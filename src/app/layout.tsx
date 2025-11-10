@@ -39,7 +39,7 @@ export default function RootLayout({
   return (
     <html lang="da">
       <body
-        className={`${geistSans.variable} ${findSans.variable}  flex min-h-screen flex-col antialiased`}
+        className={`${geistSans.variable} ${findSans.variable} flex min-h-screen flex-col antialiased text-[14px] lg:text-[16px] font-light leading-5`}
       >
         <Header />
         <main className="flex-1">{children}</main>
