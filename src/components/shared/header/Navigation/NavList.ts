@@ -6,6 +6,7 @@ export const mainNavList = [
     {
         label: "Byggeydelser",
         href: "/services",
+        dropdown: true,
     },
     {
         label: "Om os",
@@ -29,6 +30,7 @@ export const serviceNavList = [
     {
         label: "Tag",
         href: "/services/roofing",
+        dropdown: true,
     },
     {
         label: "Renovering af badeværelse",
