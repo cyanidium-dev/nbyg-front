@@ -37,11 +37,6 @@ export default function NavMenu() {
 
     return (
         <>
-            <style>{`
-                .nav-menu-link:hover {
-                    text-shadow: 0px 2px 15px #ffffff, 0px -2px 15px #ffffff;
-                }
-            `}</style>
             <nav className="relative hidden lg:block">
                 <ul className="flex items-center space-between gap-4 lg:gap-8 font-light uppercase leading-5 text-3">
                     {mainNavList.map(item => (
@@ -49,7 +44,7 @@ export default function NavMenu() {
                             <div className="flex items-center gap-3.5">
                                 <Link
                                     href={item.href}
-                                    className="nav-menu-link transition-all duration-200"
+                                    className="hover:text-shadow-white transition duration-300 ease-in-out"
                                 >
                                     {item.label}
                                 </Link>
@@ -66,7 +61,7 @@ export default function NavMenu() {
                                             isDropdownOpen
                                                 ? "rotate-0"
                                                 : "rotate-180",
-                                            "transition duration-200"
+                                            "transition duration-300 ease-in-out"
                                         )}
                                     >
                                         <ShevronIcon

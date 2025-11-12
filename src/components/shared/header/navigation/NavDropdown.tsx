@@ -39,7 +39,7 @@ export default function NavDropdown({ dropdownRef }: NavDropdownProps) {
                         <div className="flex items-center gap-[8px]">
                             <Link
                                 href={item.href}
-                                className="text-white nav-menu-link"
+                                className="text-white hover:text-shadow-white transition duration-300 ease-in-out"
                             >
                                 {item.label}
                             </Link>
@@ -56,7 +56,7 @@ export default function NavDropdown({ dropdownRef }: NavDropdownProps) {
                                         isDropdownOpen
                                             ? "rotate-0"
                                             : "rotate-180",
-                                        "transition duration-200"
+                                        "transition duration-300 ease-in-out"
                                     )}
                                 >
                                     <ShevronIcon
@@ -84,7 +84,7 @@ export default function NavDropdown({ dropdownRef }: NavDropdownProps) {
                                     <li key={item.href}>
                                         <Link
                                             href={item.href}
-                                            className="text-3 font-light leading-5 nav-menu-link"
+                                            className="text-3 font-light leading-5 hover:text-shadow-white transition duration-300 ease-in-out"
                                         >
                                             {item.label}
                                         </Link>

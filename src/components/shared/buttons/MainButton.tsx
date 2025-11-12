@@ -32,7 +32,7 @@ export default function MainButton({
             href={as === "a" ? href : undefined}
             {...props}
             className={clsx(
-                "cursor-pointer items-center justify-center text-3 md:text-3.5 leading-5 rounded-full w-[140px] h-8 md:w-[217px] md:h-12 transition duration-300",
+                "cursor-pointer items-center justify-center text-3 md:text-3.5 leading-5 rounded-full w-[140px] h-8 md:w-[217px] md:h-12 transition duration-300 ease-in-out",
                 variants[variant],
                 className
             )}
