@@ -27,18 +27,3 @@ export const mainNavList: NavItem[] = [
         href: "/blog",
     },
 ];
-
-export const servicesNavList: NavItem[] = [
-    {
-        label: "Renovering af badeværelse",
-        href: "/renovering-af-adeværelse",
-    },
-    {
-        label: "Renovering af lejlighed",
-        href: "/renovering-af-lejlighed",
-    },
-    {
-        label: "Totalrenovering af hus",
-        href: "/totalrenovering-af-hus",
-    },
-];

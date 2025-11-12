@@ -8,8 +8,12 @@ import { CONTACT_PHONE } from "@/constants/constants";
 import { contactsPhoneRegex } from "@/regex/regex";
 import { useScroll } from "framer-motion";
 import MainButton from "../buttons/MainButton";
+import { DynamicPage } from "@/types/dynamicPage";
+interface HeaderProps {
+    dynamicPagesList: DynamicPage[];
+}
 
-export default function Header() {
+export default function Header({ dynamicPagesList }: HeaderProps) {
     const { scrollYProgress } = useScroll();
     return (
         <header className="fixed top-5 left-0 right-0 z-50">
@@ -38,7 +42,7 @@ export default function Header() {
                         />
                     </Link>
                     <div className="flex items-center xl:gap-[84px] space-between gap-[16px]">
-                        <Navigation />
+                        <Navigation dynamicPagesList={dynamicPagesList} />
                         <MainButton
                             type="button"
                             className="hidden lg:flex w-[217px] h-12"

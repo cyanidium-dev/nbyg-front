@@ -5,17 +5,17 @@ import ShevronIcon from "../../icons/ShevronIcon";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { fadeInAnimation } from "@/utils/animationVariants";
-import { NavItem } from "./NavList";
-import { servicesNavList } from "./NavList";
+import { DynamicPage } from "@/types/dynamicPage";
 
 interface NavDropdownProps {
     dropdownRef: React.RefObject<HTMLDivElement | null>;
+    dynamicPagesList: DynamicPage[];
+    parentHref: string;
+    onLinkClick?: () => void;
 }
 
-export default function NavDropdown({ dropdownRef }: NavDropdownProps) {
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
-    const tagNavList: NavItem[] = [];
+export default function NavDropdown({ dropdownRef, dynamicPagesList, parentHref, onLinkClick }: NavDropdownProps) {
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);    
 
     return (
         <motion.div
@@ -32,20 +32,24 @@ export default function NavDropdown({ dropdownRef }: NavDropdownProps) {
             className="absolute top-full mt-5 left-4 w-[328px]"
         >
             <div className="absolute w-5 h-5 bg-brown rotate-45 -top-2.5 left-12 -z-10"></div>
-            <ul className="flex flex-col bg-black border border-brown rounded-3 p-6 z-10 normal-case">
-                {servicesNavList.map(item => (
+            <ul className="flex flex-col bg-black border border-brown rounded-xl p-6 z-10 normal-case">
+                {dynamicPagesList.map(item => (
                     <li
-                        key={item.href}
-                        className="w-full py-3 first:pt-0 last:pb-0 border-b border-white/10 last:border-b-0 text-3 font-light leading-4 transition duration-300 ease-in-out"
+                        key={item.slug}
+                        className="w-full py-3 first:pt-0 last:pb-0 border-b border-white/10 last:border-b-0 text-6 font-light leading-4 transition duration-300 ease-in-out"
                     >
                         <div className="flex items-center gap-[8px]">
                             <Link
-                                href={item.href}
+                                href={`${parentHref}/${item.slug}`}
+                                onClick={() => {
+                                    setIsDropdownOpen(false);
+                                    onLinkClick?.();
+                                }}
                                 className="text-white hover:text-shadow-white transition duration-300 ease-in-out"
                             >
-                                {item.label}
+                                {item.title}
                             </Link>
-                            {item.dropdown && (
+                            {item.children && item.children.length > 0 && (
                                 <button
                                     onClick={e => {
                                         e.preventDefault();
@@ -67,7 +71,7 @@ export default function NavDropdown({ dropdownRef }: NavDropdownProps) {
                                 </button>
                             )}
                         </div>
-                        {isDropdownOpen && item.dropdown && (
+                        {isDropdownOpen && item.children && item.children.length > 0 && (
                             <motion.ul
                                 variants={fadeInAnimation({
                                     x: 0,
@@ -80,13 +84,17 @@ export default function NavDropdown({ dropdownRef }: NavDropdownProps) {
                                 exit="exit"
                                 className="mt-3 pl-4 flex flex-col gap-3"
                             >
-                                {tagNavList.map(item => (
-                                    <li key={item.href}>
+                                {item.children && item.children.map(child => (
+                                    <li key={child.slug}>
                                         <Link
-                                            href={item.href}
-                                            className="text-3 font-light leading-5 hover:text-shadow-white transition duration-300 ease-in-out"
+                                            href={`${parentHref}/${item.slug}/${child.slug}`}
+                                            onClick={() => {
+                                                setIsDropdownOpen(false);
+                                                onLinkClick?.();
+                                            }}
+                                            className="text-6 font-light leading-5 hover:text-shadow-white transition duration-300 ease-in-out"
                                         >
-                                            {item.label}
+                                            {child.title}
                                         </Link>
                                     </li>
                                 ))}

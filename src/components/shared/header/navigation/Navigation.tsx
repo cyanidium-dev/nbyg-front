@@ -5,8 +5,13 @@ import { useEffect, useRef, useState } from "react";
 import ShevronIcon from "../../icons/ShevronIcon";
 import clsx from "clsx";
 import NavDropdown from "./NavDropdown";
+import { DynamicPage } from "@/types/dynamicPage";
 
-export default function Navigation() {
+interface NavigationProps {
+    dynamicPagesList: DynamicPage[];
+}
+
+export default function Navigation({ dynamicPagesList }: NavigationProps) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const buttonRef = useRef<HTMLButtonElement>(null);
@@ -80,7 +85,12 @@ export default function Navigation() {
                                 )}
                             </div>
                             {isDropdownOpen && item.dropdown && (
-                                <NavDropdown dropdownRef={dropdownRef} />
+                                <NavDropdown 
+                                    dropdownRef={dropdownRef} 
+                                    dynamicPagesList={dynamicPagesList} 
+                                    parentHref={item.href}
+                                    onLinkClick={() => setIsDropdownOpen(false)}
+                                />
                             )}
                         </li>
                     ))}
