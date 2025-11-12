@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import localFont from "next/font/local";
 import Footer from "@/components/shared/footer/Footer";
-import { Header } from '@/components/shared/header/Header';
+import Header from "@/components/shared/header/Header";
 
 const geistSans = Montserrat({
   variable: "--font-montserrat",

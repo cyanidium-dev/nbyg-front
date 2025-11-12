@@ -1,16 +1,21 @@
 "use client";
 import Link from "next/link";
 import clsx from "clsx";
-import { ShevronIcon } from "../../icons/shevron";
-import { serviceNavList, tagNavList } from "./NavList";
+import ShevronIcon from "../../icons/ShevronIcon";
+import { serviceNavList, tagNavList } from "../navigation/NavList";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { fadeInAnimation } from "@/utils/animationVariants";
 
-export const NavDropdown = () => {
+interface NavDropdownProps {
+    dropdownRef: React.RefObject<HTMLDivElement>;
+}
+
+export default function NavDropdown({ dropdownRef }: NavDropdownProps) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     return (
         <motion.div
+            ref={dropdownRef}
             variants={fadeInAnimation({
                 x: 0,
                 y: -10,
@@ -22,14 +27,14 @@ export const NavDropdown = () => {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="absolute top-full mt-[20px] left-[16px] w-[328px]"
+            className="absolute top-full mt-5 left-4 w-[328px]"
         >
-            <div className="absolute w-[20px] h-[20px] bg-brown rotate-45 top-[-10px] left-[35px] -z-10"></div>
-            <ul className="flex flex-col bg-black border border-brown rounded-[12px] p-[24px] z-10 normal-case">
+            <div className="absolute w-5 h-5 bg-brown rotate-45 -top-2.5 left-12 -z-10"></div>
+            <ul className="flex flex-col bg-black border border-brown rounded-3 p-6 z-10 normal-case">
                 {serviceNavList.map(item => (
                     <li
                         key={item.href}
-                        className="w-full py-[12px] first:pt-0 last:pb-0 border-b border-white/10 last:border-b-0 text-[16px] font-light leading-[16px] transition duration-300 ease-in-out"
+                        className="w-full py-3 first:pt-0 last:pb-0 border-b border-white/10 last:border-b-0 text-3 font-light leading-4 transition duration-300 ease-in-out"
                     >
                         <div className="flex items-center gap-[8px]">
                             <Link
@@ -47,17 +52,15 @@ export const NavDropdown = () => {
                                     }}
                                     type="button"
                                     className={clsx(
-                                        "cursor-pointer w-[16px] h-[16px] flex items-center justify-center",
+                                        "cursor-pointer w-4 h-4 flex items-center justify-center",
                                         isDropdownOpen
-                                            ? "rotate-180"
-                                            : "rotate-0",
-                                        "transition-all duration-200"
+                                            ? "rotate-0"
+                                            : "rotate-180",
+                                        "transition duration-200"
                                     )}
                                 >
                                     <ShevronIcon
-                                        className={clsx(
-                                            "w-[16px] h-[16px] fill-white"
-                                        )}
+                                        className={clsx("w-4 h-4 fill-white")}
                                     />
                                 </button>
                             )}
@@ -75,13 +78,13 @@ export const NavDropdown = () => {
                                 initial="hidden"
                                 animate="visible"
                                 exit="exit"
-                                className="mt-[12px] pl-[16px] flex flex-col gap-[12px]"
+                                className="mt-3 pl-4 flex flex-col gap-3"
                             >
                                 {tagNavList.map(item => (
                                     <li key={item.href}>
                                         <Link
                                             href={item.href}
-                                            className="text-[16px] font-light leading-[20px] nav-menu-link"
+                                            className="text-3 font-light leading-5 nav-menu-link"
                                         >
                                             {item.label}
                                         </Link>
@@ -94,4 +97,4 @@ export const NavDropdown = () => {
             </ul>
         </motion.div>
     );
-};
+}

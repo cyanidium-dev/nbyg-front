@@ -1,3 +1,9 @@
+export interface NavItem {
+    label: string;
+    href: string;
+    dropdown?: boolean;
+}
+// keep as reference
 export const mainNavList = [
     {
         label: "Hjem",
