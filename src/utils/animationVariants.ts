@@ -4,7 +4,7 @@ export const fadeInAnimation = ({
     scale = 1,
     delay = 0,
     duration = 0.7,
-    opacity = 0.01,
+    opacity = 0,
 }) => ({
     hidden: {
         opacity: opacity,

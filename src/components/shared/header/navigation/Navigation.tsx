@@ -1,21 +1,25 @@
 "use client";
 import Link from "next/link";
-import { mainNavList } from "../navigation/NavList";
+import { mainNavList } from "./NavList";
 import { useEffect, useRef, useState } from "react";
 import ShevronIcon from "../../icons/ShevronIcon";
 import clsx from "clsx";
-import NavDropdown from "../navigation/NavDropdown";
+import NavDropdown from "./NavDropdown";
 
-export default function NavMenu() {
+export default function Navigation() {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
+    const buttonRef = useRef<HTMLButtonElement>(null);
 
     useEffect(() => {
+        if (!isDropdownOpen) return;
+
         const handleClickOutside = (event: MouseEvent) => {
-            if (
-                dropdownRef.current &&
-                !dropdownRef.current.contains(event.target as Node)
-            ) {
+            const target = event.target as Node;
+            const isClickInDropdown = dropdownRef.current?.contains(target);
+            const isClickInButton = buttonRef.current?.contains(target);
+
+            if (!isClickInDropdown && !isClickInButton) {
                 setIsDropdownOpen(false);
             }
         };
@@ -50,10 +54,13 @@ export default function NavMenu() {
                                 </Link>
                                 {item.dropdown && (
                                     <button
+                                        ref={buttonRef}
                                         onClick={e => {
                                             e.preventDefault();
                                             e.stopPropagation();
-                                            setIsDropdownOpen(!isDropdownOpen);
+                                            setIsDropdownOpen(
+                                                isDropdownOpen ? false : true
+                                            );
                                         }}
                                         type="button"
                                         className={clsx(
@@ -73,11 +80,7 @@ export default function NavMenu() {
                                 )}
                             </div>
                             {isDropdownOpen && item.dropdown && (
-                                <NavDropdown
-                                    dropdownRef={
-                                        dropdownRef as React.RefObject<HTMLDivElement>
-                                    }
-                                />
+                                <NavDropdown dropdownRef={dropdownRef} />
                             )}
                         </li>
                     ))}

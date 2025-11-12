@@ -4,23 +4,23 @@ export interface NavItem {
     dropdown?: boolean;
 }
 // keep as reference
-export const mainNavList = [
+export const mainNavList: NavItem[] = [
     {
         label: "Hjem",
         href: "/",
     },
     {
         label: "Byggeydelser",
-        href: "/services",
+        href: "/byggeydelser",
         dropdown: true,
     },
     {
         label: "Om os",
-        href: "/about",
+        href: "/om-os",
     },
     {
         label: "Galleri",
-        href: "/gallery",
+        href: "/galleri",
     },
     {
         label: "Blog",
@@ -28,45 +28,17 @@ export const mainNavList = [
     },
 ];
 
-export const serviceNavList = [
-    {
-        label: "Terrasser",
-        href: "/services/terrasse",
-    },
-    {
-        label: "Tag",
-        href: "/services/roofing",
-        dropdown: true,
-    },
+export const servicesNavList: NavItem[] = [
     {
         label: "Renovering af badeværelse",
-        href: "/services/bathroom",
-    },
-    {
-        label: "Totalrenovering af hus",
-        href: "/services/house",
+        href: "/renovering-af-adeværelse",
     },
     {
         label: "Renovering af lejlighed",
-        href: "/services/apartment",
-    },
-];
-
-export const tagNavList = [
-    {
-        label: "Tegltag",
-        href: "/services/tile",
+        href: "/renovering-af-lejlighed",
     },
     {
-        label: "Ståltage",
-        href: "/services/steel",
-    },
-    {
-        label: "Eternittag",
-        href: "/services/eternit",
-    },
-    {
-        label: "Tagpap",
-        href: "/services/roofing-sheets",
+        label: "Totalrenovering af hus",
+        href: "/totalrenovering-af-hus",
     },
 ];

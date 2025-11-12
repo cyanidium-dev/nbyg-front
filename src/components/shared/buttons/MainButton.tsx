@@ -1,43 +1,78 @@
-import clsx from "clsx";
+import LoaderIcon from "../icons/LoaderIcon";
+import { twMerge } from "tailwind-merge";
+import { forwardRef } from "react";
 
 interface MainButtonProps {
     children: React.ReactNode;
-    as: "button" | "a";
-    href?: string;
+    type?: "button" | "submit";
     className?: string;
     variant?: "fill" | "outline" | "gradient";
-    props?: React.ComponentProps<"button" | "a">;
+    disabled?: boolean;
+    isLoading?: boolean;
+    onClick?: () => void;
+    loadingText?: string;
+    spanClassName?: string;
+    icon?: React.ReactNode;
 }
 
-export default function MainButton({
-    children,
-    as = "button",
-    href,
-    className,
-    variant = "fill",
-    ...props
-}: MainButtonProps) {
-    const variants = {
-        fill: "bg-white text-black",
-        outline:
-            "bg-transparent text-white border border-white hover:bg-white/10",
-        gradient:
-            // fill in later
-            "",
-    };
-    const Component = as;
+const MainButton = forwardRef<HTMLButtonElement, MainButtonProps>(
+    (
+        {
+            type = "button",
+            children,
+            className,
+            variant = "fill",
+            disabled = false,
+            isLoading = false,
+            loadingText = "Loading...",
+            spanClassName,
+            onClick,
+            icon,
+        },
+        ref
+    ) => {
+        const variants = {
+            fill: "bg-white text-black",
+            outline:
+                "bg-transparent text-white border border-white hover:bg-white/10",
+            gradient: "bg-gradient-to-r from-black to-brown text-white",
+        };
 
-    return (
-        <Component
-            href={as === "a" ? href : undefined}
-            {...props}
-            className={clsx(
-                "cursor-pointer items-center justify-center text-3 md:text-3.5 leading-5 rounded-full w-[140px] h-8 md:w-[217px] md:h-12 transition duration-300 ease-in-out",
-                variants[variant],
-                className
-            )}
-        >
-            {children}
-        </Component>
-    );
-}
+        return (
+            <button
+                ref={ref}
+                type={type}
+                disabled={disabled}
+                onClick={onClick}
+                className={twMerge(
+                    `group relative overflow-hidden enabled:cursor-pointer flex items-center justify-center rounded-full 
+          disabled:opacity-60 enabled:xl:hover:brightness-125 enabled:focus-visible:brightness-125 enabled:active:scale-[98%] will-change-transform transition duration-300 ease-in-out`,
+                    "w-full",
+                    variants[variant],
+                    className
+                )}
+            >
+                <div className="flex lg:items-center justify-between gap-2.5 w-full">
+                    <p className="relative z-10 w-full">
+                        {isLoading ? loadingText : children}
+                    </p>
+                    {icon ? (
+                        <span
+                            className={twMerge(
+                                "absolute right-1 top-1/2 -translate-y-1/2  flex items-center justify-center rounded-full",
+                                spanClassName
+                            )}
+                        >
+                            {icon}
+                        </span>
+                    ) : null}
+                </div>
+                {isLoading ? <LoaderIcon /> : null}
+            </button>
+        );
+    }
+);
+
+MainButton.displayName = "MainButton";
+
+export default MainButton;

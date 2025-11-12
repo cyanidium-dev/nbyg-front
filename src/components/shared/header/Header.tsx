@@ -2,7 +2,7 @@
 import Container from "../container/Container";
 import Link from "next/link";
 import Image from "next/image";
-//import { NavMenu } from "./navigation/Navigation";
+import Navigation from "./navigation/Navigation";
 import clsx from "clsx";
 import { CONTACT_PHONE } from "@/constants/constants";
 import { contactsPhoneRegex } from "@/regex/regex";
@@ -34,23 +34,24 @@ export default function Header() {
                             width={48}
                             height={48}
                             sizes="(max-width: 786px) 32px, 48px"
-                            className="w-12 h-12 md:w-18 md:h-18 rounded-full"
+                            className="w-12 h-12 lg:w-18 lg:h-18 rounded-full"
                         />
                     </Link>
-                    <div className="flex items-center">
-                        {/* <NavMenu /> */}
+                    <div className="flex items-center xl:gap-[84px] space-between gap-[16px]">
+                        <Navigation />
                         <MainButton
-                            as="button"
-                            props={{ type: "button" }}
-                            className="hidden md:flex"
+                            type="button"
+                            className="hidden lg:flex w-[217px] h-12"
                             variant="outline"
                         >
                             Kontakt os
                         </MainButton>
                         <MainButton
-                            as="a"
-                            href={`tel:${CONTACT_PHONE}`}
-                            className="flex md:hidden"
+                            type="button"
+                            onClick={() => {
+                                window.location.href = `tel:${CONTACT_PHONE}`;
+                            }}
+                            className="flex lg:hidden w-[140px] h-8"
                             variant="outline"
                         >
                             {CONTACT_PHONE.replace(

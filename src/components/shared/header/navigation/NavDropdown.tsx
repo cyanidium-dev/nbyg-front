@@ -2,17 +2,21 @@
 import Link from "next/link";
 import clsx from "clsx";
 import ShevronIcon from "../../icons/ShevronIcon";
-import { serviceNavList, tagNavList } from "../navigation/NavList";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { fadeInAnimation } from "@/utils/animationVariants";
+import { NavItem } from "./NavList";
+import { servicesNavList } from "./NavList";
 
 interface NavDropdownProps {
-    dropdownRef: React.RefObject<HTMLDivElement>;
+    dropdownRef: React.RefObject<HTMLDivElement | null>;
 }
 
 export default function NavDropdown({ dropdownRef }: NavDropdownProps) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+    const tagNavList: NavItem[] = [];
+
     return (
         <motion.div
             ref={dropdownRef}
@@ -20,9 +24,7 @@ export default function NavDropdown({ dropdownRef }: NavDropdownProps) {
                 x: 0,
                 y: -10,
                 scale: 0.9,
-                delay: 0,
                 duration: 0.3,
-                opacity: 0,
             })}
             initial="hidden"
             animate="visible"
@@ -31,7 +33,7 @@ export default function NavDropdown({ dropdownRef }: NavDropdownProps) {
         >
             <div className="absolute w-5 h-5 bg-brown rotate-45 -top-2.5 left-12 -z-10"></div>
             <ul className="flex flex-col bg-black border border-brown rounded-3 p-6 z-10 normal-case">
-                {serviceNavList.map(item => (
+                {servicesNavList.map(item => (
                     <li
                         key={item.href}
                         className="w-full py-3 first:pt-0 last:pb-0 border-b border-white/10 last:border-b-0 text-3 font-light leading-4 transition duration-300 ease-in-out"
@@ -71,9 +73,7 @@ export default function NavDropdown({ dropdownRef }: NavDropdownProps) {
                                     x: 0,
                                     y: -5,
                                     scale: 1,
-                                    delay: 0,
                                     duration: 0.3,
-                                    opacity: 0,
                                 })}
                                 initial="hidden"
                                 animate="visible"
