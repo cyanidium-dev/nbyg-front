@@ -5,4 +5,7 @@ export const client = createClient({
   dataset: "production",
   apiVersion: "2025-11-12",
   useCdn: true,
+  stega: {
+    enabled: false,
+  },
 });
