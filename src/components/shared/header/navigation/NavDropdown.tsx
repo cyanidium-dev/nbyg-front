@@ -22,12 +22,11 @@ export default function NavDropdown({
 }: NavDropdownProps) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-    if (
-        !dynamicPagesList ||
-        !dynamicPagesList?.length ||
-        dynamicPagesList?.length === 0
-    )
-        return null;
+    if (!dynamicPagesList || !dynamicPagesList?.length) return null;
+
+    const isChildrenNotEmpty = (children: DynamicPage["children"]) => {
+        return children && children?.length && children?.length > 0;
+    };
 
     return (
         <motion.div
@@ -61,36 +60,30 @@ export default function NavDropdown({
                             >
                                 {item.title}
                             </Link>
-                            {item.children &&
-                                item.children?.length &&
-                                item.children?.length > 0 && (
-                                    <button
-                                        onClick={e => {
-                                            e.preventDefault();
-                                            e.stopPropagation();
-                                            setIsDropdownOpen(!isDropdownOpen);
-                                        }}
-                                        type="button"
-                                        className={clsx(
-                                            "cursor-pointer w-4 h-4 flex items-center justify-center hover:svg-shadow-white transition duration-300 ease-in-out",
-                                            isDropdownOpen
-                                                ? "rotate-0"
-                                                : "rotate-180"
-                                        )}
-                                    >
-                                        <ShevronIcon
-                                            className={clsx(
-                                                "w-4 h-4 fill-white"
-                                            )}
-                                        />
-                                    </button>
-                                )}
+                            {isChildrenNotEmpty(item.children) && (
+                                <button
+                                    onClick={e => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        setIsDropdownOpen(!isDropdownOpen);
+                                    }}
+                                    type="button"
+                                    className={clsx(
+                                        "cursor-pointer w-4 h-4 flex items-center justify-center hover:svg-shadow-white transition duration-300 ease-in-out",
+                                        isDropdownOpen
+                                            ? "rotate-0"
+                                            : "rotate-180"
+                                    )}
+                                >
+                                    <ShevronIcon
+                                        className={clsx("w-4 h-4 fill-white")}
+                                    />
+                                </button>
+                            )}
                         </div>
                         <AnimatePresence>
                             {isDropdownOpen &&
-                                item.children &&
-                                item.children?.length &&
-                                item.children?.length > 0 && (
+                                isChildrenNotEmpty(item.children) && (
                                     <motion.ul
                                         key={`nested-${item.slug}`}
                                         variants={fadeInAnimation({
@@ -105,23 +98,22 @@ export default function NavDropdown({
                                         exit="exit"
                                         className="mt-3 pl-4 flex flex-col gap-3"
                                     >
-                                        {item.children &&
-                                            item.children.map(child => (
-                                                <li key={child.slug}>
-                                                    <Link
-                                                        href={`${parentHref}/${item.slug}/${child.slug}`}
-                                                        onClick={() => {
-                                                            setIsDropdownOpen(
-                                                                false
-                                                            );
-                                                            onLinkClick?.();
-                                                        }}
-                                                        className="text-6 font-light leading-5 hover:text-shadow-white transition duration-300 ease-in-out"
-                                                    >
-                                                        {child.title}
-                                                    </Link>
-                                                </li>
-                                            ))}
+                                        {item.children?.map(child => (
+                                            <li key={child.slug}>
+                                                <Link
+                                                    href={`${parentHref}/${item.slug}/${child.slug}`}
+                                                    onClick={() => {
+                                                        setIsDropdownOpen(
+                                                            false
+                                                        );
+                                                        onLinkClick?.();
+                                                    }}
+                                                    className="text-6 font-light leading-5 hover:text-shadow-white transition duration-300 ease-in-out"
+                                                >
+                                                    {child.title}
+                                                </Link>
+                                            </li>
+                                        ))}
                                     </motion.ul>
                                 )}
                         </AnimatePresence>
