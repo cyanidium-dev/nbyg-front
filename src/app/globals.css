@@ -55,12 +55,35 @@
 
 @layer utilities {
     .text-shadow-white {
-        text-shadow: 0px 2px 15px var(--color-white),
+        text-shadow:
+            0px 2px 15px var(--color-white),
             0px -2px 15px var(--color-white);
     }
 
+    .hover\:text-shadow-white {
+        text-shadow: none;
+        transition: text-shadow 300ms ease-in-out;
+    }
+
     .hover\:text-shadow-white:hover {
-        text-shadow: 0px 2px 15px var(--color-white),
+        text-shadow:
+            0px 2px 15px var(--color-white),
             0px -2px 15px var(--color-white);
+    }
+
+    .svg-shadow-white {
+        filter: drop-shadow(0px 2px 5px var(--color-white))
+            drop-shadow(0px -2px 5px var(--color-white));
+    }
+
+    .hover\:svg-shadow-white {
+        filter: none;
+        transition: filter 300ms ease-in-out;
+    }
+
+    button:hover .hover\:svg-shadow-white,
+    .hover\:svg-shadow-white:hover {
+        filter: drop-shadow(3px 2px 5px var(--color-white))
+            drop-shadow(-3px -2px 5px var(--color-white));
     }
 }

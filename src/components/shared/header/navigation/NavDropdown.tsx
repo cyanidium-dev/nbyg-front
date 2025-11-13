@@ -3,7 +3,7 @@ import Link from "next/link";
 import clsx from "clsx";
 import ShevronIcon from "../../icons/ShevronIcon";
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { fadeInAnimation } from "@/utils/animationVariants";
 import { DynamicPage } from "@/types/dynamicPage";
 
@@ -14,8 +14,13 @@ interface NavDropdownProps {
     onLinkClick?: () => void;
 }
 
-export default function NavDropdown({ dropdownRef, dynamicPagesList, parentHref, onLinkClick }: NavDropdownProps) {
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);    
+export default function NavDropdown({
+    dropdownRef,
+    dynamicPagesList,
+    parentHref,
+    onLinkClick,
+}: NavDropdownProps) {
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     return (
         <motion.div
@@ -58,11 +63,10 @@ export default function NavDropdown({ dropdownRef, dynamicPagesList, parentHref,
                                     }}
                                     type="button"
                                     className={clsx(
-                                        "cursor-pointer w-4 h-4 flex items-center justify-center",
+                                        "cursor-pointer w-4 h-4 flex items-center justify-center hover:svg-shadow-white transition duration-300 ease-in-out",
                                         isDropdownOpen
                                             ? "rotate-0"
-                                            : "rotate-180",
-                                        "transition duration-300 ease-in-out"
+                                            : "rotate-180"
                                     )}
                                 >
                                     <ShevronIcon
@@ -71,35 +75,43 @@ export default function NavDropdown({ dropdownRef, dynamicPagesList, parentHref,
                                 </button>
                             )}
                         </div>
-                        {isDropdownOpen && item.children && item.children.length > 0 && (
-                            <motion.ul
-                                variants={fadeInAnimation({
-                                    x: 0,
-                                    y: -5,
-                                    scale: 1,
-                                    duration: 0.3,
-                                })}
-                                initial="hidden"
-                                animate="visible"
-                                exit="exit"
-                                className="mt-3 pl-4 flex flex-col gap-3"
-                            >
-                                {item.children && item.children.map(child => (
-                                    <li key={child.slug}>
-                                        <Link
-                                            href={`${parentHref}/${item.slug}/${child.slug}`}
-                                            onClick={() => {
-                                                setIsDropdownOpen(false);
-                                                onLinkClick?.();
-                                            }}
-                                            className="text-6 font-light leading-5 hover:text-shadow-white transition duration-300 ease-in-out"
-                                        >
-                                            {child.title}
-                                        </Link>
-                                    </li>
-                                ))}
-                            </motion.ul>
-                        )}
+                        <AnimatePresence>
+                            {isDropdownOpen &&
+                                item.children &&
+                                item.children.length > 0 && (
+                                    <motion.ul
+                                        key={`nested-${item.slug}`}
+                                        variants={fadeInAnimation({
+                                            x: 0,
+                                            y: -5,
+                                            scale: 1,
+                                            duration: 0.3,
+                                        })}
+                                        initial="hidden"
+                                        animate="visible"
+                                        exit="exit"
+                                        className="mt-3 pl-4 flex flex-col gap-3"
+                                    >
+                                        {item.children &&
+                                            item.children.map(child => (
+                                                <li key={child.slug}>
+                                                    <Link
+                                                        href={`${parentHref}/${item.slug}/${child.slug}`}
+                                                        onClick={() => {
+                                                            setIsDropdownOpen(
+                                                                false
+                                                            );
+                                                            onLinkClick?.();
+                                                        }}
+                                                        className="text-6 font-light leading-5 hover:text-shadow-white transition duration-300 ease-in-out"
+                                                    >
+                                                        {child.title}
+                                                    </Link>
+                                                </li>
+                                            ))}
+                                    </motion.ul>
+                                )}
+                        </AnimatePresence>
                     </li>
                 ))}
             </ul>

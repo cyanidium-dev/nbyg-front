@@ -6,6 +6,7 @@ import ShevronIcon from "../../icons/ShevronIcon";
 import clsx from "clsx";
 import NavDropdown from "./NavDropdown";
 import { DynamicPage } from "@/types/dynamicPage";
+import { AnimatePresence } from "framer-motion";
 
 interface NavigationProps {
     dynamicPagesList: DynamicPage[];
@@ -69,29 +70,33 @@ export default function Navigation({ dynamicPagesList }: NavigationProps) {
                                         }}
                                         type="button"
                                         className={clsx(
-                                            "cursor-pointer w-5 h-5 flex items-center justify-center",
+                                            "cursor-pointer w-5 h-5 flex items-center justify-center transition duration-300 ease-in-out",
                                             isDropdownOpen
                                                 ? "rotate-0"
-                                                : "rotate-180",
-                                            "transition duration-300 ease-in-out"
+                                                : "rotate-180"
                                         )}
                                     >
                                         <ShevronIcon
                                             className={clsx(
-                                                "w-5 h-5 fill-white"
+                                                "w-5 h-5 fill-white hover:svg-shadow-white"
                                             )}
                                         />
                                     </button>
                                 )}
                             </div>
-                            {isDropdownOpen && item.dropdown && (
-                                <NavDropdown 
-                                    dropdownRef={dropdownRef} 
-                                    dynamicPagesList={dynamicPagesList} 
-                                    parentHref={item.href}
-                                    onLinkClick={() => setIsDropdownOpen(false)}
-                                />
-                            )}
+                            <AnimatePresence>
+                                {isDropdownOpen && item.dropdown && (
+                                    <NavDropdown
+                                        key="nav-dropdown"
+                                        dropdownRef={dropdownRef}
+                                        dynamicPagesList={dynamicPagesList}
+                                        parentHref={item.href}
+                                        onLinkClick={() =>
+                                            setIsDropdownOpen(false)
+                                        }
+                                    />
+                                )}
+                            </AnimatePresence>
                         </li>
                     ))}
                 </ul>
