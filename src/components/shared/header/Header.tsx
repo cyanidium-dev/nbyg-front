@@ -49,7 +49,11 @@ export default function Header({ dynamicPagesList }: HeaderProps) {
                         >
                             Kontakt os
                         </MainButton>
-                        <a href={`tel:${CONTACT_PHONE}`}>
+                        <a
+                            href={`tel:${CONTACT_PHONE}`}
+                            target="_blank"
+                            rel="noopener noreferrer nofollow"
+                        >
                             <MainButton
                                 className="flex lg:hidden w-[140px] h-8"
                                 variant="outline"
