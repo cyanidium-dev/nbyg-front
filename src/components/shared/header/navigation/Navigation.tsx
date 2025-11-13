@@ -54,7 +54,7 @@ export default function Navigation({ dynamicPagesList }: NavigationProps) {
                             <div className="flex items-center gap-3.5">
                                 <Link
                                     href={item.href}
-                                    className="hover:text-shadow-white transition duration-300 ease-in-out"
+                                    className="text-shadow-white"
                                 >
                                     {item.label}
                                 </Link>
@@ -78,7 +78,7 @@ export default function Navigation({ dynamicPagesList }: NavigationProps) {
                                     >
                                         <ShevronIcon
                                             className={clsx(
-                                                "w-5 h-5 fill-white hover:svg-shadow-white"
+                                                "w-5 h-5 fill-white svg-shadow-white"
                                             )}
                                         />
                                     </button>
