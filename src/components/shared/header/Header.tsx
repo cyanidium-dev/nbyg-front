@@ -44,25 +44,22 @@ export default function Header({ dynamicPagesList }: HeaderProps) {
                     <div className="flex items-center xl:gap-[84px] space-between gap-[16px]">
                         <Navigation dynamicPagesList={dynamicPagesList} />
                         <MainButton
-                            type="button"
                             className="hidden lg:flex w-[217px] h-12"
                             variant="outline"
                         >
                             Kontakt os
                         </MainButton>
-                        <MainButton
-                            type="button"
-                            onClick={() => {
-                                window.location.href = `tel:${CONTACT_PHONE}`;
-                            }}
-                            className="flex lg:hidden w-[140px] h-8"
-                            variant="outline"
-                        >
-                            {CONTACT_PHONE.replace(
-                                contactsPhoneRegex,
-                                "+45 $1"
-                            )}
-                        </MainButton>
+                        <a href={`tel:${CONTACT_PHONE}`}>
+                            <MainButton
+                                className="flex lg:hidden w-[140px] h-8"
+                                variant="outline"
+                            >
+                                {CONTACT_PHONE.replace(
+                                    contactsPhoneRegex,
+                                    "+45 $1"
+                                )}
+                            </MainButton>
+                        </a>
                         <div className="flex items-center gap-3">
                             <button
                                 type="button"

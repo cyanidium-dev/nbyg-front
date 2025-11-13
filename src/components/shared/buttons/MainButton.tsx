@@ -1,6 +1,5 @@
 import LoaderIcon from "../icons/LoaderIcon";
 import { twMerge } from "tailwind-merge";
-import { forwardRef } from "react";
 
 interface MainButtonProps {
     children: React.ReactNode;
@@ -15,64 +14,54 @@ interface MainButtonProps {
     icon?: React.ReactNode;
 }
 
-const MainButton = forwardRef<HTMLButtonElement, MainButtonProps>(
-    (
-        {
-            type = "button",
-            children,
-            className,
-            variant = "fill",
-            disabled = false,
-            isLoading = false,
-            loadingText = "Loading...",
-            spanClassName,
-            onClick,
-            icon,
-        },
-        ref
-    ) => {
-        const variants = {
-            fill: "bg-white text-black",
-            outline:
-                "bg-transparent text-white border border-white hover:bg-white/10",
-            gradient: "bg-gradient-to-r from-black to-brown text-white",
-        };
+export default function MainButton({
+    type = "button",
+    children,
+    className,
+    variant = "fill",
+    disabled = false,
+    isLoading = false,
+    loadingText = "Loading...",
+    spanClassName,
+    onClick,
+    icon,
+}: MainButtonProps) {
+    const variants = {
+        fill: "bg-white text-black",
+        outline:
+            "bg-transparent text-white border border-white hover:bg-white/10",
+        gradient: "bg-gradient-to-r from-black to-brown text-white",
+    };
 
-        return (
-            <button
-                ref={ref}
-                type={type}
-                disabled={disabled}
-                onClick={onClick}
-                className={twMerge(
-                    `group relative overflow-hidden enabled:cursor-pointer flex items-center justify-center rounded-full 
+    return (
+        <button
+            type={type}
+            disabled={disabled}
+            onClick={onClick}
+            className={twMerge(
+                `group relative overflow-hidden enabled:cursor-pointer flex items-center justify-center rounded-full 
           disabled:opacity-60 enabled:xl:hover:brightness-125 enabled:focus-visible:brightness-125 enabled:active:scale-[98%] will-change-transform transition duration-300 ease-in-out`,
-                    "w-full",
-                    variants[variant],
-                    className
-                )}
-            >
-                <div className="flex lg:items-center justify-between gap-2.5 w-full">
-                    <p className="relative z-10 w-full">
-                        {isLoading ? loadingText : children}
-                    </p>
-                    {icon ? (
-                        <span
-                            className={twMerge(
-                                "absolute right-1 top-1/2 -translate-y-1/2  flex items-center justify-center rounded-full",
-                                spanClassName
-                            )}
-                        >
-                            {icon}
-                        </span>
-                    ) : null}
-                </div>
-                {isLoading ? <LoaderIcon /> : null}
-            </button>
-        );
-    }
-);
-
-MainButton.displayName = "MainButton";
-
-export default MainButton;
+                "w-full",
+                variants[variant],
+                className
+            )}
+        >
+            <div className="flex lg:items-center justify-between gap-2.5 w-full">
+                <p className="relative z-10 w-full">
+                    {isLoading ? loadingText : children}
+                </p>
+                {icon ? (
+                    <span
+                        className={twMerge(
+                            "absolute right-1 top-1/2 -translate-y-1/2  flex items-center justify-center rounded-full",
+                            spanClassName
+                        )}
+                    >
+                        {icon}
+                    </span>
+                ) : null}
+            </div>
+            {isLoading ? <LoaderIcon /> : null}
+        </button>
+    );
+}
