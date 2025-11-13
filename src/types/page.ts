@@ -1,0 +1,180 @@
+export type SanityReference = {
+  _type: "reference";
+  _ref: string;
+};
+
+export type SanityImageCrop = {
+  _type: "sanity.imageCrop";
+  top: number;
+  bottom: number;
+  left: number;
+  right: number;
+};
+
+export type SanityImageHotspot = {
+  _type: "sanity.imageHotspot";
+  x: number;
+  y: number;
+  height: number;
+  width: number;
+};
+
+export type SanityImage = {
+  _type: "image";
+  asset: SanityReference;
+  crop?: SanityImageCrop;
+  hotspot?: SanityImageHotspot;
+  alt?: string;
+};
+
+export type PortableTextBlock = {
+  _key: string;
+  _type: "block";
+  children?: Array<{
+    _key: string;
+    _type: "span";
+    marks: string[];
+    text: string;
+  }>;
+  markDefs?: Array<Record<string, unknown>>;
+  style?: string;
+};
+
+export type PortableText = Array<PortableTextBlock | Record<string, unknown>>;
+
+// ---- Секції ----
+
+export type HeroSection = {
+  _type: "heroSection";
+  type: "heroSection";
+  title: string;
+  description: string;
+  desktopImage: SanityImage;
+  mobileImage: SanityImage;
+  showDiscussButton?: boolean;
+  showCalculatorButton?: boolean;
+};
+
+export type CtaSection = {
+  _type: "ctaSection";
+  type: "ctaSection";
+  title?: string;
+  description?: PortableText;
+  image?: SanityImage;
+  buttonType?: "calculator" | "contact" | string;
+};
+
+export type TableSection = {
+  _type: "tableSection";
+  type: "tableSection";
+  title?: string;
+  description?: PortableText;
+  desktopAlignment?: "left" | "right" | "center" | string;
+  columns?: Array<{
+    _key?: string;
+    title?: string;
+    values?: string[];
+  }>;
+};
+
+export type MaterialSliderSection = {
+  _type: "materialSliderSection";
+  type: "materialSliderSection";
+  title?: string;
+  titlePosition?: string;
+  subtitle?: string;
+  description1?: PortableText;
+  description2?: PortableText;
+  slides?: Array<{
+    _key?: string;
+    image?: SanityImage;
+    title?: string;
+    description?: PortableText;
+  }>;
+};
+
+export type GallerySection = {
+  _type: "gallerySection";
+  type: "gallerySection";
+  items?: Array<{
+    _key?: string;
+    desktopImage?: SanityImage;
+    mobileImage?: SanityImage;
+  }>;
+};
+
+export type BeforeAfterSection = {
+  _type: "beforeAfterSection";
+  type: "beforeAfterSection";
+  items?: Array<{
+    _key?: string;
+    beforeImage?: SanityImage;
+    afterImage?: SanityImage;
+  }>;
+};
+
+export type ImageTextButtonSection = {
+  _type: "imageTextButtonSection";
+  type: "imageTextButtonSection";
+  title?: string;
+  titlePosition?: string;
+  image?: SanityImage;
+  description?: PortableText;
+  buttonStyle?: string;
+  buttonText?: string;
+  buttonSlug?: string;
+};
+
+export type FaqSection = {
+  _type: "faqSection";
+  type: "faqSection";
+  description?: string | PortableText;
+  items?: Array<{
+    _key?: string;
+    question?: string;
+    answer?: PortableText;
+    buttons?: Array<Record<string, unknown>>;
+  }>;
+};
+
+export type PageSection =
+  | HeroSection
+  | CtaSection
+  | TableSection
+  | MaterialSliderSection
+  | GallerySection
+  | BeforeAfterSection
+  | ImageTextButtonSection
+  | FaqSection
+  | (Record<string, unknown> & { _type: string; type?: string }); // fallback
+
+// ---- Основний тип сторінки ----
+
+export type PageChild = {
+  title: string;
+  slug: string;
+  menuOrder: number;
+};
+
+export type PageParent = {
+  title: string;
+  slug: string;
+};
+
+export type PageSeo = {
+  metaTitle?: string;
+  metaDescription?: string;
+  keywords?: string[];
+  opengraphImage?: SanityImage;
+  schemaJson?: unknown;
+};
+
+export type SanityPage = {
+  title: string;
+  slug: string;
+  menuOrder: number;
+  parent: PageParent | null;
+  children: PageChild[];
+  sections: PageSection[];
+  seo: PageSeo | null;
+};
