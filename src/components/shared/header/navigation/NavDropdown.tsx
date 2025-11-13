@@ -22,6 +22,8 @@ export default function NavDropdown({
 }: NavDropdownProps) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
+    if (!dynamicPagesList || !dynamicPagesList.length) return null;
+
     return (
         <motion.div
             ref={dropdownRef}
