@@ -22,7 +22,12 @@ export default function NavDropdown({
 }: NavDropdownProps) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-    if (!dynamicPagesList || !dynamicPagesList.length) return null;
+    if (
+        !dynamicPagesList ||
+        !dynamicPagesList?.length ||
+        dynamicPagesList?.length === 0
+    )
+        return null;
 
     return (
         <motion.div
@@ -56,31 +61,36 @@ export default function NavDropdown({
                             >
                                 {item.title}
                             </Link>
-                            {item.children && item.children.length > 0 && (
-                                <button
-                                    onClick={e => {
-                                        e.preventDefault();
-                                        e.stopPropagation();
-                                        setIsDropdownOpen(!isDropdownOpen);
-                                    }}
-                                    type="button"
-                                    className={clsx(
-                                        "cursor-pointer w-4 h-4 flex items-center justify-center hover:svg-shadow-white transition duration-300 ease-in-out",
-                                        isDropdownOpen
-                                            ? "rotate-0"
-                                            : "rotate-180"
-                                    )}
-                                >
-                                    <ShevronIcon
-                                        className={clsx("w-4 h-4 fill-white")}
-                                    />
-                                </button>
-                            )}
+                            {item.children &&
+                                item.children?.length &&
+                                item.children?.length > 0 && (
+                                    <button
+                                        onClick={e => {
+                                            e.preventDefault();
+                                            e.stopPropagation();
+                                            setIsDropdownOpen(!isDropdownOpen);
+                                        }}
+                                        type="button"
+                                        className={clsx(
+                                            "cursor-pointer w-4 h-4 flex items-center justify-center hover:svg-shadow-white transition duration-300 ease-in-out",
+                                            isDropdownOpen
+                                                ? "rotate-0"
+                                                : "rotate-180"
+                                        )}
+                                    >
+                                        <ShevronIcon
+                                            className={clsx(
+                                                "w-4 h-4 fill-white"
+                                            )}
+                                        />
+                                    </button>
+                                )}
                         </div>
                         <AnimatePresence>
                             {isDropdownOpen &&
                                 item.children &&
-                                item.children.length > 0 && (
+                                item.children?.length &&
+                                item.children?.length > 0 && (
                                     <motion.ul
                                         key={`nested-${item.slug}`}
                                         variants={fadeInAnimation({
