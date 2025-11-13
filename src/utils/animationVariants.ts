@@ -5,6 +5,7 @@ export const fadeInAnimation = ({
     delay = 0,
     duration = 0.7,
     opacity = 0,
+    exitslide = false,
 }) => ({
     hidden: {
         opacity: opacity,
@@ -18,6 +19,9 @@ export const fadeInAnimation = ({
     },
     exit: {
         opacity: 0,
+        transform: exitslide
+            ? `translate3d(${x}px, ${y}px, 0) scale3d(${scale}, ${scale}, 1)`
+            : "translate3d(0, 0, 0) scale3d(1, 1, 1)",
         transition: { duration: 0.2, ease: [0.42, 0, 1, 1] as const },
     },
 });

@@ -85,9 +85,10 @@ export default function NavDropdown({
                                         key={`nested-${item.slug}`}
                                         variants={fadeInAnimation({
                                             x: 0,
-                                            y: -5,
+                                            y: -10,
                                             scale: 1,
-                                            duration: 0.3,
+                                            duration: 0.4,
+                                            exitslide: true,
                                         })}
                                         initial="hidden"
                                         animate="visible"
