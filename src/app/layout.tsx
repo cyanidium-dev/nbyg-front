@@ -8,6 +8,7 @@ import Header from "@/components/shared/header/Header";
 import Footer from "@/components/shared/footer/Footer";
 import { fetchSanityData } from "@/utils/fetchSanityData";
 import { ALL_DYNAMIC_PAGES_QUERY } from "@/lib/queries";
+import { DynamicPage } from "@/types/dynamicPage";
 
 const geistSans = Montserrat({
   variable: "--font-montserrat",
@@ -40,7 +41,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const dynamicPagesList = await fetchSanityData(ALL_DYNAMIC_PAGES_QUERY);
+  const dynamicPagesList = await fetchSanityData<DynamicPage[]>(ALL_DYNAMIC_PAGES_QUERY);
 
   return (
     <html lang="da">
