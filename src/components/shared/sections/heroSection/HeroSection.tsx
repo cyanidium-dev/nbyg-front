@@ -48,7 +48,6 @@ const HeroSection = (_props: HeroSectionProps) => {
         fill
         sizes="100vw"
         priority
-        preload
         fetchPriority="high"
         className="md:hidden -z-20 object-cover object-top"
       />
@@ -58,7 +57,6 @@ const HeroSection = (_props: HeroSectionProps) => {
         fill
         sizes="100vw"
         priority
-        preload
         fetchPriority="high"
         className="hidden md:block -z-20 object-cover object-top"
       />
