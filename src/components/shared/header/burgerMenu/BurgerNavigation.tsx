@@ -39,7 +39,7 @@ export default function Navigation({
                         <li key={item.href} className="relative min-h-[39px]">
                             <Link
                                 href={item.href}
-                                className="uppercase text-light flex items-center gap-3.5"
+                                className="uppercase text-[16px] text-light flex items-center gap-3.5"
                                 onClick={() => setIsBurgerMenuOpened?.(false)}
                             >
                                 {item.label}
@@ -81,7 +81,7 @@ export default function Navigation({
                             </AnimatePresence>
 
                             <div
-                                className="absolute bottom-0.5 left-0 bg-linear-to-r from-gradient-brown from-23.92% via-gradient-brown-dark via-52.62% to-black to-99.51%
+                                className="absolute bottom-0 left-0 bg-linear-to-r from-gradient-brown from-23.92% via-gradient-brown-dark via-52.62% to-black to-99.51%
                                     h-[1.5px] w-full rotate-[0.36deg]"
                             />
                         </li>
