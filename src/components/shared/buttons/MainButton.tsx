@@ -27,9 +27,11 @@ export default function MainButton({
   icon,
 }: MainButtonProps) {
   const variants = {
-    fill: "bg-white text-black enabled:xl:hover:bg-brown enabled:focus-visible:bg-brown",
-    outline: "bg-transparent text-white border border-white hover:bg-white/10",
-    gradient: "bg-gradient-to-r from-black to-brown text-white",
+    fill: "bg-white text-black button-shadow-white",
+    outline:
+      "bg-transparent text-white border border-white enabled:xl:hover:bg-white/10",
+    gradient:
+      "bg-gradient-to-r from-black to-brown text-white button-shadow-white",
   };
 
   return (
@@ -39,7 +41,7 @@ export default function MainButton({
       onClick={onClick}
       className={twMerge(
         `group relative overflow-hidden enabled:cursor-pointer flex items-center justify-center rounded-full 
-          disabled:opacity-60 enabled:xl:hover:brightness-125 enabled:focus-visible:brightness-125 enabled:active:scale-[98%] will-change-transform transition duration-300 ease-in-out`,
+          disabled:opacity-60  enabled:active:scale-[98%] will-change-transform transition duration-300 ease-in-out`,
         "w-full",
         variants[variant],
         className
