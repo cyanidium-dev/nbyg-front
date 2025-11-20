@@ -41,24 +41,20 @@ export default function BurgerNavigationDropdown({
             initial="hidden"
             animate="visible"
             exit="exit"
+            className="mt-[18px] w-full pl-4 mb-[18px]"
         >
-            <ul className="flex flex-col bg-black border border-brown rounded-xl p-6 z-10 normal-case">
+            <ul className="flex flex-col gap-3 pl-4 normal-case w-full">
                 {dynamicPagesList.map(item => (
                     <li
                         key={item.slug}
-                        className="w-full py-3 first:pt-0 last:pb-0 border-b border-white/10 last:border-b-0 text-6 font-light leading-4"
+                        className="w-full text-[14px] font-light leading-[143%]"
                     >
-                        <div className="flex items-center gap-[8px]">
-                            <Link
-                                href={`${parentHref}/${item.slug}`}
-                                onClick={() => {
-                                    setIsDropdownOpen(false);
-                                    onLinkClick?.();
-                                }}
-                                className="text-white text-shadow-white w-full"
-                            >
-                                {item.title}
-                            </Link>
+                        <Link
+                            href={`${parentHref}/${item.slug}`}
+                            onClick={onLinkClick}
+                            className="text-white w-full flex items-center gap-[8px]"
+                        >
+                            {item.title}
                             {isChildrenNotEmpty(item.children) && (
                                 <button
                                     onClick={e => {
@@ -75,13 +71,12 @@ export default function BurgerNavigationDropdown({
                                     )}
                                 >
                                     <ShevronIcon
-                                        className={clsx(
-                                            "w-4 h-4 fill-white svg-shadow-white"
-                                        )}
+                                        className={clsx("w-4 h-4 fill-white")}
                                     />
                                 </button>
                             )}
-                        </div>
+                        </Link>
+
                         <AnimatePresence>
                             {isDropdownOpen &&
                                 isChildrenNotEmpty(item.children) && (
@@ -103,13 +98,8 @@ export default function BurgerNavigationDropdown({
                                             <li key={child.slug}>
                                                 <Link
                                                     href={`${parentHref}/${item.slug}/${child.slug}`}
-                                                    onClick={() => {
-                                                        setIsDropdownOpen(
-                                                            false
-                                                        );
-                                                        onLinkClick?.();
-                                                    }}
-                                                    className="text-6 font-light leading-5 text-shadow-white w-full"
+                                                    onClick={onLinkClick}
+                                                    className="text-[14px] font-light leading-[143%] w-full"
                                                 >
                                                     {child.title}
                                                 </Link>

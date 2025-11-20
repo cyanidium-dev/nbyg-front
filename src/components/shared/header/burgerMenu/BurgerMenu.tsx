@@ -3,10 +3,10 @@ import { AnimatePresence, motion } from "framer-motion";
 import { burgerMenuVariants } from "@/utils/animationVariants";
 import Container from "@/components/shared/container/Container";
 import BurgerNavigation from "./BurgerNavigation";
-import Image from "next/image";
 import { fadeInAnimation } from "@/utils/animationVariants";
 import { DynamicPage } from "@/types/dynamicPage";
 import { mainNavList } from "../navigation/NavList";
+import MainButton from "@/components/shared/buttons/MainButton";
 
 interface BurgerMenuProps {
     isBurgerMenuOpened: boolean;
@@ -28,32 +28,32 @@ export default function BurgerMenu({
                     animate="visible"
                     exit="exit"
                     variants={burgerMenuVariants}
-                    className={`${
-                        isBurgerMenuOpened ? "no-doc-scroll" : ""
-                    } lg:hidden absolute z-50 inset-0 w-[100vw] h-[100dvh] bg-black overflow-hidden`}
+                    className="lg:hidden absolute z-40 inset-0 w-screen h-dvh bg-black overflow-hidden no-doc-scroll pt-[151px] pb-[62px] overflow-y-auto overflow-x-hidden"
                 >
-                    <div className="flex flex-col gap-y-16 justify-between w-[100vw] h-[calc(100dvh-88px)] mt-22 pt-[130px] pb-[42px] overflow-y-auto overflow-x-hidden">
-                        <Container className="w-full">
-                            <motion.div
-                                initial="hidden"
-                                whileInView="visible"
-                                exit="exit"
-                                viewport={{ once: true, amount: 0.1 }}
-                                variants={fadeInAnimation({
-                                    delay: 0.3,
-                                    x: 30,
-                                })}
-                            >
-                                <BurgerNavigation
-                                    mainNavList={mainNavList}
-                                    dynamicPagesList={dynamicPagesList}
-                                    setIsBurgerMenuOpened={
-                                        setIsBurgerMenuOpened
-                                    }
-                                />
-                            </motion.div>
-                        </Container>
-                    </div>
+                    <Container className="flex flex-col gap-10 justify-between h-full pl-[25px] pr-[30px]">
+                        <motion.div
+                            initial="hidden"
+                            whileInView="visible"
+                            exit="exit"
+                            viewport={{ once: true, amount: 0.1 }}
+                            variants={fadeInAnimation({
+                                delay: 0.3,
+                                x: 30,
+                            })}
+                        >
+                            <BurgerNavigation
+                                mainNavList={mainNavList}
+                                dynamicPagesList={dynamicPagesList}
+                                setIsBurgerMenuOpened={setIsBurgerMenuOpened}
+                            />
+                        </motion.div>
+                        <MainButton
+                            className="w-full h-12 shrink-0"
+                            variant="outline"
+                        >
+                            Kontakt os
+                        </MainButton>
+                    </Container>
                 </motion.div>
             )}
         </AnimatePresence>

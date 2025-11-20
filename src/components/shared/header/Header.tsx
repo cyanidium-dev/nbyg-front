@@ -34,66 +34,65 @@ export default function Header({ dynamicPagesList }: HeaderProps) {
     });
 
     return (
-        <header className="fixed top-5 left-0 right-0 z-50">
-            <Container className="w-full">
-                <div
-                    className={clsx(
-                        "flex items-center justify-between p-2 rounded-full",
-                        isScrolled && "backdrop-blur-[38px]"
-                    )}
-                    style={
-                        isScrolled
-                            ? {
-                                  boxShadow: "0px 4px 12px 0px #FFFFFF1F inset",
-                              }
-                            : undefined
-                    }
-                >
-                    <Link href="/">
-                        <Image
-                            src="/images/header/logo.jpg"
-                            alt="Logo"
-                            width={48}
-                            height={48}
-                            sizes="(max-width: 786px) 32px, 48px"
-                            className="w-12 h-12 lg:w-18 lg:h-18 rounded-full"
-                        />
-                    </Link>
-                    <div className="flex items-center xl:gap-[84px] space-between gap-[16px]">
-                        <Navigation dynamicPagesList={dynamicPagesList} />
-                        <MainButton
-                            className="hidden lg:flex w-[217px] h-12"
-                            variant="outline"
-                        >
-                            Kontakt os
-                        </MainButton>
-                        <a
-                            href={`tel:${CONTACT_PHONE}`}
-                            target="_blank"
-                            rel="noopener noreferrer nofollow"
-                        >
+        <>
+            <header className="fixed top-7 left-0 right-0 z-50">
+                <Container className="w-full">
+                    <div
+                        className={clsx(
+                            "flex items-center justify-between",
+                            isScrolled &&
+                                "backdrop-blur-[38px] p-2 rounded-full",
+                            isBurgerMenuOpened &&
+                                "top-[25px] p-2 pr-5 rounded-full bg-white/6 shadow-[0px_4px_12px_0px_#FFFFFF1F_inset] backdrop-blur-[38px] transition-all duration-300 ease-in-out"
+                        )}
+                    >
+                        <Link href="/">
+                            <Image
+                                src="/images/header/logo.jpg"
+                                alt="Logo"
+                                width={48}
+                                height={48}
+                                sizes="(max-width: 786px) 32px, 48px"
+                                className="w-12 h-12 lg:w-18 lg:h-18 rounded-full"
+                            />
+                        </Link>
+                        <div className="flex items-center xl:gap-[84px] space-between gap-3 lg:gap-[16px]">
+                            <Navigation dynamicPagesList={dynamicPagesList} />
                             <MainButton
-                                className="flex lg:hidden w-[140px] h-8"
+                                className="hidden lg:flex w-[217px] h-12"
                                 variant="outline"
                             >
-                                {CONTACT_PHONE.replace(
-                                    contactsPhoneRegex,
-                                    "+45 $1"
-                                )}
+                                Kontakt os
                             </MainButton>
-                        </a>
-                        <BurgerMenuButton
-                            isBurgerMenuOpened={isBurgerMenuOpened}
-                            toggleBurgerMenuOpen={toggleBurgerMenuOpen}
-                        />
+                            <a
+                                href={`tel:${CONTACT_PHONE}`}
+                                target="_blank"
+                                rel="noopener noreferrer nofollow"
+                            >
+                                <MainButton
+                                    className="flex lg:hidden w-[140px] h-8"
+                                    variant="outline"
+                                    textClassName="text-[12px] leading-[167%] font-normal"
+                                >
+                                    {CONTACT_PHONE.replace(
+                                        contactsPhoneRegex,
+                                        "+45 $1"
+                                    )}
+                                </MainButton>
+                            </a>
+                            <BurgerMenuButton
+                                isBurgerMenuOpened={isBurgerMenuOpened}
+                                toggleBurgerMenuOpen={toggleBurgerMenuOpen}
+                            />
+                        </div>
                     </div>
-                </div>
-            </Container>
+                </Container>
+            </header>
             <BurgerMenu
                 isBurgerMenuOpened={isBurgerMenuOpened}
                 setIsBurgerMenuOpened={setIsBurgerMenuOpened}
                 dynamicPagesList={dynamicPagesList}
             />
-        </header>
+        </>
     );
 }

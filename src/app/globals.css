@@ -6,7 +6,10 @@
     --color-black: #000000;
     --color-white: #ffffff;
     --color-brown: #603208;
+    --color-gradient-brown: #b86d29;
+    --color-gradient-brown-dark: #6d3a0b;
     --color-beige: #ffc189;
+    --color-purple: #f80498;
 
     --font-montserrat: var(--font-montserrat), sans-serif;
     --font-find-sans-pro: var(--font-find-sans-pro), sans-serif;
@@ -57,7 +60,7 @@
     .text-shadow-white {
         text-shadow: none;
         transition: text-shadow 300ms ease-in-out;
-        @media screen and (min-width: 1024px) {
+        @media screen and (min-width: 1280px) {
             &:hover {
                 text-shadow:
                     0px 2px 15px var(--color-white),
@@ -74,7 +77,7 @@
     .svg-shadow-white {
         filter: none;
         transition: filter 300ms ease-in-out;
-        @media screen and (min-width: 1024px) {
+        @media screen and (min-width: 1280px) {
             &:hover {
                 filter: drop-shadow(3px 2px 5px var(--color-white))
                     drop-shadow(-3px -2px 5px var(--color-white));

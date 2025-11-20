@@ -1,3 +1,13 @@
+"use client";
+import {
+    burgerMenuButtonVariants,
+    burgerMenuVariants,
+    fadeInAnimation,
+} from "@/utils/animationVariants";
+import { AnimatePresence, motion } from "framer-motion";
+import BurgerButtonIcon from "../../icons/BurgerButtonIcon";
+import CloseIcon from "../../icons/CloseIcon";
+
 interface BurgerMenuButtonProps {
     isBurgerMenuOpened?: boolean;
     toggleBurgerMenuOpen?: () => void;
@@ -16,10 +26,32 @@ export const BurgerMenuButton = ({
             }}
             className="lg:hidden group relative z-60 w-[24px] h-[24px] outline-none flex flex-col justify-center items-center gap-[3px]"
         >
-            <div className="w-full h-[2px] bg-white"></div>
-            <div className="w-full h-[2px] bg-white"></div>
-            <div className="w-full h-[2px] bg-white"></div>
-            <div className="w-full h-[2px] bg-white"></div>
+            <AnimatePresence>
+                {!isBurgerMenuOpened && (
+                    <motion.div
+                        initial="hidden"
+                        animate="visible"
+                        exit="exit"
+                        variants={burgerMenuButtonVariants}
+                        className="absolute top-0 left-0 w-full h-full"
+                    >
+                        <BurgerButtonIcon className="w-full h-full text-white" />
+                    </motion.div>
+                )}
+            </AnimatePresence>
+            <AnimatePresence>
+                {isBurgerMenuOpened && (
+                    <motion.div
+                        initial="hidden"
+                        animate="visible"
+                        exit="exit"
+                        variants={burgerMenuButtonVariants}
+                        className="absolute top-0 left-0 w-full h-full"
+                    >
+                        <CloseIcon className="w-full h-full text-white" />
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </button>
     );
 };
