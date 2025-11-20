@@ -1,9 +1,5 @@
 "use client";
-import {
-    burgerMenuButtonVariants,
-    burgerMenuVariants,
-    fadeInAnimation,
-} from "@/utils/animationVariants";
+import { burgerMenuButtonVariants } from "@/utils/animationVariants";
 import { AnimatePresence, motion } from "framer-motion";
 import BurgerButtonIcon from "../../icons/BurgerButtonIcon";
 import CloseIcon from "../../icons/CloseIcon";

@@ -28,9 +28,9 @@ export default function BurgerMenu({
                     animate="visible"
                     exit="exit"
                     variants={burgerMenuVariants}
-                    className="lg:hidden absolute z-40 inset-0 w-screen h-dvh bg-black overflow-hidden no-doc-scroll pt-[151px] pb-[62px] overflow-y-auto overflow-x-hidden"
+                    className="lg:hidden absolute z-40 inset-0 w-screen h-dvh bg-black overflow-hidden no-doc-scroll overflow-y-auto overflow-x-hidden"
                 >
-                    <Container className="flex flex-col gap-10 justify-between h-full pl-[25px] pr-[30px]">
+                    <Container className="flex flex-col gap-10 justify-between h-full pl-[25px] pr-[30px] pb-[62px] pt-[151px]">
                         <motion.div
                             initial="hidden"
                             whileInView="visible"
