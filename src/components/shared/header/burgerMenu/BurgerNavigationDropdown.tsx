@@ -1,25 +1,24 @@
-"use client";
-import Link from "next/link";
-import clsx from "clsx";
-import ShevronIcon from "../../icons/ShevronIcon";
-import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { fadeInAnimation } from "@/utils/animationVariants";
+import Link from "next/link";
+import ShevronIcon from "../../icons/ShevronIcon";
 import { DynamicPage } from "@/types/dynamicPage";
+import { useState } from "react";
+import { fadeInAnimation } from "@/utils/animationVariants";
+import clsx from "clsx";
 
-interface NavDropdownProps {
+interface BurgerNavigationDropdownProps {
     dropdownRef: React.RefObject<HTMLDivElement | null>;
     dynamicPagesList: DynamicPage[];
     parentHref: string;
     onLinkClick?: () => void;
 }
 
-export default function NavDropdown({
+export default function BurgerNavigationDropdown({
     dropdownRef,
     dynamicPagesList,
     parentHref,
     onLinkClick,
-}: NavDropdownProps) {
+}: BurgerNavigationDropdownProps) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     if (!dynamicPagesList || !dynamicPagesList?.length) return null;
@@ -42,9 +41,7 @@ export default function NavDropdown({
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="absolute top-full mt-5 left-4 w-[328px]"
         >
-            <div className="absolute w-5 h-5 bg-brown rotate-45 -top-2.5 left-12 -z-10"></div>
             <ul className="flex flex-col bg-black border border-brown rounded-xl p-6 z-10 normal-case">
                 {dynamicPagesList.map(item => (
                     <li

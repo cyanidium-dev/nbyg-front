@@ -9,22 +9,40 @@ import { contactsPhoneRegex } from "@/regex/regex";
 import { useScroll } from "framer-motion";
 import MainButton from "../buttons/MainButton";
 import { DynamicPage } from "@/types/dynamicPage";
+import { BurgerMenuButton } from "./burgerMenu/BurderMenuButton";
+import { useState } from "react";
+import { useMotionValueEvent } from "framer-motion";
+import BurgerMenu from "./burgerMenu/BurgerMenu";
+
 interface HeaderProps {
     dynamicPagesList: DynamicPage[];
 }
 
 export default function Header({ dynamicPagesList }: HeaderProps) {
-    const { scrollYProgress } = useScroll();
+    const [isBurgerMenuOpened, setIsBurgerMenuOpened] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(false);
+    const { scrollY } = useScroll();
+
+    const toggleBurgerMenuOpen = () => {
+        console.log("toggleBurgerMenuOpen");
+        setIsBurgerMenuOpened(!isBurgerMenuOpened);
+        console.log("isBurgerMenuOpened", isBurgerMenuOpened);
+    };
+
+    useMotionValueEvent(scrollY, "change", latest => {
+        setIsScrolled(latest > 20);
+    });
+
     return (
         <header className="fixed top-5 left-0 right-0 z-50">
             <Container className="w-full">
                 <div
                     className={clsx(
                         "flex items-center justify-between p-2 rounded-full",
-                        scrollYProgress.get() > 0.1 && "backdrop-blur-[38px]"
+                        isScrolled && "backdrop-blur-[38px]"
                     )}
                     style={
-                        scrollYProgress.get() > 0.1
+                        isScrolled
                             ? {
                                   boxShadow: "0px 4px 12px 0px #FFFFFF1F inset",
                               }
@@ -64,20 +82,18 @@ export default function Header({ dynamicPagesList }: HeaderProps) {
                                 )}
                             </MainButton>
                         </a>
-                        <div className="flex items-center gap-3">
-                            <button
-                                type="button"
-                                className="lg:hidden group relative z-60 w-6 h-6 outline-none flex flex-col justify-center items-center gap-1"
-                            >
-                                <div className="w-full h-[2px] bg-white"></div>
-                                <div className="w-full h-[2px] bg-white"></div>
-                                <div className="w-full h-[2px] bg-white"></div>
-                                <div className="w-full h-[2px] bg-white"></div>
-                            </button>
-                        </div>
+                        <BurgerMenuButton
+                            isBurgerMenuOpened={isBurgerMenuOpened}
+                            toggleBurgerMenuOpen={toggleBurgerMenuOpen}
+                        />
                     </div>
                 </div>
             </Container>
+            <BurgerMenu
+                isBurgerMenuOpened={isBurgerMenuOpened}
+                setIsBurgerMenuOpened={setIsBurgerMenuOpened}
+                dynamicPagesList={dynamicPagesList}
+            />
         </header>
     );
 }
