@@ -50,9 +50,10 @@ export default async function ServicePage({ params }: ServicePageProps) {
         }
 
         const key =
-          (section as { _key?: string })._key ?? `${section._type}-${index}`;
+          (section as { _key?: string })._key ??
+          `${service}-${section._type}-${index}`;
 
-        return <SectionComponent key={key} {...section} />;
+        return <SectionComponent key={key} {...section} uniqueKey={key} />;
       })}
     </>
   );

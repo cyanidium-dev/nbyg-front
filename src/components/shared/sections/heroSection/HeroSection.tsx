@@ -8,17 +8,30 @@ import { urlForSanityImage } from "@/utils/getUrlForSanityImage";
 import MainButton from "../../buttons/MainButton";
 import ShevronIcon from "../../icons/ShevronIcon";
 
-const HeroSection = (_props: HeroSectionData) => {
-  const { title, description, mobileImage, desktopImage } = _props;
+interface HeroSectionProps extends HeroSectionData {
+  uniqueKey?: string;
+}
+
+const HeroSection = (_props: HeroSectionProps) => {
+  const {
+    title,
+    description,
+    mobileImage,
+    desktopImage,
+    showDiscussButton,
+    showCalculatorButton,
+    uniqueKey,
+  } = _props;
 
   return (
     <motion.section
+      key={uniqueKey}
       initial="hidden"
       whileInView="visible"
       exit="exit"
-      viewport={{ once: true, amount: 0.1 }}
+      viewport={{ once: true, amount: 0.01 }}
       variants={headerVariants}
-      className="relative"
+      className="relative rounded-b-[18px] overflow-hidden"
     >
       <div
         className="absolute -z-10 inset-0 pointer-events-none"
@@ -34,6 +47,8 @@ const HeroSection = (_props: HeroSectionData) => {
         alt="hero image"
         fill
         sizes="100vw"
+        priority
+        fetchPriority="high"
         className="md:hidden -z-20 object-cover object-top"
       />
       <Image
@@ -41,23 +56,30 @@ const HeroSection = (_props: HeroSectionData) => {
         alt="hero image"
         fill
         sizes="100vw"
+        priority
+        fetchPriority="high"
         className="hidden md:block -z-20 object-cover object-top"
       />
       <Container className="pt-[146px] lg:pt-[179px] pb-7 lg:pb-20">
-        <PageTitle className="max-w-[430px] lg:max-w-[978px] mb-6 lg:mb-9">
+        <PageTitle
+          className="max-w-[430px] lg:max-w-[978px] mb-6 lg:mb-9"
+          uniqueKey={uniqueKey}
+        >
           {title}
         </PageTitle>
         <motion.p
+          key={`${uniqueKey}-description`}
           initial="hidden"
           whileInView="visible"
           exit="exit"
-          viewport={{ once: true, amount: 0.3 }}
+          viewport={{ once: true, amount: 0.1 }}
           variants={fadeInAnimation({ scale: 0.85, x: 70, y: 30, delay: 0.4 })}
-          className="max-w-[480px] lg:max-w-[685px] mb-6 lg:mb-9"
+          className="max-w-[480px] lg:max-w-[685px] mb-6 lg:mb-9 whitespace-pre-line"
         >
           {description}
         </motion.p>
         <motion.div
+          key={`${uniqueKey}-buttons`}
           initial="hidden"
           whileInView="visible"
           exit="exit"
@@ -65,12 +87,16 @@ const HeroSection = (_props: HeroSectionData) => {
           variants={fadeInAnimation({ scale: 0.85, y: 50, delay: 0.8 })}
           className="flex flex-col sm:flex-row gap-3 sm:gap-[30px] sm:w-fit"
         >
-          <MainButton className="h-12 sm:w-[275px]">
-            Tryk her for at drofte projektet
-          </MainButton>
-          <MainButton variant="gradient" className="h-12 sm:w-[275px]">
-            Beregn din terrasse <ShevronIcon className="size-5 rotate-90" />
-          </MainButton>
+          {showDiscussButton && (
+            <MainButton className="h-12 sm:w-[275px]">
+              Tryk her for at drofte projektet
+            </MainButton>
+          )}
+          {showCalculatorButton && (
+            <MainButton variant="gradient" className="h-12 sm:w-[275px]">
+              Beregn din terrasse <ShevronIcon className="size-5 rotate-90" />
+            </MainButton>
+          )}
         </motion.div>
       </Container>
     </motion.section>

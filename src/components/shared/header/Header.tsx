@@ -15,7 +15,7 @@ import { useMotionValueEvent } from "framer-motion";
 import BurgerMenu from "./burgerMenu/BurgerMenu";
 
 interface HeaderProps {
-    dynamicPagesList: DynamicPage[];
+  dynamicPagesList: DynamicPage[];
 }
 
 export default function Header({ dynamicPagesList }: HeaderProps) {
@@ -24,9 +24,7 @@ export default function Header({ dynamicPagesList }: HeaderProps) {
     const { scrollY } = useScroll();
 
     const toggleBurgerMenuOpen = () => {
-        console.log("toggleBurgerMenuOpen");
         setIsBurgerMenuOpened(!isBurgerMenuOpened);
-        console.log("isBurgerMenuOpened", isBurgerMenuOpened);
     };
 
     useMotionValueEvent(scrollY, "change", latest => {
@@ -41,12 +39,12 @@ export default function Header({ dynamicPagesList }: HeaderProps) {
                         className={clsx(
                             "flex items-center justify-between",
                             isScrolled &&
-                                "backdrop-blur-[38px] p-2 rounded-full",
+                                "backdrop-blur-[38px] p-2 rounded-full shadow-[0px_4px_12px_0px_#FFFFFF1F_inset]",
                             isBurgerMenuOpened &&
                                 "top-[25px] p-2 pr-5 rounded-full bg-white/6 shadow-[0px_4px_12px_0px_#FFFFFF1F_inset] backdrop-blur-[38px] transition-all duration-300 ease-in-out"
                         )}
                     >
-                        <Link href="/">
+                        <Link href="/" className="outline-none button-shadow-white">
                             <Image
                                 src="/images/header/logo.jpg"
                                 alt="Logo"
