@@ -36,8 +36,6 @@ export default async function ServicePage({ params }: ServicePageProps) {
     parentSlug: "",
   });
 
-  console.log(currentService);
-
   if (!currentService) {
     return null;
   }

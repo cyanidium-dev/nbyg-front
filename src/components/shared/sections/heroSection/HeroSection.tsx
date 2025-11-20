@@ -1,3 +1,5 @@
+import * as motion from "motion/react-client";
+import { fadeInAnimation, headerVariants } from "@/utils/animationVariants";
 import type { HeroSection as HeroSectionData } from "@/types/page";
 import Container from "../../container/Container";
 import PageTitle from "../../titles/PageTitle";
@@ -9,10 +11,15 @@ import ShevronIcon from "../../icons/ShevronIcon";
 const HeroSection = (_props: HeroSectionData) => {
   const { title, description, mobileImage, desktopImage } = _props;
 
-  console.log(mobileImage);
-
   return (
-    <section className="relative">
+    <motion.section
+      initial="hidden"
+      whileInView="visible"
+      exit="exit"
+      viewport={{ once: true, amount: 0.1 }}
+      variants={headerVariants}
+      className="relative"
+    >
       <div
         className="absolute -z-10 inset-0 pointer-events-none"
         style={{
@@ -24,28 +31,49 @@ const HeroSection = (_props: HeroSectionData) => {
       />
       <Image
         src={urlForSanityImage(mobileImage).fit("crop").url()}
-        alt="hero"
+        alt="hero image"
         fill
         sizes="100vw"
-        className="-z-20 object-cover"
+        className="md:hidden -z-20 object-cover object-top"
+      />
+      <Image
+        src={urlForSanityImage(desktopImage).fit("crop").url()}
+        alt="hero image"
+        fill
+        sizes="100vw"
+        className="hidden md:block -z-20 object-cover object-top"
       />
       <Container className="pt-[146px] lg:pt-[179px] pb-7 lg:pb-20">
-        <PageTitle className="max-w-[428px] lg:max-w-[978px] mb-6 lg:mb-9">
+        <PageTitle className="max-w-[430px] lg:max-w-[978px] mb-6 lg:mb-9">
           {title}
         </PageTitle>
-        <p className="max-w-[428px] lg:max-w-[685px] mb-6 lg:mb-9">
+        <motion.p
+          initial="hidden"
+          whileInView="visible"
+          exit="exit"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={fadeInAnimation({ scale: 0.85, x: 70, y: 30, delay: 0.4 })}
+          className="max-w-[480px] lg:max-w-[685px] mb-6 lg:mb-9"
+        >
           {description}
-        </p>
-        <div className="flex flex-col sm:flex-row gap-3 sm:gap-[30px]">
-          <MainButton className="h-12 sm:max-w-[275px]">
+        </motion.p>
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          exit="exit"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={fadeInAnimation({ scale: 0.85, y: 50, delay: 0.8 })}
+          className="flex flex-col sm:flex-row gap-3 sm:gap-[30px] sm:w-fit"
+        >
+          <MainButton className="h-12 sm:w-[275px]">
             Tryk her for at drofte projektet
           </MainButton>
-          <MainButton variant="gradient" className="h-12 sm:max-w-[275px]">
+          <MainButton variant="gradient" className="h-12 sm:w-[275px]">
             Beregn din terrasse <ShevronIcon className="size-5 rotate-90" />
           </MainButton>
-        </div>
+        </motion.div>
       </Container>
-    </section>
+    </motion.section>
   );
 };
 
