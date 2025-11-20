@@ -5,14 +5,17 @@ import { fadeInAnimation } from "@/utils/animationVariants";
 interface PageTitleProps {
   children: string;
   className?: string;
+  uniqueKey?: string;
 }
 
 export default function PageTitle({
   children,
   className = "",
+  uniqueKey,
 }: PageTitleProps) {
   return (
     <motion.h1
+      key={uniqueKey ? `${uniqueKey}-title` : undefined}
       initial="hidden"
       whileInView="visible"
       exit="exit"

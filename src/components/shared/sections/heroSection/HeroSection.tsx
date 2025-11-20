@@ -8,7 +8,11 @@ import { urlForSanityImage } from "@/utils/getUrlForSanityImage";
 import MainButton from "../../buttons/MainButton";
 import ShevronIcon from "../../icons/ShevronIcon";
 
-const HeroSection = (_props: HeroSectionData) => {
+interface HeroSectionProps extends HeroSectionData {
+  uniqueKey?: string;
+}
+
+const HeroSection = (_props: HeroSectionProps) => {
   const {
     title,
     description,
@@ -16,14 +20,16 @@ const HeroSection = (_props: HeroSectionData) => {
     desktopImage,
     showDiscussButton,
     showCalculatorButton,
+    uniqueKey,
   } = _props;
 
   return (
     <motion.section
+      key={uniqueKey}
       initial="hidden"
       whileInView="visible"
       exit="exit"
-      viewport={{ once: true, amount: 0.1 }}
+      viewport={{ once: true, amount: 0.01 }}
       variants={headerVariants}
       className="relative rounded-b-[18px] overflow-hidden"
     >
@@ -51,20 +57,25 @@ const HeroSection = (_props: HeroSectionData) => {
         className="hidden md:block -z-20 object-cover object-top"
       />
       <Container className="pt-[146px] lg:pt-[179px] pb-7 lg:pb-20">
-        <PageTitle className="max-w-[430px] lg:max-w-[978px] mb-6 lg:mb-9">
+        <PageTitle
+          className="max-w-[430px] lg:max-w-[978px] mb-6 lg:mb-9"
+          uniqueKey={uniqueKey}
+        >
           {title}
         </PageTitle>
         <motion.p
+          key={`${uniqueKey}-description`}
           initial="hidden"
           whileInView="visible"
           exit="exit"
-          viewport={{ once: true, amount: 0.3 }}
+          viewport={{ once: true, amount: 0.1 }}
           variants={fadeInAnimation({ scale: 0.85, x: 70, y: 30, delay: 0.4 })}
           className="max-w-[480px] lg:max-w-[685px] mb-6 lg:mb-9 whitespace-pre-line"
         >
           {description}
         </motion.p>
         <motion.div
+          key={`${uniqueKey}-buttons`}
           initial="hidden"
           whileInView="visible"
           exit="exit"

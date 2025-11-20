@@ -49,10 +49,17 @@ export default async function SubservicePage({ params }: SubservicePageProps) {
           return null;
         }
 
-        const key =
+        const sectionKey =
           (section as { _key?: string })._key ?? `${section._type}-${index}`;
+        const key = `${service}-${subservice}-${sectionKey}`;
 
-        return <SectionComponent key={key} {...section} />;
+        return (
+          <SectionComponent
+            key={key}
+            {...section}
+            {...(section._type === "heroSection" && { uniqueKey: key })}
+          />
+        );
       })}
     </>
   );
