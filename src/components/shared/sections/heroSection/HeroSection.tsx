@@ -47,6 +47,8 @@ const HeroSection = (_props: HeroSectionProps) => {
         alt="hero image"
         fill
         sizes="100vw"
+        priority
+        fetchPriority="high"
         className="md:hidden -z-20 object-cover object-top"
       />
       <Image
@@ -54,6 +56,8 @@ const HeroSection = (_props: HeroSectionProps) => {
         alt="hero image"
         fill
         sizes="100vw"
+        priority
+        fetchPriority="high"
         className="hidden md:block -z-20 object-cover object-top"
       />
       <Container className="pt-[146px] lg:pt-[179px] pb-7 lg:pb-20">
