@@ -9,7 +9,14 @@ import MainButton from "../../buttons/MainButton";
 import ShevronIcon from "../../icons/ShevronIcon";
 
 const HeroSection = (_props: HeroSectionData) => {
-  const { title, description, mobileImage, desktopImage } = _props;
+  const {
+    title,
+    description,
+    mobileImage,
+    desktopImage,
+    showDiscussButton,
+    showCalculatorButton,
+  } = _props;
 
   return (
     <motion.section
@@ -18,7 +25,7 @@ const HeroSection = (_props: HeroSectionData) => {
       exit="exit"
       viewport={{ once: true, amount: 0.1 }}
       variants={headerVariants}
-      className="relative"
+      className="relative rounded-b-[18px] overflow-hidden"
     >
       <div
         className="absolute -z-10 inset-0 pointer-events-none"
@@ -53,7 +60,7 @@ const HeroSection = (_props: HeroSectionData) => {
           exit="exit"
           viewport={{ once: true, amount: 0.3 }}
           variants={fadeInAnimation({ scale: 0.85, x: 70, y: 30, delay: 0.4 })}
-          className="max-w-[480px] lg:max-w-[685px] mb-6 lg:mb-9"
+          className="max-w-[480px] lg:max-w-[685px] mb-6 lg:mb-9 whitespace-pre-line"
         >
           {description}
         </motion.p>
@@ -65,12 +72,16 @@ const HeroSection = (_props: HeroSectionData) => {
           variants={fadeInAnimation({ scale: 0.85, y: 50, delay: 0.8 })}
           className="flex flex-col sm:flex-row gap-3 sm:gap-[30px] sm:w-fit"
         >
-          <MainButton className="h-12 sm:w-[275px]">
-            Tryk her for at drofte projektet
-          </MainButton>
-          <MainButton variant="gradient" className="h-12 sm:w-[275px]">
-            Beregn din terrasse <ShevronIcon className="size-5 rotate-90" />
-          </MainButton>
+          {showDiscussButton && (
+            <MainButton className="h-12 sm:w-[275px]">
+              Tryk her for at drofte projektet
+            </MainButton>
+          )}
+          {showCalculatorButton && (
+            <MainButton variant="gradient" className="h-12 sm:w-[275px]">
+              Beregn din terrasse <ShevronIcon className="size-5 rotate-90" />
+            </MainButton>
+          )}
         </motion.div>
       </Container>
     </motion.section>
