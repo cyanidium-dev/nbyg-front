@@ -1,4 +1,4 @@
-export const revalidate = 60;
+// export const revalidate = 60;
 
 import "./globals.css";
 import type { Metadata } from "next";
@@ -8,6 +8,7 @@ import Header from "@/components/shared/header/Header";
 import Footer from "@/components/shared/footer/Footer";
 import { fetchSanityData } from "@/utils/fetchSanityData";
 import { ALL_DYNAMIC_PAGES_QUERY } from "@/lib/queries";
+import { DynamicPage } from "@/types/dynamicPage";
 
 const geistSans = Montserrat({
   variable: "--font-montserrat",
@@ -40,14 +41,14 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const dynamicPagesList = await fetchSanityData(ALL_DYNAMIC_PAGES_QUERY);
+  const dynamicPagesList = await fetchSanityData<DynamicPage[]>(ALL_DYNAMIC_PAGES_QUERY);
 
   return (
     <html lang="da">
       <body
         className={`${geistSans.variable} ${findSans.variable} flex min-h-screen flex-col antialiased text-[14px] lg:text-[16px] font-light leading-5`}
       >
-        <Header dynamicPagesList={dynamicPagesList}/>
+        <Header dynamicPagesList={dynamicPagesList} />
         <main className="flex-1">{children}</main>
         <Footer />
       </body>
