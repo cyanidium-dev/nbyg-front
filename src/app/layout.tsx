@@ -1,4 +1,4 @@
-export const revalidate = 60;
+// export const revalidate = 60;
 
 import "./globals.css";
 import type { Metadata } from "next";
@@ -47,7 +47,7 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${findSans.variable} flex min-h-screen flex-col antialiased text-[14px] lg:text-[16px] font-light leading-5`}
       >
-        <Header dynamicPagesList={dynamicPagesList}/>
+        <Header dynamicPagesList={dynamicPagesList} />
         <main className="flex-1">{children}</main>
         <Footer />
       </body>

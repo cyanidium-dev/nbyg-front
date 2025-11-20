@@ -2,66 +2,65 @@ import LoaderIcon from "../icons/LoaderIcon";
 import { twMerge } from "tailwind-merge";
 
 interface MainButtonProps {
-    children: React.ReactNode;
-    type?: "button" | "submit";
-    className?: string;
-    variant?: "fill" | "outline" | "gradient";
-    disabled?: boolean;
-    isLoading?: boolean;
-    onClick?: () => void;
-    loadingText?: string;
-    spanClassName?: string;
-    icon?: React.ReactNode;
+  children: React.ReactNode;
+  type?: "button" | "submit";
+  className?: string;
+  variant?: "fill" | "outline" | "gradient";
+  disabled?: boolean;
+  isLoading?: boolean;
+  onClick?: () => void;
+  loadingText?: string;
+  spanClassName?: string;
+  icon?: React.ReactNode;
 }
 
 export default function MainButton({
-    type = "button",
-    children,
-    className,
-    variant = "fill",
-    disabled = false,
-    isLoading = false,
-    loadingText = "Loading...",
-    spanClassName,
-    onClick,
-    icon,
+  type = "button",
+  children,
+  className,
+  variant = "fill",
+  disabled = false,
+  isLoading = false,
+  loadingText = "Loading...",
+  spanClassName,
+  onClick,
+  icon,
 }: MainButtonProps) {
-    const variants = {
-        fill: "bg-white text-black",
-        outline:
-            "bg-transparent text-white border border-white hover:bg-white/10",
-        gradient: "bg-gradient-to-r from-black to-brown text-white",
-    };
+  const variants = {
+    fill: "bg-white text-black",
+    outline: "bg-transparent text-white border border-white hover:bg-white/10",
+    gradient: "bg-gradient-to-r from-black to-brown text-white",
+  };
 
-    return (
-        <button
-            type={type}
-            disabled={disabled}
-            onClick={onClick}
-            className={twMerge(
-                `group relative overflow-hidden enabled:cursor-pointer flex items-center justify-center rounded-full 
+  return (
+    <button
+      type={type}
+      disabled={disabled}
+      onClick={onClick}
+      className={twMerge(
+        `group relative overflow-hidden enabled:cursor-pointer flex items-center justify-center rounded-full 
           disabled:opacity-60 enabled:xl:hover:brightness-125 enabled:focus-visible:brightness-125 enabled:active:scale-[98%] will-change-transform transition duration-300 ease-in-out`,
-                "w-full",
-                variants[variant],
-                className
+        "w-full",
+        variants[variant],
+        className
+      )}
+    >
+      <div className="flex lg:items-center justify-between gap-2.5 w-full">
+        <p className="relative z-10 flex justify-center gap-6 lg:gap-[74px] w-full text-[14px] font-normal leading-[143%]">
+          {isLoading ? loadingText : children}
+        </p>
+        {icon ? (
+          <span
+            className={twMerge(
+              "absolute right-1 top-1/2 -translate-y-1/2 flex items-center justify-center rounded-full",
+              spanClassName
             )}
-        >
-            <div className="flex lg:items-center justify-between gap-2.5 w-full">
-                <p className="relative z-10 w-full">
-                    {isLoading ? loadingText : children}
-                </p>
-                {icon ? (
-                    <span
-                        className={twMerge(
-                            "absolute right-1 top-1/2 -translate-y-1/2  flex items-center justify-center rounded-full",
-                            spanClassName
-                        )}
-                    >
-                        {icon}
-                    </span>
-                ) : null}
-            </div>
-            {isLoading ? <LoaderIcon /> : null}
-        </button>
-    );
+          >
+            {icon}
+          </span>
+        ) : null}
+      </div>
+      {isLoading ? <LoaderIcon /> : null}
+    </button>
+  );
 }
