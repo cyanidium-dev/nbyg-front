@@ -1,47 +1,76 @@
 import { CODE_SITE_URL, WEB_BOND_URL } from "@/constants/constants";
 import Image from "next/image";
-import DotsDeco from "../dotsDeco/dotsDeco";
+import DotsDeco from "../decorations/Dotseco";
+import * as motion from "motion/react-client";
+import { fadeInAnimation } from "@/utils/animationVariants";
 
 export default function Rights() {
     return (
-        <div className="flex flex-col lg:flex-row lg:justify-between items-center justify-center w-full">
-            <p className="text-[16px] leading-[181%] uppercase font-medium tracking-[0.64px] mb-4.5">
+        <div className="flex flex-col md:flex-row md:justify-between items-center justify-center w-full">
+            <motion.p
+                variants={fadeInAnimation({ delay: 1 })}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.1 }}
+                className="text-[16px] leading-[181%] uppercase font-medium tracking-[0.64px] mb-4.5"
+            >
                 © 2024 Nbyg Bornholm ApS
-            </p>
-            <DotsDeco className="hidden lg:flex" />
-            <div className="flex flex-col lg:flex-row items-center">
-                <p className="text-[12px] leading-[125%] uppercase font-medium mb-3 lg:mb-0 lg:mr-6">
+            </motion.p>
+            <DotsDeco className="hidden md:flex" delay={1.4} />
+            <motion.div
+                variants={fadeInAnimation({ delay: 1.1 })}
+                initial="hidden"
+                whileInView="visible"
+                exit="exit"
+                viewport={{ once: true, amount: 0.1 }}
+                className="flex flex-col lg:flex-row items-center"
+            >
+                <p className="text-[12px] leading-[125%] uppercase font-medium mb-3 md:mb-0 md:mr-6">
                     Created by
                 </p>
                 <div>
-                    <a
-                        href={WEB_BOND_URL}
-                        target="_blank"
-                        rel="noopener noreferrer nofollow"
-                        className="xl:hover:opacity-80 transition-opacity duration-300 py-1"
+                    <motion.div
+                        variants={fadeInAnimation({ delay: 1.2 })}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, amount: 0.1 }}
                     >
-                        <Image
-                            src="/images/footer/WebBondLogo.webp"
-                            alt="WebBond"
-                            width={96}
-                            height={32}
-                        />
-                    </a>
-                    <a
-                        href={CODE_SITE_URL}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="xl:hover:opacity-80 transition-opacity duration-300"
+                        <a
+                            href={WEB_BOND_URL}
+                            target="_blank"
+                            rel="noopener noreferrer nofollow"
+                            className="py-1 xl:hover:opacity-80 transition-opacity duration-300 inline-block"
+                        >
+                            <Image
+                                src="/images/footer/WebBondLogo.webp"
+                                alt="WebBond"
+                                width={96}
+                                height={32}
+                            />
+                        </a>
+                    </motion.div>
+                    <motion.div
+                        variants={fadeInAnimation({ delay: 1.3 })}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, amount: 0.1 }}
                     >
-                        <Image
-                            src="/images/footer/CodeSiteLogo.svg"
-                            alt="CodeSite"
-                            width={126}
-                            height={24}
-                        />
-                    </a>
+                        <a
+                            href={CODE_SITE_URL}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="xl:hover:opacity-80 transition-opacity duration-300 inline-block"
+                        >
+                            <Image
+                                src="/images/footer/CodeSiteLogo.svg"
+                                alt="CodeSite"
+                                width={126}
+                                height={24}
+                            />
+                        </a>
+                    </motion.div>
                 </div>
-            </div>
+            </motion.div>
         </div>
     );
 }

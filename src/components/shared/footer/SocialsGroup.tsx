@@ -16,44 +16,58 @@ interface SocialsGroupProps {
 
 export default function SocialsGroup({ className }: SocialsGroupProps) {
     return (
-        <motion.ul
-            variants={fadeInAnimation({ delay: 0.4 })}
-            initial="hidden"
-            className={twMerge("flex items-center gap-5", className)}
-            whileInView="visible"
-            exit="exit"
-            viewport={{ once: true, amount: 0.1 }}
-        >
-            <li className="w-8 h-8 flex items-center justify-center xl:hover:opacity-80 transition-opacity duration-300">
+        <ul className={twMerge("flex items-center gap-5", className)}>
+            <motion.li
+                variants={fadeInAnimation({ delay: 0.3 })}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.1 }}
+                className="w-8 h-8 flex items-center justify-center"
+            >
                 <a
                     href={FACEBOOK_URL}
                     target="_blank"
                     rel="noopener noreferrer nofollow"
                     aria-label="facebook"
+                    className="w-full h-full flex items-center justify-center xl:hover:opacity-80 transition-opacity duration-300"
                 >
-                    <FacebookIcon className="text-white svg-shadow-white" />
+                    <FacebookIcon className="text-white " />
                 </a>
-            </li>
-            <li className="w-8 h-8 flex items-center justify-center xl:hover:opacity-80 transition-opacity duration-300">
+            </motion.li>
+            <motion.li
+                variants={fadeInAnimation({ delay: 0.4 })}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.1 }}
+                className="w-8 h-8 flex items-center justify-center"
+            >
                 <a
                     href={YOUTUBE_URL}
                     target="_blank"
                     rel="noopener noreferrer nofollow"
                     aria-label="youtube"
+                    className="w-full h-full flex items-center justify-center xl:hover:opacity-80 transition-opacity duration-300"
                 >
-                    <YouTubeIcon className="text-white svg-shadow-white" />
+                    <YouTubeIcon className="text-white" />
                 </a>
-            </li>
-            <li className="w-8 h-8 flex items-center justify-center xl:hover:opacity-80 transition-opacity duration-300">
+            </motion.li>
+            <motion.li
+                variants={fadeInAnimation({ delay: 0.5 })}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.1 }}
+                className="w-8 h-8 flex items-center justify-center"
+            >
                 <a
                     href={INSTAGRAM_URL}
                     target="_blank"
                     rel="noopener noreferrer nofollow"
                     aria-label="instagram"
+                    className="w-full h-full flex items-center justify-center xl:hover:opacity-80 transition-opacity duration-300 outline-none focus-visible:outline-none"
                 >
-                    <InstagramIcon className="text-white svg-shadow-white" />
+                    <InstagramIcon className="text-white" />
                 </a>
-            </li>
-        </motion.ul>
+            </motion.li>
+        </ul>
     );
 }
