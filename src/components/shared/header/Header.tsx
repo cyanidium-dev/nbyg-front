@@ -34,14 +34,14 @@ export default function Header({ dynamicPagesList }: HeaderProps) {
     return (
         <>
             <header className="fixed top-7 left-0 right-0 z-50">
-                <Container className="w-full">
+                <Container className={clsx(isScrolled && "lg:px-13")}>
                     <div
                         className={clsx(
                             "flex items-center justify-between",
                             isScrolled &&
-                                "backdrop-blur-[38px] p-2 rounded-full shadow-[0px_4px_12px_0px_#FFFFFF1F_inset]",
+                                "backdrop-blur-[38px] p-2 pr-[19px] rounded-full shadow-[0px_4px_12px_0px_#FFFFFF1F_inset]",
                             isBurgerMenuOpened &&
-                                "top-[25px] p-2 pr-5 rounded-full bg-white/6 shadow-[0px_4px_12px_0px_#FFFFFF1F_inset] backdrop-blur-[38px] transition-all duration-300 ease-in-out"
+                                "top-[25px] py-2 pr-5 rounded-full bg-white/6 shadow-[0px_4px_12px_0px_#FFFFFF1F_inset] backdrop-blur-[38px] transition-all duration-300 ease-in-out"
                         )}
                     >
                         <Link
