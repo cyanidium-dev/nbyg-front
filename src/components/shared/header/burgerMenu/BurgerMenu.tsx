@@ -28,32 +28,42 @@ export default function BurgerMenu({
                     animate="visible"
                     exit="exit"
                     variants={burgerMenuVariants}
-                    className="lg:hidden absolute z-40 inset-0 w-screen h-dvh bg-black overflow-hidden no-doc-scroll overflow-y-auto overflow-x-hidden"
+                    className="lg:hidden absolute z-40 inset-0 w-screen h-dvh bg-black overflow-hidden no-doc-scroll overflow-x-hidden flex flex-col"
                 >
-                    <Container className="flex flex-col gap-10 justify-between h-full pl-[25px] pr-[30px] pb-[62px] pt-[151px]">
-                        <motion.div
-                            initial="hidden"
-                            whileInView="visible"
-                            exit="exit"
-                            viewport={{ once: true, amount: 0.1 }}
-                            variants={fadeInAnimation({
-                                delay: 0.3,
-                                x: 30,
-                            })}
-                        >
-                            <BurgerNavigation
-                                mainNavList={mainNavList}
-                                dynamicPagesList={dynamicPagesList}
-                                setIsBurgerMenuOpened={setIsBurgerMenuOpened}
-                            />
-                        </motion.div>
-                        <MainButton
-                            className="w-full h-12 shrink-0"
-                            variant="outline"
-                        >
-                            Kontakt os
-                        </MainButton>
-                    </Container>
+                    <div className="flex-1 overflow-y-auto overflow-x-hidden mt-[137px]">
+                        <Container>
+                            <motion.div
+                                initial="hidden"
+                                whileInView="visible"
+                                exit="exit"
+                                viewport={{ once: true, amount: 0.1 }}
+                                variants={fadeInAnimation({
+                                    delay: 0.3,
+                                    x: 30,
+                                })}
+                            >
+                                <BurgerNavigation
+                                    mainNavList={mainNavList}
+                                    dynamicPagesList={dynamicPagesList}
+                                    setIsBurgerMenuOpened={
+                                        setIsBurgerMenuOpened
+                                    }
+                                />
+                            </motion.div>
+                        </Container>
+                    </div>
+
+                    {/* Fixed bottom button area with padding */}
+                    <div className="shrink-0 pb-[62px] pt-4">
+                        <Container>
+                            <MainButton
+                                className="w-full h-12"
+                                variant="outline"
+                            >
+                                Kontakt os
+                            </MainButton>
+                        </Container>
+                    </div>
                 </motion.div>
             )}
         </AnimatePresence>

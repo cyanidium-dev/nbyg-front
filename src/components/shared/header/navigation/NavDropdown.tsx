@@ -51,17 +51,15 @@ export default function NavDropdown({
                         key={item.slug}
                         className="w-full py-3 first:pt-0 last:pb-0 border-b border-white/10 last:border-b-0 text-6 font-light leading-4"
                     >
-                        <div className="flex items-center gap-[8px]">
-                            <Link
-                                href={`${parentHref}/${item.slug}`}
-                                onClick={() => {
-                                    setIsDropdownOpen(false);
-                                    onLinkClick?.();
-                                }}
-                                className="text-white text-shadow-white w-full"
-                            >
-                                {item.title}
-                            </Link>
+                        <Link
+                            href={`${parentHref}/${item.slug}`}
+                            onClick={() => {
+                                setIsDropdownOpen(false);
+                                onLinkClick?.();
+                            }}
+                            className="flex items-center gap-[8px] text-white text-shadow-white w-full"
+                        >
+                            {item.title}
                             {isChildrenNotEmpty(item.children) && (
                                 <button
                                     onClick={e => {
@@ -84,22 +82,21 @@ export default function NavDropdown({
                                     />
                                 </button>
                             )}
-                        </div>
+                        </Link>
+
                         <AnimatePresence>
                             {isDropdownOpen &&
                                 isChildrenNotEmpty(item.children) && (
                                     <motion.ul
                                         key={`nested-${item.slug}`}
-                                        variants={fadeInAnimation({
-                                            x: 0,
-                                            y: -10,
-                                            scale: 1,
-                                            duration: 0.4,
-                                            exitslide: true,
-                                        })}
-                                        initial="hidden"
-                                        animate="visible"
-                                        exit="exit"
+                                        initial={{ height: 0, opacity: 0 }}
+                                        animate={{ height: "auto", opacity: 1 }}
+                                        exit={{ height: 0, opacity: 0 }}
+                                        transition={{
+                                            duration: 0.3,
+                                            ease: "easeInOut",
+                                        }}
+                                        style={{ overflow: "hidden" }}
                                         className="mt-3 pl-4 flex flex-col gap-3"
                                     >
                                         {item.children?.map(child => (

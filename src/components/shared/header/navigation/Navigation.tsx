@@ -51,13 +51,11 @@ export default function Navigation({ dynamicPagesList }: NavigationProps) {
                 <ul className="flex items-center space-between gap-4 lg:gap-8 font-light uppercase leading-5 text-3">
                     {mainNavList.map(item => (
                         <li key={item.href} className="relative">
-                            <div className="flex items-center gap-3.5">
-                                <Link
-                                    href={item.href}
-                                    className="text-shadow-white"
-                                >
-                                    {item.label}
-                                </Link>
+                            <Link
+                                href={item.href}
+                                className="flex items-center gap-[8px] text-shadow-white"
+                            >
+                                {item.label}
                                 {item.dropdown && (
                                     <button
                                         ref={buttonRef}
@@ -83,7 +81,7 @@ export default function Navigation({ dynamicPagesList }: NavigationProps) {
                                         />
                                     </button>
                                 )}
-                            </div>
+                            </Link>
                             <AnimatePresence>
                                 {isDropdownOpen && item.dropdown && (
                                     <NavDropdown

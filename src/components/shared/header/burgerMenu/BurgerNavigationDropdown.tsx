@@ -82,16 +82,14 @@ export default function BurgerNavigationDropdown({
                                 isChildrenNotEmpty(item.children) && (
                                     <motion.ul
                                         key={`nested-${item.slug}`}
-                                        variants={fadeInAnimation({
-                                            x: 0,
-                                            y: -10,
-                                            scale: 1,
-                                            duration: 0.4,
-                                            exitslide: true,
-                                        })}
-                                        initial="hidden"
-                                        animate="visible"
-                                        exit="exit"
+                                        initial={{ height: 0, opacity: 0 }}
+                                        animate={{ height: "auto", opacity: 1 }}
+                                        exit={{ height: 0, opacity: 0 }}
+                                        transition={{
+                                            duration: 0.3,
+                                            ease: "easeInOut",
+                                        }}
+                                        style={{ overflow: "hidden" }}
                                         className="mt-3 pl-4 flex flex-col gap-3"
                                     >
                                         {item.children?.map(child => (
