@@ -1,6 +1,3 @@
-"use client";
-
-import { useState } from "react";
 import type { CtaSection as CtaSectionData } from "@/types/page";
 import Container from "../../container/Container";
 import SectionTitle from "../../titles/SectionTitle";
@@ -10,7 +7,7 @@ import MainButton from "../../buttons/MainButton";
 import DecorativeEllipsis from "../../decorativeEllipsis/DecorativeEllipsis";
 import * as motion from "motion/react-client";
 import { fadeInAnimation } from "@/utils/animationVariants";
-import { ShowMoreButton } from "../../buttons/ShowMoreButton";
+import ExpandableDescription from "./ExpandableDescription";
 
 interface CtaSectionProps extends CtaSectionData {
   uniqueKey?: string;
@@ -19,9 +16,6 @@ interface CtaSectionProps extends CtaSectionData {
 const CtaSection = (_props: CtaSectionProps) => {
   const { title, description, image, buttonType, uniqueKey, showMoreOnMobile } =
     _props;
-  const [isShownMore, setIsShownMore] = useState(false);
-
-  const toggleShowMore = () => setIsShownMore(!isShownMore);
 
   return (
     <section>
@@ -58,24 +52,10 @@ const CtaSection = (_props: CtaSectionProps) => {
             className="flex flex-col gap-12 md:w-[calc(50%-20px)] xl:w-[calc(50%-54.5px)]"
           >
             <div className="relative">
-              {showMoreOnMobile ? (
-                <div>
-                  <div
-                    className={`whitespace-pre-line overflow-hidden md:max-h-none transition-[max-height] duration-500 ease-in-out ${isShownMore ? "max-h-[1000px] " : "max-h-[158px]"}`}
-                  >
-                    <p>{description}</p>
-                  </div>
-
-                  <div className="md:hidden flex justify-end mt-4">
-                    <ShowMoreButton
-                      isShownMore={isShownMore}
-                      toggleShowMore={toggleShowMore}
-                    />
-                  </div>
-                </div>
-              ) : (
-                <p className="whitespace-pre-line">{description}</p>
-              )}
+              <ExpandableDescription
+                description={description}
+                showMoreOnMobile={showMoreOnMobile}
+              />
             </div>
             <MainButton className="hidden md:block h-[58px]">
               {buttonType === "calculator"

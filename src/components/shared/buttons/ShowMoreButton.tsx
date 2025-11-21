@@ -2,10 +2,10 @@ interface ShowMoreButtonProps {
   toggleShowMore: () => void;
   isShownMore: boolean;
 }
-export const ShowMoreButton = ({
+export default function ShowMoreButton({
   toggleShowMore,
   isShownMore,
-}: ShowMoreButtonProps) => {
+}: ShowMoreButtonProps) {
   return (
     <button
       type="button"
@@ -16,4 +16,4 @@ export const ShowMoreButton = ({
       {!isShownMore ? "Læs mere" : "Skjul"}
     </button>
   );
-};
+}
