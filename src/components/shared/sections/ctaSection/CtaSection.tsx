@@ -1,6 +1,3 @@
-"use client";
-
-import { useState } from "react";
 import type { CtaSection as CtaSectionData } from "@/types/page";
 import Container from "../../container/Container";
 import SectionTitle from "../../titles/SectionTitle";
@@ -10,7 +7,7 @@ import MainButton from "../../buttons/MainButton";
 import DecorativeEllipsis from "../../decorativeEllipsis/DecorativeEllipsis";
 import * as motion from "motion/react-client";
 import { fadeInAnimation } from "@/utils/animationVariants";
-import { ShowMoreButton } from "../../buttons/ShowMoreButton";
+import ExpandableDescription from "./ExpandableDescription";
 
 interface CtaSectionProps extends CtaSectionData {
   uniqueKey?: string;
@@ -19,21 +16,26 @@ interface CtaSectionProps extends CtaSectionData {
 const CtaSection = (_props: CtaSectionProps) => {
   const { title, description, image, buttonType, uniqueKey, showMoreOnMobile } =
     _props;
-  const [isShownMore, setIsShownMore] = useState(false);
-
-  const toggleShowMore = () => setIsShownMore(!isShownMore);
 
   return (
     <section>
       <Container className="relative py-25 lg:pt-[127px] lg:pb-0">
-        <div className="lg:hidden absolute -top-5 right-[calc(50%-332px)] sm:right-[calc(50%-500px)] w-[337px] h-[421px]">
+        <motion.div
+          key={`${uniqueKey}-cta-section-image1`}
+          initial="hidden"
+          whileInView="visible"
+          exit="exit"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={fadeInAnimation({ scale: 0.85, delay: 0.3 })}
+          className="lg:hidden absolute -top-5 right-[calc(50%-332px)] sm:right-[calc(50%-500px)] w-[337px] h-[421px]"
+        >
           <Image
             src="/images/decorations/ellipsis.svg"
             width="337"
             height="421"
             alt="ellipsis"
           />
-        </div>
+        </motion.div>
         <div className="relative w-fit">
           <DecorativeEllipsis
             uniqueKey={uniqueKey}
@@ -55,28 +57,13 @@ const CtaSection = (_props: CtaSectionProps) => {
             exit="exit"
             viewport={{ once: true, amount: 0.1 }}
             variants={fadeInAnimation({ scale: 0.85, x: 30 })}
-            className="flex flex-col gap-12 md:w-[calc(50%-20px)] xl:w-[calc(50%-54.5px)]"
+            className="md:flex flex-col gap-12 md:w-[calc(50%-20px)] xl:w-[calc(50%-54.5px)]"
           >
-            <div className="relative">
-              {showMoreOnMobile ? (
-                <div>
-                  <div
-                    className={`whitespace-pre-line overflow-hidden md:max-h-none transition-[max-height] duration-500 ease-in-out ${isShownMore ? "max-h-[1000px] " : "max-h-[158px]"}`}
-                  >
-                    <p>{description}</p>
-                  </div>
+            <ExpandableDescription
+              description={description}
+              showMoreOnMobile={showMoreOnMobile}
+            />
 
-                  <div className="md:hidden flex justify-end mt-4">
-                    <ShowMoreButton
-                      isShownMore={isShownMore}
-                      toggleShowMore={toggleShowMore}
-                    />
-                  </div>
-                </div>
-              ) : (
-                <p className="whitespace-pre-line">{description}</p>
-              )}
-            </div>
             <MainButton className="hidden md:block h-[58px]">
               {buttonType === "calculator"
                 ? "Begær terrassepris"
