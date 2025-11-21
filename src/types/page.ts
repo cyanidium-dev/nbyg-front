@@ -60,6 +60,7 @@ export type CtaSection = {
   type: "ctaSection";
   title: string;
   description: string;
+  showMoreOnMobile: boolean;
   image: SanityImage;
   buttonType: "calculator" | "contact" | string;
 };

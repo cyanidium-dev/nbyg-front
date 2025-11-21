@@ -41,7 +41,7 @@ export default function Header({ dynamicPagesList }: HeaderProps) {
               className="w-12 h-12 lg:w-18 lg:h-18 rounded-full"
             />
           </Link>
-          <div className="flex items-center xl:gap-[84px] space-between gap-[16px]">
+          <div className="flex items-center xl:gap-[84px] space-between gap-4">
             <Navigation dynamicPagesList={dynamicPagesList} />
             <MainButton
               className="hidden lg:flex w-[217px] h-12"
