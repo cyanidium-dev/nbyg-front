@@ -37,7 +37,7 @@ const FaqSection = (_props: FaqSectionProps) => {
             </motion.p>
           ) : null}
         </div>
-        <FaqList faqList={items} />
+        <FaqList faqList={items} uniqueKey={uniqueKey} />
       </Container>
     </section>
   );

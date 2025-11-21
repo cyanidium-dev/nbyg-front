@@ -9,11 +9,15 @@ interface FaqListProps {
     answer: string;
     buttons?: Array<Record<string, unknown>>;
   }>;
+  uniqueKey?: string;
 }
 
-export default function FaqList({ faqList }: FaqListProps) {
+export default function FaqList({ faqList, uniqueKey }: FaqListProps) {
+  if (!faqList || !faqList?.length) return null;
+
   return (
     <motion.ul
+      key={`${uniqueKey}-faq-section-list`}
       initial="hidden"
       whileInView="visible"
       exit="exit"
