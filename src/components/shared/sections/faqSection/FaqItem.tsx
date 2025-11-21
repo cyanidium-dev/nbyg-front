@@ -11,10 +11,9 @@ interface FaqItemProps {
     answer: string;
     buttons?: Array<Record<string, unknown>>;
   };
-  idx: number;
 }
 
-export default function FaqItem({ faqItem, idx }: FaqItemProps) {
+export default function FaqItem({ faqItem }: FaqItemProps) {
   const [isShownMore, setIsShownMore] = useState(false);
   const toggleShowMore = () => setIsShownMore(!isShownMore);
 

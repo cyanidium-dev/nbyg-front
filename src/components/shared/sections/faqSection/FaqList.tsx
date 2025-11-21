@@ -22,7 +22,7 @@ export default function FaqList({ faqList }: FaqListProps) {
       className="flex flex-col gap-4 lg:gap-6"
     >
       {faqList.map((faqItem, idx) => (
-        <FaqItem key={idx} faqItem={faqItem} idx={idx} />
+        <FaqItem key={idx} faqItem={faqItem} />
       ))}
     </motion.ul>
   );

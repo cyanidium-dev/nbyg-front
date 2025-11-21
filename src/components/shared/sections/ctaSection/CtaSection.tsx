@@ -20,14 +20,22 @@ const CtaSection = (_props: CtaSectionProps) => {
   return (
     <section>
       <Container className="relative py-25 lg:pt-[127px] lg:pb-0">
-        <div className="lg:hidden absolute -top-5 right-[calc(50%-332px)] sm:right-[calc(50%-500px)] w-[337px] h-[421px]">
+        <motion.div
+          key={`${uniqueKey}-cta-section-image1`}
+          initial="hidden"
+          whileInView="visible"
+          exit="exit"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={fadeInAnimation({ scale: 0.85, delay: 0.3 })}
+          className="lg:hidden absolute -top-5 right-[calc(50%-332px)] sm:right-[calc(50%-500px)] w-[337px] h-[421px]"
+        >
           <Image
             src="/images/decorations/ellipsis.svg"
             width="337"
             height="421"
             alt="ellipsis"
           />
-        </div>
+        </motion.div>
         <div className="relative w-fit">
           <DecorativeEllipsis
             uniqueKey={uniqueKey}
