@@ -45,6 +45,7 @@ export const PAGE_BY_SLUG_QUERY = `*[
       "type": _type,
       title,
       description,
+      showMoreOnMobile,
       image,
       buttonType
     },
