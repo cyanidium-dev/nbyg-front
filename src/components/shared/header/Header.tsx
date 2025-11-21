@@ -15,7 +15,7 @@ import { useMotionValueEvent } from "framer-motion";
 import BurgerMenu from "./burgerMenu/BurgerMenu";
 
 interface HeaderProps {
-  dynamicPagesList: DynamicPage[];
+    dynamicPagesList: DynamicPage[];
 }
 
 export default function Header({ dynamicPagesList }: HeaderProps) {
@@ -44,7 +44,10 @@ export default function Header({ dynamicPagesList }: HeaderProps) {
                                 "top-[25px] p-2 pr-5 rounded-full bg-white/6 shadow-[0px_4px_12px_0px_#FFFFFF1F_inset] backdrop-blur-[38px] transition-all duration-300 ease-in-out"
                         )}
                     >
-                        <Link href="/" className="outline-none button-shadow-white">
+                        <Link
+                            href="/"
+                            className="outline-none button-shadow-white"
+                        >
                             <Image
                                 src="/images/header/logo.jpg"
                                 alt="Logo"
@@ -66,9 +69,10 @@ export default function Header({ dynamicPagesList }: HeaderProps) {
                                 href={`tel:${CONTACT_PHONE}`}
                                 target="_blank"
                                 rel="noopener noreferrer nofollow"
+                                className="lg:hidden"
                             >
                                 <MainButton
-                                    className="flex lg:hidden w-[140px] h-8"
+                                    className="w-[140px] h-8"
                                     variant="outline"
                                     textClassName="text-[12px] leading-[167%] font-normal"
                                 >
