@@ -1,6 +1,6 @@
 import { CODE_SITE_URL, WEB_BOND_URL } from "@/constants/constants";
 import Image from "next/image";
-import DotsDeco from "../decorations/Dotseco";
+import DotsDeco from "../decorations/DotsDeco";
 import * as motion from "motion/react-client";
 import { fadeInAnimation } from "@/utils/animationVariants";
 
