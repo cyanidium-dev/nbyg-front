@@ -54,7 +54,7 @@ export default function NavDropdown({
         }
         closeTimeoutRef.current = setTimeout(() => {
             setHoveredItemSlug(null);
-        }, 300);
+        }, 100);
     };
 
     return (
