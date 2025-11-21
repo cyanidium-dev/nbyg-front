@@ -28,7 +28,7 @@ export default function BurgerMenu({
                     animate="visible"
                     exit="exit"
                     variants={burgerMenuVariants}
-                    className="lg:hidden absolute z-40 inset-0 w-screen h-dvh bg-black overflow-hidden no-doc-scroll overflow-x-hidden flex flex-col"
+                    className="lg:hidden fixed z-30 inset-0 w-screen h-dvh bg-black overflow-hidden no-doc-scroll overflow-x-hidden flex flex-col"
                 >
                     <div className="flex-1 overflow-y-auto overflow-x-hidden mt-[137px]">
                         <Container>
