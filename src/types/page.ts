@@ -58,10 +58,10 @@ export type HeroSection = {
 export type CtaSection = {
   _type: "ctaSection";
   type: "ctaSection";
-  title?: string;
-  description?: PortableText;
-  image?: SanityImage;
-  buttonType?: "calculator" | "contact" | string;
+  title: string;
+  description: string;
+  image: SanityImage;
+  buttonType: "calculator" | "contact" | string;
 };
 
 export type TableSection = {
