@@ -21,7 +21,7 @@ export default function ExpandableDescription({
   }
 
   return (
-    <div>
+    <>
       <div
         className={`whitespace-pre-line overflow-hidden md:max-h-none transition-[max-height] duration-500 ease-in-out ${
           isShownMore ? "max-h-[1000px] " : "max-h-[158px]"
@@ -36,6 +36,6 @@ export default function ExpandableDescription({
           toggleShowMore={toggleShowMore}
         />
       </div>
-    </div>
+    </>
   );
 }

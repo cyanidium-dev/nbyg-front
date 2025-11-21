@@ -49,14 +49,13 @@ const CtaSection = (_props: CtaSectionProps) => {
             exit="exit"
             viewport={{ once: true, amount: 0.1 }}
             variants={fadeInAnimation({ scale: 0.85, x: 30 })}
-            className="flex flex-col gap-12 md:w-[calc(50%-20px)] xl:w-[calc(50%-54.5px)]"
+            className="md:flex flex-col gap-12 md:w-[calc(50%-20px)] xl:w-[calc(50%-54.5px)]"
           >
-            <div className="relative">
-              <ExpandableDescription
-                description={description}
-                showMoreOnMobile={showMoreOnMobile}
-              />
-            </div>
+            <ExpandableDescription
+              description={description}
+              showMoreOnMobile={showMoreOnMobile}
+            />
+
             <MainButton className="hidden md:block h-[58px]">
               {buttonType === "calculator"
                 ? "Begær terrassepris"
