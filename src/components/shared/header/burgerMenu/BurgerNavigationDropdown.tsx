@@ -24,9 +24,7 @@ export default function BurgerNavigationDropdown({
     if (!dynamicPagesList || !dynamicPagesList?.length) return null;
 
     const isChildrenNotEmpty = (children: DynamicPage["children"]) => {
-        return children && children?.length && children?.length > 0
-            ? true
-            : false;
+        return children && children?.length ? true : false;
     };
 
     return (
