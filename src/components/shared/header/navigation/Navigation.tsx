@@ -16,12 +16,17 @@ export default function Navigation({ dynamicPagesList }: NavigationProps) {
     const [hoveredItem, setHoveredItem] = useState<string | null>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const navItemRef = useRef<HTMLLIElement>(null);
+    const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
         if (!hoveredItem) return;
 
         const handleEscape = (event: KeyboardEvent) => {
             if (event.key === "Escape" && hoveredItem) {
+                if (closeTimeoutRef.current) {
+                    clearTimeout(closeTimeoutRef.current);
+                }
                 setHoveredItem(null);
             }
         };
@@ -32,6 +37,31 @@ export default function Navigation({ dynamicPagesList }: NavigationProps) {
             document.removeEventListener("keydown", handleEscape);
         };
     }, [hoveredItem]);
+
+    const handleMouseEnter = (itemHref: string, hasDropdown: boolean) => {
+        if (closeTimeoutRef.current) {
+            clearTimeout(closeTimeoutRef.current);
+            closeTimeoutRef.current = null;
+        }
+        if (hoverTimeoutRef.current) {
+            clearTimeout(hoverTimeoutRef.current);
+        }
+        if (hasDropdown) {
+            hoverTimeoutRef.current = setTimeout(() => {
+                setHoveredItem(itemHref);
+            }, 300);
+        }
+    };
+
+    const handleMouseLeave = () => {
+        if (hoverTimeoutRef.current) {
+            clearTimeout(hoverTimeoutRef.current);
+            hoverTimeoutRef.current = null;
+        }
+        closeTimeoutRef.current = setTimeout(() => {
+            setHoveredItem(null);
+        }, 300);
+    };
 
     return (
         <>
@@ -44,18 +74,14 @@ export default function Navigation({ dynamicPagesList }: NavigationProps) {
                                 key={item.href}
                                 ref={navItemRef}
                                 className="relative"
-                                onMouseEnter={() => {
-                                    if (item.dropdown) {
-                                        setHoveredItem(item.href);
-                                    }
-                                }}
-                                onMouseLeave={() => {
-                                    setHoveredItem(null);
-                                }}
+                                onMouseEnter={() =>
+                                    handleMouseEnter(item.href, !!item.dropdown)
+                                }
+                                onMouseLeave={handleMouseLeave}
                             >
                                 <Link
                                     href={item.href}
-                                    className="flex items-center gap-[8px] text-shadow-white"
+                                    className="flex items-center gap-2 text-shadow-white"
                                 >
                                     {item.label}
                                     {item.dropdown && (
@@ -77,17 +103,37 @@ export default function Navigation({ dynamicPagesList }: NavigationProps) {
                                 </Link>
                                 <AnimatePresence>
                                     {isHovered && item.dropdown && (
-                                        <NavDropdown
-                                            key="nav-dropdown"
-                                            dropdownRef={dropdownRef}
-                                            dynamicPagesList={
-                                                dynamicPagesList
-                                            }
-                                            parentHref={item.href}
-                                            onLinkClick={() =>
-                                                setHoveredItem(null)
-                                            }
-                                        />
+                                        <div
+                                            onMouseEnter={() => {
+                                                if (closeTimeoutRef.current) {
+                                                    clearTimeout(
+                                                        closeTimeoutRef.current
+                                                    );
+                                                    closeTimeoutRef.current =
+                                                        null;
+                                                }
+                                            }}
+                                            onMouseLeave={handleMouseLeave}
+                                        >
+                                            <NavDropdown
+                                                key="nav-dropdown"
+                                                dropdownRef={dropdownRef}
+                                                dynamicPagesList={
+                                                    dynamicPagesList
+                                                }
+                                                parentHref={item.href}
+                                                onLinkClick={() => {
+                                                    if (
+                                                        closeTimeoutRef.current
+                                                    ) {
+                                                        clearTimeout(
+                                                            closeTimeoutRef.current
+                                                        );
+                                                    }
+                                                    setHoveredItem(null);
+                                                }}
+                                            />
+                                        </div>
                                     )}
                                 </AnimatePresence>
                             </li>

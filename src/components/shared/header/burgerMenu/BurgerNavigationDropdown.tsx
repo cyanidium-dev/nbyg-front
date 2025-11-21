@@ -89,8 +89,7 @@ export default function BurgerNavigationDropdown({
                                             duration: 0.3,
                                             ease: "easeInOut",
                                         }}
-                                        style={{ overflow: "hidden" }}
-                                        className="mt-3 pl-4 flex flex-col gap-3"
+                                        className="mt-3 pl-4 flex flex-col gap-3 overflow-hidden"
                                     >
                                         {item.children?.map(child => (
                                             <li key={child.slug}>

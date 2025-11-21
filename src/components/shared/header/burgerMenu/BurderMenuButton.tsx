@@ -20,7 +20,7 @@ export const BurgerMenuButton = ({
             onClick={() => {
                 if (toggleBurgerMenuOpen) toggleBurgerMenuOpen();
             }}
-            className="lg:hidden group relative z-60 w-[24px] h-[24px] outline-none flex flex-col justify-center items-center gap-[3px]"
+            className="lg:hidden group relative z-60 size-6 outline-none flex flex-col justify-center items-center"
         >
             <AnimatePresence>
                 {!isBurgerMenuOpened && (

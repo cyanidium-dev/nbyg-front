@@ -70,7 +70,7 @@ export default function Navigation({
                                         duration: 0.3,
                                         ease: "easeInOut",
                                     }}
-                                    style={{ overflow: "hidden" }}
+                                    className="overflow-hidden"
                                 >
                                     <BurgerNavigationDropdown
                                         dropdownRef={dropdownRef}
