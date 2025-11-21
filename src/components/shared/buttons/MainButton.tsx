@@ -29,7 +29,7 @@ export default function MainButton({
     icon,
 }: MainButtonProps) {
     const variants = {
-        fill: "bg-white text-black enabled:xl:hover:bg-brown enabled:focus-visible:bg-brown",
+        fill: "bg-white text-black button-shadow-white",
         outline:
             "bg-transparent text-white border border-white enabled:xl:hover:bg-white/10",
         gradient:
