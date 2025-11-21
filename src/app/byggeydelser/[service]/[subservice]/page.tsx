@@ -57,7 +57,8 @@ export default async function SubservicePage({ params }: SubservicePageProps) {
           <SectionComponent
             key={key}
             {...section}
-            {...(section._type === "heroSection" && { uniqueKey: key })}
+            {...((section._type === "heroSection" ||
+              section._type === "ctaSection") && { uniqueKey: key })}
           />
         );
       })}
