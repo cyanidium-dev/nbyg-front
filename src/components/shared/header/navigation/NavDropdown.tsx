@@ -2,7 +2,7 @@
 import Link from "next/link";
 import clsx from "clsx";
 import ShevronIcon from "../../icons/ShevronIcon";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { fadeInAnimation } from "@/utils/animationVariants";
 import { DynamicPage } from "@/types/dynamicPage";
@@ -20,14 +20,39 @@ export default function NavDropdown({
     parentHref,
     onLinkClick,
 }: NavDropdownProps) {
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [hoveredItemSlug, setHoveredItemSlug] = useState<string | null>(null);
+    const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
     if (!dynamicPagesList || !dynamicPagesList?.length) return null;
 
     const isChildrenNotEmpty = (children: DynamicPage["children"]) => {
-        return children && children?.length && children?.length > 0
-            ? true
-            : false;
+        return children && children?.length ? true : false;
+    };
+
+    const handleMouseEnter = (itemSlug: string, hasChildren: boolean) => {
+        if (closeTimeoutRef.current) {
+            clearTimeout(closeTimeoutRef.current);
+            closeTimeoutRef.current = null;
+        }
+        if (hoverTimeoutRef.current) {
+            clearTimeout(hoverTimeoutRef.current);
+        }
+        if (hasChildren) {
+            hoverTimeoutRef.current = setTimeout(() => {
+                setHoveredItemSlug(itemSlug);
+            }, 300);
+        }
+    };
+
+    const handleMouseLeave = () => {
+        if (hoverTimeoutRef.current) {
+            clearTimeout(hoverTimeoutRef.current);
+            hoverTimeoutRef.current = null;
+        }
+        closeTimeoutRef.current = setTimeout(() => {
+            setHoveredItemSlug(null);
+        }, 100);
     };
 
     return (
@@ -46,73 +71,89 @@ export default function NavDropdown({
         >
             <div className="absolute w-5 h-5 bg-brown rotate-45 -top-2.5 left-12 -z-10"></div>
             <ul className="flex flex-col bg-black border border-brown rounded-xl p-6 z-10 normal-case">
-                {dynamicPagesList.map(item => (
-                    <li
-                        key={item.slug}
-                        className="w-full py-3 first:pt-0 last:pb-0 border-b border-white/10 last:border-b-0 text-6 font-light leading-4"
-                    >
-                        <div className="flex items-center gap-[8px]">
+                {dynamicPagesList.map(item => {
+                    const hasChildren = isChildrenNotEmpty(item.children);
+                    const isHovered = hoveredItemSlug === item.slug;
+
+                    return (
+                        <li
+                            key={item.slug}
+                            className="w-full py-3 first:pt-0 last:pb-0 border-b border-white/10 last:border-b-0 text-6 font-light leading-4"
+                            onMouseEnter={() =>
+                                handleMouseEnter(item.slug, hasChildren)
+                            }
+                            onMouseLeave={handleMouseLeave}
+                        >
                             <Link
                                 href={`${parentHref}/${item.slug}`}
                                 onClick={() => {
-                                    setIsDropdownOpen(false);
+                                    if (closeTimeoutRef.current) {
+                                        clearTimeout(closeTimeoutRef.current);
+                                    }
+                                    setHoveredItemSlug(null);
                                     onLinkClick?.();
                                 }}
-                                className="text-white text-shadow-white"
+                                className="flex items-center gap-2 text-white text-shadow-white w-full"
                             >
                                 {item.title}
-                            </Link>
-                            {isChildrenNotEmpty(item.children) && (
-                                <button
-                                    onClick={e => {
-                                        e.preventDefault();
-                                        e.stopPropagation();
-                                        setIsDropdownOpen(!isDropdownOpen);
-                                    }}
-                                    type="button"
-                                    className={clsx(
-                                        "cursor-pointer w-4 h-4 flex items-center justify-center transition duration-300 ease-in-out",
-                                        isDropdownOpen
-                                            ? "rotate-0"
-                                            : "rotate-180"
-                                    )}
-                                >
-                                    <ShevronIcon
+                                {hasChildren && (
+                                    <span
                                         className={clsx(
-                                            "w-4 h-4 fill-white svg-shadow-white"
+                                            "cursor-pointer w-4 h-4 flex items-center justify-center transition duration-300 ease-in-out",
+                                            isHovered
+                                                ? "rotate-0"
+                                                : "rotate-180"
                                         )}
-                                    />
-                                </button>
-                            )}
-                        </div>
-                        <AnimatePresence>
-                            {isDropdownOpen &&
-                                isChildrenNotEmpty(item.children) && (
+                                    >
+                                        <ShevronIcon
+                                            className={clsx(
+                                                "w-4 h-4 fill-white svg-shadow-white"
+                                            )}
+                                        />
+                                    </span>
+                                )}
+                            </Link>
+
+                            <AnimatePresence>
+                                {isHovered && hasChildren && (
                                     <motion.ul
                                         key={`nested-${item.slug}`}
-                                        variants={fadeInAnimation({
-                                            x: 0,
-                                            y: -10,
-                                            scale: 1,
-                                            duration: 0.4,
-                                            exitslide: true,
-                                        })}
-                                        initial="hidden"
-                                        animate="visible"
-                                        exit="exit"
-                                        className="mt-3 pl-4 flex flex-col gap-3"
+                                        initial={{ height: 0, opacity: 0 }}
+                                        animate={{ height: "auto", opacity: 1 }}
+                                        exit={{ height: 0, opacity: 0 }}
+                                        transition={{
+                                            duration: 0.3,
+                                            ease: "easeInOut",
+                                        }}
+                                        className="mt-3 pl-4 flex flex-col gap-3 overflow-hidden"
+                                        onMouseEnter={() => {
+                                            if (closeTimeoutRef.current) {
+                                                clearTimeout(
+                                                    closeTimeoutRef.current
+                                                );
+                                                closeTimeoutRef.current = null;
+                                            }
+                                        }}
+                                        onMouseLeave={handleMouseLeave}
                                     >
                                         {item.children?.map(child => (
                                             <li key={child.slug}>
                                                 <Link
                                                     href={`${parentHref}/${item.slug}/${child.slug}`}
                                                     onClick={() => {
-                                                        setIsDropdownOpen(
-                                                            false
+                                                        if (
+                                                            closeTimeoutRef.current
+                                                        ) {
+                                                            clearTimeout(
+                                                                closeTimeoutRef.current
+                                                            );
+                                                        }
+                                                        setHoveredItemSlug(
+                                                            null
                                                         );
                                                         onLinkClick?.();
                                                     }}
-                                                    className="text-6 font-light leading-5 text-shadow-white"
+                                                    className="text-6 font-light leading-5 text-shadow-white w-full"
                                                 >
                                                     {child.title}
                                                 </Link>
@@ -120,9 +161,10 @@ export default function NavDropdown({
                                         ))}
                                     </motion.ul>
                                 )}
-                        </AnimatePresence>
-                    </li>
-                ))}
+                            </AnimatePresence>
+                        </li>
+                    );
+                })}
             </ul>
         </motion.div>
     );

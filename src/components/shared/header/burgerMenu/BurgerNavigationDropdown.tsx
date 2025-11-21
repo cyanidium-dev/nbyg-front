@@ -1,0 +1,111 @@
+import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
+import ShevronIcon from "../../icons/ShevronIcon";
+import { DynamicPage } from "@/types/dynamicPage";
+import { useState } from "react";
+import { fadeInAnimation } from "@/utils/animationVariants";
+import clsx from "clsx";
+
+interface BurgerNavigationDropdownProps {
+    dropdownRef: React.RefObject<HTMLDivElement | null>;
+    dynamicPagesList: DynamicPage[];
+    parentHref: string;
+    onLinkClick?: () => void;
+}
+
+export default function BurgerNavigationDropdown({
+    dropdownRef,
+    dynamicPagesList,
+    parentHref,
+    onLinkClick,
+}: BurgerNavigationDropdownProps) {
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+    if (!dynamicPagesList || !dynamicPagesList?.length) return null;
+
+    const isChildrenNotEmpty = (children: DynamicPage["children"]) => {
+        return children && children?.length ? true : false;
+    };
+
+    return (
+        <motion.div
+            ref={dropdownRef}
+            variants={fadeInAnimation({
+                x: 0,
+                y: -10,
+                scale: 0.9,
+                duration: 0.3,
+            })}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            className="mt-[18px] w-full pl-4 mb-[18px]"
+        >
+            <ul className="flex flex-col gap-3 pl-4 normal-case w-full">
+                {dynamicPagesList.map(item => (
+                    <li
+                        key={item.slug}
+                        className="w-full text-[14px] font-light leading-[143%]"
+                    >
+                        <Link
+                            href={`${parentHref}/${item.slug}`}
+                            onClick={onLinkClick}
+                            className="text-white w-full flex items-center gap-[8px]"
+                        >
+                            {item.title}
+                            {isChildrenNotEmpty(item.children) && (
+                                <button
+                                    onClick={e => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        setIsDropdownOpen(!isDropdownOpen);
+                                    }}
+                                    type="button"
+                                    className={clsx(
+                                        "cursor-pointer w-4 h-4 flex items-center justify-center transition duration-300 ease-in-out",
+                                        isDropdownOpen
+                                            ? "rotate-0"
+                                            : "rotate-180"
+                                    )}
+                                >
+                                    <ShevronIcon
+                                        className={clsx("w-4 h-4 fill-white")}
+                                    />
+                                </button>
+                            )}
+                        </Link>
+
+                        <AnimatePresence>
+                            {isDropdownOpen &&
+                                isChildrenNotEmpty(item.children) && (
+                                    <motion.ul
+                                        key={`nested-${item.slug}`}
+                                        initial={{ height: 0, opacity: 0 }}
+                                        animate={{ height: "auto", opacity: 1 }}
+                                        exit={{ height: 0, opacity: 0 }}
+                                        transition={{
+                                            duration: 0.3,
+                                            ease: "easeInOut",
+                                        }}
+                                        className="mt-3 pl-4 flex flex-col gap-3 overflow-hidden"
+                                    >
+                                        {item.children?.map(child => (
+                                            <li key={child.slug}>
+                                                <Link
+                                                    href={`${parentHref}/${item.slug}/${child.slug}`}
+                                                    onClick={onLinkClick}
+                                                    className="text-[14px] font-light leading-[143%] w-full"
+                                                >
+                                                    {child.title}
+                                                </Link>
+                                            </li>
+                                        ))}
+                                    </motion.ul>
+                                )}
+                        </AnimatePresence>
+                    </li>
+                ))}
+            </ul>
+        </motion.div>
+    );
+}

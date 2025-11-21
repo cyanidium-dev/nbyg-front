@@ -3,10 +3,12 @@
 @theme inline {
   --breakpoint-xs: 27rem;
 
-  --color-black: #000000;
-  --color-white: #ffffff;
-  --color-brown: #603208;
-  --color-beige: #ffc189;
+    --color-black: #000000;
+    --color-white: #ffffff;
+    --color-brown: #603208;
+    --color-gradient-brown: #b86d29;
+    --color-gradient-brown-dark: #6d3a0b;
+    --color-beige: #ffc189;
 
   --font-montserrat: var(--font-montserrat), sans-serif;
   --font-find-sans-pro: var(--font-find-sans-pro), sans-serif;
