@@ -89,7 +89,7 @@ export default function Footer() {
                                 viewport={{ once: true, amount: 0.1 }}
                                 className="text-[12px] leading-[125%] uppercase font-medium text-center md:text-left"
                             >
-                                Adresse:{" "}
+                                Adresse:
                                 <a
                                     href={ADDRESS_URL}
                                     target="_blank"

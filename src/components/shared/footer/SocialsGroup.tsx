@@ -22,7 +22,7 @@ export default function SocialsGroup({ className }: SocialsGroupProps) {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.1 }}
-                className="w-8 h-8 flex items-center justify-center"
+                className="size-8 flex items-center justify-center"
             >
                 <a
                     href={FACEBOOK_URL}
@@ -39,7 +39,7 @@ export default function SocialsGroup({ className }: SocialsGroupProps) {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.1 }}
-                className="w-8 h-8 flex items-center justify-center"
+                className="size-8 flex items-center justify-center"
             >
                 <a
                     href={YOUTUBE_URL}
@@ -56,7 +56,7 @@ export default function SocialsGroup({ className }: SocialsGroupProps) {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.1 }}
-                className="w-8 h-8 flex items-center justify-center"
+                className="size-8 flex items-center justify-center"
             >
                 <a
                     href={INSTAGRAM_URL}

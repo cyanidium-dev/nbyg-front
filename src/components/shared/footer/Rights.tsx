@@ -28,7 +28,7 @@ export default function Rights() {
                 <p className="text-[12px] leading-[125%] uppercase font-medium mb-3 md:mb-0 md:mr-6">
                     Created by
                 </p>
-                <div>
+                <div className="flex items-center flex-col md:items-start">
                     <motion.div
                         variants={fadeInAnimation({ delay: 1.2 })}
                         initial="hidden"
