@@ -104,4 +104,21 @@
       }
     }
   }
+
+  .shadow-white-universal {
+    filter: none;
+    transition: filter 300ms ease-in-out;
+
+    @media screen and (min-width: 1024px) {
+      &:hover {
+        filter: drop-shadow(3px 2px 5px rgba(255, 255, 255, 0.4))
+          drop-shadow(-3px -2px 5px rgba(255, 255, 255, 0.4));
+      }
+
+      &:focus-visible {
+        filter: drop-shadow(3px 2px 5px rgba(255, 255, 255, 0.4))
+          drop-shadow(-3px -2px 5px rgba(255, 255, 255, 0.4));
+      }
+    }
+  }
 }
