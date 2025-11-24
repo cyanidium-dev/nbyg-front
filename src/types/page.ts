@@ -90,7 +90,7 @@ export type MaterialSliderSection = {
     _key?: string;
     image: SanityImage;
     title: string;
-    description: PortableText;
+    description: string;
   }>;
 };
 
