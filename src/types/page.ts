@@ -58,10 +58,11 @@ export type HeroSection = {
 export type CtaSection = {
   _type: "ctaSection";
   type: "ctaSection";
-  title?: string;
-  description?: PortableText;
-  image?: SanityImage;
-  buttonType?: "calculator" | "contact" | string;
+  title: string;
+  description: string;
+  showMoreOnMobile: boolean;
+  image: SanityImage;
+  buttonType: "calculator" | "contact" | string;
 };
 
 export type TableSection = {
@@ -128,11 +129,11 @@ export type ImageTextButtonSection = {
 export type FaqSection = {
   _type: "faqSection";
   type: "faqSection";
-  description?: string | PortableText;
-  items?: Array<{
+  description?: string;
+  items: Array<{
     _key?: string;
-    question?: string;
-    answer?: PortableText;
+    question: string;
+    answer: string;
     buttons?: Array<Record<string, unknown>>;
   }>;
 };
