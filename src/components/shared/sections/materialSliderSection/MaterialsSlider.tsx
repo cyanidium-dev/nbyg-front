@@ -18,6 +18,7 @@ export default function MaterialsSlider({ slides }: MaterialsSliderProps) {
 
   return (
     <SwiperWrapper
+      loop
       breakpoints={{
         0: {
           spaceBetween: 16,

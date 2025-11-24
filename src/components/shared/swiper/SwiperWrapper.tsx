@@ -85,23 +85,26 @@ export default function SwiperWrapper({
       >
         {children}
       </Swiper>
-      <div className={`flex items-center lg:items-end justify-center gap-2.5`}>
+      <div
+        className={`flex gap-3 items-center justify-between sm:justify-end pr-8 lg:pr-30 sm:mr-[calc(100%-640px)] md:mr-[calc(100%-768px)] 
+          lg:mr-[calc(100%-1024px)] xl:mr-[calc(100%-1280px)]`}
+      >
         <button
           ref={prevRef}
           disabled={isBeginning}
-          className={`enabled:cursor-pointer w-[30px] h-[30px] rounded-full flex items-center justify-center pointer-events-auto transition-filter 
-          duration-300 xl:enabled:hover:brightness-[1.25] disabled:bg-gray`}
+          className={`group enabled:cursor-pointer size-[54px] bg-white border border-white rounded-full flex items-center justify-center pointer-events-auto
+             transition duration-300 xl:enabled:hover:opacity-70 disabled:bg-transparent`}
         >
-          <ShevronIcon className="rotate-90" />
+          <ShevronIcon className="-rotate-90 group-enabled:text-black group-disabled:text-white mr-1" />
         </button>
 
         <button
           ref={nextRef}
           disabled={isEnd}
-          className={`enabled:cursor-pointer w-[30px] h-[30px] rounded-full flex items-center justify-center pointer-events-auto transition-filter 
-          duration-300 xl:enabled:hover:brightness-[1.25] disabled:bg-gray `}
+          className={`group enabled:cursor-pointer size-[54px] bg-white border border-white rounded-full flex items-center justify-center pointer-events-auto transition-filter 
+          duration-300 xl:enabled:hover:opacity-70 disabled:bg-transparent`}
         >
-          <ShevronIcon />
+          <ShevronIcon className="rotate-90 group-enabled:text-black group-disabled:text-white ml-1" />
         </button>
       </div>
     </>
