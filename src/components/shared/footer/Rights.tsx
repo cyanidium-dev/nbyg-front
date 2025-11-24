@@ -1,6 +1,6 @@
 import { CODE_SITE_URL, WEB_BOND_URL } from "@/constants/constants";
 import Image from "next/image";
-import DotsDeco from "../decorations/DotsDeco";
+import DecorativeEllipsis from "../decorativeEllipsis/DecorativeEllipsis";
 import * as motion from "motion/react-client";
 import { fadeInAnimation } from "@/utils/animationVariants";
 
@@ -18,7 +18,12 @@ export default function Rights() {
             >
                 © {currentYear} Nbyg Bornholm ApS
             </motion.p>
-            <DotsDeco className="hidden md:flex" delay={1.4} />
+            <DecorativeEllipsis
+                uniqueKey="rights-ellipsis"
+                delay={1.4}
+                staggerDelay={0.1}
+                className="hidden md:flex"
+            />
             <motion.div
                 variants={fadeInAnimation({ delay: 1.1 })}
                 initial="hidden"
