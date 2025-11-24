@@ -68,13 +68,14 @@ export type CtaSection = {
 export type TableSection = {
   _type: "tableSection";
   type: "tableSection";
-  title?: string;
-  description?: PortableText;
-  desktopAlignment?: "left" | "right" | "center" | string;
-  columns?: Array<{
+  title: string;
+  description?: string;
+  image?: SanityImage;
+  desktopAlignment: "left" | "right";
+  columns: Array<{
     _key?: string;
-    title?: string;
-    values?: string[];
+    title: string;
+    values: string[];
   }>;
 };
 

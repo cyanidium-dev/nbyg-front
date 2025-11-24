@@ -31,10 +31,13 @@ const sectionComponentMap: Partial<
 export default async function SubservicePage({ params }: SubservicePageProps) {
   const { service, subservice } = await params;
 
-  const currentSubservice = await fetchSanityData<SanityPage>(PAGE_BY_SLUG_QUERY, {
-    slug: subservice,
-    parentSlug: service,
-  });
+  const currentSubservice = await fetchSanityData<SanityPage>(
+    PAGE_BY_SLUG_QUERY,
+    {
+      slug: subservice,
+      parentSlug: service,
+    }
+  );
 
   if (!currentSubservice) {
     return null;
@@ -53,14 +56,7 @@ export default async function SubservicePage({ params }: SubservicePageProps) {
           (section as { _key?: string })._key ?? `${section._type}-${index}`;
         const key = `${service}-${subservice}-${sectionKey}`;
 
-        return (
-          <SectionComponent
-            key={key}
-            {...section}
-            {...((section._type === "heroSection" ||
-              section._type === "ctaSection") && { uniqueKey: key })}
-          />
-        );
+        return <SectionComponent key={key} {...section} uniqueKey={key} />;
       })}
     </>
   );

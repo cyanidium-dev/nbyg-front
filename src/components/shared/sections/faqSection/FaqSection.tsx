@@ -12,6 +12,7 @@ interface FaqSectionProps extends FaqSectionData {
 
 const FaqSection = (_props: FaqSectionProps) => {
   const { description, items, uniqueKey } = _props;
+
   return (
     <section>
       <Container className="relative flex flex-col gap-10 lg:gap-12 pt-25 lg:pt-[138px] lg:pb-[26px]">
