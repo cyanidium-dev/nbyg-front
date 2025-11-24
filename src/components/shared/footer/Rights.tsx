@@ -5,6 +5,8 @@ import * as motion from "motion/react-client";
 import { fadeInAnimation } from "@/utils/animationVariants";
 
 export default function Rights() {
+    const currentYear = new Date().getFullYear();
+
     return (
         <div className="flex flex-col md:flex-row md:justify-between items-center justify-center w-full">
             <motion.p
@@ -12,9 +14,9 @@ export default function Rights() {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.1 }}
-                className="text-[16px] leading-[181%] uppercase font-medium tracking-[0.64px] mb-4.5"
+                className="text-[16px] leading-[181%] uppercase tracking-[0.64px] mb-4.5 md:mb-0"
             >
-                © 2024 Nbyg Bornholm ApS
+                © {currentYear} Nbyg Bornholm ApS
             </motion.p>
             <DotsDeco className="hidden md:flex" delay={1.4} />
             <motion.div
