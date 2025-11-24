@@ -22,7 +22,7 @@ export default function Rights() {
                 uniqueKey="rights-ellipsis"
                 delay={1.4}
                 staggerDelay={0.1}
-                className="hidden md:flex"
+                className="hidden lg:flex"
             />
             <motion.div
                 variants={fadeInAnimation({ delay: 1.1 })}
@@ -30,7 +30,7 @@ export default function Rights() {
                 whileInView="visible"
                 exit="exit"
                 viewport={{ once: true, amount: 0.1 }}
-                className="flex flex-col lg:flex-row items-center"
+                className="flex flex-col md:flex-row items-center"
             >
                 <p className="text-[12px] leading-[125%] uppercase font-medium mb-3 md:mb-0 md:mr-6">
                     Created by
