@@ -139,7 +139,7 @@
   .materials-slider .swiper-slide {
     width: 328px !important;
 
-    @media screen and (min-width: 1024px) {
+    @media screen and (min-width: 768px) {
       width: 687px !important;
       height: 230px !important;
     }

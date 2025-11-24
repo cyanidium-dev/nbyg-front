@@ -15,7 +15,7 @@ export default function MaterialsCard({ slide }: MaterialCardProps) {
   const { title, image, description } = slide;
 
   return (
-    <div className="flex flex-col lg:flex-row-reverse lg:gap-8 h-full p-[1.5px] rounded-[12px] overflow-hidden">
+    <div className="flex flex-col md:flex-row-reverse md:gap-8 h-full p-[1.5px] rounded-[12px] overflow-hidden">
       <div
         className="absolute inset-0 rounded-[12px] pointer-events-none"
         style={{
@@ -29,7 +29,7 @@ export default function MaterialsCard({ slide }: MaterialCardProps) {
         }}
       />
       <div
-        className="relative w-full lg:w-[320px] h-60 lg:h-auto lg:min-h-full rounded-[8px] 
+        className="relative w-full md:w-[320px] h-60 md:h-auto md:min-h-full rounded-[8px] 
       overflow-hidden shrink-0"
       >
         <Image
