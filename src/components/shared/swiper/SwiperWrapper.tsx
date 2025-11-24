@@ -14,6 +14,7 @@ interface SwiperWrapperProps {
   breakpoints: SwiperOptions["breakpoints"];
   swiperClassName: string;
   loop?: boolean;
+  uniqueKey?: string;
 }
 
 export default function SwiperWrapper({
@@ -21,6 +22,7 @@ export default function SwiperWrapper({
   breakpoints,
   swiperClassName,
   loop = false,
+  uniqueKey,
 }: SwiperWrapperProps) {
   const prevRef = useRef<HTMLButtonElement>(null);
   const nextRef = useRef<HTMLButtonElement>(null);
@@ -70,6 +72,7 @@ export default function SwiperWrapper({
   return (
     <>
       <Swiper
+        key={uniqueKey}
         onSwiper={(swiper) => {
           swiperInstanceRef.current = swiper;
         }}
@@ -87,11 +90,11 @@ export default function SwiperWrapper({
       </Swiper>
       <div
         className={`flex gap-3 items-center justify-between sm:justify-end pr-8 lg:pr-30 sm:mr-[calc(100%-640px)] md:mr-[calc(100%-768px)] 
-          lg:mr-[calc(100%-1024px)] xl:mr-[calc(100%-1280px)]`}
+          lg:mr-[calc(100%-1024px)] xl:mr-[calc(100%-1280px)] mb-0.5`}
       >
         <button
           ref={prevRef}
-          disabled={isBeginning}
+          disabled={isBeginning && !loop}
           className={`group enabled:cursor-pointer size-[54px] bg-white border border-white rounded-full flex items-center justify-center pointer-events-auto
              transition duration-300 xl:enabled:hover:opacity-70 disabled:bg-transparent`}
         >
@@ -100,7 +103,7 @@ export default function SwiperWrapper({
 
         <button
           ref={nextRef}
-          disabled={isEnd}
+          disabled={isEnd && !loop}
           className={`group enabled:cursor-pointer size-[54px] bg-white border border-white rounded-full flex items-center justify-center pointer-events-auto transition-filter 
           duration-300 xl:enabled:hover:opacity-70 disabled:bg-transparent`}
         >

@@ -12,13 +12,13 @@ export default function MaterialsSliderDecorations({
   return (
     <>
       <motion.div
-        key={`${uniqueKey}-cta-section-image1`}
+        key={`${uniqueKey}-materials-slider-decorations`}
         initial="hidden"
         whileInView="visible"
         exit="exit"
         viewport={{ once: true, amount: 0.1 }}
         variants={fadeInAnimation({ scale: 0.85, delay: 0.3 })}
-        className="absolute -top-5 lg:top-[332px] right-[calc(50%-332px)] sm:right-[calc(50%-500px)] lg:right-[calc(50%-286px)] w-[337px] lg:w-[634px] h-auto aspect-337/421"
+        className="absolute -top-5 lg:top-auto lg:bottom-[-285px] right-[calc(50%-332px)] sm:right-[calc(50%-500px)] lg:right-[calc(50%-286px)] w-[337px] lg:w-[634px] h-auto aspect-337/421"
       >
         <Image
           src="/images/decorations/ellipsis.svg"

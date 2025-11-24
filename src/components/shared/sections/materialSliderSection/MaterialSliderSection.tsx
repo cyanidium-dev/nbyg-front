@@ -124,7 +124,10 @@ const MaterialSliderSection = (_props: MaterialSliderSectionProps) => {
           variants={fadeInAnimation({ y: 30, scale: 0.95, delay: 0.6 })}
           className="w-screen"
         >
-          <MaterialsSlider slides={slides} />
+          <MaterialsSlider
+            slides={slides}
+            key={`${uniqueKey}-materials-slider-swiper-${title}`}
+          />
         </motion.div>
       </Container>
     </section>
