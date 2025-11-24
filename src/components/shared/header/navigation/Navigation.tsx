@@ -47,9 +47,8 @@ export default function Navigation({ dynamicPagesList }: NavigationProps) {
             clearTimeout(hoverTimeoutRef.current);
         }
         if (hasDropdown) {
-            hoverTimeoutRef.current = setTimeout(() => {
-                setHoveredItem(itemHref);
-            }, 300);
+            // Open dropdown instantly for navigation menu items
+            setHoveredItem(itemHref);
         }
     };
 

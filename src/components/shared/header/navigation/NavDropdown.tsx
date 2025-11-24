@@ -30,7 +30,7 @@ export default function NavDropdown({
         return children && children?.length ? true : false;
     };
 
-    const handleMouseEnter = (itemSlug: string, hasChildren: boolean) => {
+    const handleItemMouseEnter = (itemSlug: string, hasChildren: boolean) => {
         if (closeTimeoutRef.current) {
             clearTimeout(closeTimeoutRef.current);
             closeTimeoutRef.current = null;
@@ -39,20 +39,35 @@ export default function NavDropdown({
             clearTimeout(hoverTimeoutRef.current);
         }
         if (hasChildren) {
+            // Add delay for dropdown items to prevent accidental opens
             hoverTimeoutRef.current = setTimeout(() => {
                 setHoveredItemSlug(itemSlug);
-            }, 300);
+            }, 200);
         }
     };
 
-    const handleMouseLeave = () => {
+    const handleItemContainerMouseEnter = (itemSlug: string) => {
+        // Cancel any pending close when entering the container (link or submenu)
+        if (closeTimeoutRef.current) {
+            clearTimeout(closeTimeoutRef.current);
+            closeTimeoutRef.current = null;
+        }
+        // If submenu is already open, keep it open (don't cancel hover timeout)
+        if (hoveredItemSlug === itemSlug) {
+            return;
+        }
+        // Don't cancel hover timeout here - let it complete to open the submenu
+    };
+
+    const handleItemContainerMouseLeave = () => {
         if (hoverTimeoutRef.current) {
             clearTimeout(hoverTimeoutRef.current);
             hoverTimeoutRef.current = null;
         }
+        // Add delay before closing to allow moving between link and submenu
         closeTimeoutRef.current = setTimeout(() => {
             setHoveredItemSlug(null);
-        }, 100);
+        }, 150);
     };
 
     return (
@@ -79,89 +94,92 @@ export default function NavDropdown({
                         <li
                             key={item.slug}
                             className="w-full py-3 first:pt-0 last:pb-0 border-b border-white/10 last:border-b-0 text-6 font-light leading-4"
-                            onMouseEnter={() =>
-                                handleMouseEnter(item.slug, hasChildren)
-                            }
-                            onMouseLeave={handleMouseLeave}
                         >
-                            <Link
-                                href={`${parentHref}/${item.slug}`}
-                                onClick={() => {
-                                    if (closeTimeoutRef.current) {
-                                        clearTimeout(closeTimeoutRef.current);
-                                    }
-                                    setHoveredItemSlug(null);
-                                    onLinkClick?.();
+                            <div
+                                onMouseEnter={() => {
+                                    handleItemMouseEnter(
+                                        item.slug,
+                                        hasChildren
+                                    );
+                                    handleItemContainerMouseEnter(item.slug);
                                 }}
-                                className="flex items-center gap-2 text-white text-shadow-white w-full"
+                                onMouseLeave={handleItemContainerMouseLeave}
                             >
-                                {item.title}
-                                {hasChildren && (
-                                    <span
-                                        className={clsx(
-                                            "cursor-pointer w-4 h-4 flex items-center justify-center transition duration-300 ease-in-out",
-                                            isHovered
-                                                ? "rotate-0"
-                                                : "rotate-180"
-                                        )}
-                                    >
-                                        <ShevronIcon
+                                <Link
+                                    href={`${parentHref}/${item.slug}`}
+                                    onClick={() => {
+                                        if (closeTimeoutRef.current) {
+                                            clearTimeout(
+                                                closeTimeoutRef.current
+                                            );
+                                        }
+                                        setHoveredItemSlug(null);
+                                        onLinkClick?.();
+                                    }}
+                                    className="flex items-center gap-2 text-white text-shadow-white w-full"
+                                >
+                                    {item.title}
+                                    {hasChildren && (
+                                        <span
                                             className={clsx(
-                                                "w-4 h-4 fill-white svg-shadow-white"
+                                                "cursor-pointer w-4 h-4 flex items-center justify-center transition duration-300 ease-in-out",
+                                                isHovered
+                                                    ? "rotate-0"
+                                                    : "rotate-180"
                                             )}
-                                        />
-                                    </span>
-                                )}
-                            </Link>
+                                        >
+                                            <ShevronIcon
+                                                className={clsx(
+                                                    "w-4 h-4 fill-white svg-shadow-white"
+                                                )}
+                                            />
+                                        </span>
+                                    )}
+                                </Link>
 
-                            <AnimatePresence>
-                                {isHovered && hasChildren && (
-                                    <motion.ul
-                                        key={`nested-${item.slug}`}
-                                        initial={{ height: 0, opacity: 0 }}
-                                        animate={{ height: "auto", opacity: 1 }}
-                                        exit={{ height: 0, opacity: 0 }}
-                                        transition={{
-                                            duration: 0.3,
-                                            ease: "easeInOut",
-                                        }}
-                                        className="mt-3 pl-4 flex flex-col gap-3 overflow-hidden"
-                                        onMouseEnter={() => {
-                                            if (closeTimeoutRef.current) {
-                                                clearTimeout(
-                                                    closeTimeoutRef.current
-                                                );
-                                                closeTimeoutRef.current = null;
-                                            }
-                                        }}
-                                        onMouseLeave={handleMouseLeave}
-                                    >
-                                        {item.children?.map(child => (
-                                            <li key={child.slug}>
-                                                <Link
-                                                    href={`${parentHref}/${item.slug}/${child.slug}`}
-                                                    onClick={() => {
-                                                        if (
-                                                            closeTimeoutRef.current
-                                                        ) {
-                                                            clearTimeout(
+                                <AnimatePresence>
+                                    {isHovered && hasChildren && (
+                                        <motion.ul
+                                            key={`nested-${item.slug}`}
+                                            initial={{ height: 0, opacity: 0 }}
+                                            animate={{
+                                                height: "auto",
+                                                opacity: 1,
+                                            }}
+                                            exit={{ height: 0, opacity: 0 }}
+                                            transition={{
+                                                duration: 0.3,
+                                                ease: "easeInOut",
+                                            }}
+                                            className="mt-3 pl-4 flex flex-col gap-3 overflow-hidden"
+                                        >
+                                            {item.children?.map(child => (
+                                                <li key={child.slug}>
+                                                    <Link
+                                                        href={`${parentHref}/${item.slug}/${child.slug}`}
+                                                        onClick={() => {
+                                                            if (
                                                                 closeTimeoutRef.current
+                                                            ) {
+                                                                clearTimeout(
+                                                                    closeTimeoutRef.current
+                                                                );
+                                                            }
+                                                            setHoveredItemSlug(
+                                                                null
                                                             );
-                                                        }
-                                                        setHoveredItemSlug(
-                                                            null
-                                                        );
-                                                        onLinkClick?.();
-                                                    }}
-                                                    className="text-6 font-light leading-5 text-shadow-white w-full"
-                                                >
-                                                    {child.title}
-                                                </Link>
-                                            </li>
-                                        ))}
-                                    </motion.ul>
-                                )}
-                            </AnimatePresence>
+                                                            onLinkClick?.();
+                                                        }}
+                                                        className="text-6 font-light leading-5 text-shadow-white w-full"
+                                                    >
+                                                        {child.title}
+                                                    </Link>
+                                                </li>
+                                            ))}
+                                        </motion.ul>
+                                    )}
+                                </AnimatePresence>
+                            </div>
                         </li>
                     );
                 })}
