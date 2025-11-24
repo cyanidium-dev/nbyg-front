@@ -2,6 +2,7 @@ import type { MaterialSliderSection as MaterialSliderSectionData } from "@/types
 import Container from "../../container/Container";
 import SectionTitle from "../../titles/SectionTitle";
 import DecorativeEllipsis from "../../decorativeEllipsis/DecorativeEllipsis";
+import { PortableText, type PortableTextComponents } from "@portabletext/react";
 
 interface MaterialSliderSectionProps extends MaterialSliderSectionData {
   uniqueKey?: string;
@@ -18,6 +19,25 @@ const MaterialSliderSection = (_props: MaterialSliderSectionProps) => {
     uniqueKey,
   } = _props;
 
+  const portableTextComponents: Partial<PortableTextComponents> = {
+    block: {
+      normal: ({ children }) => <p>{children}</p>,
+    },
+    list: {
+      bullet: ({ children }) => (
+        <ul
+          className="space-y-2"
+          style={{ listStyle: "disc", paddingLeft: "1.5rem" }}
+        >
+          {children}
+        </ul>
+      ),
+    },
+    listItem: {
+      bullet: ({ children }) => <li>{children}</li>,
+    },
+  };
+
   return (
     <section>
       <Container className="py-25 lg:pt-[152px] lg:pb-0">
@@ -26,7 +46,28 @@ const MaterialSliderSection = (_props: MaterialSliderSectionProps) => {
         >
           {title}
         </SectionTitle>
-        <div className="flex flex-col lg:flex-row lg:justify-between gap-4 lg:flex-50 mb-12 lg:mb-9"></div>
+        <div className="flex flex-col lg:flex-row lg:justify-between gap-4 lg:flex-50 mb-12 lg:mb-9">
+          <div className="lg:w-[calc(50%-100px)] shrink-0">
+            <PortableText
+              value={
+                description1 as unknown as Parameters<
+                  typeof PortableText
+                >[0]["value"]
+              }
+              components={portableTextComponents}
+            />
+          </div>
+          <div className="lg:w-[calc(50%-100px)] shrink-0">
+            <PortableText
+              value={
+                description2 as unknown as Parameters<
+                  typeof PortableText
+                >[0]["value"]
+              }
+              components={portableTextComponents}
+            />
+          </div>
+        </div>
         <div
           className={`flex justify-between items-center ${titlePosition === "left" ? "flex-row" : "flex-row-reverse"}`}
         >
