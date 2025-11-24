@@ -6,6 +6,7 @@ import { PortableText, type PortableTextComponents } from "@portabletext/react";
 import MaterialsSlider from "./MaterialsSlider";
 import * as motion from "motion/react-client";
 import { fadeInAnimation } from "@/utils/animationVariants";
+import MaterialsSliderDecorations from "./MaterialsSliderDecorations";
 
 interface MaterialSliderSectionProps extends MaterialSliderSectionData {
   uniqueKey?: string;
@@ -42,8 +43,9 @@ const MaterialSliderSection = (_props: MaterialSliderSectionProps) => {
   };
 
   return (
-    <section>
+    <section className="overflow-hidden">
       <Container className="relative py-25 lg:pt-[152px] lg:pb-0 overflow-visible">
+        <MaterialsSliderDecorations uniqueKey={uniqueKey} />
         <div className="relative">
           <DecorativeEllipsis
             uniqueKey={uniqueKey}
