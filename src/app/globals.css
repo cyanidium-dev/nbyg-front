@@ -88,22 +88,43 @@
           drop-shadow(-3px -2px 5px var(--color-white));
       }
     }
-  }
 
-  .button-shadow-white {
-    filter: none;
-    transition: filter 300ms ease-in-out;
+    button.svg-shadow-white {
+        @media screen and (min-width: 1024px) {
+            &:hover {
+                filter: none;
+            }
+            &:hover svg {
+                filter: drop-shadow(3px 2px 5px var(--color-white))
+                    drop-shadow(-3px -2px 5px var(--color-white));
+                transition: filter 300ms ease-in-out;
+            }
+            &:focus-visible {
+                filter: none;
+            }
+            &:focus-visible svg {
+                filter: drop-shadow(3px 2px 5px var(--color-white))
+                    drop-shadow(-3px -2px 5px var(--color-white));
+                transition: filter 300ms ease-in-out;
+            }
+        }
+    }
 
-    @media screen and (min-width: 1024px) {
-      &:enabled:hover {
-        filter: drop-shadow(3px 2px 5px rgba(255, 255, 255, 0.4))
-          drop-shadow(-3px -2px 5px rgba(255, 255, 255, 0.4));
-      }
+    .button-shadow-white {
+        filter: none;
+        transition: filter 300ms ease-in-out;
 
-      &:enabled:focus-visible {
-        filter: drop-shadow(3px 2px 5px rgba(255, 255, 255, 0.4))
-          drop-shadow(-3px -2px 5px rgba(255, 255, 255, 0.4));
-      }
+        @media screen and (min-width: 1024px) {
+            &:enabled:hover {
+                filter: drop-shadow(3px 2px 5px rgba(255, 255, 255, 0.4))
+                    drop-shadow(-3px -2px 5px rgba(255, 255, 255, 0.4));
+            }
+
+            &:enabled:focus-visible {
+                filter: drop-shadow(3px 2px 5px rgba(255, 255, 255, 0.4))
+                    drop-shadow(-3px -2px 5px rgba(255, 255, 255, 0.4));
+            }
+        }
     }
   }
 

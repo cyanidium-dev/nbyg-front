@@ -108,7 +108,7 @@ export default function BurgerNavigationDropdown({
                                                 <Link
                                                     href={`${parentHref}/${item.slug}/${child.slug}`}
                                                     onClick={onLinkClick}
-                                                    className="text-grey text-[14px] font-light leading-[143%] w-full"
+                                                    className="block text-grey text-[14px] font-light leading-[143%] w-full"
                                                 >
                                                     {child.title}
                                                 </Link>
