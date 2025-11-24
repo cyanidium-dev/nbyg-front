@@ -19,7 +19,9 @@ export default function BurgerNavigationDropdown({
     parentHref,
     onLinkClick,
 }: BurgerNavigationDropdownProps) {
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [openDropdownSlug, setOpenDropdownSlug] = useState<string | null>(
+        null
+    );
 
     if (!dynamicPagesList || !dynamicPagesList?.length) return null;
 
@@ -39,44 +41,56 @@ export default function BurgerNavigationDropdown({
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="mt-[18px] w-full pl-4 mb-[18px]"
+            className="mt-[18px] w-full mb-[18px]"
         >
-            <ul className="flex flex-col gap-3 pl-4 normal-case w-full">
-                {dynamicPagesList.map(item => (
+            <ul className="flex flex-col normal-case w-full">
+                {dynamicPagesList.map((item, index) => (
                     <li
                         key={item.slug}
-                        className="w-full text-[14px] font-light leading-[143%]"
+                        className="relative w-full text-[14px] font-light leading-[143%]"
                     >
-                        <Link
-                            href={`${parentHref}/${item.slug}`}
-                            onClick={onLinkClick}
-                            className="text-white w-full flex items-center gap-[8px]"
-                        >
-                            {item.title}
+                        <div className="flex items-center w-full">
+                            <Link
+                                href={`${parentHref}/${item.slug}`}
+                                onClick={onLinkClick}
+                                className={clsx(
+                                    "text-white flex items-center pb-4",
+                                    index !== 0 && "pt-4",
+                                    isChildrenNotEmpty(item.children)
+                                        ? "w-1/2"
+                                        : "w-full"
+                                )}
+                            >
+                                {item.title}
+                            </Link>
                             {isChildrenNotEmpty(item.children) && (
                                 <button
                                     onClick={e => {
                                         e.preventDefault();
                                         e.stopPropagation();
-                                        setIsDropdownOpen(!isDropdownOpen);
+                                        setOpenDropdownSlug(
+                                            openDropdownSlug === item.slug
+                                                ? null
+                                                : item.slug
+                                        );
                                     }}
                                     type="button"
-                                    className={clsx(
-                                        "cursor-pointer w-4 h-4 flex items-center justify-center transition duration-300 ease-in-out",
-                                        isDropdownOpen
-                                            ? "rotate-0"
-                                            : "rotate-180"
-                                    )}
+                                    className="w-1/2 flex items-center pt-4 pb-3 justify-end cursor-pointer transition duration-300 ease-in-out"
                                 >
                                     <ShevronIcon
-                                        className={clsx("w-4 h-4 fill-white")}
+                                        className={clsx(
+                                            "w-4 h-4 fill-white transition duration-300 ease-in-out",
+                                            openDropdownSlug === item.slug
+                                                ? "rotate-0"
+                                                : "rotate-180"
+                                        )}
                                     />
                                 </button>
                             )}
-                        </Link>
+                        </div>
 
                         <AnimatePresence>
-                            {isDropdownOpen &&
+                            {openDropdownSlug === item.slug &&
                                 isChildrenNotEmpty(item.children) && (
                                     <motion.ul
                                         key={`nested-${item.slug}`}
@@ -87,14 +101,14 @@ export default function BurgerNavigationDropdown({
                                             duration: 0.3,
                                             ease: "easeInOut",
                                         }}
-                                        className="mt-3 pl-4 flex flex-col gap-3 overflow-hidden"
+                                        className="flex flex-col gap-3 overflow-hidden"
                                     >
                                         {item.children?.map(child => (
                                             <li key={child.slug}>
                                                 <Link
                                                     href={`${parentHref}/${item.slug}/${child.slug}`}
                                                     onClick={onLinkClick}
-                                                    className="text-[14px] font-light leading-[143%] w-full"
+                                                    className="text-grey text-[14px] font-light leading-[143%] w-full"
                                                 >
                                                     {child.title}
                                                 </Link>
@@ -103,6 +117,12 @@ export default function BurgerNavigationDropdown({
                                     </motion.ul>
                                 )}
                         </AnimatePresence>
+                        {openDropdownSlug !== item.slug && (
+                            <div
+                                className="absolute bottom-0 left-0 bg-linear-to-r from-grey-dark to-black
+                                    h-[1px] w-full"
+                            />
+                        )}
                     </li>
                 ))}
             </ul>

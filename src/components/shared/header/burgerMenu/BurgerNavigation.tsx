@@ -31,12 +31,17 @@ export default function Navigation({
             <ul className={twMerge("flex flex-col gap-9 w-full")}>
                 {mainNavList.map(item => (
                     <li key={item.href} className="relative min-h-[39px]">
-                        <Link
-                            href={item.href}
-                            className="uppercase text-[16px] text-light flex items-center gap-3.5"
-                            onClick={() => setIsBurgerMenuOpened?.(false)}
-                        >
-                            {item.label}
+                        <div className="flex items-center w-full">
+                            <Link
+                                href={item.href}
+                                className={clsx(
+                                    "uppercase text-[16px] text-light flex items-center",
+                                    item.dropdown ? "w-1/2" : "w-full"
+                                )}
+                                onClick={() => setIsBurgerMenuOpened?.(false)}
+                            >
+                                {item.label}
+                            </Link>
                             {item.dropdown && (
                                 <button
                                     ref={buttonRef}
@@ -48,17 +53,19 @@ export default function Navigation({
                                         );
                                     }}
                                     type="button"
-                                    className={clsx(
-                                        "cursor-pointer w-5 h-5 flex items-center justify-center transition duration-300 ease-in-out",
-                                        isDropdownOpen
-                                            ? "rotate-0"
-                                            : "rotate-180"
-                                    )}
+                                    className="w-1/2 flex items-center justify-end cursor-pointer transition duration-300 ease-in-out"
                                 >
-                                    <ShevronIcon />
+                                    <ShevronIcon
+                                        className={clsx(
+                                            "w-5 h-5 transition duration-300 ease-in-out",
+                                            isDropdownOpen
+                                                ? "rotate-0"
+                                                : "rotate-180"
+                                        )}
+                                    />
                                 </button>
                             )}
-                        </Link>
+                        </div>
 
                         <AnimatePresence>
                             {isDropdownOpen && item.dropdown && (
