@@ -23,6 +23,7 @@ export default function NavDropdown({
     const [hoveredItemSlug, setHoveredItemSlug] = useState<string | null>(null);
     const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
     const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const linkButtonLeaveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
     if (!dynamicPagesList || !dynamicPagesList?.length) return null;
 
@@ -39,7 +40,6 @@ export default function NavDropdown({
             clearTimeout(hoverTimeoutRef.current);
         }
         if (hasChildren) {
-            // Add delay for dropdown items to prevent accidental opens
             hoverTimeoutRef.current = setTimeout(() => {
                 setHoveredItemSlug(itemSlug);
             }, 200);
@@ -47,16 +47,13 @@ export default function NavDropdown({
     };
 
     const handleItemContainerMouseEnter = (itemSlug: string) => {
-        // Cancel any pending close when entering the container (link or submenu)
         if (closeTimeoutRef.current) {
             clearTimeout(closeTimeoutRef.current);
             closeTimeoutRef.current = null;
         }
-        // If submenu is already open, keep it open (don't cancel hover timeout)
         if (hoveredItemSlug === itemSlug) {
             return;
         }
-        // Don't cancel hover timeout here - let it complete to open the submenu
     };
 
     const handleItemContainerMouseLeave = () => {
@@ -64,10 +61,55 @@ export default function NavDropdown({
             clearTimeout(hoverTimeoutRef.current);
             hoverTimeoutRef.current = null;
         }
-        // Add delay before closing to allow moving between link and submenu
         closeTimeoutRef.current = setTimeout(() => {
             setHoveredItemSlug(null);
         }, 150);
+    };
+
+    const handleLinkButtonAreaMouseLeave = (itemSlug: string) => {
+        if (hoveredItemSlug === itemSlug) {
+            if (linkButtonLeaveTimeoutRef.current) {
+                clearTimeout(linkButtonLeaveTimeoutRef.current);
+            }
+            linkButtonLeaveTimeoutRef.current = setTimeout(() => {
+                if (hoveredItemSlug === itemSlug) {
+                    if (closeTimeoutRef.current) {
+                        clearTimeout(closeTimeoutRef.current);
+                    }
+                    setHoveredItemSlug(null);
+                }
+            }, 150);
+        }
+    };
+
+    const handleLinkButtonAreaMouseEnter = () => {
+        if (linkButtonLeaveTimeoutRef.current) {
+            clearTimeout(linkButtonLeaveTimeoutRef.current);
+            linkButtonLeaveTimeoutRef.current = null;
+        }
+    };
+
+    const handleSubmenuMouseEnter = () => {
+        if (closeTimeoutRef.current) {
+            clearTimeout(closeTimeoutRef.current);
+            closeTimeoutRef.current = null;
+        }
+        if (linkButtonLeaveTimeoutRef.current) {
+            clearTimeout(linkButtonLeaveTimeoutRef.current);
+            linkButtonLeaveTimeoutRef.current = null;
+        }
+    };
+
+    const handleButtonClick = (itemSlug: string) => {
+        if (hoverTimeoutRef.current) {
+            clearTimeout(hoverTimeoutRef.current);
+            hoverTimeoutRef.current = null;
+        }
+        if (closeTimeoutRef.current) {
+            clearTimeout(closeTimeoutRef.current);
+            closeTimeoutRef.current = null;
+        }
+        setHoveredItemSlug(hoveredItemSlug === itemSlug ? null : itemSlug);
     };
 
     return (
@@ -105,7 +147,17 @@ export default function NavDropdown({
                                 }}
                                 onMouseLeave={handleItemContainerMouseLeave}
                             >
-                                <div className="flex items-center w-full">
+                                <div
+                                    className="flex items-center w-full"
+                                    onMouseEnter={
+                                        handleLinkButtonAreaMouseEnter
+                                    }
+                                    onMouseLeave={() =>
+                                        handleLinkButtonAreaMouseLeave(
+                                            item.slug
+                                        )
+                                    }
+                                >
                                     <Link
                                         href={`${parentHref}/${item.slug}`}
                                         onClick={() => {
@@ -128,6 +180,11 @@ export default function NavDropdown({
                                     {hasChildren && (
                                         <button
                                             type="button"
+                                            onClick={e => {
+                                                e.preventDefault();
+                                                e.stopPropagation();
+                                                handleButtonClick(item.slug);
+                                            }}
                                             className="w-1/2 flex items-center justify-end cursor-pointer transition duration-300 ease-in-out pb-3"
                                         >
                                             <ShevronIcon
@@ -156,6 +213,9 @@ export default function NavDropdown({
                                                 ease: "easeInOut",
                                             }}
                                             className="mb-3 flex flex-col gap-3 overflow-hidden"
+                                            onMouseEnter={
+                                                handleSubmenuMouseEnter
+                                            }
                                         >
                                             {item.children?.map(child => (
                                                 <li key={child.slug}>
@@ -174,7 +234,7 @@ export default function NavDropdown({
                                                             );
                                                             onLinkClick?.();
                                                         }}
-                                                        className="text-6 text-grey font-light leading-5 text-shadow-white w-full"
+                                                        className="text-6w-full text-grey font-light leading-5 text-shadow-white w-full"
                                                     >
                                                         {child.title}
                                                     </Link>
