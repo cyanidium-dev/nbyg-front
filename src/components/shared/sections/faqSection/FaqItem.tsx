@@ -3,21 +3,45 @@ import { useState } from "react";
 import * as motion from "motion/react-client";
 import { listItemVariantsLeft } from "@/utils/animationVariants";
 import ShevronIcon from "../../icons/ShevronIcon";
+import Link from "next/link";
+import MainButton from "../../buttons/MainButton";
 
 interface FaqItemProps {
   faqItem: {
     _key?: string;
     question: string;
     answer: string;
-    buttons?: Array<Record<string, unknown>>;
+    buttons?: string[];
   };
 }
+
+const buttonConfig: Record<
+  string,
+  { label: string; href?: string; modal?: string }
+> = {
+  calculatorTerrace: {
+    label: "Terrasseberegner",
+    href: "/calculator-terrasser",
+  },
+  calculatorRoof: {
+    label: "Tagberegner",
+    href: "/calculator-tag",
+  },
+  services: {
+    label: "Byggeydelser",
+    href: "/byggeydesler",
+  },
+  contact: {
+    label: "Kontakt os",
+    modal: "contact",
+  },
+};
 
 export default function FaqItem({ faqItem }: FaqItemProps) {
   const [isShownMore, setIsShownMore] = useState(false);
   const toggleShowMore = () => setIsShownMore(!isShownMore);
 
-  const { question, answer } = faqItem;
+  const { question, answer, buttons } = faqItem;
 
   return (
     <motion.li
@@ -50,6 +74,41 @@ export default function FaqItem({ faqItem }: FaqItemProps) {
         >
           {answer}
         </p>
+        {buttons && buttons.length > 0 && (
+          <div className="flex flex-wrap gap-4 pt-7">
+            {buttons.map((btnKey) => {
+              const cfg = buttonConfig[btnKey];
+              if (!cfg) return null;
+
+              if (cfg.href) {
+                return (
+                  <Link key={btnKey} href={cfg.href} className="">
+                    <MainButton
+                      variant="outline"
+                      className="h-12 min-w-[179px] px-11"
+                    >
+                      {cfg.label}
+                    </MainButton>
+                  </Link>
+                );
+              }
+
+              if (cfg.modal) {
+                return (
+                  <MainButton
+                    key={btnKey}
+                    variant="outline"
+                    className="w-fit h-12 min-w-[210px] px-11"
+                  >
+                    {cfg.label}
+                  </MainButton>
+                );
+              }
+
+              return null;
+            })}
+          </div>
+        )}
       </div>
     </motion.li>
   );

@@ -134,7 +134,7 @@ export type FaqSection = {
     _key?: string;
     question: string;
     answer: string;
-    buttons?: Array<Record<string, unknown>>;
+    buttons?: string[];
   }>;
 };
 
