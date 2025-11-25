@@ -44,10 +44,10 @@ export default function NavDropdown({
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="absolute top-full mt-5 left-4 w-[328px]"
+            className="absolute top-full mt-5 left-4 p-px w-[328px] rounded-xl bg-[linear-gradient(146.79deg,var(--color-gradient-brown-dark)_8.8%,var(--color-black)_104.55%)]"
         >
             <div className="absolute w-5 h-5 bg-brown rotate-45 -top-2.5 left-12 -z-10"></div>
-            <ul className="flex flex-col bg-black border border-brown rounded-xl p-6 z-10 normal-case">
+            <ul className="flex flex-col bg-black rounded-xl p-6 z-10 normal-case">
                 {dynamicPagesList.map((item, index) => {
                     const hasChildren = isChildrenNotEmpty(item.children);
                     const isOpened = openedItemSlug === item.slug;
@@ -55,7 +55,7 @@ export default function NavDropdown({
                     return (
                         <li
                             key={item.slug}
-                            className="w-full border-b border-white/10 last:border-b-0 text-6 font-light leading-4"
+                            className="w-full text-6 font-light leading-4 relative"
                         >
                             <div>
                                 <div className="flex items-center w-full">
@@ -66,8 +66,11 @@ export default function NavDropdown({
                                             onLinkClick?.();
                                         }}
                                         className={clsx(
-                                            "flex items-center gap-2 text-white text-shadow-white pb-3",
+                                            "flex items-center gap-2 text-white text-shadow-white",
                                             index !== 0 && "pt-3",
+                                            index !==
+                                                dynamicPagesList.length - 1 &&
+                                                "pb-3",
                                             hasChildren ? "w-1/2" : "w-full"
                                         )}
                                     >
@@ -81,7 +84,7 @@ export default function NavDropdown({
                                                 e.stopPropagation();
                                                 handleButtonClick(item.slug);
                                             }}
-                                            className="w-1/2 flex items-center justify-end cursor-pointer transition duration-300 ease-in-out pb-3 svg-shadow-white"
+                                            className="w-1/2 flex items-center justify-end cursor-pointer transition duration-300 ease-in-out svg-shadow-white"
                                         >
                                             <ShevronIcon
                                                 className={clsx(
@@ -130,6 +133,12 @@ export default function NavDropdown({
                                     )}
                                 </AnimatePresence>
                             </div>
+                            {index !== dynamicPagesList.length - 1 && (
+                                <div
+                                    className="absolute bottom-0 left-0 bg-linear-to-r from-grey-dark to-black
+                                    h-px w-full"
+                                />
+                            )}
                         </li>
                     );
                 })}
