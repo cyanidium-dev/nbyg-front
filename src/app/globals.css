@@ -6,6 +6,7 @@
   --color-black: #000000;
   --color-white: #ffffff;
   --color-brown: #603208;
+  --color-gradient-brown-dark: #6d3a0b;
   --color-beige: #ffc189;
 
   --font-montserrat: var(--font-montserrat), sans-serif;
@@ -117,6 +118,30 @@
         filter: drop-shadow(3px 2px 5px rgba(255, 255, 255, 0.4))
           drop-shadow(-3px -2px 5px rgba(255, 255, 255, 0.4));
       }
+    }
+  }
+
+  /* Swiper */
+
+  .swiper.materials-slider {
+    padding: 0px 0px 40px 0px !important;
+
+    @media screen and (min-width: 1024px) {
+      padding: 0px 3px 24px 0px !important;
+    }
+  }
+
+  .swiper-slide {
+    flex-grow: 1 0;
+    height: auto !important;
+  }
+
+  .materials-slider .swiper-slide {
+    width: 328px !important;
+
+    @media screen and (min-width: 768px) {
+      width: 687px !important;
+      height: 230px !important;
     }
   }
 }
