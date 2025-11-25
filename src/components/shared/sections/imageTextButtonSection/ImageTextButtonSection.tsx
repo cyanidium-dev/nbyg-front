@@ -6,6 +6,10 @@ import { portableTextComponents } from "../../portableTextComponents/PortableTex
 import Image from "next/image";
 import { urlForSanityImage } from "@/utils/getUrlForSanityImage";
 import DecorativeEllipsis from "../../decorativeEllipsis/DecorativeEllipsis";
+import MainButton from "../../buttons/MainButton";
+import Link from "next/link";
+import * as motion from "motion/react-client";
+import { fadeInAnimation } from "@/utils/animationVariants";
 
 interface ImageTextButtonSectionProps extends ImageTextButtonSectionData {
   uniqueKey?: string;
@@ -27,38 +31,93 @@ const ImageTextButtonSection = (_props: ImageTextButtonSectionProps) => {
     <section className="py-25 lg:pt-[152px] lg:pb-0">
       <Container>
         <SectionTitle
-          className={`mb-8 lg:mb-9 ${titlePosition === "left" ? "text-left" : "text-right"}`}
+          className={`mb-8 lg:mb-9 md:whitespace-pre-line ${titlePosition === "left" ? "md:text-left" : "md:text-right"}`}
         >
           {title}
         </SectionTitle>
-        <div className="flex flex-col md:flex-row gap-10 md:gap-9">
-          {description ? (
-            <div className="flex flex-col gap-9">
-              <div>
-                <PortableText
-                  value={
-                    description as unknown as Parameters<
-                      typeof PortableText
-                    >[0]["value"]
-                  }
-                  components={portableTextComponents}
-                />
-              </div>
+        <div className="flex flex-col md:flex-row gap-10 md:gap-9 md:min-h-[320px]">
+          {description || buttonText ? (
+            <div className="flex flex-col gap-9 md:my-auto">
+              {description ? (
+                <motion.div
+                  key={`${uniqueKey}-portable-text`}
+                  initial="hidden"
+                  whileInView="visible"
+                  exit="exit"
+                  viewport={{ once: true, amount: 0.1 }}
+                  variants={fadeInAnimation({ scale: 0.85, delay: 0.3, y: 30 })}
+                >
+                  <PortableText
+                    value={
+                      description as unknown as Parameters<
+                        typeof PortableText
+                      >[0]["value"]
+                    }
+                    components={portableTextComponents}
+                  />
+                </motion.div>
+              ) : null}
               <DecorativeEllipsis
                 uniqueKey={uniqueKey}
                 className="hidden md:flex"
               />
+              {buttonText && buttonSlug ? (
+                <Link
+                  href={buttonSlug}
+                  className="hidden md:block md:max-w-[275px]"
+                >
+                  <MainButton
+                    variant={
+                      buttonStyle === "transparentBorder"
+                        ? "outline"
+                        : buttonStyle === "white"
+                          ? "fill"
+                          : "gradient"
+                    }
+                    className="h-[58px]"
+                  >
+                    {buttonText}
+                  </MainButton>
+                </Link>
+              ) : null}
             </div>
           ) : null}
           {image ? (
-            <div className="relative w-full md:w-[43.6%] h-[328px] md:h-auto rounded-[12px] overflow-hidden shrink-0">
+            <motion.div
+              key={`${uniqueKey}-portable-text`}
+              initial="hidden"
+              whileInView="visible"
+              exit="exit"
+              viewport={{ once: true, amount: 0.1 }}
+              variants={fadeInAnimation({ scale: 0.85, delay: 0.6, x: 30 })}
+              className="relative w-full md:w-[43.6%] h-[300px] md:h-auto rounded-[12px] overflow-hidden shrink-0"
+            >
               <Image
                 src={urlForSanityImage(image).fit("crop").url()}
                 fill
                 alt="image"
                 className="object-cover"
               />
-            </div>
+            </motion.div>
+          ) : null}
+          {buttonText && buttonSlug ? (
+            <Link
+              href={buttonSlug}
+              className="block md:hidden md:max-w-[275px]"
+            >
+              <MainButton
+                variant={
+                  buttonStyle === "transparentBorder"
+                    ? "outline"
+                    : buttonStyle === "white"
+                      ? "fill"
+                      : "gradient"
+                }
+                className="h-[58px]"
+              >
+                {buttonText}
+              </MainButton>
+            </Link>
           ) : null}
         </div>
       </Container>

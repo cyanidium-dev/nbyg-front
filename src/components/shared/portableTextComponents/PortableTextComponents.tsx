@@ -2,7 +2,7 @@ import type { PortableTextComponents } from "@portabletext/react";
 
 export const portableTextComponents: Partial<PortableTextComponents> = {
   block: {
-    normal: ({ children }) => <p>{children}</p>,
+    normal: ({ children }) => <p className="not-last:mb-3">{children}</p>,
   },
   list: {
     bullet: ({ children }) => (
