@@ -33,7 +33,7 @@ export default function Header({ dynamicPagesList }: HeaderProps) {
 
     return (
         <>
-            <header className="fixed top-7 left-0 right-0 z-50 py-2 transition duration-300 ease-in-out">
+            <header className="fixed top-7 left-0 right-0 z-50 py-2">
                 <div
                     className={clsx(
                         "absolute inset-y-0 left-1/2 -translate-x-1/2 -z-10 rounded-full transition duration-300 ease-in-out",

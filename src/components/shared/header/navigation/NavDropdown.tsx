@@ -88,7 +88,7 @@ export default function NavDropdown({
                                         >
                                             <ShevronIcon
                                                 className={clsx(
-                                                    "w-4 h-4 fill-white transition duration-300 ease-in-out",
+                                                    "w-4 h-4 fill-white",
                                                     isOpened
                                                         ? "rotate-0"
                                                         : "rotate-180"

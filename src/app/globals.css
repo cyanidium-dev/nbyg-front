@@ -97,7 +97,6 @@
                 &:hover svg {
                     filter: drop-shadow(3px 2px 5px var(--color-white))
                         drop-shadow(-3px -2px 5px var(--color-white));
-                    transition: filter 300ms ease-in-out;
                 }
                 &:focus-visible {
                     filter: none;
@@ -105,7 +104,11 @@
                 &:focus-visible svg {
                     filter: drop-shadow(3px 2px 5px var(--color-white))
                         drop-shadow(-3px -2px 5px var(--color-white));
-                    transition: filter 300ms ease-in-out;
+                }
+                svg {
+                    transition:
+                        filter 300ms ease-in-out,
+                        transform 300ms ease-in-out;
                 }
             }
         }
