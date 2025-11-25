@@ -81,16 +81,16 @@ export type TableSection = {
 export type MaterialSliderSection = {
   _type: "materialSliderSection";
   type: "materialSliderSection";
-  title?: string;
-  titlePosition?: string;
-  subtitle?: string;
-  description1?: PortableText;
-  description2?: PortableText;
-  slides?: Array<{
+  title: string;
+  titlePosition: string;
+  subtitle: string;
+  description1: PortableText;
+  description2: PortableText;
+  slides: Array<{
     _key?: string;
-    image?: SanityImage;
-    title?: string;
-    description?: PortableText;
+    image: SanityImage;
+    title: string;
+    description: string;
   }>;
 };
 
@@ -134,7 +134,7 @@ export type FaqSection = {
     _key?: string;
     question: string;
     answer: string;
-    buttons?: Array<Record<string, unknown>>;
+    buttons?: string[];
   }>;
 };
 
