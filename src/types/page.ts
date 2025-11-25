@@ -70,8 +70,8 @@ export type TableSection = {
   type: "tableSection";
   title: string;
   description?: string;
-  image?: SanityImage;
   desktopAlignment: "left" | "right";
+  showDecorativeCircles: boolean;
   columns: Array<{
     _key?: string;
     title: string;

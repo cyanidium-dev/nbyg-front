@@ -2,7 +2,6 @@ import type { TableSection as TableSectionData } from "@/types/page";
 import Container from "../../container/Container";
 import SectionTitle from "../../titles/SectionTitle";
 import Image from "next/image";
-import { urlForSanityImage } from "@/utils/getUrlForSanityImage";
 import TableList from "./TableList";
 import * as motion from "motion/react-client";
 import { fadeInAnimation } from "@/utils/animationVariants";
@@ -13,16 +12,22 @@ interface TableSectionProps extends TableSectionData {
 }
 
 const TableSection = (_props: TableSectionProps) => {
-  const { title, description, image, desktopAlignment, columns, uniqueKey } =
-    _props;
+  const {
+    title,
+    description,
+    desktopAlignment,
+    showDecorativeCircles,
+    columns,
+    uniqueKey,
+  } = _props;
 
   return (
     <section className="py-25 lg:pt-[138px] lg:pb-0">
       <Container
-        className={`relative flex flex-col gap-10 xl:gap-[70px] xl:items-center ${desktopAlignment === "right" ? "xl:flex-row" : "xl:flex-row-reverse"}`}
+        className={`relative flex flex-col gap-10 xl:gap-20 xl:items-end ${desktopAlignment === "right" ? "xl:flex-row" : "xl:flex-row-reverse"}`}
       >
         <motion.div
-          key={`${uniqueKey}-cta-section-image1`}
+          key={`${uniqueKey}-table-section-ellipsis`}
           initial="hidden"
           whileInView="visible"
           exit="exit"
@@ -42,25 +47,31 @@ const TableSection = (_props: TableSectionProps) => {
           <div className="relative">
             <DecorativeEllipsis
               uniqueKey={uniqueKey}
-              className="absolute -top-[26px] left-0 lg:left-auto lg:top-auto lg:right-0 lg:bottom-5"
+              className="lg:hidden absolute -top-[26px] left-0 lg:left-auto lg:top-auto lg:right-0 lg:bottom-5"
             />
             <SectionTitle>{title}</SectionTitle>
           </div>
-          {image ? (
-            <div className="relative min-h-[95px] lg:min-h-[162px] h-auto">
-              <Image
-                src={urlForSanityImage(image).fit("crop").url()}
-                alt="table section image"
-                fill
-                className="object-cover"
-              />
-            </div>
-          ) : null}
           {description ? (
-            <p className="whitespace-pre-line">{description}</p>
+            <motion.p
+              key={`${uniqueKey}-table-section-description`}
+              initial="hidden"
+              whileInView="visible"
+              exit="exit"
+              viewport={{ once: true, amount: 0.1 }}
+              variants={fadeInAnimation({ scale: 0.85, delay: 0.3, y: 30 })}
+              className="whitespace-pre-line"
+            >
+              {description}
+            </motion.p>
+          ) : null}
+          {showDecorativeCircles ? (
+            <DecorativeEllipsis
+              uniqueKey={uniqueKey}
+              className="hidden xl:flex mt-1"
+            />
           ) : null}
         </div>
-        <TableList columns={columns} />
+        <TableList columns={columns} uniqueKey={uniqueKey} />
       </Container>
     </section>
   );
