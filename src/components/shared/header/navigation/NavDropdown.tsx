@@ -84,7 +84,7 @@ export default function NavDropdown({
                                                 e.stopPropagation();
                                                 handleButtonClick(item.slug);
                                             }}
-                                            className="w-1/2 flex items-center justify-end cursor-pointer transition duration-300 ease-in-out svg-shadow-white"
+                                            className="w-1/2 flex items-center justify-end cursor-pointer svg-shadow-white"
                                         >
                                             <ShevronIcon
                                                 className={clsx(

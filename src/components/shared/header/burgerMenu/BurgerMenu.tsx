@@ -54,7 +54,7 @@ export default function BurgerMenu({
                     </div>
 
                     {/* Fixed bottom button area with padding */}
-                    <div className="shrink-0 pb-[62px] pt-4">
+                    <div className="shrink-0 pb-[62px] pt-1">
                         <Container>
                             <MainButton
                                 className="w-full h-12"

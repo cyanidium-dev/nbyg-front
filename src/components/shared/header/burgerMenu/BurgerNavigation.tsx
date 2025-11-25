@@ -28,14 +28,14 @@ export default function Navigation({
     const buttonRef = useRef<HTMLButtonElement>(null);
     return (
         <nav className={className}>
-            <ul className={twMerge("flex flex-col gap-9 w-full")}>
+            <ul className={twMerge("flex flex-col gap-7 w-full")}>
                 {mainNavList.map(item => (
                     <li key={item.href} className="relative min-h-[39px]">
-                        <div className="flex items-center w-full">
+                        <div className="flex  w-full">
                             <Link
                                 href={item.href}
                                 className={clsx(
-                                    "uppercase text-[16px] text-light flex items-center",
+                                    "uppercase text-[16px] text-light",
                                     item.dropdown ? "w-1/2" : "w-full"
                                 )}
                                 onClick={() => setIsBurgerMenuOpened?.(false)}
@@ -53,11 +53,11 @@ export default function Navigation({
                                         );
                                     }}
                                     type="button"
-                                    className="w-1/2 flex items-center justify-end cursor-pointer transition duration-300 ease-in-out"
+                                    className="w-1/2 flex items-center justify-end cursor-pointer"
                                 >
                                     <ShevronIcon
                                         className={clsx(
-                                            "w-5 h-5 transition duration-300 ease-in-out",
+                                            "size-6 transition duration-300 ease-in-out",
                                             isDropdownOpen
                                                 ? "rotate-0"
                                                 : "rotate-180"
@@ -77,7 +77,7 @@ export default function Navigation({
                                         duration: 0.3,
                                         ease: "easeInOut",
                                     }}
-                                    className="overflow-hidden"
+                                    className="overflow-hidden mt-[18px]"
                                 >
                                     <BurgerNavigationDropdown
                                         dropdownRef={dropdownRef}

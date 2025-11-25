@@ -41,20 +41,20 @@ export default function BurgerNavigationDropdown({
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="mt-[18px] w-full mb-[18px]"
+            className="w-full mb-[18px]"
         >
             <ul className="flex flex-col normal-case w-full">
                 {dynamicPagesList.map((item, index) => (
                     <li
                         key={item.slug}
-                        className="relative w-full text-[14px] font-light leading-[143%]"
+                        className="relative w-full text-[14px] font-light leading-[121%] tracking-tight"
                     >
-                        <div className="flex items-center w-full">
+                        <div className="flex items-end w-full">
                             <Link
                                 href={`${parentHref}/${item.slug}`}
                                 onClick={onLinkClick}
                                 className={clsx(
-                                    "text-white flex items-center pb-4",
+                                    "text-white pb-3",
                                     index !== 0 && "pt-4",
                                     isChildrenNotEmpty(item.children)
                                         ? "w-1/2"
@@ -75,11 +75,11 @@ export default function BurgerNavigationDropdown({
                                         );
                                     }}
                                     type="button"
-                                    className="w-1/2 flex items-center pt-4 pb-3 justify-end cursor-pointer transition duration-300 ease-in-out"
+                                    className="w-1/2 flex items-center pt-5 pb-3 justify-end cursor-pointer"
                                 >
                                     <ShevronIcon
                                         className={clsx(
-                                            "w-4 h-4 fill-white transition duration-300 ease-in-out",
+                                            "size-6 fill-white transition duration-300 ease-in-out",
                                             openDropdownSlug === item.slug
                                                 ? "rotate-0"
                                                 : "rotate-180"
@@ -101,7 +101,7 @@ export default function BurgerNavigationDropdown({
                                             duration: 0.3,
                                             ease: "easeInOut",
                                         }}
-                                        className="flex flex-col gap-3 overflow-hidden"
+                                        className="flex flex-col pb-1 gap-3 overflow-hidden"
                                     >
                                         {item.children?.map(child => (
                                             <li key={child.slug}>
@@ -120,7 +120,7 @@ export default function BurgerNavigationDropdown({
                         {openDropdownSlug !== item.slug && (
                             <div
                                 className="absolute bottom-0 left-0 bg-linear-to-r from-grey-dark to-black
-                                    h-[1px] w-full"
+                                    h-px w-full"
                             />
                         )}
                     </li>
