@@ -68,13 +68,14 @@ export type CtaSection = {
 export type TableSection = {
   _type: "tableSection";
   type: "tableSection";
-  title?: string;
-  description?: PortableText;
-  desktopAlignment?: "left" | "right" | "center" | string;
-  columns?: Array<{
+  title: string;
+  description?: string;
+  desktopAlignment: "left" | "right";
+  showDecorativeCircles: boolean;
+  columns: Array<{
     _key?: string;
-    title?: string;
-    values?: string[];
+    title: string;
+    values: string[];
   }>;
 };
 

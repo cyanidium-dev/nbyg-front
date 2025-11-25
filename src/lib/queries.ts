@@ -70,6 +70,7 @@ export const PAGE_BY_SLUG_QUERY = `*[
       title,
       description,
       desktopAlignment,
+      showDecorativeCircles,
       columns[]{
         title,
         values
