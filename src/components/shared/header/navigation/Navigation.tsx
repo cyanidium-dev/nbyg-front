@@ -94,7 +94,7 @@ export default function Navigation({ dynamicPagesList }: NavigationProps) {
                                         >
                                             <ShevronIcon
                                                 className={clsx(
-                                                    "w-5 h-5 fill-white svg-shadow-white"
+                                                    "w-5 h-5 fill-white"
                                                 )}
                                             />
                                         </span>
