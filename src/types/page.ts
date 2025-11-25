@@ -118,8 +118,8 @@ export type BeforeAfterSection = {
 export type ImageTextButtonSection = {
   _type: "imageTextButtonSection";
   type: "imageTextButtonSection";
-  title?: string;
-  titlePosition?: string;
+  title: string;
+  titlePosition: string;
   image?: SanityImage;
   description?: PortableText;
   buttonStyle?: string;

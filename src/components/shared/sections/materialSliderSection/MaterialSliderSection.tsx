@@ -2,11 +2,12 @@ import type { MaterialSliderSection as MaterialSliderSectionData } from "@/types
 import Container from "../../container/Container";
 import SectionTitle from "../../titles/SectionTitle";
 import DecorativeEllipsis from "../../decorativeEllipsis/DecorativeEllipsis";
-import { PortableText, type PortableTextComponents } from "@portabletext/react";
+import { PortableText } from "@portabletext/react";
 import MaterialsSlider from "./MaterialsSlider";
 import * as motion from "motion/react-client";
 import { fadeInAnimation } from "@/utils/animationVariants";
 import MaterialsSliderDecorations from "./MaterialsSliderDecorations";
+import { portableTextComponents } from "../../portableTextComponents/PortableTextComponents";
 
 interface MaterialSliderSectionProps extends MaterialSliderSectionData {
   uniqueKey?: string;
@@ -22,25 +23,6 @@ const MaterialSliderSection = (_props: MaterialSliderSectionProps) => {
     slides,
     uniqueKey,
   } = _props;
-
-  const portableTextComponents: Partial<PortableTextComponents> = {
-    block: {
-      normal: ({ children }) => <p>{children}</p>,
-    },
-    list: {
-      bullet: ({ children }) => (
-        <ul
-          className="space-y-2"
-          style={{ listStyle: "disc", paddingLeft: "1.5rem" }}
-        >
-          {children}
-        </ul>
-      ),
-    },
-    listItem: {
-      bullet: ({ children }) => <li>{children}</li>,
-    },
-  };
 
   return (
     <section className="overflow-hidden">
