@@ -147,4 +147,12 @@
             height: 230px !important;
         }
     }
+
+    .table-list-grid {
+        grid-template-columns: repeat(var(--columns-count), minmax(0, 1fr));
+
+        @media screen and (min-width: 1280px) {
+            grid-template-columns: repeat(var(--columns-count), minmax(0, 155px));
+        }
+    }
 }

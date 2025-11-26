@@ -7,6 +7,7 @@ import Image from "next/image";
 import { urlForSanityImage } from "@/utils/getUrlForSanityImage";
 import MainButton from "../../buttons/MainButton";
 import ShevronIcon from "../../icons/ShevronIcon";
+import Link from "next/link";
 
 interface HeroSectionProps extends HeroSectionData {
   uniqueKey?: string;
@@ -19,7 +20,8 @@ const HeroSection = (_props: HeroSectionProps) => {
     mobileImage,
     desktopImage,
     showDiscussButton,
-    showCalculatorButton,
+    showCalculatorTerraceButton,
+    showCalculatorRoofButton,
     uniqueKey,
   } = _props;
 
@@ -92,10 +94,19 @@ const HeroSection = (_props: HeroSectionProps) => {
               Tryk her for at drofte projektet
             </MainButton>
           )}
-          {showCalculatorButton && (
-            <MainButton variant="gradient" className="h-12 sm:w-[275px]">
-              Beregn din terrasse <ShevronIcon className="size-5 rotate-90" />
-            </MainButton>
+          {showCalculatorTerraceButton && (
+            <Link href="/calculator-terrasse">
+              <MainButton variant="gradient" className="h-12 sm:w-[275px]">
+                Beregn din terrasse <ShevronIcon className="size-5 rotate-90" />
+              </MainButton>
+            </Link>
+          )}
+          {showCalculatorRoofButton && (
+            <Link href="/calculator-tag">
+              <MainButton variant="gradient" className="h-12 sm:w-[275px]">
+                Gratis tagberegner <ShevronIcon className="size-5 rotate-90" />
+              </MainButton>
+            </Link>
           )}
         </motion.div>
       </Container>

@@ -48,7 +48,7 @@ export default async function RootLayout({
     <html lang="da">
       <body
         className={`${geistSans.variable} ${findSans.variable} flex min-h-screen flex-col antialiased text-[14px] lg:text-[16px] font-light 
-        leading-[143%] overflow-hidden`}
+        leading-[143%] lg:leading-[125%] overflow-hidden`}
       >
         <Header dynamicPagesList={dynamicPagesList} />
         <main className="flex-1">{children}</main>

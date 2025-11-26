@@ -39,7 +39,8 @@ export const PAGE_BY_SLUG_QUERY = `*[
       desktopImage,
       mobileImage,
       showDiscussButton,
-      showCalculatorButton
+      showCalculatorTerraceButton,
+      showCalculatorRoofButton
     },
     _type == "ctaSection" => {
       "type": _type,

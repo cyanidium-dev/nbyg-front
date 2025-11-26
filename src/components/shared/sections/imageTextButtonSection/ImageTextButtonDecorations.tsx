@@ -34,7 +34,7 @@ export default function ImageTextButtonDecorations({
         />
         <div
           className={`hidden lg:block absolute  w-[1134px] h-[504px] rounded-full bg-black supports-backdrop-filter:blur-[53px] 
-            will-change-transform ${imagePosition === "right" ? "top-14 right-[-109px]" : "lg:top-[18px] lg:left-[calc(50%-500px)]"}`}
+            will-change-transform ${imagePosition === "right" ? "top-14 right-[-109px]" : "lg:top-[-18px] lg:left-[calc(50%-500px)]"}`}
         />
       </motion.div>
     </div>

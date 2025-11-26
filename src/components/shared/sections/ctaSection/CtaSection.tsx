@@ -18,6 +18,8 @@ const CtaSection = (_props: CtaSectionProps) => {
   const { title, description, image, buttonType, uniqueKey, showMoreOnMobile } =
     _props;
 
+  console.log(buttonType);
+
   return (
     <section>
       <Container className="relative py-25 lg:pt-[127px] lg:pb-0">
@@ -65,11 +67,21 @@ const CtaSection = (_props: CtaSectionProps) => {
               showMoreOnMobile={showMoreOnMobile}
             />
 
-            <MainButton className="hidden md:block h-[58px]">
-              {buttonType === "calculator"
-                ? "Begær terrassepris"
-                : "Kontakt os"}
-            </MainButton>
+            {buttonType === "calculatorTerrace" ? (
+              <Link href="/calculator-terrasser" className="hidden md:block">
+                <MainButton className="h-[58px]">Begær terrassepris</MainButton>
+              </Link>
+            ) : buttonType === "calculatorRoof" ? (
+              <Link href="/calculator-tag" className="hidden md:block">
+                <MainButton className="h-[58px]">
+                  Beregn prisen på taget
+                </MainButton>
+              </Link>
+            ) : (
+              <MainButton className="hidden md:block h-[58px]">
+                Kontakt os
+              </MainButton>
+            )}
           </motion.div>
           <motion.div
             key={`${uniqueKey}-cta-image-${title}`}
