@@ -121,6 +121,7 @@ export type ImageTextButtonSection = {
   title: string;
   titlePosition: string;
   image?: SanityImage;
+  imagePosition: string;
   description?: PortableText;
   buttonStyle?: string;
   buttonText?: string;

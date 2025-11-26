@@ -22,6 +22,7 @@ const ImageTextButtonSection = (_props: ImageTextButtonSectionProps) => {
     titlePosition,
     description,
     image,
+    imagePosition,
     buttonText,
     buttonStyle,
     buttonSlug,
@@ -29,11 +30,13 @@ const ImageTextButtonSection = (_props: ImageTextButtonSectionProps) => {
   } = _props;
 
   return (
-    <section className="overflow-hidden">
+    <section
+      className={`${imagePosition === "right" ? "lg:overflow-hidden" : ""}`}
+    >
       <Container className="relative py-25 lg:pt-[152px] lg:pb-0">
         <ImageTextButtonDecorations
           uniqueKey={uniqueKey}
-          titlePosition={titlePosition}
+          imagePosition={imagePosition}
         />
         <div className="relative">
           <DecorativeEllipsis
@@ -46,7 +49,9 @@ const ImageTextButtonSection = (_props: ImageTextButtonSectionProps) => {
             {title}
           </SectionTitle>
         </div>
-        <div className="flex flex-col md:flex-row gap-10 md:gap-9 md:min-h-[320px]">
+        <div
+          className={`flex flex-col gap-10 md:gap-9 md:min-h-[320px] ${imagePosition === "right" ? "md:flex-row" : "md:flex-row-reverse"}`}
+        >
           {description || buttonText ? (
             <div className="flex flex-col gap-9 md:my-auto">
               {description ? (
@@ -73,23 +78,31 @@ const ImageTextButtonSection = (_props: ImageTextButtonSectionProps) => {
                 className="hidden md:flex"
               />
               {buttonText && buttonSlug ? (
-                <Link
-                  href={buttonSlug}
+                <motion.div
+                  key={`${uniqueKey}-button-desktop`}
+                  initial="hidden"
+                  whileInView="visible"
+                  exit="exit"
+                  viewport={{ once: true, amount: 0.1 }}
+                  variants={fadeInAnimation({ scale: 0.85, delay: 0.4, y: 30 })}
                   className="hidden md:block md:max-w-[275px]"
                 >
-                  <MainButton
-                    variant={
-                      buttonStyle === "transparentBorder"
-                        ? "outline"
-                        : buttonStyle === "white"
-                          ? "fill"
-                          : "gradient"
-                    }
-                    className="h-[58px]"
-                  >
-                    {buttonText}
-                  </MainButton>
-                </Link>
+                  {" "}
+                  <Link href={buttonSlug}>
+                    <MainButton
+                      variant={
+                        buttonStyle === "transparentBorder"
+                          ? "outline"
+                          : buttonStyle === "white"
+                            ? "fill"
+                            : "gradient"
+                      }
+                      className="h-[58px]"
+                    >
+                      {buttonText}
+                    </MainButton>
+                  </Link>
+                </motion.div>
               ) : null}
             </div>
           ) : null}
@@ -100,7 +113,7 @@ const ImageTextButtonSection = (_props: ImageTextButtonSectionProps) => {
               whileInView="visible"
               exit="exit"
               viewport={{ once: true, amount: 0.1 }}
-              variants={fadeInAnimation({ scale: 0.85, delay: 0.8, x: 30 })}
+              variants={fadeInAnimation({ scale: 0.85, delay: 0.5, x: 30 })}
               className="relative w-full md:w-[43.6%] h-[300px] md:h-auto rounded-[12px] overflow-hidden shrink-0"
             >
               <Image
@@ -112,23 +125,30 @@ const ImageTextButtonSection = (_props: ImageTextButtonSectionProps) => {
             </motion.div>
           ) : null}
           {buttonText && buttonSlug ? (
-            <Link
-              href={buttonSlug}
-              className="block md:hidden md:max-w-[275px]"
+            <motion.div
+              key={`${uniqueKey}-button-mobile`}
+              initial="hidden"
+              whileInView="visible"
+              exit="exit"
+              viewport={{ once: true, amount: 0.1 }}
+              variants={fadeInAnimation({ scale: 0.85, delay: 0.4, y: 30 })}
+              className="md:hidden md:max-w-[275px]"
             >
-              <MainButton
-                variant={
-                  buttonStyle === "transparentBorder"
-                    ? "outline"
-                    : buttonStyle === "white"
-                      ? "fill"
-                      : "gradient"
-                }
-                className="h-[58px]"
-              >
-                {buttonText}
-              </MainButton>
-            </Link>
+              <Link href={buttonSlug}>
+                <MainButton
+                  variant={
+                    buttonStyle === "transparentBorder"
+                      ? "outline"
+                      : buttonStyle === "white"
+                        ? "fill"
+                        : "gradient"
+                  }
+                  className="h-[58px]"
+                >
+                  {buttonText}
+                </MainButton>
+              </Link>
+            </motion.div>
           ) : null}
         </div>
       </Container>

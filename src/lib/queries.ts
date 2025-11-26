@@ -100,6 +100,7 @@ export const PAGE_BY_SLUG_QUERY = `*[
       "type": _type,
       title,
       titlePosition,
+      imagePosition,
       image,
       description,
       buttonStyle,
