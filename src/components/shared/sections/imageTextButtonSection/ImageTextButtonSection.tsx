@@ -10,6 +10,7 @@ import MainButton from "../../buttons/MainButton";
 import Link from "next/link";
 import * as motion from "motion/react-client";
 import { fadeInAnimation } from "@/utils/animationVariants";
+import ImageTextButtonDecorations from "./ImageTextButtonDecorations";
 
 interface ImageTextButtonSectionProps extends ImageTextButtonSectionData {
   uniqueKey?: string;
@@ -28,13 +29,23 @@ const ImageTextButtonSection = (_props: ImageTextButtonSectionProps) => {
   } = _props;
 
   return (
-    <section className="py-25 lg:pt-[152px] lg:pb-0">
-      <Container>
-        <SectionTitle
-          className={`mb-8 lg:mb-9 md:whitespace-pre-line ${titlePosition === "left" ? "md:text-left" : "md:text-right"}`}
-        >
-          {title}
-        </SectionTitle>
+    <section className="overflow-hidden">
+      <Container className="relative py-25 lg:pt-[152px] lg:pb-0">
+        <ImageTextButtonDecorations
+          uniqueKey={uniqueKey}
+          titlePosition={titlePosition}
+        />
+        <div className="relative">
+          <DecorativeEllipsis
+            uniqueKey={uniqueKey}
+            className="md:hidden absolute -top-[26px] left-0"
+          />
+          <SectionTitle
+            className={`mb-8 lg:mb-9 md:whitespace-pre-line ${titlePosition === "left" ? "md:text-left" : "md:text-right"}`}
+          >
+            {title}
+          </SectionTitle>
+        </div>
         <div className="flex flex-col md:flex-row gap-10 md:gap-9 md:min-h-[320px]">
           {description || buttonText ? (
             <div className="flex flex-col gap-9 md:my-auto">
@@ -45,7 +56,7 @@ const ImageTextButtonSection = (_props: ImageTextButtonSectionProps) => {
                   whileInView="visible"
                   exit="exit"
                   viewport={{ once: true, amount: 0.1 }}
-                  variants={fadeInAnimation({ scale: 0.85, delay: 0.3, y: 30 })}
+                  variants={fadeInAnimation({ scale: 0.85, delay: 0.4, y: 30 })}
                 >
                   <PortableText
                     value={
@@ -89,7 +100,7 @@ const ImageTextButtonSection = (_props: ImageTextButtonSectionProps) => {
               whileInView="visible"
               exit="exit"
               viewport={{ once: true, amount: 0.1 }}
-              variants={fadeInAnimation({ scale: 0.85, delay: 0.6, x: 30 })}
+              variants={fadeInAnimation({ scale: 0.85, delay: 0.8, x: 30 })}
               className="relative w-full md:w-[43.6%] h-[300px] md:h-auto rounded-[12px] overflow-hidden shrink-0"
             >
               <Image
