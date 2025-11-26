@@ -52,7 +52,8 @@ export type HeroSection = {
   desktopImage: SanityImage;
   mobileImage: SanityImage;
   showDiscussButton?: boolean;
-  showCalculatorButton?: boolean;
+  showCalculatorTerraceButton?: boolean;
+  showCalculatorRoofButton: boolean;
 };
 
 export type CtaSection = {
