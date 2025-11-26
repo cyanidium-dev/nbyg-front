@@ -9,7 +9,7 @@ import { contactsPhoneRegex } from "@/regex/regex";
 import { useScroll } from "framer-motion";
 import MainButton from "../buttons/MainButton";
 import { DynamicPage } from "@/types/dynamicPage";
-import { BurgerMenuButton } from "./burgerMenu/BurderMenuButton";
+import { BurgerMenuButton } from "./burgerMenu/BurgerMenuButton";
 import { useState } from "react";
 import { useMotionValueEvent } from "framer-motion";
 import BurgerMenu from "./burgerMenu/BurgerMenu";
