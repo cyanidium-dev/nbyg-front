@@ -8,6 +8,7 @@ import DecorativeEllipsis from "../../decorativeEllipsis/DecorativeEllipsis";
 import * as motion from "motion/react-client";
 import { fadeInAnimation } from "@/utils/animationVariants";
 import ExpandableDescription from "./ExpandableDescription";
+import Link from "next/link";
 
 interface CtaSectionProps extends CtaSectionData {
   uniqueKey?: string;
@@ -95,11 +96,19 @@ const CtaSection = (_props: CtaSectionProps) => {
             variants={fadeInAnimation({ scale: 0.85, x: 30, delay: 0.3 })}
             className="md:hidden"
           >
-            <MainButton className="h-[58px]">
-              {buttonType === "calculator"
-                ? "Begær terrassepris"
-                : "Kontakt os"}
-            </MainButton>
+            {buttonType === "calculatorTerrace" ? (
+              <Link href="/calculator-terrasser">
+                <MainButton className="h-[58px]">Begær terrassepris</MainButton>
+              </Link>
+            ) : buttonType === "calculatorRoof" ? (
+              <Link href="/calculator-tag">
+                <MainButton className="h-[58px]">
+                  Beregn prisen på taget
+                </MainButton>
+              </Link>
+            ) : (
+              <MainButton className="h-[58px]">Kontakt os</MainButton>
+            )}
           </motion.div>
         </div>
       </Container>
