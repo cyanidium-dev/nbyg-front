@@ -22,7 +22,7 @@ export default function SectionTitle({
       viewport={{ once: true, amount: 0.3 }}
       variants={fadeInAnimation({ scale: 0.85, y: 30, x: -70 })}
       className={twMerge(
-        "font-find-sans-pro text-[24px] lg:text-[48px] font-light leading-[120%] uppercase whitespace-pre-line",
+        "font-find-sans-pro text-[24px] lg:text-[48px] font-light leading-[120%] uppercase ",
         className
       )}
     >
