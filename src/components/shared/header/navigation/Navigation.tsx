@@ -13,92 +13,131 @@ interface NavigationProps {
 }
 
 export default function Navigation({ dynamicPagesList }: NavigationProps) {
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [hoveredItem, setHoveredItem] = useState<string | null>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
-    const buttonRef = useRef<HTMLButtonElement>(null);
+    const navItemRef = useRef<HTMLLIElement>(null);
+    const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
-        if (!isDropdownOpen) return;
-
-        const handleClickOutside = (event: MouseEvent) => {
-            const target = event.target as Node;
-            const isClickInDropdown = dropdownRef.current?.contains(target);
-            const isClickInButton = buttonRef.current?.contains(target);
-
-            if (!isClickInDropdown && !isClickInButton) {
-                setIsDropdownOpen(false);
-            }
-        };
+        if (!hoveredItem) return;
 
         const handleEscape = (event: KeyboardEvent) => {
-            if (event.key === "Escape" && isDropdownOpen) {
-                setIsDropdownOpen(false);
+            if (event.key === "Escape" && hoveredItem) {
+                if (closeTimeoutRef.current) {
+                    clearTimeout(closeTimeoutRef.current);
+                }
+                setHoveredItem(null);
             }
         };
 
-        document.addEventListener("mousedown", handleClickOutside);
         document.addEventListener("keydown", handleEscape);
 
         return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
             document.removeEventListener("keydown", handleEscape);
         };
-    }, [isDropdownOpen]);
+    }, [hoveredItem]);
+
+    const handleMouseEnter = (itemHref: string, hasDropdown: boolean) => {
+        if (closeTimeoutRef.current) {
+            clearTimeout(closeTimeoutRef.current);
+            closeTimeoutRef.current = null;
+        }
+        if (hoverTimeoutRef.current) {
+            clearTimeout(hoverTimeoutRef.current);
+        }
+        if (hasDropdown) {
+            // Open dropdown instantly for navigation menu items
+            setHoveredItem(itemHref);
+        }
+    };
+
+    const handleMouseLeave = () => {
+        if (hoverTimeoutRef.current) {
+            clearTimeout(hoverTimeoutRef.current);
+            hoverTimeoutRef.current = null;
+        }
+        closeTimeoutRef.current = setTimeout(() => {
+            setHoveredItem(null);
+        }, 300);
+    };
 
     return (
         <>
             <nav className="relative hidden lg:block">
                 <ul className="flex items-center space-between gap-4 lg:gap-8 font-light uppercase leading-5 text-3">
-                    {mainNavList.map(item => (
-                        <li key={item.href} className="relative">
-                            <div className="flex items-center gap-3.5">
+                    {mainNavList.map(item => {
+                        const isHovered = hoveredItem === item.href;
+                        return (
+                            <li
+                                key={item.href}
+                                ref={navItemRef}
+                                className="relative"
+                                onMouseEnter={() =>
+                                    handleMouseEnter(item.href, !!item.dropdown)
+                                }
+                                onMouseLeave={handleMouseLeave}
+                            >
                                 <Link
                                     href={item.href}
-                                    className="text-shadow-white"
+                                    className="flex items-center gap-2 text-shadow-white"
                                 >
                                     {item.label}
-                                </Link>
-                                {item.dropdown && (
-                                    <button
-                                        ref={buttonRef}
-                                        onClick={e => {
-                                            e.preventDefault();
-                                            e.stopPropagation();
-                                            setIsDropdownOpen(
-                                                isDropdownOpen ? false : true
-                                            );
-                                        }}
-                                        type="button"
-                                        className={clsx(
-                                            "cursor-pointer w-5 h-5 flex items-center justify-center transition duration-300 ease-in-out",
-                                            isDropdownOpen
-                                                ? "rotate-0"
-                                                : "rotate-180"
-                                        )}
-                                    >
-                                        <ShevronIcon
+                                    {item.dropdown && (
+                                        <span
                                             className={clsx(
-                                                "w-5 h-5 fill-white svg-shadow-white"
+                                                "w-5 h-5 flex items-center justify-center transition duration-300 ease-in-out",
+                                                isHovered
+                                                    ? "rotate-0"
+                                                    : "rotate-180"
                                             )}
-                                        />
-                                    </button>
-                                )}
-                            </div>
-                            <AnimatePresence>
-                                {isDropdownOpen && item.dropdown && (
-                                    <NavDropdown
-                                        key="nav-dropdown"
-                                        dropdownRef={dropdownRef}
-                                        dynamicPagesList={dynamicPagesList}
-                                        parentHref={item.href}
-                                        onLinkClick={() =>
-                                            setIsDropdownOpen(false)
-                                        }
-                                    />
-                                )}
-                            </AnimatePresence>
-                        </li>
-                    ))}
+                                        >
+                                            <ShevronIcon
+                                                className={clsx(
+                                                    "w-5 h-5 fill-white"
+                                                )}
+                                            />
+                                        </span>
+                                    )}
+                                </Link>
+                                <AnimatePresence>
+                                    {isHovered && item.dropdown && (
+                                        <div
+                                            onMouseEnter={() => {
+                                                if (closeTimeoutRef.current) {
+                                                    clearTimeout(
+                                                        closeTimeoutRef.current
+                                                    );
+                                                    closeTimeoutRef.current =
+                                                        null;
+                                                }
+                                            }}
+                                            onMouseLeave={handleMouseLeave}
+                                        >
+                                            <NavDropdown
+                                                key="nav-dropdown"
+                                                dropdownRef={dropdownRef}
+                                                dynamicPagesList={
+                                                    dynamicPagesList
+                                                }
+                                                parentHref={item.href}
+                                                onLinkClick={() => {
+                                                    if (
+                                                        closeTimeoutRef.current
+                                                    ) {
+                                                        clearTimeout(
+                                                            closeTimeoutRef.current
+                                                        );
+                                                    }
+                                                    setHoveredItem(null);
+                                                }}
+                                            />
+                                        </div>
+                                    )}
+                                </AnimatePresence>
+                            </li>
+                        );
+                    })}
                 </ul>
             </nav>
         </>
