@@ -13,36 +13,50 @@ interface TableListProps {
 export default function TableList({ columns, uniqueKey }: TableListProps) {
   if (!columns || !columns?.length) return null;
 
+  // Знаходимо максимальну кількість рядків серед усіх колонок
+  const maxRows = Math.max(...columns.map((col) => col.values?.length || 0));
+
   return (
-    <motion.ul
+    <motion.div
       key={`${uniqueKey}-table-section-tables-list`}
       initial="hidden"
       whileInView="visible"
       exit="exit"
       viewport={{ once: true, amount: 0.1 }}
       variants={fadeInAnimation({ scale: 0.85, delay: 0.3, x: 30 })}
-      className="flex shrink-0 h-fit"
+      className="grid shrink-0 h-fit table-list-grid"
+      style={{
+        "--columns-count": columns.length,
+      } as React.CSSProperties}
     >
-      {columns.map(({ title, values }, idx) => (
-        <li
-          key={idx}
-          className="flex-1 not-last:border-r-[0.5px] border-white/10 text-center xl:min-w-[155px]"
+      {/* Заголовки колонок */}
+      {columns.map(({ title }, idx) => (
+        <h3
+          key={`header-${idx}`}
+          className="py-4 lg:py-5 text-[12px] lg:text-[16px] font-medium leading-[167%] border-b-[0.5px] border-white/10 text-center"
+          style={{
+            borderRight: idx < columns.length - 1 ? "0.5px solid rgba(255, 255, 255, 0.1)" : "none",
+          }}
         >
-          <h3 className="py-4 lg:py-5 text-[12px] lg:text-[16px] font-medium leading-[167%] border-b-[0.5px] border-white/10">
-            {title}
-          </h3>
-          <ul className="flex flex-col">
-            {values?.map((value, idx) => (
-              <li
-                key={idx}
-                className="py-4 lg:py-5 text-[12px] lg:text-[16px] font-light leading-[167%] not-last:border-b-[0.5px] border-white/10"
-              >
-                {value}
-              </li>
-            ))}
-          </ul>
-        </li>
+          {title}
+        </h3>
       ))}
-    </motion.ul>
+
+      {/* Рядки зі значеннями */}
+      {Array.from({ length: maxRows }).map((_, rowIdx) =>
+        columns.map(({ values }, colIdx) => (
+          <div
+            key={`cell-${rowIdx}-${colIdx}`}
+            className="py-4 lg:py-5 text-[12px] lg:text-[16px] font-light leading-[167%] text-center flex items-center justify-center"
+            style={{
+              borderRight: colIdx < columns.length - 1 ? "0.5px solid rgba(255, 255, 255, 0.1)" : "none",
+              borderBottom: rowIdx < maxRows - 1 ? "0.5px solid rgba(255, 255, 255, 0.1)" : "none",
+            }}
+          >
+            {values?.[rowIdx] || ""}
+          </div>
+        ))
+      )}
+    </motion.div>
   );
 }
