@@ -62,7 +62,7 @@ export type CtaSection = {
   description: string;
   showMoreOnMobile: boolean;
   image: SanityImage;
-  buttonType: "calculator" | "contact" | string;
+  buttonType: "calculatorTerrace" | "calculatorRoof" | "contact" | string;
 };
 
 export type TableSection = {
