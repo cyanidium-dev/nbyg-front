@@ -11,10 +11,12 @@ interface TextRevealCardsSliderProps {
     description: string;
     image: SanityImage;
   }>;
+  uniqueKey?: string;
 }
 
 export default function TextRevealCardsSlider({
   slides,
+  uniqueKey,
 }: TextRevealCardsSliderProps) {
   if (!slides || !slides?.length) return null;
 
@@ -23,14 +25,11 @@ export default function TextRevealCardsSlider({
       loop
       breakpoints={{
         0: {
-          spaceBetween: 16,
-          slidesPerView: "auto",
-        },
-        1024: {
-          spaceBetween: 36,
+          spaceBetween: 20,
           slidesPerView: "auto",
         },
       }}
+      uniqueKey={uniqueKey}
       swiperClassName="text-reveal-cards-slider"
     >
       {slides.map((slide, idx) => (

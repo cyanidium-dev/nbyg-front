@@ -29,15 +29,15 @@ const TextRevealCardsSliderSection = (
           ) : null}
         </div>
         <motion.div
-          key={`${uniqueKey}-materials-slider-subtitle-${title}`}
+          key={`${uniqueKey}-text-reveal-card-slider-${title}`}
           initial="hidden"
           whileInView="visible"
           exit="exit"
           viewport={{ once: true, amount: 0.2 }}
           variants={fadeInAnimation({ y: 30, scale: 0.95, delay: 0.6 })}
-          className="w-screen"
+          className="w-screen max-w-[1455px]"
         >
-          <TextRevealCardsSlider slides={cards} />
+          <TextRevealCardsSlider uniqueKey={uniqueKey} slides={cards} />
         </motion.div>
       </Container>
     </section>

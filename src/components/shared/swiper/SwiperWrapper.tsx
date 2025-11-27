@@ -74,7 +74,7 @@ export default function SwiperWrapper({
   return (
     <>
       <Swiper
-        key={uniqueKey}
+        key={`${uniqueKey}-swiper`}
         onSwiper={(swiper) => {
           swiperInstanceRef.current = swiper;
         }}
@@ -91,6 +91,7 @@ export default function SwiperWrapper({
         {children}
       </Swiper>
       <div
+        key={`${uniqueKey}-buttons`}
         className={`flex gap-3 items-center justify-between pr-8 lg:pr-30 sm:mr-[calc(100%-640px)] md:mr-[calc(100%-768px)] 
           lg:mr-[calc(100%-1024px)] xl:mr-[calc(100%-1280px)] mb-0.5 ${buttonsPosition === "right" ? "sm:justify-end" : "sm:justify-center"}`}
       >
