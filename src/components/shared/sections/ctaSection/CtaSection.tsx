@@ -18,8 +18,6 @@ const CtaSection = (_props: CtaSectionProps) => {
   const { title, description, image, buttonType, uniqueKey, showMoreOnMobile } =
     _props;
 
-  console.log(buttonType);
-
   return (
     <section>
       <Container className="relative py-25 lg:pt-[127px] lg:pb-0">

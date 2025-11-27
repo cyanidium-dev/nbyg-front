@@ -7,6 +7,7 @@ import GallerySection from "@/components/shared/sections/gallerySection/GalleryS
 import BeforeAfterSection from "@/components/shared/sections/beforeAfterSection/BeforeAfterSection";
 import ImageTextButtonSection from "@/components/shared/sections/imageTextButtonSection/ImageTextButtonSection";
 import FaqSection from "@/components/shared/sections/faqSection/FaqSection";
+import TableWithImageSection from "@/components/shared/sections/tableWithImageSection/TableWithImageSection";
 import { PAGE_BY_SLUG_QUERY } from "@/lib/queries";
 import { fetchSanityData } from "@/utils/fetchSanityData";
 import type { PageSection, SanityPage } from "@/types/page";
@@ -26,6 +27,7 @@ const sectionComponentMap: Partial<
   beforeAfterSection: BeforeAfterSection as ComponentType<PageSection>,
   imageTextButtonSection: ImageTextButtonSection as ComponentType<PageSection>,
   faqSection: FaqSection as ComponentType<PageSection>,
+  tableWithImageSection: TableWithImageSection as ComponentType<PageSection>,
 };
 
 export default async function ServicePage({ params }: ServicePageProps) {

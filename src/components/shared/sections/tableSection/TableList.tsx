@@ -52,7 +52,7 @@ export default function TableList({ columns, uniqueKey }: TableListProps) {
         columns.map(({ values }, colIdx) => (
           <div
             key={`cell-${rowIdx}-${colIdx}`}
-            className="py-4 lg:py-5 text-[12px] lg:text-[16px] font-light leading-[167%] lg:leading-[125%] text-center flex items-center justify-center"
+            className="py-4 lg:py-5 px-5 text-[12px] lg:text-[16px] font-light leading-[167%] lg:leading-[125%] text-center flex items-center justify-center"
             style={{
               borderRight:
                 colIdx < columns.length - 1
