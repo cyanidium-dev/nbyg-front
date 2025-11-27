@@ -18,17 +18,19 @@ const TableWithImageSection = (_props: TableWithImageSectionProps) => {
   return (
     <section className="py-25 lg:pt-[152px] lg:pb-0">
       <Container className="relative">
-        <div className="relative flex justify-between items-center mb-8 lg:mb-9">
+        <div
+          className={`relative md:flex justify-between items-center mb-8 lg:mb-9 ${tablePosition === "right" ? "md:flex-row-reverse" : "md:flex-row"}`}
+        >
           <DecorativeEllipsis
             uniqueKey={uniqueKey}
-            className="md:static absolute -top-[26px] left-0"
+            className="hidden md:flex"
           />
           <SectionTitle className="lg:whitespace-pre-line">
             {title}
           </SectionTitle>
         </div>
         <div
-          className={`flex  gap-10 xl:gap-[109px] ${tablePosition === "right" ? "flex-col xl:flex-row" : "flex-col-reverse xl:flex-row-reverse"}`}
+          className={`flex  gap-10 xl:gap-[109px] ${tablePosition === "right" ? "flex-col-reverse xl:flex-row-reverse" : "flex-col-reverse xl:flex-row"}`}
         >
           {/* Таблиця */}
           <div className="xl:w-1/2 table-with-image-wrapper">
