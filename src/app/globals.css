@@ -126,12 +126,19 @@
 
   /* Swiper */
 
-  .swiper.materials-slider,
-  .swiper.before-after-slider {
+  .swiper.materials-slider {
     padding: 0px 0px 40px 0px !important;
 
     @media screen and (min-width: 1024px) {
       padding: 0px 3px 24px 0px !important;
+    }
+  }
+
+  .swiper.before-after-slider {
+    padding: 0px 0px 24px 0px !important;
+
+    @media screen and (min-width: 1024px) {
+      padding: 0px 3px 34px 0px !important;
     }
   }
 
@@ -150,10 +157,10 @@
   }
 
   .before-after-slider .swiper-slide {
-    width: 328px !important;
+    max-width: 328px !important;
 
-    @media screen and (min-width: 768px) {
-      width: 373px !important;
+    @media screen and (min-width: 640px) {
+      max-width: 100% !important;
     }
   }
 

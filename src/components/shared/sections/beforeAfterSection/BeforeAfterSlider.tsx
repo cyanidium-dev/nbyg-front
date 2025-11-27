@@ -21,11 +21,16 @@ export default function BeforeAfterSlider({ slides }: BeforeAfterSliderProps) {
           spaceBetween: 16,
           slidesPerView: "auto",
         },
+        640: {
+          spaceBetween: 16,
+          slidesPerView: 2,
+        },
         1024: {
-          spaceBetween: 20.5,
-          slidesPerView: "auto",
+          spaceBetween: 20,
+          slidesPerView: 3,
         },
       }}
+      buttonsPosition="center"
       swiperClassName="before-after-slider"
     >
       {slides.map((slide, idx) => (

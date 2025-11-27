@@ -32,7 +32,7 @@ const BeforeAfterSection = (_props: BeforeAfterSctionProps) => {
           exit="exit"
           viewport={{ once: true, amount: 0.2 }}
           variants={fadeInAnimation({ y: 30, scale: 0.95, delay: 0.6 })}
-          className="w-screen max-w-[1160px]"
+          className="w-screen sm:w-full"
         >
           <BeforeAfterSlider
             slides={items}
