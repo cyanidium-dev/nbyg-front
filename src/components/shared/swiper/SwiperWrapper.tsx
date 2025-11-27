@@ -16,6 +16,7 @@ interface SwiperWrapperProps {
   loop?: boolean;
   uniqueKey?: string;
   buttonsPosition?: "right" | "center" | "onSlides";
+  component?: ReactNode;
 }
 
 export default function SwiperWrapper({
@@ -25,6 +26,7 @@ export default function SwiperWrapper({
   loop = false,
   buttonsPosition = "right",
   uniqueKey,
+  component,
 }: SwiperWrapperProps) {
   const prevRef = useRef<HTMLButtonElement>(null);
   const nextRef = useRef<HTMLButtonElement>(null);
@@ -92,26 +94,30 @@ export default function SwiperWrapper({
       </Swiper>
       <div
         key={`${uniqueKey}-buttons`}
-        className={`flex gap-3 items-center justify-between pr-8 lg:pr-30 sm:mr-[calc(100%-640px)] md:mr-[calc(100%-768px)] 
-          lg:mr-[calc(100%-1024px)] xl:mr-[calc(100%-1280px)] mb-0.5 ${buttonsPosition === "right" ? "sm:justify-end" : "sm:justify-center"}`}
+        className={`flex flex-col-reverse lg:flex-row lg:items-center lg:justify-between gap-10 pr-8 lg:pr-30 sm:mr-[calc(100%-640px)] md:mr-[calc(100%-768px)] 
+          lg:mr-[calc(100%-1024px)] xl:mr-[calc(100%-1280px)] mb-0.5 `}
       >
-        <button
-          ref={prevRef}
-          disabled={isBeginning && !loop}
-          className={`group enabled:cursor-pointer size-[54px] bg-white border border-white rounded-full flex items-center justify-center pointer-events-auto
+        {component}
+        <div
+          className={`flex justify-between sm:gap-3 items-center ${buttonsPosition === "right" ? "sm:justify-end sm:ml-auto" : "sm:justify-center"}`}
+        >
+          <button
+            ref={prevRef}
+            disabled={isBeginning && !loop}
+            className={`group enabled:cursor-pointer size-[54px] bg-white border border-white rounded-full flex items-center justify-center pointer-events-auto
              transition duration-300 xl:enabled:hover:opacity-70 disabled:bg-transparent`}
-        >
-          <ShevronIcon className="-rotate-90 group-enabled:text-black group-disabled:text-white mr-1" />
-        </button>
-
-        <button
-          ref={nextRef}
-          disabled={isEnd && !loop}
-          className={`group enabled:cursor-pointer size-[54px] bg-white border border-white rounded-full flex items-center justify-center pointer-events-auto transition-filter 
+          >
+            <ShevronIcon className="-rotate-90 group-enabled:text-black group-disabled:text-white mr-1" />
+          </button>
+          <button
+            ref={nextRef}
+            disabled={isEnd && !loop}
+            className={`group enabled:cursor-pointer size-[54px] bg-white border border-white rounded-full flex items-center justify-center pointer-events-auto transition-filter 
           duration-300 xl:enabled:hover:opacity-70 disabled:bg-transparent`}
-        >
-          <ShevronIcon className="rotate-90 group-enabled:text-black group-disabled:text-white ml-1" />
-        </button>
+          >
+            <ShevronIcon className="rotate-90 group-enabled:text-black group-disabled:text-white ml-1" />
+          </button>
+        </div>
       </div>
     </>
   );

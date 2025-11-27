@@ -25,7 +25,17 @@ const TextRevealCardsSliderSection = (
             {title}
           </SectionTitle>
           {description ? (
-            <p className="whitespace-pre-line">{description}</p>
+            <motion.p
+              key={`${uniqueKey}-description`}
+              initial="hidden"
+              whileInView="visible"
+              exit="exit"
+              viewport={{ once: true, amount: 0.2 }}
+              variants={fadeInAnimation({ x: 30, scale: 0.95, delay: 0.3 })}
+              className="whitespace-pre-line"
+            >
+              {description}
+            </motion.p>
           ) : null}
         </div>
         <motion.div
@@ -37,7 +47,25 @@ const TextRevealCardsSliderSection = (
           variants={fadeInAnimation({ y: 30, scale: 0.95, delay: 0.6 })}
           className="w-screen max-w-[1455px]"
         >
-          <TextRevealCardsSlider uniqueKey={uniqueKey} slides={cards} />
+          <TextRevealCardsSlider
+            uniqueKey={uniqueKey}
+            slides={cards}
+            component={
+              description2 ? (
+                <motion.p
+                  key={`${uniqueKey}-description`}
+                  initial="hidden"
+                  whileInView="visible"
+                  exit="exit"
+                  viewport={{ once: true, amount: 0.2 }}
+                  variants={fadeInAnimation({ x: 30, scale: 0.95, delay: 0.3 })}
+                  className="lg:max-w-[537px] whitespace-pre-line"
+                >
+                  {description2}
+                </motion.p>
+              ) : null
+            }
+          />
         </motion.div>
       </Container>
     </section>

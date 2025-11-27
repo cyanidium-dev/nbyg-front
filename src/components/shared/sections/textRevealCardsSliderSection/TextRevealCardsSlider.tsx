@@ -3,6 +3,7 @@ import { SwiperSlide } from "swiper/react";
 import SwiperWrapper from "../../swiper/SwiperWrapper";
 import { SanityImage } from "@/types/page";
 import TextRevealCard from "./TextRevealCard";
+import { ReactNode } from "react";
 
 interface TextRevealCardsSliderProps {
   slides: Array<{
@@ -12,11 +13,13 @@ interface TextRevealCardsSliderProps {
     image: SanityImage;
   }>;
   uniqueKey?: string;
+  component?: ReactNode;
 }
 
 export default function TextRevealCardsSlider({
   slides,
   uniqueKey,
+  component,
 }: TextRevealCardsSliderProps) {
   if (!slides || !slides?.length) return null;
 
@@ -30,6 +33,7 @@ export default function TextRevealCardsSlider({
         },
       }}
       uniqueKey={uniqueKey}
+      component={component}
       swiperClassName="text-reveal-cards-slider"
     >
       {slides.map((slide, idx) => (
