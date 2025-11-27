@@ -16,7 +16,7 @@ const TableWithImageSection = (_props: TableWithImageSectionProps) => {
   const { title, tablePosition, image, columns, uniqueKey } = _props;
 
   return (
-    <section className="py-16 lg:pt-[109px] lg:pb-0">
+    <section className="py-25 lg:pt-[152px] lg:pb-0">
       <Container className="relative">
         <div className="relative flex justify-between items-center mb-8 lg:mb-9">
           <DecorativeEllipsis
@@ -28,10 +28,10 @@ const TableWithImageSection = (_props: TableWithImageSectionProps) => {
           </SectionTitle>
         </div>
         <div
-          className={`flex flex-col gap-10 xl:gap-[109px] ${tablePosition === "right" ? "xl:flex-row" : "xl:flex-row-reverse"}`}
+          className={`flex  gap-10 xl:gap-[109px] ${tablePosition === "right" ? "flex-col xl:flex-row" : "flex-col-reverse xl:flex-row-reverse"}`}
         >
           {/* Таблиця */}
-          <div className="xl:w-1/2">
+          <div className="xl:w-1/2 table-with-image-wrapper">
             <TableList columns={columns} uniqueKey={uniqueKey} />
           </div>
 

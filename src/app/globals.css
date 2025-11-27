@@ -155,4 +155,10 @@
       grid-template-columns: repeat(var(--columns-count), minmax(0, 155px));
     }
   }
+
+  .table-with-image-wrapper .table-list-grid {
+    @media screen and (min-width: 1280px) {
+      grid-template-columns: repeat(var(--columns-count), minmax(0, 1fr));
+    }
+  }
 }
