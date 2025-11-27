@@ -15,6 +15,7 @@ interface SwiperWrapperProps {
   swiperClassName: string;
   loop?: boolean;
   uniqueKey?: string;
+  buttonsPosition?: "right" | "center" | "onSlides";
 }
 
 export default function SwiperWrapper({
@@ -22,6 +23,7 @@ export default function SwiperWrapper({
   breakpoints,
   swiperClassName,
   loop = false,
+  buttonsPosition = "right",
   uniqueKey,
 }: SwiperWrapperProps) {
   const prevRef = useRef<HTMLButtonElement>(null);
@@ -89,8 +91,8 @@ export default function SwiperWrapper({
         {children}
       </Swiper>
       <div
-        className={`flex gap-3 items-center justify-between sm:justify-end pr-8 lg:pr-30 sm:mr-[calc(100%-640px)] md:mr-[calc(100%-768px)] 
-          lg:mr-[calc(100%-1024px)] xl:mr-[calc(100%-1280px)] mb-0.5`}
+        className={`flex gap-3 items-center justify-between pr-8 lg:pr-30 sm:mr-[calc(100%-640px)] md:mr-[calc(100%-768px)] 
+          lg:mr-[calc(100%-1024px)] xl:mr-[calc(100%-1280px)] mb-0.5 ${buttonsPosition === "right" ? "sm:justify-end" : "sm:justify-center"}`}
       >
         <button
           ref={prevRef}

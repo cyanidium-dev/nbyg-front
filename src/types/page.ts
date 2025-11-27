@@ -109,10 +109,10 @@ export type GallerySection = {
 export type BeforeAfterSection = {
   _type: "beforeAfterSection";
   type: "beforeAfterSection";
-  items?: Array<{
+  items: Array<{
     _key?: string;
-    beforeImage?: SanityImage;
-    afterImage?: SanityImage;
+    beforeImage: SanityImage;
+    afterImage: SanityImage;
   }>;
 };
 
