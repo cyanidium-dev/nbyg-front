@@ -117,6 +117,17 @@ export const PAGE_BY_SLUG_QUERY = `*[
         title,
         values
       }
+    },
+    _type == "textReavealCardsSliderSection" => {
+      "type": _type,
+      title,
+      description,
+      description2,
+      cards[]{
+        title,
+        description,
+        image
+      }
     }
   },
   seo{

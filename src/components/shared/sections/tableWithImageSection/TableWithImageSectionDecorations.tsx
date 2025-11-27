@@ -21,7 +21,7 @@ export default function TableWithImageSectionDecorations({
         whileInView="visible"
         exit="exit"
         viewport={{ once: true, amount: 0.1 }}
-        variants={fadeInAnimation({ scale: 0.85, delay: 0, duration: 0.4 })}
+        variants={fadeInAnimation({ scale: 0.85, delay: 1 })}
         className={`absolute -z-10 ${tablePosition === "right" ? "xl:bottom-[-118px] xl:right-[calc(50%-50px)]" : "xl:bottom-[-271px] xl:right-[calc(50%-630px)]"} 
         w-[337px] xl:w-[645px] h-auto aspect-337/421`}
       >
