@@ -141,6 +141,19 @@ export type FaqSection = {
   }>;
 };
 
+export type TableWithImageSection = {
+  _type: "tableWithImageSection";
+  type: "tableWithImageSection";
+  title: string;
+  tablePosition: "left" | "right";
+  image: SanityImage;
+  columns: Array<{
+    _key?: string;
+    title: string;
+    values: string[];
+  }>;
+};
+
 export type PageSection =
   | HeroSection
   | CtaSection
@@ -150,6 +163,7 @@ export type PageSection =
   | BeforeAfterSection
   | ImageTextButtonSection
   | FaqSection
+  | TableWithImageSection
   | (Record<string, unknown> & { _type: string; type?: string }); // fallback
 
 // ---- Основний тип сторінки ----

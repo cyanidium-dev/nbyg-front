@@ -107,6 +107,16 @@ export const PAGE_BY_SLUG_QUERY = `*[
       buttonStyle,
       buttonText,
       "buttonSlug": buttonPage->slug.current
+    },
+    _type == "tableWithImageSection" => {
+      "type": _type,
+      title,
+      tablePosition,
+      image,
+      columns[]{
+        title,
+        values
+      }
     }
   },
   seo{
