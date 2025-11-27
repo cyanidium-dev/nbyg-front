@@ -22,7 +22,7 @@ export default function ImageTextButtonDecorations({
         exit="exit"
         viewport={{ once: true, amount: 0.1 }}
         variants={fadeInAnimation({ scale: 0.85, delay: 0, duration: 0.5 })}
-        className={`absolute -top-5 right-[calc(50%-332px)] sm:right-[calc(50%-500px)] ${imagePosition === "right" ? "lg:top-[-328px] lg:right-[calc(50%-500px)]" : "lg:top-[-135px] lg:left-[calc(50%-650px)]"} 
+        className={`absolute -top-5 right-[calc(50%-332px)] sm:right-[calc(50%-500px)] md:right-[calc(50%-600px)] ${imagePosition === "right" ? "lg:top-[-328px] lg:right-[calc(50%-500px)]" : "lg:top-[-135px] lg:left-[calc(50%-650px)]"} 
         w-[337px] lg:w-[634px] h-auto aspect-337/421`}
       >
         <Image

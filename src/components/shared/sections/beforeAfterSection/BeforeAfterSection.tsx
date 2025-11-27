@@ -5,6 +5,7 @@ import DecorativeEllipsis from "../../decorativeEllipsis/DecorativeEllipsis";
 import BeforeAfterSlider from "./BeforeAfterSlider";
 import * as motion from "motion/react-client";
 import { fadeInAnimation } from "@/utils/animationVariants";
+import BeforeAFterSectionDecorations from "./BeforeAfterDecorations";
 
 interface BeforeAfterSctionProps extends BeforeAfterSctionData {
   uniqueKey?: string;
@@ -17,7 +18,8 @@ const BeforeAfterSection = (_props: BeforeAfterSctionProps) => {
 
   return (
     <section>
-      <Container className="py-25 lg:pt-[138px] lg:pb-0">
+      <Container className="relative py-25 lg:pt-[138px] lg:pb-0">
+        <BeforeAFterSectionDecorations uniqueKey={uniqueKey} />
         <div className="relative lg:max-w-[641px] mb-8 lg:mb-[50px]">
           <DecorativeEllipsis
             uniqueKey={uniqueKey}

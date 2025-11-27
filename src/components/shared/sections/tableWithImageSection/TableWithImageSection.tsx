@@ -47,7 +47,7 @@ const TableWithImageSection = (_props: TableWithImageSectionProps) => {
               whileInView="visible"
               exit="exit"
               viewport={{ once: true, amount: 0.1 }}
-              variants={fadeInAnimation({ scale: 0.85, delay: 0.6, x: 30 })}
+              variants={fadeInAnimation({ scale: 0.85, delay: 0.4, x: 30 })}
               className="relative w-full xl:w-1/2 h-[300px] xl:h-auto rounded-[12px] overflow-hidden shrink-0"
             >
               <Image

@@ -154,6 +154,20 @@ export type TableWithImageSection = {
   }>;
 };
 
+export type TextRevealCardsSliderSection = {
+  _type: "textReavealCardsSliderSection";
+  type: "textReavealCardsSliderSection";
+  title: string;
+  description?: string;
+  description2?: string;
+  cards: Array<{
+    _key?: string;
+    title: string;
+    description: string;
+    image: SanityImage;
+  }>;
+};
+
 export type PageSection =
   | HeroSection
   | CtaSection
@@ -164,6 +178,7 @@ export type PageSection =
   | ImageTextButtonSection
   | FaqSection
   | TableWithImageSection
+  | TextRevealCardsSliderSection
   | (Record<string, unknown> & { _type: string; type?: string }); // fallback
 
 // ---- Основний тип сторінки ----

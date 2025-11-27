@@ -16,7 +16,7 @@ export default function FaqSectionImages({ uniqueKey }: FaqSectionImagesProps) {
         exit="exit"
         viewport={{ once: true, amount: 0.1 }}
         variants={fadeInAnimation({ scale: 0.85, delay: 0.3 })}
-        className="absolute -top-2 lg:top-auto lg:bottom-[-216px] right-[calc(50%-352px)] sm:right-[calc(50%-500px)] lg:right-auto lg:left-[294px] w-[337px] 
+        className="absolute -top-2 lg:top-auto lg:bottom-[-216px] right-[calc(50%-352px)] sm:right-[calc(50%-500px)] md:right-[calc(50%-600px)] lg:right-auto lg:left-[294px] w-[337px] 
             lg:w-[337px] h-auto aspect-337/421"
       >
         <Image
