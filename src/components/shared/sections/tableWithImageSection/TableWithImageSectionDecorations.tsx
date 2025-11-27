@@ -30,12 +30,8 @@ export default function TableWithImageSectionDecorations({
           width="337"
           height="421"
           alt="ellipsis"
-          className={`w-[337px] lg:w-[739px] h-auto  ${tablePosition === "right" ? "lg:-rotate-63" : "xl:-rotate-93"}`}
+          className={`w-[337px] xl:w-[645px] h-auto ${tablePosition === "right" ? "lg:-rotate-63" : "xl:-rotate-93"}`}
         />
-        {/* <div
-          className={`hidden lg:block absolute  w-[1134px] h-[504px] rounded-full bg-black supports-backdrop-filter:blur-[53px] 
-            will-change-transform ${tablePosition === "right" ? "top-14 right-[-109px]" : "lg:top-[-18px] lg:left-[calc(50%-500px)]"}`}
-        /> */}
       </motion.div>
     </div>
   );
