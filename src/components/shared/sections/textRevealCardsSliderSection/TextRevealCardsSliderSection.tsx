@@ -4,6 +4,7 @@ import SectionTitle from "../../titles/SectionTitle";
 import TextRevealCardsSlider from "./TextRevealCardsSlider";
 import * as motion from "motion/react-client";
 import { fadeInAnimation } from "@/utils/animationVariants";
+import TextRevealCardsSectionDecorations from "./TextRevealCardSectionDecorations";
 
 interface TextRevealCardsSliderSectionProps
   extends TextRevealCardsSliderSectionData {
@@ -17,9 +18,10 @@ const TextRevealCardsSliderSection = (
 
   return (
     <section className="py-25 lg:pt-[152px] lg:pb-0">
-      <Container>
+      <Container className="relative">
+        <TextRevealCardsSectionDecorations uniqueKey={uniqueKey} />
         <div
-          className={`relative flex flex-col gap-10 md:flex-row md:justify-between md:items-end mb-7 lg:mb-[41px]`}
+          className={`relative flex flex-col gap-10 xl:flex-row xl:justify-between xl:items-end mb-7 xl:mb-[41px]`}
         >
           <SectionTitle className="lg:whitespace-pre-line">
             {title}

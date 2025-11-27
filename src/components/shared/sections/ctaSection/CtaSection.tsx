@@ -28,7 +28,7 @@ const CtaSection = (_props: CtaSectionProps) => {
           exit="exit"
           viewport={{ once: true, amount: 0.1 }}
           variants={fadeInAnimation({ scale: 0.85, delay: 0.3 })}
-          className="lg:hidden absolute -top-5 right-[calc(50%-332px)] sm:right-[calc(50%-500px)] w-[337px] h-[421px]"
+          className="lg:hidden absolute -top-5 right-[calc(50%-332px)] sm:right-[calc(50%-500px)] md:right-[calc(50%-600px)] w-[337px] h-[421px]"
         >
           <Image
             src="/images/decorations/ellipsis.svg"
