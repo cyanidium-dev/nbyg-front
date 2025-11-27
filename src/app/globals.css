@@ -142,16 +142,24 @@
     }
   }
 
+  .swiper.text-reveal-cards-slider {
+    padding: 12px 0px 24px 0px !important;
+
+    @media screen and (min-width: 1024px) {
+      padding: 12px 3px 34px 0px !important;
+    }
+  }
+
   .swiper-slide {
     flex-grow: 1 0;
     height: auto !important;
   }
 
   .materials-slider .swiper-slide {
-    width: 328px !important;
+    max-width: 328px !important;
 
     @media screen and (min-width: 768px) {
-      width: 687px !important;
+      max-width: 687px !important;
       height: 230px !important;
     }
   }
@@ -162,6 +170,10 @@
     @media screen and (min-width: 640px) {
       max-width: 100% !important;
     }
+  }
+
+  .text-reveal-cards-slider .swiper-slide {
+    max-width: 275px !important;
   }
 
   .table-list-grid {
