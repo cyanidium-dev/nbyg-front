@@ -126,7 +126,8 @@
 
   /* Swiper */
 
-  .swiper.materials-slider {
+  .swiper.materials-slider,
+  .swiper.before-after-slider {
     padding: 0px 0px 40px 0px !important;
 
     @media screen and (min-width: 1024px) {
@@ -145,6 +146,14 @@
     @media screen and (min-width: 768px) {
       width: 687px !important;
       height: 230px !important;
+    }
+  }
+
+  .before-after-slider .swiper-slide {
+    width: 328px !important;
+
+    @media screen and (min-width: 768px) {
+      width: 373px !important;
     }
   }
 
