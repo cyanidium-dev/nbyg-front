@@ -7,6 +7,7 @@ import TableList from "../tableSection/TableList";
 import * as motion from "motion/react-client";
 import { fadeInAnimation } from "@/utils/animationVariants";
 import DecorativeEllipsis from "../../decorativeEllipsis/DecorativeEllipsis";
+import TableWithImageSectionDecorations from "./TableWithImageSectionDecorations";
 
 interface TableWithImageSectionProps extends TableWithImageSectionData {
   uniqueKey?: string;
@@ -16,8 +17,9 @@ const TableWithImageSection = (_props: TableWithImageSectionProps) => {
   const { title, tablePosition, image, columns, uniqueKey } = _props;
 
   return (
-    <section className="py-25 lg:pt-[152px] lg:pb-0">
+    <section className="py-16 lg:pt-[109px] lg:pb-0 overflow-hidden">
       <Container className="relative">
+        <TableWithImageSectionDecorations tablePosition={tablePosition} />
         <div
           className={`relative md:flex justify-between items-center mb-8 lg:mb-9 ${tablePosition === "right" ? "md:flex-row-reverse" : "md:flex-row"}`}
         >
@@ -45,7 +47,7 @@ const TableWithImageSection = (_props: TableWithImageSectionProps) => {
               whileInView="visible"
               exit="exit"
               viewport={{ once: true, amount: 0.1 }}
-              variants={fadeInAnimation({ scale: 0.85, delay: 0.4, x: 30 })}
+              variants={fadeInAnimation({ scale: 0.85, delay: 0.6, x: 30 })}
               className="relative w-full xl:w-1/2 h-[300px] xl:h-auto rounded-[12px] overflow-hidden shrink-0"
             >
               <Image
