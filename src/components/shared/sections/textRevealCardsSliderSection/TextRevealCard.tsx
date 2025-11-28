@@ -12,7 +12,7 @@ interface TextRevealCardProps {
     _key?: string;
     title: string;
     description: string;
-    image: SanityImage;
+    image: SanityImage | string;
     link?: string;
   };
 }
@@ -26,7 +26,7 @@ export default function TextRevealCard({ slide }: TextRevealCardProps) {
   return (
     <div className="relative flex flex-col justify-end h-[399px] rounded-[8px]">
       <Image
-        src={urlForSanityImage(image).fit("crop").url()}
+        src={typeof image === "string" ? image : urlForSanityImage(image).fit("crop").url()}
         alt={title}
         fill
         className="-z-10 object-cover rounded-[8px]"
