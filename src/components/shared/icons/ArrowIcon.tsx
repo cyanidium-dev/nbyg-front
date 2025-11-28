@@ -15,7 +15,7 @@ export default function ArrowIcon({ className = "" }: ArrowIconProps) {
     >
       <path
         d="M20.9876 17.0327L20.9876 7.12776L11.0827 7.12776"
-        stroke="#292D32"
+        stroke="currentColor"
         strokeWidth="1.73077"
         strokeMiterlimit="10"
         strokeLinecap="round"
@@ -23,7 +23,7 @@ export default function ArrowIcon({ className = "" }: ArrowIconProps) {
       />
       <path
         d="M6.9072 20.7779L20.6387 7.04639"
-        stroke="#292D32"
+        stroke="currentColor"
         strokeWidth="1.73077"
         strokeMiterlimit="10"
         strokeLinecap="round"
