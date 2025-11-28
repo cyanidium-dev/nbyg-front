@@ -143,6 +143,17 @@ export const PAGE_BY_SLUG_QUERY = `*[
         title,
         description
       }
+    },
+    _type == "largeTableSection" => {
+      "type": _type,
+      title,
+      description,
+      description2,
+      image,
+      columns[]{
+        title,
+        values
+      }
     }
   },
   seo{
