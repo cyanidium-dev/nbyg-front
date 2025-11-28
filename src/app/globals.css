@@ -194,20 +194,44 @@
   /* Синхронізація висоти рядків для large table section */
   .large-table-wrapper {
     display: flex;
+    align-items: stretch;
   }
 
   @media screen and (min-width: 1024px) {
+    .large-table-wrapper {
+      align-items: stretch;
+    }
+
     .large-table-wrapper > div {
-      height: 100%;
       display: flex;
+      flex-direction: column;
       width: calc(50% - 40px);
       min-width: 0;
       max-width: calc(50% - 40px);
+      align-items: stretch;
+    }
+
+    /* Перевизначаємо h-fit та shrink-0 для motion.div всередині large-table-wrapper */
+    .large-table-wrapper > div > div {
+      height: 100% !important;
+      flex: 1 1 auto !important;
+      flex-shrink: 1 !important;
+      min-height: 0;
+      align-self: stretch;
+    }
+
+    /* Специфічний селектор для table-list-grid */
+    .large-table-wrapper > div > div.table-list-grid,
+    .large-table-wrapper > div > div[class*="table-list-grid"] {
+      height: 100% !important;
+      flex: 1 1 auto !important;
+      flex-shrink: 1 !important;
+      min-height: 0;
     }
 
     .large-table-wrapper .table-list-grid {
-      height: 100%;
-      display: grid;
+      height: 100% !important;
+      display: grid !important;
       width: 100%;
       min-width: 0;
       grid-template-columns: repeat(

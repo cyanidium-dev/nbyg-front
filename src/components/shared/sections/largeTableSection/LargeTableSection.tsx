@@ -115,8 +115,8 @@ const LargeTableSection = (_props: LargeTableSectionProps) => {
             </MainButton>
           </motion.div>
         </div>
-        <div className="hidden lg:block">
-          <div className="flex lg:gap-20 xl:gap-[172px] w-full large-table-wrapper">
+        <div className="hidden lg:block lg:flex lg:items-stretch">
+          <div className="flex lg:gap-20 xl:gap-[172px] w-full large-table-wrapper lg:items-stretch">
             <div className="flex-1 min-w-0 lg:h-full">
               <TableList
                 columns={columns.slice(0, 2)}
