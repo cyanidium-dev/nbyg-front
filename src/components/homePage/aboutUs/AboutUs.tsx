@@ -5,6 +5,7 @@ import MainButton from "@/components/shared/buttons/MainButton";
 import DecorativeEllipsis from "@/components/shared/decorativeEllipsis/DecorativeEllipsis";
 import * as motion from "motion/react-client";
 import { fadeInAnimation } from "@/utils/animationVariants";
+import Link from "next/link";
 
 export default function AboutUs() {
     return (
@@ -58,9 +59,11 @@ export default function AboutUs() {
                         viewport={{ once: true, amount: 0.1 }}
                         className="hidden md:block"
                     >
-                        <MainButton className="h-[58px] max-w-[426px]">
-                            Se flere detaljer
-                        </MainButton>
+                        <Link href="/om-os">
+                            <MainButton className="h-[58px] max-w-[426px]">
+                                Se flere detaljer
+                            </MainButton>
+                        </Link>
                     </motion.div>
                 </div>
                 <div className="md:max-w-[350px] mb-10 md:mb-0 lg:mt-[11px] lg:max-w-[515px] w-full">
@@ -102,9 +105,11 @@ export default function AboutUs() {
                     viewport={{ once: true, amount: 0.1 }}
                     className="md:hidden"
                 >
-                    <MainButton className="h-[58px] max-w-[426px]">
-                        Se flere detaljer
-                    </MainButton>
+                    <Link href="/om-os">
+                        <MainButton className="h-[58px] max-w-[426px]">
+                            Se flere detaljer
+                        </MainButton>
+                    </Link>
                 </motion.div>
             </Container>
         </div>
