@@ -8,6 +8,8 @@ import { urlForSanityImage } from "@/utils/getUrlForSanityImage";
 import DecorativeEllipsis from "../../decorativeEllipsis/DecorativeEllipsis";
 import * as motion from "motion/react-client";
 import { fadeInAnimation } from "@/utils/animationVariants";
+import RoofTypesList from "./RoofTypesList";
+import RoofTypesDecorations from "./RoofTypesDecorations";
 
 interface RoofTypesSectionProps extends RoofTypesSectionData {
   uniqueKey?: string;
@@ -28,6 +30,8 @@ const RoofTypesSection = (_props: RoofTypesSectionProps) => {
   return (
     <section>
       <Container className="relative py-25 lg:pt-[105px] lg:pb-0">
+        <RoofTypesDecorations uniqueKey={uniqueKey} />
+
         <div className="relative">
           <DecorativeEllipsis
             uniqueKey={uniqueKey}
@@ -119,8 +123,8 @@ const RoofTypesSection = (_props: RoofTypesSectionProps) => {
               whileInView="visible"
               exit="exit"
               viewport={{ once: true, amount: 0.1 }}
-              variants={fadeInAnimation({ scale: 0.85, delay: 0.7, x: 30 })}
-              className="relative w-full lg:w-1/2 h-[300px] lg:h-auto rounded-[8px] overflow-hidden shrink-0"
+              variants={fadeInAnimation({ scale: 0.85, delay: 0.4, x: 30 })}
+              className="relative w-full lg:w-1/2 h-60 lg:h-auto rounded-[8px] overflow-hidden shrink-0"
             >
               <Image
                 src={urlForSanityImage(image).fit("crop").url()}
@@ -130,38 +134,8 @@ const RoofTypesSection = (_props: RoofTypesSectionProps) => {
               />
             </motion.div>
           ) : null}
+          <RoofTypesList roofTypes={roofTypes} uniqueKey={uniqueKey} />
         </div>
-
-        <motion.div
-          key={`${uniqueKey}-roof-types-list`}
-          initial="hidden"
-          whileInView="visible"
-          exit="exit"
-          viewport={{ once: true, amount: 0.1 }}
-          variants={fadeInAnimation({ scale: 0.95, delay: 0.8, y: 30 })}
-          className="flex flex-col gap-6 lg:gap-8"
-        >
-          {roofTypes.map((roofType, index) => (
-            <motion.div
-              key={roofType._key || `${uniqueKey}-roof-type-${index}`}
-              initial="hidden"
-              whileInView="visible"
-              exit="exit"
-              viewport={{ once: true, amount: 0.1 }}
-              variants={fadeInAnimation({
-                scale: 0.95,
-                delay: 0.9 + index * 0.1,
-                y: 20,
-              })}
-              className="border-b border-gray-200 pb-6 lg:pb-8 last:border-0"
-            >
-              <h4 className="font-find-sans-pro text-[18px] lg:text-[20px] leading-[120%] uppercase mb-3 lg:mb-4">
-                {roofType.title}
-              </h4>
-              <p className="whitespace-pre-line">{roofType.description}</p>
-            </motion.div>
-          ))}
-        </motion.div>
       </Container>
     </section>
   );
