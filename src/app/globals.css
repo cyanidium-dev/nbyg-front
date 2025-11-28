@@ -151,6 +151,50 @@
     }
   }
 
+  /* Синхронізація висоти таблиць у слайдері */
+  .large-table-slider {
+    display: flex;
+    align-items: stretch;
+  }
+
+  .large-table-slider .swiper-slide {
+    height: auto !important;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .large-table-slider .swiper-slide > div {
+    height: 100% !important;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .large-table-slider .table-list-grid {
+    height: 100% !important;
+    display: grid !important;
+    width: 100%;
+    grid-template-columns: repeat(
+      var(--columns-count),
+      minmax(0, 1fr)
+    ) !important;
+    grid-template-rows: auto repeat(var(--rows-count, 1), 1fr);
+  }
+
+  .large-table-slider .table-list-grid > h3 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .large-table-slider .table-list-grid > div:not(h3) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+  }
+
   .swiper-slide {
     flex-grow: 1 0;
     height: auto !important;
