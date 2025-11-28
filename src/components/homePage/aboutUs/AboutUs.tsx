@@ -12,7 +12,7 @@ export default function AboutUs() {
         <div className="pt-18 lg:pt-[127px] pb-25">
             <Container className="md:flex md:justify-between relative">
                 <motion.div
-                    variants={fadeInAnimation({ scale: 0.85, delay: 0.3 })}
+                    variants={fadeInAnimation({ scale: 0.85, delay: 1.1 })}
                     initial="hidden"
                     whileInView="visible"
                     exit="exit"
@@ -49,7 +49,7 @@ export default function AboutUs() {
                     </motion.p>
                     <DecorativeEllipsis
                         uniqueKey="aboutUs-ellipsis"
-                        delay={0.1}
+                        delay={0.9}
                         className="hidden md:flex mb-10"
                     />
                     <motion.div
