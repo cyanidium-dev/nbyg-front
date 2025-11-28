@@ -168,6 +168,22 @@ export type TextRevealCardsSliderSection = {
   }>;
 };
 
+export type RoofTypesSection = {
+  _type: "roofTypesSection";
+  type: "roofTypesSection";
+  title: string;
+  description: PortableText;
+  description2: PortableText;
+  description3: PortableText;
+  subtitle: string;
+  image: SanityImage;
+  roofTypes: Array<{
+    _key?: string;
+    title: string;
+    description: string;
+  }>;
+};
+
 export type PageSection =
   | HeroSection
   | CtaSection
@@ -179,6 +195,7 @@ export type PageSection =
   | FaqSection
   | TableWithImageSection
   | TextRevealCardsSliderSection
+  | RoofTypesSection
   | (Record<string, unknown> & { _type: string; type?: string }); // fallback
 
 // ---- Основний тип сторінки ----

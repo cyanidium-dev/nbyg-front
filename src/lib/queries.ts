@@ -124,9 +124,24 @@ export const PAGE_BY_SLUG_QUERY = `*[
       description,
       description2,
       cards[]{
+        _key,
         title,
         description,
         image
+      }
+    },
+    _type == "roofTypesSection" => {
+      "type": _type,
+      title,
+      description,
+      description2,
+      description3,
+      subtitle,
+      image,
+      roofTypes[]{
+        _key,
+        title,
+        description
       }
     }
   },
