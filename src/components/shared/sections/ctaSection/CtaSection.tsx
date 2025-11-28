@@ -37,7 +37,7 @@ const CtaSection = (_props: CtaSectionProps) => {
             alt="ellipsis"
           />
         </motion.div>
-        <div className="relative w-fit">
+        <div className="relative w-full">
           <DecorativeEllipsis
             uniqueKey={uniqueKey}
             className="absolute -top-[26px] left-0 lg:left-auto lg:top-auto lg:right-0 lg:bottom-5"
