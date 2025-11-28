@@ -19,6 +19,8 @@ const HeroGallerySlider = dynamic(() => import("./HeroGallerySlider"), {
             fill
             className="object-cover"
             priority
+            sizes="100vw"
+            fetchPriority="high"
         />
     ),
 });

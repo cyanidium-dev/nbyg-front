@@ -1,8 +1,8 @@
 "use client";
 import Image from "next/image";
-import { Swiper, SwiperSlide } from "swiper/react";
+import { SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
-import "swiper/css";
+import SwiperWrapper from "@/components/shared/swiper/SwiperWrapper";
 
 interface HeroGallerySliderProps {
     images: string[];
@@ -10,16 +10,22 @@ interface HeroGallerySliderProps {
 
 export default function HeroGallerySlider({ images }: HeroGallerySliderProps) {
     return (
-        <Swiper
-            modules={[Autoplay]}
+        <SwiperWrapper
             loop={true}
-            autoplay={{
-                delay: 3000,
-                disableOnInteraction: false,
+            breakpoints={{
+                0: {
+                    slidesPerView: 1,
+                },
             }}
-            speed={1000}
-            slidesPerView={1}
-            className="h-full w-full"
+            swiperClassName="h-full w-full"
+            showNavigation={false}
+            additionalModules={[Autoplay]}
+            additionalOptions={{
+                autoplay: {
+                    delay: 3000,
+                    disableOnInteraction: false,
+                },
+            }}
         >
             {images.map((image, index) => (
                 <SwiperSlide key={index}>
@@ -28,9 +34,12 @@ export default function HeroGallerySlider({ images }: HeroGallerySliderProps) {
                         alt={`Hero Gallery ${index + 1}`}
                         fill
                         className="object-cover"
+                        sizes="100vw"
+                        priority
+                        fetchPriority="high"
                     />
                 </SwiperSlide>
             ))}
-        </Swiper>
+        </SwiperWrapper>
     );
 }
