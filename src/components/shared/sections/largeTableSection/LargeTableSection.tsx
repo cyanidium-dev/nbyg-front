@@ -8,6 +8,7 @@ import * as motion from "motion/react-client";
 import { fadeInAnimation } from "@/utils/animationVariants";
 import DecorativeEllipsis from "../../decorativeEllipsis/DecorativeEllipsis";
 import MainButton from "../../buttons/MainButton";
+import LargeTableSlider from "./LargeTableSlider";
 
 interface LargeTableSectionProps extends LargeTableSectionData {
   uniqueKey?: string;
@@ -114,21 +115,24 @@ const LargeTableSection = (_props: LargeTableSectionProps) => {
             </MainButton>
           </motion.div>
         </div>
-
-        <div className="hidden lg:flex lg:gap-20 xl:gap-[172px] w-full large-table-wrapper">
-          <div className="flex-1 min-w-0 lg:h-full">
-            <TableList
-              columns={columns.slice(0, 2)}
-              uniqueKey={`${uniqueKey}-table-1`}
-            />
-          </div>
-          <div className="flex-1 min-w-0 lg:h-full">
-            <TableList
-              columns={columns.slice(2, 4)}
-              uniqueKey={`${uniqueKey}-table-2`}
-            />
+        <div className="hidden lg:block">
+          <div className="flex lg:gap-20 xl:gap-[172px] w-full large-table-wrapper">
+            <div className="flex-1 min-w-0 lg:h-full">
+              <TableList
+                columns={columns.slice(0, 2)}
+                uniqueKey={`${uniqueKey}-table-1`}
+              />
+            </div>
+            <div className="flex-1 min-w-0 lg:h-full">
+              <TableList
+                columns={columns.slice(2, 4)}
+                uniqueKey={`${uniqueKey}-table-2`}
+              />
+            </div>
           </div>
         </div>
+
+        <LargeTableSlider columns={columns} uniqueKey={uniqueKey} />
       </Container>
     </section>
   );

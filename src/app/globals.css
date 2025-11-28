@@ -142,7 +142,8 @@
     }
   }
 
-  .swiper.text-reveal-cards-slider {
+  .swiper.text-reveal-cards-slider,
+  .swiper.large-table-slider {
     padding: 12px 0px 24px 0px !important;
 
     @media screen and (min-width: 1024px) {
@@ -205,8 +206,8 @@
     }
 
     .large-table-wrapper .table-list-grid {
-      height: 100% !important;
-      display: grid !important;
+      height: 100%;
+      display: grid;
       width: 100%;
       min-width: 0;
       grid-template-columns: repeat(
