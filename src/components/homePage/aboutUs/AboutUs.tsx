@@ -9,7 +9,7 @@ import Link from "next/link";
 
 export default function AboutUs() {
     return (
-        <div className="pt-18 lg:pt-[127px] pb-25">
+        <section className="pt-18 lg:pt-[127px] pb-25 lg:pb-0">
             <Container className="md:flex md:justify-between relative">
                 <motion.div
                     variants={fadeInAnimation({ scale: 0.85, delay: 1.1 })}
@@ -112,6 +112,6 @@ export default function AboutUs() {
                     </Link>
                 </motion.div>
             </Container>
-        </div>
+        </section>
     );
 }
