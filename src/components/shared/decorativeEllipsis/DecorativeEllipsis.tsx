@@ -1,7 +1,6 @@
 import * as motion from "motion/react-client";
 import { fadeInAnimation } from "@/utils/animationVariants";
 import { twMerge } from "tailwind-merge";
-import clsx from "clsx";
 
 interface DecorativeEllipsisProps {
     uniqueKey?: string;
