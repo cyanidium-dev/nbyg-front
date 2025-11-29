@@ -40,32 +40,45 @@ export default function HeroGallerySlider({
     };
 
     useEffect(() => {
-        if (!readyCalled && loadedImages.has(0)) {
+        if (
+            !readyCalled &&
+            loadedImages.size === images.length &&
+            images.length > 0
+        ) {
             const timer = setTimeout(() => {
                 setReadyCalled(true);
                 onReady?.();
             }, 150);
             return () => clearTimeout(timer);
         }
-    }, [loadedImages, readyCalled, onReady]);
+    }, [loadedImages, readyCalled, onReady, images.length]);
 
     useEffect(() => {
-        if (!readyCalled && !loadedImages.has(0)) {
+        if (
+            !readyCalled &&
+            loadedImages.size < images.length &&
+            images.length > 0
+        ) {
             const fallbackTimer = setTimeout(() => {
-                const firstImage = document.querySelector(
-                    'img[alt="Hero Gallery 1"]'
-                ) as HTMLImageElement;
-                if (firstImage?.complete && firstImage.naturalHeight !== 0) {
-                    setLoadedImages(prev => {
-                        const newSet = new Set(prev);
-                        newSet.add(0);
-                        return newSet;
-                    });
-                }
+                images.forEach((_, index) => {
+                    const imageElement = document.querySelector(
+                        `img[alt="Hero Gallery ${index + 1}"]`
+                    ) as HTMLImageElement;
+                    if (
+                        imageElement?.complete &&
+                        imageElement.naturalHeight !== 0
+                    ) {
+                        setLoadedImages(prev => {
+                            const newSet = new Set(prev);
+                            newSet.add(index);
+                            return newSet;
+                        });
+                    }
+                });
             }, 500);
             return () => clearTimeout(fallbackTimer);
         }
-    }, [readyCalled, loadedImages]);
+    }, [readyCalled, loadedImages, images]);
 
     return (
         <SwiperWrapper
@@ -93,10 +106,8 @@ export default function HeroGallerySlider({
                         fill
                         className="object-cover"
                         sizes="(max-width: 768px) 100vw, 1920px"
-                        quality={95}
-                        priority={index === 0}
-                        fetchPriority={index === 0 ? "high" : "auto"}
-                        loading={index === 0 ? "eager" : "lazy"}
+                        priority
+                        fetchPriority="high"
                         onLoad={() => handleImageLoad(index)}
                         onLoadingComplete={result => {
                             handleImageLoad(index);

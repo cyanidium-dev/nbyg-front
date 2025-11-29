@@ -24,7 +24,6 @@ export default function HeroGallery() {
                 className="object-cover hero-gallery-static-image transition-opacity duration-700 ease-in-out z-[1]"
                 priority
                 sizes="(max-width: 768px) 100vw, 1920px"
-                quality={95}
                 fetchPriority="high"
             />
         </div>
