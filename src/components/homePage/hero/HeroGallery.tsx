@@ -9,10 +9,6 @@ const HERO_GALLERY_IMAGES = [
     "/images/homePage/hero/gallery-5.webp",
 ];
 
-    ssr: false,
-    loading: () => (
-            src={HERO_GALLERY_IMAGES[0]}
-            alt="Hero Gallery"
 export default function HeroGallery() {
     return (
         <div className="absolute inset-0 -z-10 rounded-b-[18px] overflow-hidden">
