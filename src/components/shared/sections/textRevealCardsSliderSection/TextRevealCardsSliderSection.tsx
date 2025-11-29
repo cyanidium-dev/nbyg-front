@@ -5,16 +5,20 @@ import TextRevealCardsSlider from "./TextRevealCardsSlider";
 import * as motion from "motion/react-client";
 import { fadeInAnimation } from "@/utils/animationVariants";
 import TextRevealCardsSectionDecorations from "./TextRevealCardSectionDecorations";
+import Link from "next/link";
+import MainButton from "../../buttons/MainButton";
 
 interface TextRevealCardsSliderSectionProps
   extends TextRevealCardsSliderSectionData {
   uniqueKey?: string;
+  linkButtonText?: string;
+  linkButtonLink?: string;
 }
 
 const TextRevealCardsSliderSection = (
   _props: TextRevealCardsSliderSectionProps
 ) => {
-  const { title, description, description2, cards, uniqueKey } = _props;
+  const { title, description, description2, cards, uniqueKey, linkButtonText, linkButtonLink } = _props;
 
   return (
     <section className="py-25 lg:pt-[152px] lg:pb-0">
@@ -69,6 +73,13 @@ const TextRevealCardsSliderSection = (
             }
           />
         </motion.div>
+        {linkButtonText && linkButtonLink ? (
+          <Link href={linkButtonLink} >
+            <MainButton className="h-[58px] sm:w-[323px] mt-10 sm:mt-0 sm:absolute sm:left-4 lg:left-15 sm:bottom-0">
+              {linkButtonText}
+            </MainButton>
+          </Link>
+        ) : null}
       </Container>
     </section>
   );
