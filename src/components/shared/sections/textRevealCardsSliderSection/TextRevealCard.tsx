@@ -47,7 +47,7 @@ export default function TextRevealCard({ slide }: TextRevealCardProps) {
         } transition-[max-height] duration-500 ease-in-out `}
       >
         <div className="inset-0 overflow-hidden">
-          <h3 className="font-find-sans-pro text-[20px] font-light leading-[120%] uppercase">
+          <h3 className="flex items-center min-h-12 font-find-sans-pro text-[20px] font-light leading-[120%] uppercase">
             {title}
           </h3>
           <p
