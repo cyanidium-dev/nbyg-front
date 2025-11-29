@@ -17,6 +17,7 @@ export default function Hero() {
             variants={headerVariants}
             className="relative pt-[208px] lg:pt-[199px] pb-7 lg:pb-[128px]"
         >
+            <div className="hidden 2xl:block absolute inset-0 bg-[linear-gradient(90deg,#000000_7.32%,rgba(0,0,0,0)_27.78%,rgba(0,0,0,0)_70.63%,#000000_91.82%)] pointer-events-none" />
             <HeroGallery />
             <Container className="xs:pr-[100px] lg:pr-[242px]">
                 <PageTitle className="md:text-[48px] lg:text-[64px] mb-8 lg:mb-9">
