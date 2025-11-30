@@ -9,6 +9,8 @@ import { SwiperOptions } from "swiper/types";
 import type { Swiper as SwiperType } from "swiper";
 import type { SwiperModule } from "swiper/types";
 import ShevronIcon from "../icons/ShevronIcon";
+import { useMemo } from "react";
+import clsx from "clsx";
 
 interface SwiperWrapperProps {
     children: ReactNode;
@@ -41,6 +43,19 @@ export default function SwiperWrapper({
     const navigationSetupRef = useRef(false);
     const [isBeginning, setIsBeginning] = useState(true);
     const [isEnd, setIsEnd] = useState(false);
+
+    const buttonsPositionClass = useMemo(() => {
+        switch (buttonsPosition) {
+            case "right":
+                return "sm:justify-end sm:ml-auto";
+            case "center":
+                return "sm:justify-center";
+            case "onSlides":
+                return "sm:justify-between sm:ml-auto sm:absolute sm:top-1/2 sm:-translate-y-1/2 sm:left-0 sm:right-0 z-20";
+            default:
+                return "sm:justify-center";
+        }
+    }, [buttonsPosition]);
 
     // Функція для налаштування навігації
     const setupNavigation = (swiperInstance: SwiperType) => {
@@ -117,13 +132,13 @@ export default function SwiperWrapper({
                 >
                     {component}
                     <div
-                        className={`flex justify-between sm:gap-3 items-center ${buttonsPosition === "right" ? "sm:justify-end sm:ml-auto" : "sm:justify-center"}`}
+                        className={`flex justify-between sm:gap-3 items-center ${buttonsPositionClass}`}
                     >
                         <button
                             ref={prevRef}
                             disabled={isBeginning && !loop}
                             className={`group enabled:cursor-pointer size-[54px] bg-white border border-white rounded-full flex items-center justify-center pointer-events-auto
-             transition duration-300 xl:enabled:hover:opacity-70 disabled:bg-transparent`}
+             transition duration-300 xl:enabled:hover:opacity-70 disabled:bg-transparent ${buttonsPosition === "onSlides" ? "sm:translate-x-[-50%]" : ""}`}
                         >
                             <ShevronIcon className="-rotate-90 group-enabled:text-black group-disabled:text-white mr-1" />
                         </button>
@@ -131,7 +146,7 @@ export default function SwiperWrapper({
                             ref={nextRef}
                             disabled={isEnd && !loop}
                             className={`group enabled:cursor-pointer size-[54px] bg-white border border-white rounded-full flex items-center justify-center pointer-events-auto transition-filter 
-          duration-300 xl:enabled:hover:opacity-70 disabled:bg-transparent`}
+          duration-300 xl:enabled:hover:opacity-70 disabled:bg-transparent ${buttonsPosition === "onSlides" ? "sm:translate-x-[50%]" : ""}`}
                         >
                             <ShevronIcon className="rotate-90 group-enabled:text-black group-disabled:text-white ml-1" />
                         </button>
