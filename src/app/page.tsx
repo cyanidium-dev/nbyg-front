@@ -9,6 +9,7 @@ export default function Home() {
             <FaqSection
                 _type="faqSection"
                 type="faqSection"
+                description="Har du nogen spørgsmål?"
                 items={faq}
                 uniqueKey="home-faq"
             />
