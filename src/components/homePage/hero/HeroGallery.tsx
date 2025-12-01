@@ -13,14 +13,14 @@ export default function HeroGallery() {
     return (
         <div className="absolute inset-0 -z-10 rounded-b-[18px] overflow-hidden">
             <div
-                className="md:hidden absolute inset-0 -z-10 pointer-events-none"
+                className="absolute inset-0 md:hidden pointer-events-none z-10"
                 style={{
                     background: `linear-gradient(0deg, rgba(0, 0, 0, 0) -36.89%, rgba(0, 0, 0, 0.464) 91.14%, rgba(0, 0, 0, 0) 144.39%), linear-gradient(240.18deg, rgba(0, 0, 0, 0) 19.24%, rgba(0, 0, 0, 0.8) 82.96%)`,
                 }}
             />
 
             <div
-                className="hidden md:block absolute inset-0 -z-10 pointer-events-none bg-black/30"
+                className="absolute inset-0 hidden md:block pointer-events-none z-10"
                 style={{
                     background: `linear-gradient(0deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), linear-gradient(360deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.464) 100%)`,
                 }}
