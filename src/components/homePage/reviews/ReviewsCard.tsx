@@ -27,7 +27,7 @@ export default function ReviewsCard({ review }: ReviewsCardProps) {
                         alt={review.name}
                         width={52}
                         height={52}
-                        className="rounded-full"
+                        className="rounded-full size-[52px] shrink-0"
                     />
                     <div>
                         <p className="text-[16px] md:text-[18px] leading-[125%] md:leading-[111%] mb-2">
