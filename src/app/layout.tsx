@@ -45,7 +45,7 @@ export default async function RootLayout({
   );
 
   return (
-    <html lang="da">
+    <html lang="da" className="scroll-smooth">
       <body
         className={`${geistSans.variable} ${findSans.variable} flex min-h-screen flex-col antialiased text-[14px] lg:text-[16px] font-light 
         leading-[143%] lg:leading-[125%] overflow-hidden`}

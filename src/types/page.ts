@@ -184,6 +184,22 @@ export type RoofTypesSection = {
   }>;
 };
 
+export type LargeTableSection = {
+  _type: "largeTableSection";
+  type: "largeTableSection";
+  title: string;
+  description: string;
+  description2: string;
+  image: SanityImage;
+  columns: Array<{
+    _key?: string;
+    title: string;
+    values: string[];
+  }>;
+  buttonText: string;
+  buttonLink: string;
+};
+
 export type PageSection =
   | HeroSection
   | CtaSection
@@ -196,6 +212,7 @@ export type PageSection =
   | TableWithImageSection
   | TextRevealCardsSliderSection
   | RoofTypesSection
+  | LargeTableSection
   | (Record<string, unknown> & { _type: string; type?: string }); // fallback
 
 // ---- Основний тип сторінки ----
