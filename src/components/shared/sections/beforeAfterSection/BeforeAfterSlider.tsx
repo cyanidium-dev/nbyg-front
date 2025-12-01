@@ -34,6 +34,8 @@ export default function BeforeAfterSlider({ slides }: BeforeAfterSliderProps) {
       }}
       buttonsPosition="center"
       swiperClassName="before-after-slider"
+      buttonsClassName="pr-8 lg:pr-30 sm:mr-[calc(100%-640px)] md:mr-[calc(100%-768px)] 
+          lg:mr-[calc(100%-1024px)] xl:mr-[calc(100%-1280px)]"
     >
       {slides.map((slide, idx) => (
         <SwiperSlide key={idx}>
