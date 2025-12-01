@@ -9,6 +9,7 @@ import { fadeInAnimation } from "@/utils/animationVariants";
 import DecorativeEllipsis from "../../decorativeEllipsis/DecorativeEllipsis";
 import MainButton from "../../buttons/MainButton";
 import LargeTableSlider from "./LargeTableSlider";
+import LargeTableSectionDecorations from "./LargeTableSectionDecorations";
 
 interface LargeTableSectionProps extends LargeTableSectionData {
   uniqueKey?: string;
@@ -21,6 +22,7 @@ const LargeTableSection = (_props: LargeTableSectionProps) => {
   return (
     <section className="py-25 lg:pt-[127px] lg:pb-0">
       <Container className="relative">
+        <LargeTableSectionDecorations uniqueKey={uniqueKey} />
         <div className="relative lg:flex lg:justify-between lg:items-center lg:gap-25 xl:gap-25 mb-8 lg:mb-9">
           <SectionTitle className="lg:max-w-[467px] xl:max-w-[567px] lg:whitespace-pre-line shrink-0">
             {title}
