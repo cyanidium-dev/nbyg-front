@@ -57,29 +57,31 @@ const TextRevealCardsSliderSection = (
             uniqueKey={uniqueKey}
             slides={cards}
             component={
-              description2 ? (
-                <motion.p
-                  key={`${uniqueKey}-description`}
-                  initial="hidden"
-                  whileInView="visible"
-                  exit="exit"
-                  viewport={{ once: true, amount: 0.2 }}
-                  variants={fadeInAnimation({ x: 30, scale: 0.95, delay: 0.3 })}
-                  className="lg:max-w-[537px] whitespace-pre-line"
-                >
-                  {description2}
-                </motion.p>
-              ) : null
+              <>
+                {description2 ? (
+                  <motion.p
+                    key={`${uniqueKey}-description`}
+                    initial="hidden"
+                    whileInView="visible"
+                    exit="exit"
+                    viewport={{ once: true, amount: 0.2 }}
+                    variants={fadeInAnimation({ x: 30, scale: 0.95, delay: 0.3 })}
+                    className="lg:max-w-[537px] whitespace-pre-line"
+                  >
+                    {description2}
+                  </motion.p>
+                ) : null}
+                {linkButtonText && linkButtonLink ? (
+                  <Link href={linkButtonLink} className="sm:absolute sm:left-0 sm:bottom-0 lg:static">
+                    <MainButton className="h-[58px] sm:w-[323px]">
+                      {linkButtonText}
+                    </MainButton>
+                  </Link>
+                ) : null}
+              </>
             }
           />
         </motion.div>
-        {linkButtonText && linkButtonLink ? (
-          <Link href={linkButtonLink} >
-            <MainButton className="h-[58px] sm:w-[323px] mt-10 sm:mt-0 sm:absolute sm:left-4 lg:left-15 sm:bottom-0">
-              {linkButtonText}
-            </MainButton>
-          </Link>
-        ) : null}
       </Container>
     </section>
   );
