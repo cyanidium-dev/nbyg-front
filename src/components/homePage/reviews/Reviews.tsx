@@ -7,9 +7,9 @@ import ReviewsDecorations from "./ReviewsDecorations";
 
 export default function Reviews() {
     return (
-        <section className="py-25 relative">
-            <ReviewsDecorations />
-            <Container>
+        <section className="py-25">
+            <Container className="relative">
+                <ReviewsDecorations />
                 <div className="mb-10 lg:mb-[78px] md:flex items-center justify-between">
                     <div>
                         <SectionTitle className="mb-8 xl:text-[64px] md:mb-[59px]">
