@@ -23,6 +23,7 @@ interface SwiperWrapperProps {
     additionalModules?: SwiperModule[];
     additionalOptions?: Partial<SwiperOptions>;
     showNavigation?: boolean;
+    buttonsClassName?: string;
 }
 
 export default function SwiperWrapper({
@@ -37,6 +38,7 @@ export default function SwiperWrapper({
     additionalModules = [],
     additionalOptions = {},
     showNavigation = true,
+    buttonsClassName,
 }: SwiperWrapperProps) {
     const prevRef = useRef<HTMLButtonElement>(null);
     const nextRef = useRef<HTMLButtonElement>(null);
@@ -122,8 +124,11 @@ export default function SwiperWrapper({
             {showNavigation && (
                 <div
                     key={`${uniqueKey}-buttons`}
-                    className={`flex flex-col-reverse lg:flex-row lg:items-center lg:justify-between gap-10 ${isOverflowSlider ? "pr-8 lg:pr-30" : ""} sm:mr-[calc(100%-640px)] md:mr-[calc(100%-768px)] 
-          lg:mr-[calc(100%-1024px)] xl:mr-[calc(100%-1280px)] mb-0.5 `}
+                    className={twMerge(
+                        `flex flex-col-reverse lg:flex-row lg:items-center lg:justify-between gap-10 ${isOverflowSlider ? "pr-8 lg:pr-30" : ""} sm:mr-[calc(100%-640px)] md:mr-[calc(100%-768px)] 
+          lg:mr-[calc(100%-1024px)] xl:mr-[calc(100%-1280px)] mb-0.5`,
+                        buttonsClassName
+                    )}
                 >
                     {component}
                     <div
