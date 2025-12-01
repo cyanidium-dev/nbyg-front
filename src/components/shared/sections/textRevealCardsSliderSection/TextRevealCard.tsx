@@ -42,17 +42,20 @@ export default function TextRevealCard({ slide }: TextRevealCardProps) {
         </Link>
       ) : null}
       <div
-        className={`relative flex flex-col justify-center min-h-30 px-4 py-9 rounded-[8px] bg-white/6 shadow-[inset_0px_4px_12.6px_rgba(255,255,255,0.12)] backdrop-blur-[38px] ${
-          !isExpanded ? "max-h-30" : "max-h-full"
-        } transition-[max-height] duration-500 ease-in-out `}
+        className={`relative flex flex-col justify-center min-h-30 px-4 rounded-[8px] bg-white/6 shadow-[inset_0px_4px_12.6px_rgba(255,255,255,0.12)] backdrop-blur-[38px] ${
+            !isExpanded ? "max-h-30" : "max-h-full"
+          } transition-[max-height, padding] duration-500 ease-in-out ${
+          isExpanded ? "py-6" : "py-9"
+        }`}
       >
         <div className="inset-0 overflow-hidden">
           <h3 className="flex items-center min-h-12 font-find-sans-pro text-[20px] font-light leading-[120%] uppercase">
             {title}
           </h3>
           <p
-            className={`mt-9 whitespace-pre-line text-[14px] lg:text-[16px] font-light leading-[143%] lg:leading-[125%]
-             `}
+            className={`whitespace-pre-line text-[14px] lg:text-[16px] font-light leading-[143%] lg:leading-[125%]
+            ${isExpanded ? "mt-6" : "mt-9"} transition-[margin] duration-500 ease-in-out
+            `}
           >
             {description}
           </p>
