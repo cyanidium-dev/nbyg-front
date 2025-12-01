@@ -27,7 +27,7 @@ export default function AboutUs() {
                     />
                 </motion.div>
                 <DecorativeEllipsis
-                    uniqueKey="aboutUs-ellipsis"
+                    uniqueKey="aboutUs-ellipsis-mobile"
                     delay={0.1}
                     className="md:hidden mb-4"
                 />
@@ -48,7 +48,7 @@ export default function AboutUs() {
                         virkelighed.
                     </motion.p>
                     <DecorativeEllipsis
-                        uniqueKey="aboutUs-ellipsis"
+                        uniqueKey="aboutUs-ellipsis-desktop"
                         delay={0.9}
                         className="hidden md:flex mb-10"
                     />
