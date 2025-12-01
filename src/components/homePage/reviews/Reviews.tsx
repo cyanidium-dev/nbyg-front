@@ -12,7 +12,7 @@ export default function Reviews() {
             <Container>
                 <div className="mb-10 lg:mb-[78px] md:flex items-center justify-between">
                     <div>
-                        <SectionTitle className="mb-8 lg:text-[64px] md:mb-[59px]">
+                        <SectionTitle className="mb-8 xl:text-[64px] md:mb-[59px]">
                             Anmeldelser
                         </SectionTitle>
                         <p className="text-[18px] leading-[111%] font-light">
@@ -24,7 +24,7 @@ export default function Reviews() {
                             src="/images/homePage/reviews/reviewImage.webp"
                             alt="Reviews"
                             fill
-                            className="object-cover"
+                            className="object-cover object-[center_23%]"
                         />
                     </div>
                 </div>

@@ -48,7 +48,7 @@ export default function SwiperWrapper({
         right: "sm:justify-end sm:ml-auto",
         center: "sm:justify-center",
         onSlides:
-            "sm:justify-between sm:ml-auto sm:absolute sm:top-1/2 sm:-translate-y-1/2 sm:left-0 sm:right-0 z-20",
+            "sm:justify-between sm:ml-auto sm:absolute sm:top-[28%] sm:left-0 sm:right-0 z-20",
     };
 
     // Функція для налаштування навігації
@@ -132,7 +132,7 @@ export default function SwiperWrapper({
                             ref={prevRef}
                             disabled={isBeginning && !loop}
                             className={`group enabled:cursor-pointer size-[54px] bg-white border border-white rounded-full flex items-center justify-center pointer-events-auto
-             transition duration-300 xl:enabled:hover:opacity-70 disabled:bg-transparent ${buttonsPosition === "onSlides" ? "sm:translate-x-[-50%]" : ""}`}
+             transition duration-300 xl:enabled:hover:opacity-70 disabled:bg-transparent ${buttonsPosition === "onSlides" ? "sm:translate-x-[-55%]" : ""}`}
                         >
                             <ShevronIcon className="-rotate-90 group-enabled:text-black group-disabled:text-white mr-1" />
                         </button>
@@ -140,7 +140,7 @@ export default function SwiperWrapper({
                             ref={nextRef}
                             disabled={isEnd && !loop}
                             className={`group enabled:cursor-pointer size-[54px] bg-white border border-white rounded-full flex items-center justify-center pointer-events-auto transition-filter 
-          duration-300 xl:enabled:hover:opacity-70 disabled:bg-transparent ${buttonsPosition === "onSlides" ? "sm:translate-x-[50%]" : ""}`}
+          duration-300 xl:enabled:hover:opacity-70 disabled:bg-transparent ${buttonsPosition === "onSlides" ? "sm:translate-x-[55%]" : ""}`}
                         >
                             <ShevronIcon className="rotate-90 group-enabled:text-black group-disabled:text-white ml-1" />
                         </button>
