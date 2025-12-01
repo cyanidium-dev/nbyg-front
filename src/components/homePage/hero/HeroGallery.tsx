@@ -1,13 +1,10 @@
-import Image from "next/image";
-import HeroGalleryClient from "./HeroGalleryClient";
+"use client";
+import dynamic from "next/dynamic";
+import { HERO_GALLERY_IMAGES } from "./heroImages";
 
-const HERO_GALLERY_IMAGES = [
-    "/images/homePage/hero/gallery-1.webp",
-    "/images/homePage/hero/gallery-2.webp",
-    "/images/homePage/hero/gallery-3.webp",
-    "/images/homePage/hero/gallery-4.webp",
-    "/images/homePage/hero/gallery-5.webp",
-];
+const HeroGallerySlider = dynamic(() => import("./HeroGallerySlider"), {
+    ssr: false,
+});
 
 export default function HeroGallery() {
     return (
@@ -25,16 +22,7 @@ export default function HeroGallery() {
                     background: `linear-gradient(0deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), linear-gradient(360deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.464) 100%)`,
                 }}
             />
-            <HeroGalleryClient images={HERO_GALLERY_IMAGES} />
-            <Image
-                src="/images/homePage/hero/gallery-loader.webp"
-                alt="Hero Gallery Loader"
-                fill
-                className="object-cover hero-gallery-static-image transition-opacity duration-700 ease-in-out z-1"
-                priority
-                sizes="(max-width: 768px) 100vw, 1920px"
-                fetchPriority="high"
-            />
+            <HeroGallerySlider images={HERO_GALLERY_IMAGES} />
         </div>
     );
 }
