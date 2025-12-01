@@ -28,6 +28,7 @@ export default function TableList({ columns, uniqueKey }: TableListProps) {
       style={
         {
           "--columns-count": columns.length,
+          "--rows-count": maxRows,
         } as React.CSSProperties
       }
     >
