@@ -29,6 +29,7 @@ export default function ReviewsBlock({ reviews }: ReviewsBlockProps) {
                 }}
                 loop={true}
                 buttonsPosition="onSlides"
+                isOverflowSlider={false}
             >
                 {reviews.map(review => (
                     <SwiperSlide key={review.id}>

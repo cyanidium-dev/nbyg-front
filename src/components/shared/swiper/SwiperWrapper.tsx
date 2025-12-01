@@ -9,8 +9,6 @@ import { SwiperOptions } from "swiper/types";
 import type { Swiper as SwiperType } from "swiper";
 import type { SwiperModule } from "swiper/types";
 import ShevronIcon from "../icons/ShevronIcon";
-import { useMemo } from "react";
-import clsx from "clsx";
 
 interface SwiperWrapperProps {
     children: ReactNode;
@@ -19,6 +17,7 @@ interface SwiperWrapperProps {
     loop?: boolean;
     uniqueKey?: string;
     buttonsPosition?: "right" | "center" | "onSlides";
+    isOverflowSlider?: boolean;
     component?: ReactNode;
     additionalModules?: SwiperModule[];
     additionalOptions?: Partial<SwiperOptions>;
@@ -31,6 +30,7 @@ export default function SwiperWrapper({
     swiperClassName,
     loop = false,
     buttonsPosition = "right",
+    isOverflowSlider = true,
     uniqueKey,
     component,
     additionalModules = [],
@@ -44,18 +44,12 @@ export default function SwiperWrapper({
     const [isBeginning, setIsBeginning] = useState(true);
     const [isEnd, setIsEnd] = useState(false);
 
-    const buttonsPositionClass = useMemo(() => {
-        switch (buttonsPosition) {
-            case "right":
-                return "sm:justify-end sm:ml-auto";
-            case "center":
-                return "sm:justify-center";
-            case "onSlides":
-                return "sm:justify-between sm:ml-auto sm:absolute sm:top-1/2 sm:-translate-y-1/2 sm:left-0 sm:right-0 z-20";
-            default:
-                return "sm:justify-center";
-        }
-    }, [buttonsPosition]);
+    const buttonsPositionClass = {
+        right: "sm:justify-end sm:ml-auto",
+        center: "sm:justify-center",
+        onSlides:
+            "sm:justify-between sm:ml-auto sm:absolute sm:top-1/2 sm:-translate-y-1/2 sm:left-0 sm:right-0 z-20",
+    };
 
     // Функція для налаштування навігації
     const setupNavigation = (swiperInstance: SwiperType) => {
@@ -127,12 +121,12 @@ export default function SwiperWrapper({
             {showNavigation && (
                 <div
                     key={`${uniqueKey}-buttons`}
-                    className={`flex flex-col-reverse lg:flex-row lg:items-center lg:justify-between gap-10 pr-8 lg:pr-30 sm:mr-[calc(100%-640px)] md:mr-[calc(100%-768px)] 
+                    className={`flex flex-col-reverse lg:flex-row lg:items-center lg:justify-between gap-10 ${isOverflowSlider ? "pr-8 lg:pr-30" : ""} sm:mr-[calc(100%-640px)] md:mr-[calc(100%-768px)] 
           lg:mr-[calc(100%-1024px)] xl:mr-[calc(100%-1280px)] mb-0.5 `}
                 >
                     {component}
                     <div
-                        className={`flex justify-between sm:gap-3 items-center ${buttonsPositionClass}`}
+                        className={`flex justify-between sm:gap-3 items-center ${buttonsPositionClass[buttonsPosition]}`}
                     >
                         <button
                             ref={prevRef}

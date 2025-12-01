@@ -6,7 +6,7 @@ export interface Review {
     text: string;
 }
 
-export const reviews = [
+export const reviewsData = [
     {
         id: 1,
         rating: 5,
