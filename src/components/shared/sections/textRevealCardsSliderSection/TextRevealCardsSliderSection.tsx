@@ -72,7 +72,7 @@ const TextRevealCardsSliderSection = (
                   </motion.p>
                 ) : null}
                 {linkButtonText && linkButtonLink ? (
-                  <Link href={linkButtonLink} className="sm:absolute sm:left-0 sm:bottom-0 lg:static">
+                  <Link href={linkButtonLink}>
                     <MainButton className="h-[58px] sm:w-[323px]">
                       {linkButtonText}
                     </MainButton>
