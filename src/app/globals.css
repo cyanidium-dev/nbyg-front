@@ -142,7 +142,8 @@
         }
     }
 
-    .swiper.text-reveal-cards-slider {
+    .swiper.text-reveal-cards-slider,
+    .swiper.large-table-slider {
         padding: 12px 0px 24px 0px !important;
 
         @media screen and (min-width: 1024px) {
@@ -150,12 +151,48 @@
         }
     }
 
-    .swiper.reviews-block {
-        padding: 0px 0px 24px 0px !important;
+    /* Синхронізація висоти таблиць у слайдері */
+    .large-table-slider {
+        display: flex;
+        align-items: stretch;
+    }
 
-        @media screen and (min-width: 640px) {
-            padding: 0px !important;
-        }
+    .large-table-slider .swiper-slide {
+        height: auto !important;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .large-table-slider .swiper-slide > div {
+        height: 100% !important;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .large-table-slider .table-list-grid {
+        height: 100% !important;
+        display: grid !important;
+        width: 100%;
+        grid-template-columns: repeat(
+            var(--columns-count),
+            minmax(0, 1fr)
+        ) !important;
+        grid-template-rows: auto repeat(var(--rows-count, 1), 1fr);
+    }
+
+    .large-table-slider .table-list-grid > h3 {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .large-table-slider .table-list-grid > div:not(h3) {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 0;
     }
 
     .swiper-slide {
@@ -198,6 +235,77 @@
     .table-with-image-wrapper .table-list-grid {
         @media screen and (min-width: 1280px) {
             grid-template-columns: repeat(var(--columns-count), minmax(0, 1fr));
+        }
+    }
+
+    /* Синхронізація висоти рядків для large table section */
+    .large-table-wrapper {
+        display: flex;
+        align-items: stretch;
+    }
+
+    @media screen and (min-width: 1024px) {
+        .large-table-wrapper {
+            align-items: stretch;
+        }
+
+        .large-table-wrapper > div {
+            display: flex;
+            flex-direction: column;
+            width: calc(50% - 40px);
+            min-width: 0;
+            max-width: calc(50% - 40px);
+            align-items: stretch;
+        }
+
+        /* Перевизначаємо h-fit та shrink-0 для motion.div всередині large-table-wrapper */
+        .large-table-wrapper > div > div {
+            height: 100% !important;
+            flex: 1 1 auto !important;
+            flex-shrink: 1 !important;
+            min-height: 0;
+            align-self: stretch;
+        }
+
+        /* Специфічний селектор для table-list-grid */
+        .large-table-wrapper > div > div.table-list-grid,
+        .large-table-wrapper > div > div[class*="table-list-grid"] {
+            height: 100% !important;
+            flex: 1 1 auto !important;
+            flex-shrink: 1 !important;
+            min-height: 0;
+        }
+
+        .large-table-wrapper .table-list-grid {
+            height: 100% !important;
+            display: grid !important;
+            width: 100%;
+            min-width: 0;
+            grid-template-columns: repeat(
+                var(--columns-count),
+                minmax(0, 1fr)
+            ) !important;
+            grid-template-rows: auto repeat(var(--rows-count, 1), 1fr);
+        }
+
+        .large-table-wrapper .table-list-grid > h3 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .large-table-wrapper .table-list-grid > div:not(h3) {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 0;
+        }
+    }
+
+    @media screen and (min-width: 1280px) {
+        .large-table-wrapper > div {
+            width: calc(50% - 86px);
+            max-width: calc(50% - 86px);
         }
     }
 }

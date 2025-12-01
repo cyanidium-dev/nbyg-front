@@ -9,6 +9,7 @@ import { SwiperOptions } from "swiper/types";
 import type { Swiper as SwiperType } from "swiper";
 import type { SwiperModule } from "swiper/types";
 import ShevronIcon from "../icons/ShevronIcon";
+import { twMerge } from "tailwind-merge";
 
 interface SwiperWrapperProps {
     children: ReactNode;
