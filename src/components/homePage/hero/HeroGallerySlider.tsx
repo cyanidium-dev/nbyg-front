@@ -35,7 +35,7 @@ export default function HeroGallerySlider({ images }: HeroGallerySliderProps) {
                         alt={`Hero Gallery ${index + 1}`}
                         fill
                         className="object-cover"
-                        sizes="(max-width: 768px) 100vw, 1920px"
+                        sizes="100vw"
                         priority
                         fetchPriority="high"
                         placeholder="blur"
