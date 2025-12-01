@@ -153,7 +153,9 @@ export const PAGE_BY_SLUG_QUERY = `*[
       columns[]{
         title,
         values
-      }
+      },
+      buttonText,
+      buttonLink
     }
   },
   seo{

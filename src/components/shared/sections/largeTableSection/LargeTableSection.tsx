@@ -10,14 +10,23 @@ import DecorativeEllipsis from "../../decorativeEllipsis/DecorativeEllipsis";
 import MainButton from "../../buttons/MainButton";
 import LargeTableSlider from "./LargeTableSlider";
 import LargeTableSectionDecorations from "./LargeTableSectionDecorations";
+import Link from "next/link";
 
 interface LargeTableSectionProps extends LargeTableSectionData {
   uniqueKey?: string;
 }
 
 const LargeTableSection = (_props: LargeTableSectionProps) => {
-  const { title, description, description2, image, columns, uniqueKey } =
-    _props;
+  const {
+    title,
+    description,
+    description2,
+    image,
+    columns,
+    uniqueKey,
+    buttonText,
+    buttonLink,
+  } = _props;
 
   return (
     <section className="py-25 lg:pt-[127px] lg:pb-0">
@@ -80,9 +89,9 @@ const LargeTableSection = (_props: LargeTableSectionProps) => {
               variants={fadeInAnimation({ scale: 0.85, delay: 0.7, x: -30 })}
               className="hidden lg:block"
             >
-              <MainButton className="h-[58px]">
-                Se prisen for mit projekt
-              </MainButton>
+              <Link href={buttonLink}>
+                <MainButton className="h-[58px]">{buttonText}</MainButton>
+              </Link>
             </motion.div>
           </div>
 
@@ -112,29 +121,30 @@ const LargeTableSection = (_props: LargeTableSectionProps) => {
             variants={fadeInAnimation({ scale: 0.85, delay: 0.5, x: -30 })}
             className="lg:hidden"
           >
-            <MainButton className="h-[58px]">
-              Se prisen for mit projekt
-            </MainButton>
+            <Link href={buttonLink}>
+              <MainButton className="h-[58px]">{buttonText}</MainButton>
+            </Link>
           </motion.div>
         </div>
-        <div className="hidden lg:block lg:flex lg:items-stretch">
-          <div className="flex lg:gap-20 xl:gap-[172px] w-full large-table-wrapper lg:items-stretch">
-            <div className="flex-1 min-w-0 lg:h-full">
-              <TableList
-                columns={columns.slice(0, 2)}
-                uniqueKey={`${uniqueKey}-table-1`}
-              />
-            </div>
-            <div className="flex-1 min-w-0 lg:h-full">
-              <TableList
-                columns={columns.slice(2, 4)}
-                uniqueKey={`${uniqueKey}-table-2`}
-              />
+        <div id="prices" className="scroll-mt-22 lg:scroll-mt-32">
+          <div className="hidden lg:flex lg:items-stretch">
+            <div className="flex lg:gap-20 xl:gap-[172px] w-full large-table-wrapper lg:items-stretch">
+              <div className="flex-1 min-w-0 lg:h-full">
+                <TableList
+                  columns={columns.slice(0, 2)}
+                  uniqueKey={`${uniqueKey}-table-1`}
+                />
+              </div>
+              <div className="flex-1 min-w-0 lg:h-full">
+                <TableList
+                  columns={columns.slice(2, 4)}
+                  uniqueKey={`${uniqueKey}-table-2`}
+                />
+              </div>
             </div>
           </div>
+          <LargeTableSlider columns={columns} uniqueKey={uniqueKey} />
         </div>
-
-        <LargeTableSlider columns={columns} uniqueKey={uniqueKey} />
       </Container>
     </section>
   );

@@ -196,6 +196,8 @@ export type LargeTableSection = {
     title: string;
     values: string[];
   }>;
+  buttonText: string;
+  buttonLink: string;
 };
 
 export type PageSection =
