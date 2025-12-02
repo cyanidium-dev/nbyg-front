@@ -7,15 +7,21 @@ import Image from "next/image";
 import { useState, useRef } from "react";
 import GalleryModal from "./GalleryModal";
 import type { Swiper as SwiperType } from "swiper";
+import * as motion from "motion/react-client";
+import { fadeInAnimation } from "@/utils/animationVariants";
 
 interface GallerySliderProps {
   items: Array<{
     _key?: string;
     image?: SanityImage;
   }>;
+  uniqueKey?: string;
 }
 
-export default function GallerySlider({ items }: GallerySliderProps) {
+export default function GallerySlider({
+  items,
+  uniqueKey,
+}: GallerySliderProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -55,7 +61,15 @@ export default function GallerySlider({ items }: GallerySliderProps) {
 
   return (
     <>
-      <div className="relative">
+      <motion.div
+        key={`${uniqueKey}-gallery-slider`}
+        initial="hidden"
+        whileInView="visible"
+        exit="exit"
+        viewport={{ once: true, amount: 0.1 }}
+        variants={fadeInAnimation({ scale: 0.85, x: -70, y: 70, delay: 0.2 })}
+        className="relative"
+      >
         <SwiperWrapper
           loop={true}
           centeredSlides={true}
@@ -116,7 +130,7 @@ export default function GallerySlider({ items }: GallerySliderProps) {
             );
           })}
         </SwiperWrapper>
-      </div>
+      </motion.div>
 
       <GalleryModal
         items={items}

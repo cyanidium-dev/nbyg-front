@@ -21,7 +21,7 @@ const GallerySection = (props: GallerySectionProps) => {
   return (
     <>
       <section className="py-25 lg:pt-[138px] lg:pb-0">
-        <GallerySlider items={items} />
+        <GallerySlider items={items} uniqueKey={uniqueKey} />
 
         <Container className="flex justify-between items-center mt-10 lg:mt-15">
           <div className="flex gap-4 lg:gap-8 items-center w-fit">
@@ -44,7 +44,11 @@ const GallerySection = (props: GallerySectionProps) => {
               </Link>
             </motion.div>
           </div>
-          <DecorativeEllipsis className="hidden sm:flex" delay={0.6} />
+          <DecorativeEllipsis
+            uniqueKey={uniqueKey}
+            className="hidden sm:flex"
+            delay={0.6}
+          />
         </Container>
       </section>
     </>
