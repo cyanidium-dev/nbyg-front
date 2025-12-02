@@ -164,7 +164,8 @@ export type TextRevealCardsSliderSection = {
     _key?: string;
     title: string;
     description: string;
-    image: SanityImage;
+    image: SanityImage | string;
+    link?: string;
   }>;
 };
 
