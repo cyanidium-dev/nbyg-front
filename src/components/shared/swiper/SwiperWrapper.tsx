@@ -26,6 +26,7 @@ interface SwiperWrapperProps {
   buttonsClassName?: string;
   showCoverflowEffect?: boolean;
   centeredSlides?: boolean;
+  onSwiper?: (swiper: SwiperType) => void;
 }
 
 export default function SwiperWrapper({
@@ -42,6 +43,7 @@ export default function SwiperWrapper({
   buttonsClassName,
   showCoverflowEffect = false,
   centeredSlides = false,
+  onSwiper,
 }: SwiperWrapperProps) {
   const prevRef = useRef<HTMLButtonElement>(null);
   const nextRef = useRef<HTMLButtonElement>(null);
@@ -95,6 +97,7 @@ export default function SwiperWrapper({
         key={`${uniqueKey}-swiper`}
         onSwiper={(swiper) => {
           swiperInstanceRef.current = swiper;
+          onSwiper?.(swiper);
         }}
         centeredSlides={centeredSlides}
         breakpoints={breakpoints}
@@ -155,7 +158,7 @@ export default function SwiperWrapper({
             <button
               ref={nextRef}
               disabled={isEnd && !loop}
-              className={`group enabled:cursor-pointer size-[54px] bg-white border border-white rounded-full flex items-center justify-center pointer-events-auto transition-filter 
+              className={`group enabled:cursor-pointer size-[54px] bg-white border border-white rounded-full flex items-center justify-center pointer-events-auto transition 
           duration-300 xl:enabled:hover:opacity-70 disabled:bg-transparent`}
             >
               <ShevronIcon className="rotate-90 group-enabled:text-black group-disabled:text-white ml-1" />
