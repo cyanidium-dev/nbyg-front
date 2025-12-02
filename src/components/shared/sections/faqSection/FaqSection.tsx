@@ -32,7 +32,7 @@ const FaqSection = (_props: FaqSectionProps) => {
               exit="exit"
               viewport={{ once: true, amount: 0.1 }}
               variants={fadeInAnimation({ scale: 0.85, x: 30, delay: 0.3 })}
-              className="lg:max-w-[259px] mt-8 lg:mt-4 lg:ml-auto lg:text-right"
+              className="lg:max-w-[259px] mt-8 lg:mt-4 lg:ml-auto lg:text-right lg:text-[20px]"
             >
               {description}
             </motion.p>
