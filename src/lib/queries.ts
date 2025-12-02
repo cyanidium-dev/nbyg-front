@@ -52,9 +52,9 @@ export const PAGE_BY_SLUG_QUERY = `*[
     },
     _type == "gallerySection" => {
       "type": _type,
+      description,
       items[]{
-        desktopImage,
-        mobileImage
+        image
       },
       showOnServicesPage
     },

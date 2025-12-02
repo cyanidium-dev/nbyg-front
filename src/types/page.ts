@@ -99,10 +99,10 @@ export type MaterialSliderSection = {
 export type GallerySection = {
   _type: "gallerySection";
   type: "gallerySection";
+  description?: string;
   items?: Array<{
     _key?: string;
-    desktopImage?: SanityImage;
-    mobileImage?: SanityImage;
+    image?: SanityImage;
   }>;
   showOnServicesPage?: boolean;
 };

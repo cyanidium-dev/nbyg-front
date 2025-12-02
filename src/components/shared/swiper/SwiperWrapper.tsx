@@ -1,9 +1,10 @@
 "use client";
 import "swiper/css";
 import "swiper/css/navigation";
+import "swiper/css/effect-coverflow";
 
 import { ReactNode, useRef, useLayoutEffect, useState } from "react";
-import { Navigation } from "swiper/modules";
+import { Navigation, EffectCoverflow } from "swiper/modules";
 import { Swiper } from "swiper/react";
 import { SwiperOptions } from "swiper/types";
 import type { Swiper as SwiperType } from "swiper";
@@ -23,6 +24,8 @@ interface SwiperWrapperProps {
   additionalOptions?: Partial<SwiperOptions>;
   showNavigation?: boolean;
   buttonsClassName?: string;
+  showCoverflowEffect?: boolean;
+  centeredSlides?: boolean;
 }
 
 export default function SwiperWrapper({
@@ -37,6 +40,8 @@ export default function SwiperWrapper({
   additionalOptions = {},
   showNavigation = true,
   buttonsClassName,
+  showCoverflowEffect = false,
+  centeredSlides = false,
 }: SwiperWrapperProps) {
   const prevRef = useRef<HTMLButtonElement>(null);
   const nextRef = useRef<HTMLButtonElement>(null);
@@ -91,6 +96,7 @@ export default function SwiperWrapper({
         onSwiper={(swiper) => {
           swiperInstanceRef.current = swiper;
         }}
+        centeredSlides={centeredSlides}
         breakpoints={breakpoints}
         navigation={
           showNavigation
@@ -102,10 +108,24 @@ export default function SwiperWrapper({
         }
         loop={loop}
         speed={1000}
+        coverflowEffect={
+          showCoverflowEffect
+            ? {
+                rotate: 0,
+                depth: 100,
+                stretch: 0,
+                modifier: 1,
+                slideShadows: false,
+              }
+            : {}
+        }
+        effect={showCoverflowEffect ? "coverflow" : ""}
         modules={
-          showNavigation
-            ? [Navigation, ...additionalModules]
-            : additionalModules
+          showNavigation && showCoverflowEffect
+            ? [Navigation, EffectCoverflow, ...additionalModules]
+            : showNavigation
+              ? [Navigation, ...additionalModules]
+              : additionalModules
         }
         className={swiperClassName}
         {...additionalOptions}
@@ -122,7 +142,7 @@ export default function SwiperWrapper({
         >
           {component}
           <div
-            className={`flex justify-between sm:gap-3 items-center ${buttonsPosition === "right" ? "sm:justify-end sm:ml-auto" : "sm:justify-center"}`}
+            className={`flex justify-between sm:gap-3 items-center ${buttonsPosition === "right" ? "sm:justify-end sm:ml-auto" : buttonsPosition === "onSlides" ? "w-full justify-between" : "sm:justify-center"}`}
           >
             <button
               ref={prevRef}

@@ -209,6 +209,24 @@
     }
   }
 
+  .gallery-slider .swiper-slide {
+    width: 232px !important;
+    height: 350px !important;
+
+    @media screen and (min-width: 640px) {
+      width: 427px !important;
+    }
+
+    @media screen and (min-width: 768px) {
+      width: 517px !important;
+    }
+
+    @media screen and (min-width: 1024px) {
+      width: 727px !important;
+      height: 425px !important;
+    }
+  }
+
   .before-after-slider .swiper-slide {
     max-width: 328px !important;
 
@@ -220,6 +238,34 @@
   .text-reveal-cards-slider .swiper-slide {
     max-width: 275px !important;
   }
+
+  /* Gallery Carousel */
+  /* .swiper.gallery-carousel {
+    padding: 0 !important;
+  }
+
+  .gallery-carousel .swiper-slide {
+    width: 100% !important;
+  }
+
+  /* Gallery Modal */
+  /* .swiper.gallery-modal-main {
+    padding: 0 !important;
+    height: 100%;
+  }
+
+  .gallery-modal-main .swiper-slide {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .swiper.gallery-modal-thumbnails {
+    padding: 0 !important;
+  }
+
+  .gallery-modal-thumbnails .swiper-slide {
+    width: auto !important;
+  } */
 
   .table-list-grid {
     grid-template-columns: repeat(var(--columns-count), minmax(0, 1fr));
