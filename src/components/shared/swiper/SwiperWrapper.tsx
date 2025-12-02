@@ -27,6 +27,7 @@ interface SwiperWrapperProps {
   showCoverflowEffect?: boolean;
   centeredSlides?: boolean;
   onSwiper?: (swiper: SwiperType) => void;
+  onSlideChange?: (swiper: SwiperType) => void;
 }
 
 export default function SwiperWrapper({
@@ -44,6 +45,7 @@ export default function SwiperWrapper({
   showCoverflowEffect = false,
   centeredSlides = false,
   onSwiper,
+  onSlideChange,
 }: SwiperWrapperProps) {
   const prevRef = useRef<HTMLButtonElement>(null);
   const nextRef = useRef<HTMLButtonElement>(null);
@@ -99,6 +101,7 @@ export default function SwiperWrapper({
           swiperInstanceRef.current = swiper;
           onSwiper?.(swiper);
         }}
+        onSlideChange={onSlideChange}
         centeredSlides={centeredSlides}
         breakpoints={breakpoints}
         navigation={

@@ -1,11 +1,10 @@
 "use client";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { SwiperSlide } from "swiper/react";
 import SwiperWrapper from "../../swiper/SwiperWrapper";
 import { SanityImage } from "@/types/page";
 import { urlForSanityImage } from "@/utils/getUrlForSanityImage";
 import Image from "next/image";
-import ShevronIcon from "../../icons/ShevronIcon";
 import type { Swiper as SwiperType } from "swiper";
 import Backdrop from "../../backdrop/Backdrop";
 import Modal from "../../modals/Modal";
@@ -16,107 +15,150 @@ interface GalleryModalProps {
     image?: SanityImage;
   }>;
   isOpen: boolean;
-  initialIndex: number;
   onClose: () => void;
   mainSwiperRef?: React.RefObject<SwiperType | null>;
+  activeIndex: number;
+  setActiveIndex: (index: number) => void;
 }
 
 export default function GalleryModal({
   items,
   isOpen,
-  initialIndex,
   onClose,
   mainSwiperRef,
+  activeIndex,
+  setActiveIndex,
 }: GalleryModalProps) {
-  const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const modalMainSwiperRef = useRef<SwiperType | null>(null);
   const thumbnailSwiperRef = useRef<SwiperType | null>(null);
+  const isSyncingRef = useRef(false); // Флаг для запобігання циклічним оновленням
+  const isSyncingFromMainRef = useRef(false); // Флаг для синхронізації з основного слайдера
 
+  // Синхронізація модалки з activeIndex при зміні ззовні (наприклад, коли основний слайдер змінюється)
   useEffect(() => {
-    if (isOpen) {
-      // Визначаємо початковий індекс з основного слайдера або з initialIndex
-      let startIndex = initialIndex;
-      if (mainSwiperRef?.current) {
-        startIndex = mainSwiperRef.current.realIndex;
-      }
-
-      // Оновлюємо індекс асинхронно
-      const updateTimer = setTimeout(() => {
-        setCurrentIndex(startIndex);
-      }, 0);
-
-      // Оновлюємо слайдер модалки після невеликої затримки
-      const slideTimer = setTimeout(() => {
-        if (modalMainSwiperRef.current) {
-          modalMainSwiperRef.current.slideTo(startIndex);
-        }
+    if (isOpen && modalMainSwiperRef.current && !isSyncingRef.current && !isSyncingFromMainRef.current) {
+      const modalIndex = modalMainSwiperRef.current.realIndex;
+      if (modalIndex !== activeIndex) {
+        isSyncingFromMainRef.current = true;
+        modalMainSwiperRef.current.slideTo(activeIndex, 0);
         if (thumbnailSwiperRef.current) {
-          thumbnailSwiperRef.current.slideTo(startIndex);
+          thumbnailSwiperRef.current.slideTo(activeIndex, 0);
         }
-      }, 100);
-
-      return () => {
-        clearTimeout(updateTimer);
-        clearTimeout(slideTimer);
-      };
+        setTimeout(() => {
+          isSyncingFromMainRef.current = false;
+        }, 150);
+      }
     }
-  }, [isOpen, initialIndex, mainSwiperRef]);
+  }, [activeIndex, isOpen]);
 
   useEffect(() => {
     // Синхронізація з основним слайдером при зміні (якщо основний слайдер змінюється ззовні)
     if (isOpen && mainSwiperRef?.current) {
-      const handleMainSlideChange = () => {
+      const handleMainSliderChange = () => {
+        // Якщо ми вже синхронізуємо з модалки, пропускаємо
+        if (isSyncingRef.current) return;
+
         if (mainSwiperRef.current && modalMainSwiperRef.current) {
           const mainIndex = mainSwiperRef.current.realIndex;
           const modalIndex = modalMainSwiperRef.current.realIndex;
           if (modalIndex !== mainIndex) {
-            modalMainSwiperRef.current.slideTo(mainIndex);
-            setCurrentIndex(mainIndex);
+            isSyncingFromMainRef.current = true;
+            modalMainSwiperRef.current.slideTo(mainIndex, 0);
+            setActiveIndex(mainIndex);
             if (thumbnailSwiperRef.current) {
-              thumbnailSwiperRef.current.slideTo(mainIndex);
+              thumbnailSwiperRef.current.slideTo(mainIndex, 0);
             }
+            // Скидаємо флаг після невеликої затримки, щоб дозволити подальші оновлення
+            setTimeout(() => {
+              isSyncingFromMainRef.current = false;
+            }, 150);
           }
         }
       };
 
       const swiper = mainSwiperRef.current;
-      swiper.on("slideChange", handleMainSlideChange);
+      swiper.on("slideChange", handleMainSliderChange);
 
       return () => {
-        swiper.off("slideChange", handleMainSlideChange);
+        swiper.off("slideChange", handleMainSliderChange);
       };
     }
-  }, [isOpen, mainSwiperRef]);
+  }, [isOpen, mainSwiperRef, setActiveIndex]);
 
   const handleClose = () => {
+    // Синхронізуємо основний слайдер з поточним індексом модалки перед закриттям
+    if (mainSwiperRef?.current) {
+      // Отримуємо актуальний індекс з модалки
+      const modalIndex = modalMainSwiperRef.current?.realIndex ?? activeIndex;
+
+      // Оновлюємо activeIndex в батьківському компоненті
+      setActiveIndex(modalIndex);
+
+      // Синхронізуємо основний слайдер
+      if (mainSwiperRef.current.realIndex !== modalIndex) {
+        isSyncingRef.current = true;
+        mainSwiperRef.current.slideTo(modalIndex, 0);
+        // Даємо час для оновлення слайдера перед закриттям модалки
+        setTimeout(() => {
+          isSyncingRef.current = false;
+          onClose();
+        }, 100);
+        return;
+      }
+    }
     onClose();
   };
 
   const handleMainSlideChange = (swiper: SwiperType) => {
+    // Якщо ми вже синхронізуємо з основного слайдера, пропускаємо
+    if (isSyncingFromMainRef.current) return;
+
     const newIndex = swiper.realIndex;
-    setCurrentIndex(newIndex);
+
+    // Оновлюємо activeIndex
+    setActiveIndex(newIndex);
 
     // Синхронізуємо превью
     if (thumbnailSwiperRef.current) {
-      thumbnailSwiperRef.current.slideTo(newIndex);
+      thumbnailSwiperRef.current.slideTo(newIndex, 0);
     }
 
-    // Синхронізуємо з основним слайдером
-    if (
-      mainSwiperRef?.current &&
-      mainSwiperRef.current.realIndex !== newIndex
-    ) {
-      mainSwiperRef.current.slideTo(newIndex);
+    // Синхронізуємо з основним слайдером тільки якщо індекси різні
+    if (mainSwiperRef?.current && !isSyncingRef.current) {
+      const mainIndex = mainSwiperRef.current.realIndex;
+      if (mainIndex !== newIndex) {
+        isSyncingRef.current = true;
+        mainSwiperRef.current.slideTo(newIndex, 0);
+        // Скидаємо флаг після невеликої затримки, щоб дозволити синхронізацію назад
+        setTimeout(() => {
+          isSyncingRef.current = false;
+        }, 100);
+      }
     }
   };
 
   const handleThumbnailClick = (index: number) => {
+    if (isSyncingFromMainRef.current) return;
+
+    // Оновлюємо activeIndex
+    setActiveIndex(index);
+
+    // Переходимо до слайду в модалці
     if (modalMainSwiperRef.current) {
-      modalMainSwiperRef.current.slideTo(index);
+      modalMainSwiperRef.current.slideTo(index, 0);
     }
+
     // Синхронізуємо з основним слайдером
-    if (mainSwiperRef?.current) {
-      mainSwiperRef.current.slideTo(index);
+    if (mainSwiperRef?.current && !isSyncingRef.current) {
+      const mainIndex = mainSwiperRef.current.realIndex;
+      if (mainIndex !== index) {
+        isSyncingRef.current = true;
+        mainSwiperRef.current.slideTo(index, 0);
+        // Скидаємо флаг після невеликої затримки
+        setTimeout(() => {
+          isSyncingRef.current = false;
+        }, 100);
+      }
     }
   };
 
@@ -127,7 +169,7 @@ export default function GalleryModal({
         isModalShown={isOpen}
         setIsModalShown={(value) => {
           if (value === false) {
-            onClose();
+            handleClose();
           }
         }}
         className="w-full lg:max-w-[930px] h-full max-h-[90vh] md:max-h-[95vh] flex flex-col bg-black"
@@ -144,14 +186,20 @@ export default function GalleryModal({
             swiperClassName="gallery-modal w-full"
             showNavigation={true}
             buttonsPosition="onSlides"
-            buttonsClassName="absolute z-10 top-[calc(50%-27px)] left-[calc(50%-143px)] left-[calc(50%-240.5px)] md:left-[calc(50%-285.5px)] 
-          lg:left-[calc(50%-492px)] w-[286px] sm:w-[481px] md:w-[571px] lg:w-[984px] pointer-events-none"
+            buttonsClassName="absolute inset-0 pointer-events-none z-20"
+            uniqueKey="gallery-modal"
             onSwiper={(swiper) => {
               modalMainSwiperRef.current = swiper;
+              // Встановлюємо правильний слайд одразу після ініціалізації
+              requestAnimationFrame(() => {
+                if (swiper.realIndex !== activeIndex) {
+                  swiper.slideTo(activeIndex, 0);
+                }
+              });
             }}
+            onSlideChange={handleMainSlideChange}
             additionalOptions={{
-              initialSlide: currentIndex,
-              onSlideChange: handleMainSlideChange,
+              initialSlide: activeIndex,
             }}
           >
             {items.map((item, idx) => {
@@ -166,7 +214,7 @@ export default function GalleryModal({
                       fill
                       className="object-cover"
                       sizes="(max-width: 260px) 240px, 1280px"
-                      priority={idx === currentIndex}
+                      priority={idx === activeIndex}
                     />
                   </div>
                 </SwiperSlide>
@@ -195,14 +243,21 @@ export default function GalleryModal({
             }}
             swiperClassName="gallery-modal-thumbnails"
             showNavigation={false}
+            uniqueKey="gallery-modal-thumbnails"
             onSwiper={(swiper) => {
               thumbnailSwiperRef.current = swiper;
+              // Встановлюємо правильний слайд одразу після ініціалізації
+              requestAnimationFrame(() => {
+                if (swiper.realIndex !== activeIndex) {
+                  swiper.slideTo(activeIndex, 0);
+                }
+              });
             }}
             additionalOptions={{
               slidesPerView: "auto",
               freeMode: true,
               watchSlidesProgress: true,
-              initialSlide: currentIndex,
+              initialSlide: activeIndex,
             }}
           >
             {items.map((item, idx) => {
@@ -216,7 +271,7 @@ export default function GalleryModal({
                 >
                   <div
                     className={`relative w-[60px] h-[60px] md:w-20 md:h-20 lg:w-24 lg:h-24 border-2 transition-colors rounded ${
-                      idx === currentIndex
+                      idx === activeIndex
                         ? "border-white"
                         : "border-transparent opacity-60 hover:opacity-100"
                     }`}
@@ -241,7 +296,7 @@ export default function GalleryModal({
 
         {/* Page indicator */}
         <div className="absolute -bottom-6 md:-bottom-8 left-1/2 -translate-x-1/2 z-30 text-white text-xs md:text-sm lg:text-base pointer-events-none">
-          {currentIndex + 1} / {items.length}
+          {activeIndex + 1} / {items.length}
         </div>
       </Modal>
     </>

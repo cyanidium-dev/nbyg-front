@@ -18,13 +18,16 @@ interface GallerySliderProps {
 export default function GallerySlider({ items }: GallerySliderProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [initialModalIndex, setInitialModalIndex] = useState(0);
   const swiperRef = useRef<SwiperType | null>(null);
 
   if (!items || !items?.length) return null;
 
-  const handleImageClick = (index: number) => {
-    setInitialModalIndex(index);
+  const handleImageClick = () => {
+    // Оновлюємо activeIndex з поточного активного слайда перед відкриттям модалки
+    if (swiperRef.current) {
+      const realIndex = swiperRef.current.realIndex;
+      setActiveIndex(realIndex);
+    }
     setIsModalOpen(true);
   };
 
@@ -65,6 +68,9 @@ export default function GallerySlider({ items }: GallerySliderProps) {
               coverflowEffect: { scale: 0.91, stretch: 508 },
             },
           }}
+          additionalOptions={{
+            initialSlide: activeIndex,
+          }}
           swiperClassName="gallery-slider"
           showNavigation={true}
           buttonsPosition="onSlides"
@@ -74,10 +80,8 @@ export default function GallerySlider({ items }: GallerySliderProps) {
           onSwiper={(swiper) => {
             swiperRef.current = swiper;
           }}
-          additionalOptions={{
-            onSlideChange: (swiper) => {
-              setActiveIndex(swiper.realIndex);
-            },
+          onSlideChange={(swiper) => {
+            setActiveIndex(swiper.realIndex);
           }}
         >
           {items.map((item, idx) => {
@@ -87,7 +91,7 @@ export default function GallerySlider({ items }: GallerySliderProps) {
               <SwiperSlide key={item._key || idx}>
                 <div
                   className="relative w-full h-full rounded-[14px] cursor-pointer"
-                  onClick={() => handleImageClick(idx)}
+                  onClick={handleImageClick}
                 >
                   <Image
                     src={urlForSanityImage(item.image).fit("crop").url()}
@@ -104,9 +108,10 @@ export default function GallerySlider({ items }: GallerySliderProps) {
       <GalleryModal
         items={items}
         isOpen={isModalOpen}
-        initialIndex={initialModalIndex}
         onClose={handleCloseModal}
         mainSwiperRef={swiperRef}
+        activeIndex={activeIndex}
+        setActiveIndex={setActiveIndex}
       />
     </>
   );
