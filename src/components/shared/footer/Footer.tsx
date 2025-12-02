@@ -14,7 +14,7 @@ import { fadeInAnimation } from "@/utils/animationVariants";
 
 export default function Footer() {
     return (
-        <footer className="py-15 lg:pt-0 lg:pb-[70px]">
+        <footer className="py-15 lg:pt-[138px]">
             <Container className="flex flex-col items-center">
                 <div className="flex flex-col md:flex-row justify-between w-full lg:mb-12.5">
                     <div className="flex flex-col items-center md:items-start mb-4.5 md:mb-0">

@@ -7,7 +7,7 @@ import ReviewsDecorations from "./ReviewsDecorations";
 
 export default function Reviews() {
     return (
-        <section className="py-25 lg:py-[138px]">
+        <section className="py-25 lg:pt-[138px] lg:pb-0">
             <Container className="relative">
                 <ReviewsDecorations />
                 <div className="mb-10 lg:mb-[78px] md:flex items-center justify-between">
