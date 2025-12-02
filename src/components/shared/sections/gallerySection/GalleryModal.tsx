@@ -1,5 +1,5 @@
 "use client";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { SwiperSlide } from "swiper/react";
 import SwiperWrapper from "../../swiper/SwiperWrapper";
 import { SanityImage } from "@/types/page";
@@ -8,7 +8,6 @@ import Image from "next/image";
 import type { Swiper as SwiperType } from "swiper";
 import Backdrop from "../../backdrop/Backdrop";
 import Modal from "../../modals/Modal";
-import { Controller } from "swiper/modules";
 
 interface GalleryModalProps {
   items: Array<{
@@ -19,10 +18,9 @@ interface GalleryModalProps {
   onClose: () => void;
   activeIndex: number;
   setActiveIndex: (index: number) => void;
-  // Нові props для синхронізації контроллером
-  mainSwiper: SwiperType | null;
-  modalSwiper: SwiperType | null;
-  setModalSwiper: (s: SwiperType | null) => void;
+
+  mainSwiper: React.MutableRefObject<SwiperType | null>;
+  modalSwiper: React.MutableRefObject<SwiperType | null>;
 }
 
 export default function GalleryModal({
@@ -33,71 +31,67 @@ export default function GalleryModal({
   setActiveIndex,
   mainSwiper,
   modalSwiper,
-  setModalSwiper,
 }: GalleryModalProps) {
-  const modalMainSwiperRef = useRef<SwiperType | null>(null);
+  const modalRef = useRef<SwiperType | null>(null);
+  const isSyncingRef = useRef(false);
+
+  useEffect(() => {
+    if (isOpen && modalRef.current) {
+      modalRef.current.slideToLoop(activeIndex, 0);
+    }
+  }, [isOpen, activeIndex]);
 
   const handleClose = () => {
-    // якщо modal інстанс є — беремо його індекс, інакше використовуємо activeIndex
-    const modalIndex = modalMainSwiperRef.current?.realIndex ?? activeIndex;
+    const modalIndex = modalRef.current?.realIndex ?? activeIndex;
     setActiveIndex(modalIndex);
-
-    // закриваємо модалку
     onClose();
   };
 
-  const handleMainSlideChange = (swiper: SwiperType) => {
-    const newIndex = swiper.realIndex;
-    setActiveIndex(newIndex);
-    // controller синхронізує інші слайдери — додаткового slideTo не потрібно
+  const handleSlideChange = (swiper: SwiperType) => {
+    if (isSyncingRef.current) return;
+    const realIndex = swiper.realIndex;
+    setActiveIndex(realIndex);
+
+    if (mainSwiper.current) {
+      isSyncingRef.current = true;
+      mainSwiper.current.slideToLoop(realIndex);
+      isSyncingRef.current = false;
+    }
   };
 
   return (
     <>
       <Backdrop isVisible={isOpen} onClick={handleClose} />
+
       <Modal
         isModalShown={isOpen}
-        setIsModalShown={(value) => {
-          if (value === false) {
-            handleClose();
-          }
-        }}
+        setIsModalShown={(value) => !value && handleClose()}
         className="w-full lg:max-w-[930px] h-full max-h-[90vh] md:max-h-[95vh] flex flex-col bg-black"
       >
         <div className="relative flex items-center justify-center lg:pt-16 lg:pb-5">
           <SwiperWrapper
             loop={true}
             breakpoints={{
-              0: {
-                spaceBetween: 0,
-                slidesPerView: 1,
-              },
+              0: { spaceBetween: 0, slidesPerView: 1 },
             }}
             swiperClassName="gallery-modal w-full"
             showNavigation={true}
             buttonsPosition="onSlides"
-            buttonsClassName="absolute inset-0 pointer-events-none z-20"
+            buttonsClassName="absolute pointer-events-none z-10 top-[calc(50%-27px)] left-[calc(50%-143px)] left-[calc(50%-240.5px)] md:left-[calc(50%-285.5px)] 
+          lg:left-[calc(50%-492px)] w-[286px] sm:w-[481px] md:w-[571px] lg:w-[984px]"
             uniqueKey="gallery-modal"
-            additionalModules={[Controller]}
-            additionalOptions={{
-              initialSlide: activeIndex,
-              // Контролер вказує на інстанс mainSwiper
-              controller: { control: mainSwiper || undefined },
-            }}
+            additionalOptions={{}}
             onSwiper={(swiper) => {
-              // зберігаємо інстанс modal слайдера
-              modalMainSwiperRef.current = swiper;
-              setModalSwiper(swiper);
-
+              modalRef.current = swiper;
               swiper.slideToLoop(activeIndex, 0);
             }}
-            onSlideChange={handleMainSlideChange}
+            onSlideChange={handleSlideChange}
           >
             {items.map((item, idx) => {
               if (!item.image) return null;
 
               return (
-                <SwiperSlide key={item._key}>
+                <SwiperSlide key={item._key || idx}>
                   <div className="relative w-full h-[523px] flex items-center justify-center">
                     <Image
                       src={urlForSanityImage(item.image).fit("crop").url()}
@@ -114,7 +108,6 @@ export default function GalleryModal({
           </SwiperWrapper>
         </div>
 
-        {/* Page indicator */}
         <div className="absolute -bottom-6 md:-bottom-8 left-1/2 -translate-x-1/2 z-30 text-white text-xs md:text-sm lg:text-base pointer-events-none">
           {activeIndex + 1} / {items.length}
         </div>
