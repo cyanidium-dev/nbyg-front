@@ -30,7 +30,9 @@ export default function GalleryModal({
 }: GalleryModalProps) {
   const modalRef = useRef<SwiperType | null>(null);
   const thumbRef = useRef<SwiperType | null>(null);
+
   const isSyncingRef = useRef(false);
+  const isSyncingThumbRef = useRef(false);
 
   useEffect(() => {
     if (isOpen && modalRef.current) {
@@ -51,10 +53,18 @@ export default function GalleryModal({
     const realIndex = swiper.realIndex;
     setActiveIndex(realIndex);
 
+    // синхронізація mainSwiper
     if (mainSwiper.current) {
       isSyncingRef.current = true;
       mainSwiper.current.slideToLoop(realIndex);
       isSyncingRef.current = false;
+    }
+
+    // синхронізація тумби
+    if (thumbRef.current) {
+      isSyncingThumbRef.current = true;
+      thumbRef.current.slideToLoop(realIndex);
+      isSyncingThumbRef.current = false;
     }
   };
 
@@ -62,7 +72,6 @@ export default function GalleryModal({
   const handleThumbClick = (index: number) => {
     if (!modalRef.current) return;
     modalRef.current.slideToLoop(index);
-    // mainSwiper оновиться через onSlideChange modalRef
   };
 
   return (
@@ -88,7 +97,7 @@ export default function GalleryModal({
             additionalOptions={{}}
             onSwiper={(swiper) => {
               modalRef.current = swiper;
-              // modalSwiper.current = swiper; // зберігаємо для доступу з зовні
+              // modalSwiper.current = swiper; // для зовнішнього доступу
               swiper.slideToLoop(activeIndex, 0);
             }}
             onSlideChange={handleModalSlideChange}
