@@ -3,6 +3,8 @@ import SwiperWrapper from "@/components/shared/swiper/SwiperWrapper";
 import { SwiperSlide } from "swiper/react";
 import ReviewsCard from "./ReviewsCard";
 import { Review } from "./reviewsData";
+import { fadeInAnimation } from "@/utils/animationVariants";
+import * as motion from "motion/react-client";
 
 interface ReviewsBlockProps {
     reviews: Review[];
@@ -10,7 +12,14 @@ interface ReviewsBlockProps {
 
 export default function ReviewsBlock({ reviews }: ReviewsBlockProps) {
     return (
-        <div className="relative">
+        <motion.div
+            variants={fadeInAnimation({ delay: 0.6, y: 30 })}
+            initial="hidden"
+            whileInView="visible"
+            exit="exit"
+            viewport={{ once: true, amount: 0.1 }}
+            className="relative"
+        >
             <SwiperWrapper
                 swiperClassName="reviews-block"
                 breakpoints={{
@@ -36,6 +45,6 @@ export default function ReviewsBlock({ reviews }: ReviewsBlockProps) {
                     </SwiperSlide>
                 ))}
             </SwiperWrapper>
-        </div>
+        </motion.div>
     );
 }
