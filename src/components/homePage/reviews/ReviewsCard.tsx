@@ -20,7 +20,7 @@ export default function ReviewsCard({ review }: ReviewsCardProps) {
                     maskComposite: "exclude",
                 }}
             />
-            <div className="w-full h-full rounded-[8px] p-5 pb-8.5 flex flex-col">
+            <div className="w-full h-full rounded-[8px] p-5 flex flex-col">
                 <div className="flex gap-[15px] mb-8">
                     <Image
                         src={review.image}
@@ -53,9 +53,11 @@ export default function ReviewsCard({ review }: ReviewsCardProps) {
                         </div>
                     </div>
                 </div>
-                <p className="text-[12px] leading-[167%] font-light whitespace-pre-line">
-                    {review.text}
-                </p>
+                <div className="h-full flex items-center">
+                    <p className="text-[12px] leading-[167%] font-light whitespace-pre-line">
+                        {review.text}
+                    </p>
+                </div>
             </div>
         </div>
     );
