@@ -139,7 +139,6 @@ export default function GallerySlider({
         activeIndex={activeIndex}
         setActiveIndex={setActiveIndex}
         mainSwiper={mainSwiper}
-        modalSwiper={modalSwiper}
       />
     </>
   );

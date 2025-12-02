@@ -16,7 +16,6 @@ interface GalleryModalProps {
   activeIndex: number;
   setActiveIndex: (index: number) => void;
   mainSwiper: React.MutableRefObject<SwiperType | null>;
-  modalSwiper: React.MutableRefObject<SwiperType | null>;
 }
 
 export default function GalleryModal({
@@ -26,17 +25,17 @@ export default function GalleryModal({
   activeIndex,
   setActiveIndex,
   mainSwiper,
-  modalSwiper,
 }: GalleryModalProps) {
   const modalRef = useRef<SwiperType | null>(null);
   const thumbRef = useRef<SwiperType | null>(null);
-
   const isSyncingRef = useRef(false);
-  const isSyncingThumbRef = useRef(false);
 
   useEffect(() => {
     if (isOpen && modalRef.current) {
       modalRef.current.slideToLoop(activeIndex, 0);
+      if (thumbRef.current) {
+        thumbRef.current.slideToLoop(activeIndex, 0);
+      }
     }
   }, [isOpen, activeIndex]);
 
@@ -46,26 +45,26 @@ export default function GalleryModal({
     onClose();
   };
 
-  // Головний слайдер модалки
+  // Зміна головного слайду модалки
   const handleModalSlideChange = (swiper: SwiperType) => {
     if (isSyncingRef.current) return;
 
     const realIndex = swiper.realIndex;
     setActiveIndex(realIndex);
 
+    isSyncingRef.current = true;
+
     // синхронізація mainSwiper
     if (mainSwiper.current) {
-      isSyncingRef.current = true;
       mainSwiper.current.slideToLoop(realIndex);
-      isSyncingRef.current = false;
     }
 
-    // синхронізація тумби
+    // синхронізація тумби (перший видимий слайд)
     if (thumbRef.current) {
-      isSyncingThumbRef.current = true;
-      thumbRef.current.slideToLoop(realIndex);
-      isSyncingThumbRef.current = false;
+      thumbRef.current.slideToLoop(realIndex, 300);
     }
+
+    isSyncingRef.current = false;
   };
 
   // Клік на тумбу: оновлюємо тільки modalRef
@@ -81,23 +80,22 @@ export default function GalleryModal({
       <Modal
         isModalShown={isOpen}
         setIsModalShown={(value) => !value && handleClose()}
-        className="w-full lg:max-w-[930px] max-h-dvh flex flex-col bg-black"
+        className="w-full lg:max-w-[930px] max-h-dvh md:max-h-[95dvh] h-full md:h-fit flex flex-col bg-black"
       >
         {/* MAIN modal slider */}
-        <div className="relative flex items-center justify-center lg:pt-16 lg:pb-5">
+        <div className="relative flex items-center justify-center my-auto md:pt-16 md:pb-5">
           <SwiperWrapper
             loop={true}
             breakpoints={{ 0: { spaceBetween: 0, slidesPerView: 1 } }}
             swiperClassName="gallery-modal w-full"
             showNavigation={true}
             buttonsPosition="onSlides"
-            buttonsClassName="absolute pointer-events-none z-10 top-[calc(50%-27px)] left-[calc(50%-143px)] left-[calc(50%-240.5px)] md:left-[calc(50%-285.5px)] 
-          lg:left-[calc(50%-492px)] w-[286px] sm:w-[481px] md:w-[571px] lg:w-[984px]"
+            buttonsClassName="absolute pointer-events-none z-10 top-[calc(50%-27px+22px)] left-0 
+          lg:left-[calc(50%-492px)] w-full lg:w-[984px] px-4 lg:px-0"
             uniqueKey="gallery-modal"
             additionalOptions={{}}
             onSwiper={(swiper) => {
               modalRef.current = swiper;
-              // modalSwiper.current = swiper; // для зовнішнього доступу
               swiper.slideToLoop(activeIndex, 0);
             }}
             onSlideChange={handleModalSlideChange}
@@ -105,7 +103,7 @@ export default function GalleryModal({
             {items.map((item, idx) =>
               item.image ? (
                 <SwiperSlide key={item._key || idx}>
-                  <div className="relative w-full h-[523px] flex items-center justify-center">
+                  <div className="relative w-full h-[202px] xs:h-[302px] sm:h-[402px] xl:h-[523px] flex items-center justify-center">
                     <Image
                       src={urlForSanityImage(item.image).fit("crop").url()}
                       alt={`Gallery image ${idx + 1}`}
@@ -122,7 +120,7 @@ export default function GalleryModal({
         </div>
 
         {/* Slider thumb */}
-        <div className="pb-[43px] px-[65px]">
+        <div className="absolute bottom-8 md:static w-full pb-[43px] px-14 lg:px-[65px] overflow-hidden">
           <SwiperWrapper
             loop={true}
             breakpoints={{ 0: { spaceBetween: 16, slidesPerView: "auto" } }}
@@ -130,7 +128,7 @@ export default function GalleryModal({
             showNavigation={false}
             buttonsPosition="onSlides"
             buttonsClassName="absolute pointer-events-none z-10 top-[calc(50%-27px)] left-[calc(50%-143px)] left-[calc(50%-240.5px)] md:left-[calc(50%-285.5px)] 
-          lg:left-[calc(50%-492px)] w-[286px] sm:w-[481px] md:w-[571px] lg:w-[984px]"
+          lg:left-[calc(50%-492px)]"
             uniqueKey="gallery-modal-thumb"
             additionalOptions={{}}
             onSwiper={(swiper) => {
@@ -142,7 +140,7 @@ export default function GalleryModal({
               item.image ? (
                 <SwiperSlide key={item._key || idx}>
                   <div
-                    className="relative w-full h-25 flex items-center justify-center rounded-[8px] cursor-pointer"
+                    className="relative w-full h-12 xs:h-18 lg:h-25 flex items-center justify-center rounded-[8px] cursor-pointer"
                     onClick={() => handleThumbClick(idx)}
                   >
                     <Image
