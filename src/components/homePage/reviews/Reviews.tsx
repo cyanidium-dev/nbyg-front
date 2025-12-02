@@ -7,7 +7,7 @@ import ReviewsDecorations from "./ReviewsDecorations";
 
 export default function Reviews() {
     return (
-        <section className="py-25">
+        <section className="py-25 lg:py-[138px]">
             <Container className="relative">
                 <ReviewsDecorations />
                 <div className="mb-10 lg:mb-[78px] md:flex items-center justify-between">
@@ -29,7 +29,7 @@ export default function Reviews() {
                     </div>
                 </div>
                 <ReviewsBlock reviews={reviewsData} />
-                <div className="md:hidden relative mt-[54px] w-full h-[156px] rounded-[8px] overflow-hidden">
+                <div className="md:hidden relative mt-[54px] w-full h-auto aspect-328/156 rounded-[8px] overflow-hidden">
                     <Image
                         src="/images/homePage/reviews/reviewImage.webp"
                         alt="Reviews"
