@@ -66,7 +66,7 @@ export default function GalleryModal({
       <Modal
         isModalShown={isOpen}
         setIsModalShown={(value) => !value && handleClose()}
-        className="w-full lg:max-w-[930px] h-full max-h-[90vh] md:max-h-[95vh] flex flex-col bg-black"
+        className="w-full lg:max-w-[930px] max-h-dvh flex flex-col bg-black"
       >
         <div className="relative flex items-center justify-center lg:pt-16 lg:pb-5">
           <SwiperWrapper
@@ -108,7 +108,48 @@ export default function GalleryModal({
           </SwiperWrapper>
         </div>
 
-        <div className="absolute -bottom-6 md:-bottom-8 left-1/2 -translate-x-1/2 z-30 text-white text-xs md:text-sm lg:text-base pointer-events-none">
+        {/* Slider thumb */}
+        <div className="pb-[43px] px-[65px]">
+          <SwiperWrapper
+            loop={true}
+            breakpoints={{
+              0: { spaceBetween: 16, slidesPerView: "auto" },
+            }}
+            swiperClassName="gallery-modal-thumb w-full"
+            showNavigation={false}
+            buttonsPosition="onSlides"
+            buttonsClassName="absolute pointer-events-none z-10 top-[calc(50%-27px)] left-[calc(50%-143px)] left-[calc(50%-240.5px)] md:left-[calc(50%-285.5px)] 
+          lg:left-[calc(50%-492px)] w-[286px] sm:w-[481px] md:w-[571px] lg:w-[984px]"
+            uniqueKey="gallery-modal"
+            additionalOptions={{}}
+            onSwiper={(swiper) => {
+              modalRef.current = swiper;
+              swiper.slideToLoop(activeIndex, 0);
+            }}
+            onSlideChange={handleSlideChange}
+          >
+            {items.map((item, idx) => {
+              if (!item.image) return null;
+
+              return (
+                <SwiperSlide key={item._key || idx}>
+                  <div className="relative w-full h-25 flex items-center justify-center rounded-[8px]">
+                    <Image
+                      src={urlForSanityImage(item.image).fit("crop").url()}
+                      alt={`Gallery image ${idx + 1}`}
+                      fill
+                      className="object-cover rounded-[8px]"
+                      sizes="120px"
+                      priority={idx === activeIndex}
+                    />
+                  </div>
+                </SwiperSlide>
+              );
+            })}
+          </SwiperWrapper>
+        </div>
+
+        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-10 font-find-sans-pro text-[16px] font-light leading-[120%] pointer-events-none">
           {activeIndex + 1} / {items.length}
         </div>
       </Modal>

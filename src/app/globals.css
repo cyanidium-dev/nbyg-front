@@ -200,6 +200,10 @@
     height: auto !important;
   }
 
+  .gallery-modal-thumb .swiper-slide {
+    width: 120px !important;
+  }
+
   .materials-slider .swiper-slide {
     max-width: 328px !important;
 
