@@ -154,7 +154,7 @@ export default function SwiperWrapper({
               ref={prevRef}
               disabled={isBeginning && !loop}
               className={`group enabled:cursor-pointer size-[54px] bg-white border border-white rounded-full flex items-center justify-center pointer-events-auto
-             transition duration-300 xl:enabled:hover:opacity-70 disabled:bg-transparent`}
+             transition duration-300 xl:enabled:hover:opacity-85 disabled:bg-transparent`}
             >
               <ShevronIcon className="-rotate-90 group-enabled:text-black group-disabled:text-white mr-1" />
             </button>
