@@ -112,8 +112,8 @@ export type BeforeAfterSection = {
   type: "beforeAfterSection";
   items: Array<{
     _key?: string;
-    beforeImage: SanityImage;
-    afterImage: SanityImage;
+    beforeImage: SanityImage | string;
+    afterImage: SanityImage | string;
   }>;
 };
 
