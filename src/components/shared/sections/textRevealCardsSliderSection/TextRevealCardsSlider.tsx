@@ -10,7 +10,8 @@ interface TextRevealCardsSliderProps {
     _key?: string;
     title: string;
     description: string;
-    image: SanityImage;
+    image: SanityImage | string;
+    link?: string;
   }>;
   uniqueKey?: string;
   component?: ReactNode;

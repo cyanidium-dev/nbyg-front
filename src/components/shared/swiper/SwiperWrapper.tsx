@@ -116,7 +116,7 @@ export default function SwiperWrapper({
         <div
           key={`${uniqueKey}-buttons`}
           className={twMerge(
-            `flex flex-col-reverse lg:flex-row lg:items-center lg:justify-between gap-10 mb-0.5`,
+            `flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-10 mb-0.5`,
             buttonsClassName
           )}
         >
