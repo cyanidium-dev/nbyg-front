@@ -8,7 +8,7 @@ import { fadeInAnimation } from "@/utils/animationVariants";
 
 export default function BottomCTA() {
     return (
-        <section className="py-[192px] md:py-13 relative md:rounded-[18px] overflow-hidden">
+        <section className="py-[192px] md:py-13 lg:mt-[92px] relative md:rounded-[18px] overflow-hidden">
             <motion.div
                 initial="hidden"
                 whileInView="visible"
