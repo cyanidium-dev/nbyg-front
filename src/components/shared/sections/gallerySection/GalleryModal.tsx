@@ -130,21 +130,22 @@ export default function GalleryModal({
             onClose();
           }
         }}
-        className="w-full max-w-[1280px] h-full max-h-[90vh] md:max-h-[95vh] flex flex-col bg-black"
+        className="w-full lg:max-w-[930px] h-full max-h-[90vh] md:max-h-[95vh] flex flex-col bg-black"
       >
-        <div className="flex-1 relative flex items-center justify-center px-[10px] md:px-5 py-4 md:py-8 overflow-hidden">
+        <div className="relative flex items-center justify-center lg:pt-16 lg:pb-5">
           <SwiperWrapper
-            loop={false}
+            loop={true}
             breakpoints={{
               0: {
                 spaceBetween: 0,
                 slidesPerView: 1,
               },
             }}
-            swiperClassName="gallery-modal-main"
+            swiperClassName="gallery-modal w-full"
             showNavigation={true}
             buttonsPosition="onSlides"
-            buttonsClassName="absolute inset-0 pointer-events-none"
+            buttonsClassName="absolute z-10 top-[calc(50%-27px)] left-[calc(50%-143px)] left-[calc(50%-240.5px)] md:left-[calc(50%-285.5px)] 
+          lg:left-[calc(50%-492px)] w-[286px] sm:w-[481px] md:w-[571px] lg:w-[984px] pointer-events-none"
             onSwiper={(swiper) => {
               modalMainSwiperRef.current = swiper;
             }}
@@ -158,17 +159,12 @@ export default function GalleryModal({
 
               return (
                 <SwiperSlide key={item._key || idx}>
-                  <div className="relative w-full h-full max-h-[calc(90vh-200px)] md:max-h-[calc(95vh-250px)] flex items-center justify-center">
+                  <div className="relative w-full h-[523px] flex items-center justify-center">
                     <Image
-                      src={urlForSanityImage(item.image)
-                        .width(1280)
-                        .height(1280)
-                        .fit("max")
-                        .url()}
+                      src={urlForSanityImage(item.image).fit("crop").url()}
                       alt={`Gallery image ${idx + 1}`}
-                      width={1280}
-                      height={1280}
-                      className="object-contain w-full h-full"
+                      fill
+                      className="object-cover"
                       sizes="(max-width: 260px) 240px, 1280px"
                       priority={idx === currentIndex}
                     />
@@ -177,26 +173,10 @@ export default function GalleryModal({
               );
             })}
           </SwiperWrapper>
-
-          {/* Navigation buttons overlay */}
-          {/* <div className="absolute inset-0 pointer-events-none flex items-center justify-between px-[10px] md:px-4">
-            <button
-              className="custom-prev pointer-events-auto w-[40px] h-[40px] md:w-[54px] md:h-[54px] bg-white rounded-full flex items-center justify-center hover:opacity-70 transition-opacity disabled:opacity-30 disabled:cursor-not-allowed"
-              aria-label="Previous image"
-            >
-              <ShevronIcon className="-rotate-90 text-black mr-0.5 md:mr-1 w-4 h-4 md:w-6 md:h-6" />
-            </button>
-            <button
-              className="custom-next pointer-events-auto w-[40px] h-[40px] md:w-[54px] md:h-[54px] bg-white rounded-full flex items-center justify-center hover:opacity-70 transition-opacity disabled:opacity-30 disabled:cursor-not-allowed"
-              aria-label="Next image"
-            >
-              <ShevronIcon className="rotate-90 text-black ml-0.5 md:ml-1 w-4 h-4 md:w-6 md:h-6" />
-            </button>
-          </div> */}
         </div>
 
         {/* Thumbnail carousel */}
-        <div className="px-[10px] md:px-5 pb-3 md:pb-6 pt-2 md:pt-4 border-t border-white/20 relative">
+        {/* <div className="px-[10px] md:px-5 pb-3 md:pb-6 pt-2 md:pt-4 border-t border-white/20 relative">
           <SwiperWrapper
             loop={false}
             breakpoints={{
@@ -257,7 +237,7 @@ export default function GalleryModal({
               );
             })}
           </SwiperWrapper>
-        </div>
+        </div> */}
 
         {/* Page indicator */}
         <div className="absolute -bottom-6 md:-bottom-8 left-1/2 -translate-x-1/2 z-30 text-white text-xs md:text-sm lg:text-base pointer-events-none">
