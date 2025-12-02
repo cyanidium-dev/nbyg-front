@@ -90,7 +90,7 @@ export default function GalleryModal({
             swiperClassName="gallery-modal w-full"
             showNavigation={true}
             buttonsPosition="onSlides"
-            buttonsClassName="absolute pointer-events-none z-10 top-[calc(50%-27px+22px)] left-0 
+            buttonsClassName="absolute pointer-events-none z-10 top-[calc(50%-27px)] md:top-[calc(50%-27px+22px)] left-0 
           lg:left-[calc(50%-492px)] w-full lg:w-[984px] px-4 lg:px-0"
             uniqueKey="gallery-modal"
             additionalOptions={{}}
@@ -120,7 +120,7 @@ export default function GalleryModal({
         </div>
 
         {/* Slider thumb */}
-        <div className="absolute bottom-8 md:static w-full pb-[43px] px-14 lg:px-[65px] overflow-hidden">
+        <div className="absolute bottom-[63px] md:static w-full pb-3 md:pb-[43px] px-14 lg:px-[65px] overflow-hidden">
           <SwiperWrapper
             loop={true}
             breakpoints={{ 0: { spaceBetween: 16, slidesPerView: "auto" } }}
@@ -158,7 +158,7 @@ export default function GalleryModal({
           </SwiperWrapper>
         </div>
 
-        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-10 font-find-sans-pro text-[16px] font-light leading-[120%] pointer-events-none">
+        <div className="absolute bottom-8 md:bottom-3 left-1/2 -translate-x-1/2 z-10 font-find-sans-pro text-[16px] font-light leading-[120%] pointer-events-none">
           {activeIndex + 1} / {items.length}
         </div>
       </Modal>
