@@ -55,7 +55,8 @@ export const PAGE_BY_SLUG_QUERY = `*[
       items[]{
         desktopImage,
         mobileImage
-      }
+      },
+      showOnServicesPage
     },
     _type == "faqSection" => {
       "type": _type,

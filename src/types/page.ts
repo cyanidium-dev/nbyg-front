@@ -104,6 +104,7 @@ export type GallerySection = {
     desktopImage?: SanityImage;
     mobileImage?: SanityImage;
   }>;
+  showOnServicesPage?: boolean;
 };
 
 export type BeforeAfterSection = {
