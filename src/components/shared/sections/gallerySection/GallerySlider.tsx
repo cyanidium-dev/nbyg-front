@@ -4,9 +4,10 @@ import SwiperWrapper from "../../swiper/SwiperWrapper";
 import { SanityImage } from "@/types/page";
 import { urlForSanityImage } from "@/utils/getUrlForSanityImage";
 import Image from "next/image";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import GalleryModal from "./GalleryModal";
 import type { Swiper as SwiperType } from "swiper";
+import { Controller } from "swiper/modules";
 
 interface GallerySliderProps {
   items: Array<{
@@ -16,18 +17,19 @@ interface GallerySliderProps {
 }
 
 export default function GallerySlider({ items }: GallerySliderProps) {
-  const [activeIndex, setActiveIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const swiperRef = useRef<SwiperType | null>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  if (!items || !items?.length) return null;
+  // Інстанси слайдерів для controller
+  const [mainSwiper, setMainSwiper] = useState<SwiperType | null>(null);
+  const [modalSwiper, setModalSwiper] = useState<SwiperType | null>(null);
+
+  if (!items || !items.length) return null;
 
   const handleImageClick = () => {
-    // Оновлюємо activeIndex з поточного активного слайда перед відкриттям модалки
-    if (swiperRef.current) {
-      const realIndex = swiperRef.current.realIndex;
-      setActiveIndex(realIndex);
-    }
+    // при кліку оновлюємо activeIndex з mainSwiper.realIndex якщо доступно
+    const realIndex = mainSwiper?.realIndex ?? activeIndex;
+    setActiveIndex(realIndex);
     setIsModalOpen(true);
   };
 
@@ -69,8 +71,11 @@ export default function GallerySlider({ items }: GallerySliderProps) {
             },
           }}
           additionalOptions={{
-            initialSlide: activeIndex,
+            // initialSlide: activeIndex,
+            // controller.control буде встановлено нижче через state (modalSwiper)
+            controller: { control: modalSwiper || undefined },
           }}
+          additionalModules={[Controller]}
           swiperClassName="gallery-slider"
           showNavigation={true}
           buttonsPosition="onSlides"
@@ -78,10 +83,12 @@ export default function GallerySlider({ items }: GallerySliderProps) {
           lg:left-[calc(50%-390.5px)] w-[286px] sm:w-[481px] md:w-[571px] lg:w-[781px] pointer-events-none"
           showCoverflowEffect={true}
           onSwiper={(swiper) => {
-            swiperRef.current = swiper;
+            // зберігаємо інстанс основного слайдера
+            setMainSwiper(swiper);
           }}
           onSlideChange={(swiper) => {
-            setActiveIndex(swiper.realIndex);
+            const newIndex = swiper.realIndex;
+            setActiveIndex(newIndex);
           }}
         >
           {items.map((item, idx) => {
@@ -105,13 +112,16 @@ export default function GallerySlider({ items }: GallerySliderProps) {
           })}
         </SwiperWrapper>
       </div>
+
       <GalleryModal
         items={items}
         isOpen={isModalOpen}
         onClose={handleCloseModal}
-        mainSwiperRef={swiperRef}
         activeIndex={activeIndex}
         setActiveIndex={setActiveIndex}
+        mainSwiper={mainSwiper}
+        modalSwiper={modalSwiper}
+        setModalSwiper={setModalSwiper}
       />
     </>
   );
