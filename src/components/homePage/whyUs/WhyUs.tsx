@@ -9,27 +9,27 @@ import Link from "next/link";
 
 export default function WhyUs() {
     return (
-        <section className="relative py-25 lg:pt-[152px] lg:pb-0">
-            <motion.div
-                initial="hidden"
-                whileInView="visible"
-                exit="exit"
-                viewport={{ once: true, amount: 0.1 }}
-                variants={fadeInAnimation({
-                    scale: 0.85,
-                    delay: 1.2,
-                })}
-                className="hidden lg:block absolute top-[50px] left-[150px] w-[600px] h-auto aspect-655/459 z-[-1]"
-            >
-                <Image
-                    src="/images/decorations/ellipsis.svg"
-                    alt="Background"
-                    width={655}
-                    height={459}
-                />
-            </motion.div>
+        <section className="relative py-25 lg:pt-[152px] lg:pb-0 overflow-hidden">
             <div className="hidden lg:block absolute bottom-0 left-0 z-[-1] w-[1134px] h-[388px] left-[-51px] top-[494px] bg-black blur-[53.3px]" />
-            <Container>
+            <Container className="relative">
+                <motion.div
+                    initial="hidden"
+                    whileInView="visible"
+                    exit="exit"
+                    viewport={{ once: true, amount: 0.1 }}
+                    variants={fadeInAnimation({
+                        scale: 0.85,
+                        delay: 1.2,
+                    })}
+                    className="hidden lg:block absolute top-[-50px] left-[160px] w-[580px] h-auto aspect-655/459 -z-10"
+                >
+                    <Image
+                        src="/images/decorations/ellipsis.svg"
+                        alt="Background"
+                        width={600}
+                        height={459}
+                    />
+                </motion.div>
                 <div className="relative mb-8 lg:mb-10 md:flex md:flex-row-reverse md:justify-between md:items-center ">
                     <SectionTitle className="lg:max-w-[536px] lg:text-right">
                         Hvorfor skal du vælge Nbyg?
