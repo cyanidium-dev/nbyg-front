@@ -200,12 +200,42 @@
     height: auto !important;
   }
 
+  .gallery-modal-thumb .swiper-slide {
+    width: calc(33.33% - 10.33px) !important;
+
+    @media screen and (min-width: 640px) {
+      width: calc(20% - 12.8px) !important;
+    }
+
+    @media screen and (min-width: 768px) {
+      width: 120px !important;
+    }
+  }
+
   .materials-slider .swiper-slide {
     max-width: 328px !important;
 
     @media screen and (min-width: 768px) {
       max-width: 687px !important;
       height: 230px !important;
+    }
+  }
+
+  .gallery-slider .swiper-slide {
+    width: 232px !important;
+    height: 350px !important;
+
+    @media screen and (min-width: 640px) {
+      width: 427px !important;
+    }
+
+    @media screen and (min-width: 768px) {
+      width: 517px !important;
+    }
+
+    @media screen and (min-width: 1024px) {
+      width: 727px !important;
+      height: 425px !important;
     }
   }
 

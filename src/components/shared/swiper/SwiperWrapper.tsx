@@ -1,9 +1,10 @@
 "use client";
 import "swiper/css";
 import "swiper/css/navigation";
+import "swiper/css/effect-coverflow";
 
 import { ReactNode, useRef, useLayoutEffect, useState } from "react";
-import { Navigation } from "swiper/modules";
+import { Navigation, EffectCoverflow } from "swiper/modules";
 import { Swiper } from "swiper/react";
 import { SwiperOptions } from "swiper/types";
 import type { Swiper as SwiperType } from "swiper";
@@ -23,6 +24,10 @@ interface SwiperWrapperProps {
   additionalOptions?: Partial<SwiperOptions>;
   showNavigation?: boolean;
   buttonsClassName?: string;
+  showCoverflowEffect?: boolean;
+  centeredSlides?: boolean;
+  onSwiper?: (swiper: SwiperType) => void;
+  onSlideChange?: (swiper: SwiperType) => void;
 }
 
 export default function SwiperWrapper({
@@ -37,6 +42,10 @@ export default function SwiperWrapper({
   additionalOptions = {},
   showNavigation = true,
   buttonsClassName,
+  showCoverflowEffect = false,
+  centeredSlides = false,
+  onSwiper,
+  onSlideChange,
 }: SwiperWrapperProps) {
   const prevRef = useRef<HTMLButtonElement>(null);
   const nextRef = useRef<HTMLButtonElement>(null);
@@ -90,7 +99,10 @@ export default function SwiperWrapper({
         key={`${uniqueKey}-swiper`}
         onSwiper={(swiper) => {
           swiperInstanceRef.current = swiper;
+          onSwiper?.(swiper);
         }}
+        onSlideChange={onSlideChange}
+        centeredSlides={centeredSlides}
         breakpoints={breakpoints}
         navigation={
           showNavigation
@@ -102,10 +114,24 @@ export default function SwiperWrapper({
         }
         loop={loop}
         speed={1000}
+        coverflowEffect={
+          showCoverflowEffect
+            ? {
+                rotate: 0,
+                depth: 100,
+                stretch: 0,
+                modifier: 1,
+                slideShadows: false,
+              }
+            : {}
+        }
+        effect={showCoverflowEffect ? "coverflow" : ""}
         modules={
-          showNavigation
-            ? [Navigation, ...additionalModules]
-            : additionalModules
+          showNavigation && showCoverflowEffect
+            ? [Navigation, EffectCoverflow, ...additionalModules]
+            : showNavigation
+              ? [Navigation, ...additionalModules]
+              : additionalModules
         }
         className={swiperClassName}
         {...additionalOptions}
@@ -122,20 +148,20 @@ export default function SwiperWrapper({
         >
           {component}
           <div
-            className={`flex justify-between sm:gap-3 items-center ${buttonsPosition === "right" ? "sm:justify-end sm:ml-auto" : "sm:justify-center"}`}
+            className={`flex justify-between sm:gap-3 items-center ${buttonsPosition === "right" ? "sm:justify-end sm:ml-auto" : buttonsPosition === "onSlides" ? "w-full justify-between" : "sm:justify-center"}`}
           >
             <button
               ref={prevRef}
               disabled={isBeginning && !loop}
               className={`group enabled:cursor-pointer size-[54px] bg-white border border-white rounded-full flex items-center justify-center pointer-events-auto
-             transition duration-300 xl:enabled:hover:opacity-70 disabled:bg-transparent`}
+             transition duration-300 xl:enabled:hover:opacity-85 disabled:bg-transparent`}
             >
               <ShevronIcon className="-rotate-90 group-enabled:text-black group-disabled:text-white mr-1" />
             </button>
             <button
               ref={nextRef}
               disabled={isEnd && !loop}
-              className={`group enabled:cursor-pointer size-[54px] bg-white border border-white rounded-full flex items-center justify-center pointer-events-auto transition-filter 
+              className={`group enabled:cursor-pointer size-[54px] bg-white border border-white rounded-full flex items-center justify-center pointer-events-auto transition 
           duration-300 xl:enabled:hover:opacity-70 disabled:bg-transparent`}
             >
               <ShevronIcon className="rotate-90 group-enabled:text-black group-disabled:text-white ml-1" />
