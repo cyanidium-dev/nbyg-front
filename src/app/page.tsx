@@ -7,6 +7,7 @@ import TextRevealCardsSliderSection from "@/components/shared/sections/textRevea
 import AboutUs from "@/components/homePage/aboutUs/AboutUs";
 import BeforeAfterSection from "@/components/shared/sections/beforeAfterSection/BeforeAfterSection";
 import { BEFORE_AFTER_IMAGES } from "@/components/homePage/beforeAfter/beforeAfter";
+import Reviews from "@/components/homePage/reviews/Reviews";
 
 export default function Home() {
   return (
@@ -35,6 +36,7 @@ export default function Home() {
         items={faq}
         uniqueKey="home-faq"
       />
+      <Reviews />
     </>
   );
 }
