@@ -7,7 +7,6 @@ interface DecorativeEllipsisProps {
     className?: string;
     delay?: number;
     staggerDelay?: number;
-    variant?: "normal" | "large";
 }
 
 export default function DecorativeEllipsis({
@@ -15,16 +14,9 @@ export default function DecorativeEllipsis({
     className = "",
     delay = 0.4,
     staggerDelay = 0.2,
-    variant = "normal",
 }: DecorativeEllipsisProps) {
     return (
-        <div
-            className={twMerge(
-                "flex gap-2 lg:gap-3",
-                variant === "large" && "gap-3",
-                className
-            )}
-        >
+        <div className={twMerge("flex gap-2 lg:gap-3", className)}>
             <motion.span
                 key={`${uniqueKey}-1`}
                 initial="hidden"
@@ -32,10 +24,7 @@ export default function DecorativeEllipsis({
                 exit="exit"
                 viewport={{ once: true, amount: 0.1 }}
                 variants={fadeInAnimation({ scale: 0.85, delay: delay })}
-                className={twMerge(
-                    "size-3 lg:size-4 rounded-full bg-brown",
-                    variant === "large" && "size-4"
-                )}
+                className="size-3 lg:size-4 rounded-full bg-brown"
             />
             <motion.span
                 key={`${uniqueKey}-2`}
@@ -47,10 +36,7 @@ export default function DecorativeEllipsis({
                     scale: 0.85,
                     delay: delay + staggerDelay,
                 })}
-                className={twMerge(
-                    "size-3 lg:size-4 rounded-full bg-[linear-gradient(167.47deg,var(--color-beige)_9.09%,var(--color-brown)_105.68%)]",
-                    variant === "large" && "size-4"
-                )}
+                className="size-3 lg:size-4 rounded-full bg-[linear-gradient(167.47deg,var(--color-beige)_9.09%,var(--color-brown)_105.68%)]"
             />
             <motion.span
                 key={`${uniqueKey}-3`}
@@ -62,10 +48,7 @@ export default function DecorativeEllipsis({
                     scale: 0.85,
                     delay: delay + staggerDelay * 2,
                 })}
-                className={twMerge(
-                    "size-3 lg:size-4 rounded-full bg-white",
-                    variant === "large" && "size-4"
-                )}
+                className="size-3 lg:size-4 rounded-full bg-white"
             />
         </div>
     );

@@ -49,7 +49,6 @@ export default function WhyUs() {
                             uniqueKey="why-us-ellipsis"
                             delay={0.1}
                             staggerDelay={0.1}
-                            variant="large"
                             className="absolute bottom-[5px] right-0 lg:relative lg:left-auto lg:bottom-auto"
                         />
                         <Link href="/om-os">
