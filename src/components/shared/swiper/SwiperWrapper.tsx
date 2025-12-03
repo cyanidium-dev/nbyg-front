@@ -30,6 +30,12 @@ interface SwiperWrapperProps {
   onSlideChange?: (swiper: SwiperType) => void;
 }
 
+const buttonsPositionClass = {
+  right: "sm:justify-end sm:ml-auto",
+  center: "sm:justify-center",
+  onSlides: "w-full justify-between",
+};
+
 export default function SwiperWrapper({
   children,
   breakpoints,
@@ -148,13 +154,13 @@ export default function SwiperWrapper({
         >
           {component}
           <div
-            className={`flex justify-between sm:gap-3 items-center ${buttonsPosition === "right" ? "sm:justify-end sm:ml-auto" : buttonsPosition === "onSlides" ? "w-full justify-between" : "sm:justify-center"}`}
+            className={`flex justify-between sm:gap-3 items-center ${buttonsPositionClass[buttonsPosition]}`}
           >
             <button
               ref={prevRef}
               disabled={isBeginning && !loop}
               className={`group enabled:cursor-pointer size-[54px] bg-white border border-white rounded-full flex items-center justify-center pointer-events-auto
-             transition duration-300 xl:enabled:hover:opacity-85 disabled:bg-transparent`}
+             transition duration-300 xl:enabled:hover:opacity-70 disabled:bg-transparent`}
             >
               <ShevronIcon className="-rotate-90 group-enabled:text-black group-disabled:text-white mr-1 pointer-events-auto" />
             </button>
