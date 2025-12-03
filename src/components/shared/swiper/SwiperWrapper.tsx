@@ -31,10 +31,9 @@ interface SwiperWrapperProps {
 }
 
 const buttonsPositionClass = {
-    right: "sm:justify-end sm:ml-auto",
-    center: "sm:justify-center",
-    onSlides:
-        "w-full justify-between",
+  right: "sm:justify-end sm:ml-auto",
+  center: "sm:justify-center",
+  onSlides: "w-full justify-between",
 };
 
 export default function SwiperWrapper({
@@ -163,15 +162,15 @@ export default function SwiperWrapper({
               className={`group enabled:cursor-pointer size-[54px] bg-white border border-white rounded-full flex items-center justify-center pointer-events-auto
              transition duration-300 xl:enabled:hover:opacity-70 disabled:bg-transparent`}
             >
-              <ShevronIcon className="-rotate-90 group-enabled:text-black group-disabled:text-white mr-1" />
+              <ShevronIcon className="-rotate-90 group-enabled:text-black group-disabled:text-white mr-1 pointer-events-auto" />
             </button>
             <button
               ref={nextRef}
               disabled={isEnd && !loop}
-              className={`group enabled:cursor-pointer size-[54px] bg-white border border-white rounded-full flex items-center justify-center pointer-events-auto
-             transition duration-300 xl:enabled:hover:opacity-70 disabled:bg-transparent`}
+              className={`group enabled:cursor-pointer size-[54px] bg-white border border-white rounded-full flex items-center justify-center pointer-events-auto transition 
+          duration-300 xl:enabled:hover:opacity-85 disabled:bg-transparent`}
             >
-              <ShevronIcon className="rotate-90 group-enabled:text-black group-disabled:text-white ml-1" />
+              <ShevronIcon className="rotate-90 group-enabled:text-black group-disabled:text-white ml-1 pointer-events-auto" />
             </button>
           </div>
         </div>

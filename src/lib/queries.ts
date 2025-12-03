@@ -167,3 +167,21 @@ export const PAGE_BY_SLUG_QUERY = `*[
     schemaJson
   }
 }`;
+
+export const ALL_GALLERIES_QUERY = `
+*[_type == "page"]{
+  title,
+  "slug": slug.current,
+  "gallery": sections[_type == "gallerySection"][0]{
+    order,
+    description,
+    items[]{ image },
+    showOnServicesPage
+  },
+  "galleryOrder": sections[_type == "gallerySection"][0].order
+}
+[
+  defined(gallery)
+] 
+| order(galleryOrder asc)
+`;
