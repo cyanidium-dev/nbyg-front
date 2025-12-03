@@ -1,9 +1,10 @@
 "use client";
 import "swiper/css";
 import "swiper/css/navigation";
+import "swiper/css/effect-coverflow";
 
 import { ReactNode, useRef, useLayoutEffect, useState } from "react";
-import { Navigation } from "swiper/modules";
+import { Navigation, EffectCoverflow } from "swiper/modules";
 import { Swiper } from "swiper/react";
 import { SwiperOptions } from "swiper/types";
 import type { Swiper as SwiperType } from "swiper";
@@ -23,13 +24,17 @@ interface SwiperWrapperProps {
   additionalOptions?: Partial<SwiperOptions>;
   showNavigation?: boolean;
   buttonsClassName?: string;
+  showCoverflowEffect?: boolean;
+  centeredSlides?: boolean;
+  onSwiper?: (swiper: SwiperType) => void;
+  onSlideChange?: (swiper: SwiperType) => void;
 }
 
 const buttonsPositionClass = {
     right: "sm:justify-end sm:ml-auto",
     center: "sm:justify-center",
     onSlides:
-        "sm:justify-between sm:ml-auto sm:absolute sm:top-[28%] sm:left-0 sm:right-0 z-20",
+        "w-full justify-between",
 };
 
 export default function SwiperWrapper({
@@ -44,6 +49,10 @@ export default function SwiperWrapper({
   additionalOptions = {},
   showNavigation = true,
   buttonsClassName,
+  showCoverflowEffect = false,
+  centeredSlides = false,
+  onSwiper,
+  onSlideChange,
 }: SwiperWrapperProps) {
   const prevRef = useRef<HTMLButtonElement>(null);
   const nextRef = useRef<HTMLButtonElement>(null);
@@ -97,7 +106,10 @@ export default function SwiperWrapper({
         key={`${uniqueKey}-swiper`}
         onSwiper={(swiper) => {
           swiperInstanceRef.current = swiper;
+          onSwiper?.(swiper);
         }}
+        onSlideChange={onSlideChange}
+        centeredSlides={centeredSlides}
         breakpoints={breakpoints}
         navigation={
           showNavigation
@@ -109,10 +121,24 @@ export default function SwiperWrapper({
         }
         loop={loop}
         speed={1000}
+        coverflowEffect={
+          showCoverflowEffect
+            ? {
+                rotate: 0,
+                depth: 100,
+                stretch: 0,
+                modifier: 1,
+                slideShadows: false,
+              }
+            : {}
+        }
+        effect={showCoverflowEffect ? "coverflow" : ""}
         modules={
-          showNavigation
-            ? [Navigation, ...additionalModules]
-            : additionalModules
+          showNavigation && showCoverflowEffect
+            ? [Navigation, EffectCoverflow, ...additionalModules]
+            : showNavigation
+              ? [Navigation, ...additionalModules]
+              : additionalModules
         }
         className={swiperClassName}
         {...additionalOptions}

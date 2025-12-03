@@ -1,5 +1,5 @@
 import Hero from "@/components/homePage/hero/Hero";
-import Reviews from "@/components/homePage/reviews/Reviews";
+import BottomCTA from "@/components/homePage/bottomCTA/BottomCTA";
 import FaqSection from "@/components/shared/sections/faqSection/FaqSection";
 import { faq } from "@/components/homePage/faq/Faq";
 import { services } from "@/components/homePage/services/services";
@@ -7,6 +7,7 @@ import TextRevealCardsSliderSection from "@/components/shared/sections/textRevea
 import AboutUs from "@/components/homePage/aboutUs/AboutUs";
 import BeforeAfterSection from "@/components/shared/sections/beforeAfterSection/BeforeAfterSection";
 import { BEFORE_AFTER_IMAGES } from "@/components/homePage/beforeAfter/beforeAfter";
+import Reviews from "@/components/homePage/reviews/Reviews";
 
 export default function Home() {
   return (
@@ -27,6 +28,7 @@ export default function Home() {
         items={BEFORE_AFTER_IMAGES}
         uniqueKey="home-before-after"
       />
+      <BottomCTA />
       <FaqSection
         _type="faqSection"
         type="faqSection"
