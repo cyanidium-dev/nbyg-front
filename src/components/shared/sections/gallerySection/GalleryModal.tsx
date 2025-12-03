@@ -8,6 +8,8 @@ import Image from "next/image";
 import type { Swiper as SwiperType } from "swiper";
 import Backdrop from "../../backdrop/Backdrop";
 import Modal from "../../modals/Modal";
+import ShevronIcon from "../../icons/ShevronIcon";
+import IconButton from "../../buttons/IconButton";
 
 interface GalleryModalProps {
   items: Array<{ _key?: string; image?: SanityImage }>;
@@ -30,12 +32,11 @@ export default function GalleryModal({
   const thumbRef = useRef<SwiperType | null>(null);
   const isSyncingRef = useRef(false);
 
+  // Відкриття модалки
   useEffect(() => {
-    if (isOpen && modalRef.current) {
+    if (isOpen && modalRef.current && thumbRef.current) {
       modalRef.current.slideToLoop(activeIndex, 0);
-      if (thumbRef.current) {
-        thumbRef.current.slideToLoop(activeIndex, 0);
-      }
+      thumbRef.current.slideToLoop(activeIndex, 0);
     }
   }, [isOpen, activeIndex]);
 
@@ -45,32 +46,33 @@ export default function GalleryModal({
     onClose();
   };
 
-  // Зміна головного слайду модалки
+  // Слайд змінився на головному слайдері
   const handleModalSlideChange = (swiper: SwiperType) => {
     if (isSyncingRef.current) return;
-
-    const realIndex = swiper.realIndex;
-    setActiveIndex(realIndex);
-
     isSyncingRef.current = true;
 
-    // синхронізація mainSwiper
-    if (mainSwiper.current) {
-      mainSwiper.current.slideToLoop(realIndex);
-    }
+    const newIndex = swiper.realIndex;
+    setActiveIndex(newIndex);
 
-    // синхронізація тумби (перший видимий слайд)
-    if (thumbRef.current) {
-      thumbRef.current.slideToLoop(realIndex, 300);
-    }
+    // Синхронізація зовнішнього mainSwiper
+    if (mainSwiper.current) mainSwiper.current.slideToLoop(newIndex, 300);
+
+    // Прокрутка тумби
+    if (thumbRef.current) thumbRef.current.slideToLoop(newIndex, 300);
 
     isSyncingRef.current = false;
   };
 
-  // Клік на тумбу: оновлюємо тільки modalRef
-  const handleThumbClick = (index: number) => {
+  // Кнопки навігації тумби
+  const handleThumbNav = (direction: "next" | "prev") => {
     if (!modalRef.current) return;
-    modalRef.current.slideToLoop(index);
+    const newIndex =
+      direction === "next"
+        ? (activeIndex + 1) % items.length
+        : (activeIndex - 1 + items.length) % items.length;
+
+    // Прокручуємо головний слайдер з анімацією
+    modalRef.current.slideToLoop(newIndex, 500);
   };
 
   return (
@@ -110,7 +112,6 @@ export default function GalleryModal({
                       fill
                       className="object-cover"
                       sizes="(max-width: 260px) 240px, 1280px"
-                      priority={idx === activeIndex}
                     />
                   </div>
                 </SwiperSlide>
@@ -125,10 +126,7 @@ export default function GalleryModal({
             loop={true}
             breakpoints={{ 0: { spaceBetween: 16, slidesPerView: "auto" } }}
             swiperClassName="gallery-modal-thumb w-full"
-            showNavigation={false}
-            buttonsPosition="onSlides"
-            buttonsClassName="absolute pointer-events-none z-10 top-[calc(50%-27px)] left-[calc(50%-143px)] left-[calc(50%-240.5px)] md:left-[calc(50%-285.5px)] 
-          lg:left-[calc(50%-492px)]"
+            showNavigation={false} // кнопки власні
             uniqueKey="gallery-modal-thumb"
             additionalOptions={{}}
             onSwiper={(swiper) => {
@@ -139,23 +137,33 @@ export default function GalleryModal({
             {items.map((item, idx) =>
               item.image ? (
                 <SwiperSlide key={item._key || idx}>
-                  <div
-                    className="relative w-full h-12 xs:h-18 lg:h-25 flex items-center justify-center rounded-[8px] cursor-pointer"
-                    onClick={() => handleThumbClick(idx)}
-                  >
+                  <div className="relative w-full h-12 xs:h-18 lg:h-25 flex items-center justify-center rounded-[8px]">
                     <Image
                       src={urlForSanityImage(item.image).fit("crop").url()}
                       alt={`Gallery image ${idx + 1}`}
                       fill
                       className="object-cover rounded-[8px]"
                       sizes="120px"
-                      priority={idx === activeIndex}
                     />
                   </div>
                 </SwiperSlide>
               ) : null
             )}
           </SwiperWrapper>
+
+          {/* Кнопки навігації тумби */}
+          <IconButton
+            className="absolute left-4 lg:left-[25px] bottom-6 sm:bottom-8 md:bottom-16 lg:bottom-20 z-20 size-6"
+            handleClick={() => handleThumbNav("prev")}
+          >
+            <ShevronIcon className="-rotate-90" />
+          </IconButton>
+          <IconButton
+            className="absolute right-4 lg:right-[25px] bottom-6 sm:bottom-8 md:bottom-16 lg:bottom-20 z-20 size-6"
+            handleClick={() => handleThumbNav("next")}
+          >
+            <ShevronIcon className="rotate-90" />
+          </IconButton>
         </div>
 
         <div className="absolute bottom-8 md:bottom-3 left-1/2 -translate-x-1/2 z-10 font-find-sans-pro text-[16px] font-light leading-[120%] pointer-events-none">
