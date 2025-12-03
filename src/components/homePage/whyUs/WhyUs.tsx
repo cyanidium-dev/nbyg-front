@@ -9,7 +9,7 @@ import Link from "next/link";
 
 export default function WhyUs() {
     return (
-        <section className="relative py-25 lg:mt-[152px] lb:mb-0">
+        <section className="relative py-25 lg:pt-[152px] lg:pb-0">
             <motion.div
                 initial="hidden"
                 whileInView="visible"
