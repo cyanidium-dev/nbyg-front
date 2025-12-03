@@ -9,7 +9,7 @@ import Link from "next/link";
 
 export default function WhyUs() {
     return (
-        <section className="relative py-25 lg:pt-[152px] lg:pb-0 overflow-hidden">
+        <section className="relative py-25 lg:pt-[152px] lg:pb-[1px] overflow-hidden">
             <div className="hidden lg:block absolute bottom-0 left-0 z-[-1] w-[1134px] h-[388px] left-[-51px] top-[494px] bg-black blur-[53.3px]" />
             <Container className="relative">
                 <motion.div
@@ -69,7 +69,7 @@ export default function WhyUs() {
                             delay: 0.3,
                         })}
                         id="card-1"
-                        className="w-full lg:w-[41%] lg:max-w-[472px] bg-[linear-gradient(146.79deg,var(--color-gradient-brown-dark)_8.8%,var(--color-black)_104.55%)] rounded-[12px] p-px"
+                        className="w-full lg:w-[41%] lg:max-w-[472px] bg-[linear-gradient(146.79deg,var(--color-gradient-brown-dark)_8.8%,var(--color-black)_104.55%)] rounded-[12px] p-[1.5px]"
                     >
                         <div className="w-full h-full bg-black rounded-[12px] pt-[31px] flex flex-col justify-between overflow-hidden">
                             <motion.h3
@@ -138,9 +138,9 @@ export default function WhyUs() {
                             delay: 0.7,
                         })}
                         id="card-2"
-                        className="w-full lg:max-w-[275px] bg-[linear-gradient(316.28deg,var(--color-gradient-brown-dark)_6.67%,var(--color-black)_95.76%)] rounded-[12px] p-px"
+                        className="w-full lg:max-w-[275px] bg-[linear-gradient(316.28deg,var(--color-gradient-brown-dark)_6.67%,var(--color-black)_95.76%)] rounded-[12px] p-[1.5px]"
                     >
-                        <div className="w-full h-full relative bg-black pt-[191px] lg:pt-[186px] pl-4 pr-19 lg:pr-4 pb-8 lg:pb-6 rounded-[12px] overflow-hidden">
+                        <div className="w-full h-full relative bg-black pt-[191px] lg:pt-[186px] pl-4 pr-19 lg:pr-4 pb-8 lg:pb-6 rounded-[12px] overflow-hidden flex flex-col">
                             <motion.div
                                 initial="hidden"
                                 whileInView="visible"
@@ -160,36 +160,39 @@ export default function WhyUs() {
                                     className="object-cover object-bottom"
                                 />
                             </motion.div>
-                            <motion.h3
-                                initial="hidden"
-                                whileInView="visible"
-                                exit="exit"
-                                viewport={{ once: true, amount: 0.1 }}
-                                variants={fadeInAnimation({
-                                    y: 30,
-                                    delay: 0.9,
-                                })}
-                                className="font-find-sans-pro text-[18px] lg:text-[24px] leading-[120%] uppercase mb-[22px] lg:mb-7"
-                            >
-                                Kvalitet
-                            </motion.h3>
-                            <motion.p
-                                initial="hidden"
-                                whileInView="visible"
-                                exit="exit"
-                                viewport={{ once: true, amount: 0.1 }}
-                                variants={fadeInAnimation({
-                                    y: 30,
-                                    delay: 1,
-                                })}
-                                className="text-[14px] font-light leading-[120%] lg:max-w-[236px] "
-                            >
-                                Vi bruger kun de bedste materialer og de nyeste
-                                teknikker for at sikre, at vores arbejde er af
-                                højeste kvalitet. Vores erfarne håndværkere er
-                                dedikerede til at levere et resultat, der lever
-                                op til dine forventninger og mere til.
-                            </motion.p>
+                            <div className="flex-1"></div>
+                            <div className="mt-auto">
+                                <motion.h3
+                                    initial="hidden"
+                                    whileInView="visible"
+                                    exit="exit"
+                                    viewport={{ once: true, amount: 0.1 }}
+                                    variants={fadeInAnimation({
+                                        y: 30,
+                                        delay: 0.9,
+                                    })}
+                                    className="font-find-sans-pro text-[18px] lg:text-[24px] leading-[120%] uppercase mb-[22px] lg:mb-7"
+                                >
+                                    Kvalitet
+                                </motion.h3>
+                                <motion.p
+                                    initial="hidden"
+                                    whileInView="visible"
+                                    exit="exit"
+                                    viewport={{ once: true, amount: 0.1 }}
+                                    variants={fadeInAnimation({
+                                        y: 30,
+                                        delay: 1,
+                                    })}
+                                    className="text-[14px] font-light leading-[120%] lg:max-w-[236px] "
+                                >
+                                    Vi bruger kun de bedste materialer og de nyeste
+                                    teknikker for at sikre, at vores arbejde er af
+                                    højeste kvalitet. Vores erfarne håndværkere er
+                                    dedikerede til at levere et resultat, der lever
+                                    op til dine forventninger og mere til.
+                                </motion.p>
+                            </div>
                         </div>
                     </motion.div>
                     <motion.div
@@ -202,7 +205,7 @@ export default function WhyUs() {
                             delay: 1.1,
                         })}
                         id="card-3"
-                        className="w-full lg:w-[33%] lg:max-w-[374px] bg-[linear-gradient(129.15deg,var(--color-gradient-brown-dark)_21.74%,var(--color-black)_103.38%)] rounded-[12px] p-px"
+                        className="w-full lg:w-[33%] lg:max-w-[374px] bg-[linear-gradient(129.15deg,var(--color-gradient-brown-dark)_21.74%,var(--color-black)_103.38%)] rounded-[12px] p-[1.5px]"
                     >
                         <div className="w-full h-full bg-black rounded-[12px] overflow-hidden flex flex-col">
                             <div className="py-8 px-4 flex-1">
