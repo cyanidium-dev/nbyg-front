@@ -5,6 +5,7 @@ import MainButton from "@/components/shared/buttons/MainButton";
 import Image from "next/image";
 import * as motion from "motion/react-client";
 import { fadeInAnimation } from "@/utils/animationVariants";
+import Link from "next/link";
 
 export default function WhyUs() {
     return (
@@ -51,9 +52,11 @@ export default function WhyUs() {
                             variant="large"
                             className="absolute bottom-[5px] right-0 lg:relative lg:left-auto lg:bottom-auto"
                         />
-                        <MainButton className="hidden md:block mr-11 lg:mr-0 lg:ml-11 w-[255px] h-[58px]">
-                            Se flere detaljer
-                        </MainButton>
+                        <Link href="/om-os">
+                            <MainButton className="hidden md:block mr-11 lg:mr-0 lg:ml-11 w-[255px] h-[58px]">
+                                Se flere detaljer
+                            </MainButton>
+                        </Link>
                     </motion.div>
                 </div>
                 <div className="flex flex-col md:flex-row gap-6 md:gap-5 mb-10 lg:mb-0">
@@ -270,9 +273,11 @@ export default function WhyUs() {
                         delay: 1.5,
                     })}
                 >
-                    <MainButton className="h-[58px] w-full lg:max-w-[255px] lg:hidden">
-                        Se flere detaljer
-                    </MainButton>
+                    <Link href="/om-os">
+                        <MainButton className="h-[58px] w-full lg:max-w-[255px] lg:hidden">
+                            Se flere detaljer
+                        </MainButton>
+                    </Link>
                 </motion.div>
             </Container>
         </section>
