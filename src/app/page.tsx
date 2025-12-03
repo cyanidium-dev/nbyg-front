@@ -1,4 +1,5 @@
 import Hero from "@/components/homePage/hero/Hero";
+import WhyUs from "@/components/homePage/whyUs/WhyUs";
 import BottomCTA from "@/components/homePage/bottomCTA/BottomCTA";
 import FaqSection from "@/components/shared/sections/faqSection/FaqSection";
 import { faq } from "@/components/homePage/faq/Faq";
@@ -28,6 +29,7 @@ export default function Home() {
         items={BEFORE_AFTER_IMAGES}
         uniqueKey="home-before-after"
       />
+      <WhyUs/>
       <BottomCTA />
       <FaqSection
         _type="faqSection"
