@@ -9,6 +9,8 @@ import AboutUs from "@/components/homePage/aboutUs/AboutUs";
 import BeforeAfterSection from "@/components/shared/sections/beforeAfterSection/BeforeAfterSection";
 import { BEFORE_AFTER_IMAGES } from "@/components/homePage/beforeAfter/beforeAfter";
 import Reviews from "@/components/homePage/reviews/Reviews";
+import GallerySection from "@/components/shared/sections/gallerySection/GallerySection";
+import { galleryData } from "@/components/homePage/gallery/galleryData";
 
 export default function Home() {
   return (
@@ -30,6 +32,12 @@ export default function Home() {
         uniqueKey="home-before-after"
       />
       <WhyUs/>
+      <GallerySection
+        _type="gallerySection"
+        type="gallerySection"
+        items={galleryData}
+        uniqueKey="home-gallery"
+      />
       <BottomCTA />
       <FaqSection
         _type="faqSection"
