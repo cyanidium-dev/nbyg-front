@@ -49,10 +49,10 @@ export default function WhyUs() {
                             uniqueKey="why-us-ellipsis"
                             delay={0.1}
                             staggerDelay={0.1}
-                            className="absolute bottom-[5px] right-0 lg:relative lg:left-auto lg:bottom-auto"
+                            className="absolute bottom-[5px] right-0 sm:relative lg:left-auto lg:bottom-auto"
                         />
-                        <Link href="/om-os">
-                            <MainButton className="hidden md:block mr-11 lg:mr-0 lg:ml-11 w-[255px] h-[58px]">
+                        <Link href="/om-os" className="hidden lg:block">
+                            <MainButton className=" mr-11 lg:mr-0 lg:ml-11 w-[255px] h-[58px]">
                                 Se flere detaljer
                             </MainButton>
                         </Link>
@@ -101,7 +101,7 @@ export default function WhyUs() {
                                         src="/images/homePage/whyUs/card-1.webp"
                                         alt="Service"
                                         fill
-                                        className="object-cover"
+                                        className="object-cover sm:object-[center_35%] lg:object-center"
                                     />
                                 </motion.div>
                                 <motion.div
@@ -140,7 +140,7 @@ export default function WhyUs() {
                         id="card-2"
                         className="w-full lg:max-w-[275px] bg-[linear-gradient(316.28deg,var(--color-gradient-brown-dark)_6.67%,var(--color-black)_95.76%)] rounded-[12px] p-px"
                     >
-                        <div className="w-full h-full relative bg-black pt-[191px] lg:pt-[186px] px-4 pb-8 lg:pb-6 rounded-[12px] overflow-hidden">
+                        <div className="w-full h-full relative bg-black pt-[191px] lg:pt-[186px] pl-4 pr-19 lg:pr-4 pb-8 lg:pb-6 rounded-[12px] overflow-hidden">
                             <motion.div
                                 initial="hidden"
                                 whileInView="visible"
@@ -151,7 +151,7 @@ export default function WhyUs() {
                                     scale: 0.9,
                                     delay: 0.8,
                                 })}
-                                className="absolute left-8 top-[-159px] size-[318px] rounded-full overflow-hidden mb-8"
+                                className="absolute right-[-22px] md:right-[-75px] top-[-159px] size-[318px] rounded-full overflow-hidden mb-8"
                             >
                                 <Image
                                     src="/images/homePage/whyUs/card-2.webp"
@@ -182,7 +182,7 @@ export default function WhyUs() {
                                     y: 30,
                                     delay: 1,
                                 })}
-                                className="text-[14px] font-light leading-[120%] max-w-[236px]"
+                                className="text-[14px] font-light leading-[120%] lg:max-w-[236px] "
                             >
                                 Vi bruger kun de bedste materialer og de nyeste
                                 teknikker for at sikre, at vores arbejde er af
@@ -204,8 +204,8 @@ export default function WhyUs() {
                         id="card-3"
                         className="w-full lg:w-[33%] lg:max-w-[374px] bg-[linear-gradient(129.15deg,var(--color-gradient-brown-dark)_21.74%,var(--color-black)_103.38%)] rounded-[12px] p-px"
                     >
-                        <div className="w-full h-full bg-black rounded-[12px] overflow-hidden">
-                            <div className="py-8 px-4">
+                        <div className="w-full h-full bg-black rounded-[12px] overflow-hidden flex flex-col">
+                            <div className="py-8 px-4 flex-1">
                                 <motion.h3
                                     initial="hidden"
                                     whileInView="visible"
@@ -250,13 +250,13 @@ export default function WhyUs() {
                                     y: 30,
                                     delay: 1.4,
                                 })}
-                                className="relative w-full h-[154px] overflow-hidden"
+                                className="relative w-full h-[154px] overflow-hidden mt-auto"
                             >
                                 <Image
                                     src="/images/homePage/whyUs/card-3.webp"
                                     alt="Service"
                                     fill
-                                    className="object-cover scale-118 object-[center_73%] lg:scale-100"
+                                    className="object-cover scale-118 object-[center_73%] xs:object-center xl:object-[center_73%] xl:scale-100"
                                 />
                             </motion.div>
                         </div>
@@ -271,9 +271,10 @@ export default function WhyUs() {
                         y: 40,
                         delay: 1.5,
                     })}
+                    className="lg:hidden"
                 >
                     <Link href="/om-os">
-                        <MainButton className="h-[58px] w-full lg:max-w-[255px] lg:hidden">
+                        <MainButton className="h-[58px] w-full sm:max-w-[255px]">
                             Se flere detaljer
                         </MainButton>
                     </Link>
