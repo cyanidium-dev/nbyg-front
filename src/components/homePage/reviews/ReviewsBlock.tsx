@@ -38,7 +38,7 @@ export default function ReviewsBlock({ reviews }: ReviewsBlockProps) {
                 }}
                 loop={true}
                 buttonsPosition="onSlides"
-                buttonsClassName="sm:absolute sm:top-[28%] sm:left-0 sm:right-0 z-20"
+                buttonsClassName="sm:absolute sm:top-[28%] sm:left-[-30px] sm:right-[-30px] z-20"
             >
                 {reviews.map(review => (
                     <SwiperSlide key={review.id}>
