@@ -54,6 +54,14 @@ export default async function SubservicePage({ params }: SubservicePageProps) {
   return (
     <>
       {currentSubservice.sections?.map((section, index) => {
+        // Filter gallerySection - only show if showOnServicesPage is true
+        if (
+          section._type === "gallerySection" &&
+          !(section as { showOnServicesPage?: boolean }).showOnServicesPage
+        ) {
+          return null;
+        }
+
         const SectionComponent = sectionComponentMap[section._type];
 
         if (!SectionComponent) {
