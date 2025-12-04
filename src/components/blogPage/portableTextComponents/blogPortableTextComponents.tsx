@@ -86,7 +86,7 @@ export const blogPortableTextComponents: Partial<PortableTextComponents> = {
           exit="exit"
           viewport={{ once: true, amount: 0.1 }}
           variants={fadeInAnimation({ scale: 0.95, y: 10, delay: 0.15 })}
-          className="not-last:mb-4 not-first:mt-4 text-[14px] lg:text-[16px] font-semibold leading-[150%]"
+          className="not-last:mb-4 not-first:mt-4 text-[14px] lg:text-[16px] font-medium leading-[150%]"
         >
           {children}
         </motion.h4>
@@ -137,7 +137,7 @@ export const blogPortableTextComponents: Partial<PortableTextComponents> = {
   },
   marks: {
     strong: ({ children }) => (
-      <strong className="font-semibold">{children}</strong>
+      <strong className="font-medium">{children}</strong>
     ),
     em: ({ children }) => <em className="italic">{children}</em>,
     link: ({ value, children }) => {
