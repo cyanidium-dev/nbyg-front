@@ -63,3 +63,11 @@ export type BlogPost = {
   seo?: PageSeo | null;
 };
 
+export type BlogPostPreview = {
+  heroTitle: string;
+  heroDescription: string;
+  heroMobileImage: SanityImage;
+  slug: string;
+  _createdAt?: string;
+};
+

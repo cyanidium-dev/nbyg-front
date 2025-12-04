@@ -12,11 +12,13 @@ import React from "react";
 import * as motion from "motion/react-client";
 import { fadeInAnimation } from "@/utils/animationVariants";
 
-export const blogPortableTextComponents: Partial<PortableTextComponents> = {
+export const getBlogPortableTextComponents = (
+  slug: string
+): Partial<PortableTextComponents> => ({
   block: {
     // Звичайний параграф <p>
     normal: ({ children, value }) => {
-      const key = value?._key || `p-${Math.random()}`;
+      const key = `${slug}-${value?._key || `p-${Math.random()}`}`;
       return (
         <motion.p
           key={key}
@@ -32,7 +34,7 @@ export const blogPortableTextComponents: Partial<PortableTextComponents> = {
       );
     },
     h2: ({ children, value }) => {
-      const key = value?._key || `h2-${Math.random()}`;
+      const key = `${slug}-${value?._key || `h2-${Math.random()}`}`;
       // Витягуємо текст з children для SectionTitle
       const getTextFromChildren = (node: React.ReactNode): string => {
         if (typeof node === "string") return node;
@@ -61,7 +63,7 @@ export const blogPortableTextComponents: Partial<PortableTextComponents> = {
       );
     },
     h3: ({ children, value }) => {
-      const key = value?._key || `h3-${Math.random()}`;
+      const key = `${slug}-${value?._key || `h3-${Math.random()}`}`;
       return (
         <motion.h3
           key={key}
@@ -77,7 +79,7 @@ export const blogPortableTextComponents: Partial<PortableTextComponents> = {
       );
     },
     h4: ({ children, value }) => {
-      const key = value?._key || `h4-${Math.random()}`;
+      const key = `${slug}-${value?._key || `h4-${Math.random()}`}`;
       return (
         <motion.h4
           key={key}
@@ -95,7 +97,7 @@ export const blogPortableTextComponents: Partial<PortableTextComponents> = {
   },
   list: {
     bullet: ({ children, value }) => {
-      const key = value?._key || `ul-${Math.random()}`;
+      const key = `${slug}-${value?._key || `ul-${Math.random()}`}`;
       return (
         <motion.ul
           key={key}
@@ -112,7 +114,7 @@ export const blogPortableTextComponents: Partial<PortableTextComponents> = {
       );
     },
     number: ({ children, value }) => {
-      const key = value?._key || `ol-${Math.random()}`;
+      const key = `${slug}-${value?._key || `ol-${Math.random()}`}`;
       return (
         <motion.ol
           key={key}
@@ -162,7 +164,7 @@ export const blogPortableTextComponents: Partial<PortableTextComponents> = {
     image: ({ value }: { value: BlogPostContentImage }) => {
       const imageUrl = urlForSanityImage(value).fit("crop").url();
       const alt = value?.alt || "blog image";
-      const key = value?._key || `image-${Math.random()}`;
+      const key = `${slug}-${value?._key || `image-${Math.random()}`}`;
 
       return (
         <motion.div
@@ -188,7 +190,7 @@ export const blogPortableTextComponents: Partial<PortableTextComponents> = {
       const headerCells = headerRow?.cells || [];
       const columnCount = headerCells.length;
 
-      const tableKey = value?._key || `table-${Math.random()}`;
+      const tableKey = `${slug}-${value?._key || `table-${Math.random()}`}`;
 
       return (
         <motion.div
@@ -286,4 +288,4 @@ export const blogPortableTextComponents: Partial<PortableTextComponents> = {
       );
     },
   },
-};
+});
