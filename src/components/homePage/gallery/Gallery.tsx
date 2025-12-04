@@ -37,7 +37,7 @@ export default function Gallery() {
                 <DecorativeEllipsis
                     uniqueKey="gallery"
                     className="hidden lg:flex"
-                    delay={0.6}
+                    delay={0.4}
                 />
                 <motion.p
                     initial="hidden"
@@ -47,7 +47,7 @@ export default function Gallery() {
                     variants={fadeInAnimation({
                         scale: 0.85,
                         x: 30,
-                        delay: 0.3,
+                        delay: 0.6,
                     })}
                     className="max-w-[397px] text-[14px] lg:text-[16px] font-light leading-[120%]"
                 >
