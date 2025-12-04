@@ -1,4 +1,3 @@
-import Container from "@/components/shared/container/Container";
 import { BlogPost } from "@/types/blogPost";
 import { PortableText } from "@portabletext/react";
 import { blogPortableTextComponents } from "../portableTextComponents/blogPortableTextComponents";
