@@ -102,7 +102,7 @@ export type GallerySection = {
   description?: string;
   items?: Array<{
     _key?: string;
-    image?: SanityImage;
+    image?: SanityImage | string;
   }>;
   showOnServicesPage?: boolean;
 };

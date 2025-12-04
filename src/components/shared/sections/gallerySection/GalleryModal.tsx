@@ -12,7 +12,7 @@ import ShevronIcon from "../../icons/ShevronIcon";
 import IconButton from "../../buttons/IconButton";
 
 interface GalleryModalProps {
-  items: Array<{ _key?: string; image?: SanityImage }>;
+  items: Array<{ _key?: string; image?: SanityImage | string }>;
   isOpen: boolean;
   onClose: () => void;
   activeIndex: number;
@@ -107,7 +107,7 @@ export default function GalleryModal({
                 <SwiperSlide key={item._key || idx}>
                   <div className="relative w-full h-[202px] xs:h-[302px] sm:h-[402px] xl:h-[523px] flex items-center justify-center">
                     <Image
-                      src={urlForSanityImage(item.image).fit("crop").url()}
+                      src={typeof item.image === "string" ? item.image : urlForSanityImage(item.image).fit("crop").url()}
                       alt={`Gallery image ${idx + 1}`}
                       fill
                       className="object-cover"
@@ -139,7 +139,7 @@ export default function GalleryModal({
                 <SwiperSlide key={item._key || idx}>
                   <div className="relative w-full h-12 xs:h-18 lg:h-25 flex items-center justify-center rounded-[8px]">
                     <Image
-                      src={urlForSanityImage(item.image).fit("crop").url()}
+                      src={typeof item.image === "string" ? item.image : urlForSanityImage(item.image).fit("crop").url()}
                       alt={`Gallery image ${idx + 1}`}
                       fill
                       className="object-cover rounded-[8px]"

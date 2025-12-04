@@ -11,6 +11,7 @@ import TableWithImageSection from "@/components/shared/sections/tableWithImageSe
 import TextRevealCardsSliderSection from "@/components/shared/sections/textRevealCardsSliderSection/TextRevealCardsSliderSection";
 import RoofTypesSection from "@/components/shared/sections/roofTypesSection/RoofTypesSection";
 import LargeTableSection from "@/components/shared/sections/largeTableSection/LargeTableSection";
+import Container from "@/components/shared/container/Container";
 import { PAGE_BY_SLUG_QUERY } from "@/lib/queries";
 import { fetchSanityData } from "@/utils/fetchSanityData";
 import type { PageSection, SanityPage } from "@/types/page";
@@ -71,6 +72,15 @@ export default async function SubservicePage({ params }: SubservicePageProps) {
         const sectionKey =
           (section as { _key?: string })._key ?? `${section._type}-${index}`;
         const key = `${service}-${subservice}-${sectionKey}`;
+
+        // Обгортаємо FaqSection в Container на сторінках subservice
+        if (section._type === "faqSection") {
+          return (
+            <Container key={key}>
+              <SectionComponent {...section} uniqueKey={key} />
+            </Container>
+          );
+        }
 
         return <SectionComponent key={key} {...section} uniqueKey={key} />;
       })}

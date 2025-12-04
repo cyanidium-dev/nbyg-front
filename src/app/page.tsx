@@ -9,6 +9,8 @@ import AboutUs from "@/components/homePage/aboutUs/AboutUs";
 import BeforeAfterSection from "@/components/shared/sections/beforeAfterSection/BeforeAfterSection";
 import { BEFORE_AFTER_IMAGES } from "@/components/homePage/beforeAfter/beforeAfter";
 import Reviews from "@/components/homePage/reviews/Reviews";
+import Gallery from "@/components/homePage/gallery/Gallery";
+import Container from "@/components/shared/container/Container";
 
 export default function Home() {
   return (
@@ -29,15 +31,18 @@ export default function Home() {
         items={BEFORE_AFTER_IMAGES}
         uniqueKey="home-before-after"
       />
-      <WhyUs/>
+      <WhyUs />
       <BottomCTA />
-      <FaqSection
-        _type="faqSection"
-        type="faqSection"
-        description="Har du nogen spørgsmål?"
-        items={faq}
-        uniqueKey="home-faq"
-      />
+      <Gallery />
+      <Container>
+        <FaqSection
+          _type="faqSection"
+          type="faqSection"
+          description="Har du nogen spørgsmål?"
+          items={faq}
+          uniqueKey="home-faq"
+        />
+      </Container>
       <Reviews />
     </>
   );
