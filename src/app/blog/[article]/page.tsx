@@ -1,9 +1,9 @@
-import Hero from "@/components/blogPage/hero/Hero";
+import Hero from "@/components/articlePage/hero/Hero";
 import { BLOG_POST_BY_SLUG_QUERY } from "@/lib/queries";
 import { BlogPost } from "@/types/blogPost";
 import { fetchSanityData } from "@/utils/fetchSanityData";
 import FaqSection from "@/components/shared/sections/faqSection/FaqSection";
-import ContentSection from "@/components/blogPage/contentSection/ContentSection";
+import ContentSection from "@/components/articlePage/contentSection/ContentSection";
 import Container from "@/components/shared/container/Container";
 
 interface ArticlePageProps {
