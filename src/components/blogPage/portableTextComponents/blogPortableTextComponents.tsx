@@ -9,13 +9,28 @@ import type {
   BlogPostContentTable,
 } from "@/types/blogPost";
 import React from "react";
+import * as motion from "motion/react-client";
+import { fadeInAnimation } from "@/utils/animationVariants";
 
 export const blogPortableTextComponents: Partial<PortableTextComponents> = {
   block: {
     // Звичайний параграф <p>
-    normal: ({ children }) => (
-      <p className="not-last:mb-4 leading-[150%]">{children}</p>
-    ),
+    normal: ({ children, value }) => {
+      const key = value?._key || `p-${Math.random()}`;
+      return (
+        <motion.p
+          key={key}
+          initial="hidden"
+          whileInView="visible"
+          exit="exit"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={fadeInAnimation({ scale: 0.95, y: 10, delay: 0.1 })}
+          className="not-last:mb-4 leading-[150%]"
+        >
+          {children}
+        </motion.p>
+      );
+    },
     h2: ({ children, value }) => {
       const key = value?._key || `h2-${Math.random()}`;
       // Витягуємо текст з children для SectionTitle
@@ -45,34 +60,74 @@ export const blogPortableTextComponents: Partial<PortableTextComponents> = {
         </SectionTitle>
       );
     },
-    h3: ({ children }) => (
-      <h3 className="not-last:mb-8 not-first:mt-14 font-find-sans-pro text-[18px] lg:text-[24px] font-light leading-[120%] uppercase">
-        {children}
-      </h3>
-    ),
-    h4: ({ children }) => (
-      <h4 className="not-last:mb-4 not-first:mt-4 text-[14px] lg:text-[16px] font-semibold leading-[150%]">
-        {children}
-      </h4>
-    ),
+    h3: ({ children, value }) => {
+      const key = value?._key || `h3-${Math.random()}`;
+      return (
+        <motion.h3
+          key={key}
+          initial="hidden"
+          whileInView="visible"
+          exit="exit"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={fadeInAnimation({ scale: 0.95, y: 10, delay: 0.2 })}
+          className="not-last:mb-8 not-first:mt-14 font-find-sans-pro text-[18px] lg:text-[24px] font-light leading-[120%] uppercase"
+        >
+          {children}
+        </motion.h3>
+      );
+    },
+    h4: ({ children, value }) => {
+      const key = value?._key || `h4-${Math.random()}`;
+      return (
+        <motion.h4
+          key={key}
+          initial="hidden"
+          whileInView="visible"
+          exit="exit"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={fadeInAnimation({ scale: 0.95, y: 10, delay: 0.15 })}
+          className="not-last:mb-4 not-first:mt-4 text-[14px] lg:text-[16px] font-semibold leading-[150%]"
+        >
+          {children}
+        </motion.h4>
+      );
+    },
   },
   list: {
-    bullet: ({ children }) => (
-      <ul
-        className="space-y-2 not-last:mb-4 leading-[150%]"
-        style={{ listStyle: "disc", paddingLeft: "1.5rem" }}
-      >
-        {children}
-      </ul>
-    ),
-    number: ({ children }) => (
-      <ol
-        className="space-y-2 not-last:mb-4 leading-[150%]"
-        style={{ listStyle: "decimal", paddingLeft: "1.5rem" }}
-      >
-        {children}
-      </ol>
-    ),
+    bullet: ({ children, value }) => {
+      const key = value?._key || `ul-${Math.random()}`;
+      return (
+        <motion.ul
+          key={key}
+          initial="hidden"
+          whileInView="visible"
+          exit="exit"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={fadeInAnimation({ scale: 0.95, y: 10, delay: 0.2 })}
+          className="space-y-2 not-last:mb-4 leading-[150%]"
+          style={{ listStyle: "disc", paddingLeft: "1.5rem" }}
+        >
+          {children}
+        </motion.ul>
+      );
+    },
+    number: ({ children, value }) => {
+      const key = value?._key || `ol-${Math.random()}`;
+      return (
+        <motion.ol
+          key={key}
+          initial="hidden"
+          whileInView="visible"
+          exit="exit"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={fadeInAnimation({ scale: 0.95, y: 10, delay: 0.2 })}
+          className="space-y-2 not-last:mb-4 leading-[150%]"
+          style={{ listStyle: "decimal", paddingLeft: "1.5rem" }}
+        >
+          {children}
+        </motion.ol>
+      );
+    },
   },
   listItem: {
     bullet: ({ children }) => <li>{children}</li>,
@@ -107,11 +162,20 @@ export const blogPortableTextComponents: Partial<PortableTextComponents> = {
     image: ({ value }: { value: BlogPostContentImage }) => {
       const imageUrl = urlForSanityImage(value).fit("crop").url();
       const alt = value?.alt || "blog image";
+      const key = value?._key || `image-${Math.random()}`;
 
       return (
-        <div className="relative w-full h-30 lg:h-60 rounded-[12px] overflow-hidden my-4 lg:my-6">
+        <motion.div
+          key={key}
+          initial="hidden"
+          whileInView="visible"
+          exit="exit"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={fadeInAnimation({ scale: 0.95, y: 20, delay: 0.2 })}
+          className="relative w-full h-30 lg:h-60 rounded-[12px] overflow-hidden my-4 lg:my-6"
+        >
           <Image src={imageUrl} fill alt={alt} className="object-cover" />
-        </div>
+        </motion.div>
       );
     },
     table: ({ value }: { value: BlogPostContentTable }) => {
@@ -124,8 +188,18 @@ export const blogPortableTextComponents: Partial<PortableTextComponents> = {
       const headerCells = headerRow?.cells || [];
       const columnCount = headerCells.length;
 
+      const tableKey = value?._key || `table-${Math.random()}`;
+
       return (
-        <div className="w-full my-8 overflow-x-auto">
+        <motion.div
+          key={tableKey}
+          initial="hidden"
+          whileInView="visible"
+          exit="exit"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={fadeInAnimation({ scale: 0.95, y: 20, delay: 0.2 })}
+          className="w-full my-8 overflow-x-auto"
+        >
           <table
             className="w-full border-collapse"
             style={{ borderSpacing: 0, tableLayout: "fixed" }}
@@ -208,7 +282,7 @@ export const blogPortableTextComponents: Partial<PortableTextComponents> = {
               })}
             </tbody>
           </table>
-        </div>
+        </motion.div>
       );
     },
   },
