@@ -4,13 +4,18 @@ import Image from "next/image";
 import { urlForSanityImage } from "@/utils/getUrlForSanityImage";
 import Link from "next/link";
 import MainButton from "@/components/shared/buttons/MainButton";
-import type { BlogPostContentImage } from "@/types/blogPost";
+import type {
+  BlogPostContentImage,
+  BlogPostContentTable,
+} from "@/types/blogPost";
 import React from "react";
 
 export const blogPortableTextComponents: Partial<PortableTextComponents> = {
   block: {
     // Звичайний параграф <p>
-    normal: ({ children }) => <p className="not-last:mb-4">{children}</p>,
+    normal: ({ children }) => (
+      <p className="not-last:mb-4 leading-[150%]">{children}</p>
+    ),
     h2: ({ children, value }) => {
       const key = value?._key || `h2-${Math.random()}`;
       // Витягуємо текст з children для SectionTitle
@@ -106,6 +111,97 @@ export const blogPortableTextComponents: Partial<PortableTextComponents> = {
       return (
         <div className="relative w-full h-[120px] lg:h-[240px] rounded-[12px] overflow-hidden my-4 lg:my-6">
           <Image src={imageUrl} fill alt={alt} className="object-cover" />
+        </div>
+      );
+    },
+    table: ({ value }: { value: BlogPostContentTable }) => {
+      const rows = value?.rows || [];
+      if (rows.length === 0) return null;
+
+      // Перший рядок - заголовки
+      const headerRow = rows[0];
+      const dataRows = rows.slice(1);
+      const headerCells = headerRow?.cells || [];
+      const columnCount = headerCells.length;
+
+      return (
+        <div className="w-full my-8 overflow-x-auto">
+          <table
+            className="w-full border-collapse"
+            style={{ borderSpacing: 0 }}
+          >
+            <thead>
+              <tr>
+                {headerCells.map((cell, index) => {
+                  const isLastColumn = index === headerCells.length - 1;
+                  return (
+                    <th
+                      key={index}
+                      className="text-[12px] lg:text-[16px] font-medium text-center align-middle p-5"
+                      style={{
+                        width: `${100 / columnCount}%`,
+                        borderRight: isLastColumn
+                          ? "none"
+                          : "0.5px solid rgba(255, 255, 255, 0.1)",
+                        borderBottom: "0.5px solid rgba(255, 255, 255, 0.1)",
+                      }}
+                    >
+                      {cell || ""}
+                    </th>
+                  );
+                })}
+              </tr>
+            </thead>
+            <tbody>
+              {dataRows.map((row, rowIndex) => {
+                const isLastRow = rowIndex === dataRows.length - 1;
+                return (
+                  <tr key={rowIndex}>
+                    {(row?.cells || []).map((cell, cellIndex) => {
+                      const isLastColumn = cellIndex === columnCount - 1;
+                      return (
+                        <td
+                          key={cellIndex}
+                          className="text-[12px] lg:text-[16px] font-light text-center align-middle p-5"
+                          style={{
+                            borderRight: isLastColumn
+                              ? "none"
+                              : "0.5px solid rgba(255, 255, 255, 0.1)",
+                            borderBottom: isLastRow
+                              ? "none"
+                              : "0.5px solid rgba(255, 255, 255, 0.1)",
+                          }}
+                        >
+                          {cell || ""}
+                        </td>
+                      );
+                    })}
+                    {/* Заповнюємо порожні комірки, якщо їх не вистачає */}
+                    {Array.from({
+                      length: columnCount - (row?.cells?.length || 0),
+                    }).map((_, index) => {
+                      const actualIndex = (row?.cells?.length || 0) + index;
+                      const isLastColumn = actualIndex === columnCount - 1;
+                      return (
+                        <td
+                          key={`empty-${index}`}
+                          className="text-[12px] lg:text-[16px] font-light text-center align-middle py-2 px-3"
+                          style={{
+                            borderRight: isLastColumn
+                              ? "none"
+                              : "0.5px solid rgba(255, 255, 255, 0.1)",
+                            borderBottom: isLastRow
+                              ? "none"
+                              : "0.5px solid rgba(255, 255, 255, 0.1)",
+                          }}
+                        ></td>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
       );
     },
