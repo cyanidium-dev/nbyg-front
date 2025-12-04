@@ -3,8 +3,17 @@ import PageTitle from "@/components/shared/titles/PageTitle";
 import Image from "next/image";
 import * as motion from "motion/react-client";
 import { fadeInAnimation, headerVariants } from "@/utils/animationVariants";
+import { BlogPost } from "@/types/blogPost";
+import { urlForSanityImage } from "@/utils/getUrlForSanityImage";
 
-export default function Hero() {
+interface HeroProps {
+  article: BlogPost;
+}
+
+export default function Hero({ article }: HeroProps) {
+  const { heroTitle, heroDescription, heroMobileImage, heroDesktopImage } =
+    article;
+
   return (
     <motion.section
       initial="hidden"
@@ -15,11 +24,20 @@ export default function Hero() {
       className="relative rounded-b-[18px] overflow-hidden"
     >
       <Image
-        src="/images/blogPage/hero/hero.webp"
+        src={urlForSanityImage(heroMobileImage).fit("crop").url()}
         fill
-        alt="blog hero image"
+        alt="blog post hero image"
         sizes="100vw"
-        className="object-cover -z-20"
+        className="md:hidden object-cover -z-20"
+        priority
+        fetchPriority="high"
+      />
+      <Image
+        src={urlForSanityImage(heroDesktopImage).fit("crop").url()}
+        fill
+        alt="blog post hero image"
+        sizes="100vw"
+        className="hidden md:block object-cover -z-20"
         priority
         fetchPriority="high"
       />
@@ -41,19 +59,19 @@ export default function Hero() {
     `,
         }}
       ></div>
-      <Container className="pt-[132px] lg:pt-[219px] pb-14 lg:pb-30">
-        <PageTitle className="mb-6 lg:mb-9">Blog</PageTitle>
+      <Container className="pt-[147px] lg:pt-[179px] pb-7 lg:pb-[108px]">
+        <PageTitle className="max-w-[978px] mb-6 lg:mb-9">
+          {heroTitle}
+        </PageTitle>
         <motion.p
           initial="hidden"
           whileInView="visible"
           exit="exit"
           viewport={{ once: true, amount: 0.1 }}
           variants={fadeInAnimation({ scale: 0.85, x: 70, y: 30, delay: 0.4 })}
-          className="max-w-[685px]"
+          className="max-w-[978px] whitespace-pre-line"
         >
-          Læs vores tips, inspiration og guides om byggeri, tagløsninger og
-          energioptimering. Få indsigt fra vores erfarne håndværkere og find
-          nyttig viden til dit næste projekt.
+          {heroDescription}
         </motion.p>
       </Container>
     </motion.section>
