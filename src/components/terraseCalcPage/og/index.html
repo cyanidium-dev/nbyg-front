@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NByg calculator</title>
+    <link href="style.css" rel="stylesheet" />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Taviraj&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/3.0.1/modern-normalize.min.css"
+      integrity="sha512-q6WgHqiHlKyOqslT/lgBgodhd03Wp4BEqKeW6nNtlOY4quzyG3VoQKFrieaCeSnuVseNKRGpGeDU3qPmabCANg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <main>
+      <form id="form" class="container">
+        <section id="materialtype" class="section">
+          <h2 class="section-title">Vælg materialetype</h2>
+          <fieldset class="field-grid">
+            <label class="option" for="wood">
+              <input
+                type="radio"
+                id="wood"
+                name="materialtype"
+                value="wood"
+                data-category="Vælg materialetype"
+                data-label="Træterrasse"
+              />
+              <img
+                src="assets/type-wood.jpg"
+                srcset="assets/type-wood.jpg 1x, assets/type-wood@2x.jpg 2x"
+                alt="wood"
+                loading="lazy"
+                width="157"
+                height="157"
+                class="option-image"
+              />
+              <div class="option-label-container">
+                <div class="check-icon-container">
+                  <svg class="check-icon">
+                    <use href="assets/sprites.svg#icon-tick" />
+                  </svg>
+                </div>
+                <span class="option-label">Træterrasse</span>
+              </div>
+            </label>
+            <label class="option" for="stone">
+              <input
+                type="radio"
+                id="stone"
+                name="materialtype"
+                value="stone"
+                data-category="Vælg materialetype"
+                data-label="Stenterrasse"
+              />
+              <img
+                src="assets/type-stone.jpg"
+                srcset="assets/type-stone.jpg 1x, assets/type-stone@2x.jpg 2x"
+                alt="stone"
+                loading="lazy"
+                width="157"
+                height="157"
+                class="option-image"
+              />
+              <div class="option-label-container">
+                <div class="check-icon-container">
+                  <svg class="check-icon">
+                    <use href="assets/sprites.svg#icon-tick" />
+                  </svg>
+                </div>
+                <span class="option-label">Stenterrasse</span>
+              </div>
+            </label>
+            <label class="option" for="composite">
+              <input
+                type="radio"
+                id="composite"
+                name="materialtype"
+                value="composite"
+                data-category="Vælg materialetype"
+                data-label="Kompositterrasse"
+              />
+              <img
+                src="assets/type-composite.jpg"
+                srcset="
+                  assets/type-composite.jpg    1x,
+                  assets/type-composite@2x.jpg 2x
+                "
+                alt="composite"
+                loading="lazy"
+                width="157"
+                height="157"
+                class="option-image"
+              />
+              <div class="option-label-container">
+                <div class="check-icon-container">
+                  <svg class="check-icon">
+                    <use href="assets/sprites.svg#icon-tick" />
+                  </svg>
+                </div>
+                <span class="option-label">Kompositterrasse</span>
+              </div>
+            </label>
+            <label class="option" for="tiled">
+              <input
+                type="radio"
+                id="tiled"
+                name="materialtype"
+                value="tiled"
+                data-category="Vælg materialetype"
+                data-label="Fliseterrasse"
+              />
+              <img
+                src="assets/type-tiled.jpg"
+                srcset="assets/type-tiled.jpg 1x, assets/type-tiled@2x.jpg 2x"
+                alt="tiled"
+                loading="lazy"
+                width="157"
+                height="157"
+                class="option-image"
+              />
+              <div class="option-label-container">
+                <div class="check-icon-container">
+                  <svg class="check-icon">
+                    <use href="assets/sprites.svg#icon-tick" />
+                  </svg>
+                </div>
+                <span class="option-label">Fliseterrasse</span>
+              </div>
+            </label>
+          </fieldset>
+        </section>
+
+        <section id="area" class="section animated">
+          <h2 class="section-title">Angiv terrasseareal i m²</h2>
+          <div class="input-group">
+            <input
+              name="area"
+              type="number"
+              id="area-input"
+              min="5"
+              max="300"
+              value="50"
+              data-category="Angiv terrasseareal i m²"
+              class="area-number"
+            />
+            <p class="number-option-label">
+              Indtast terrassearealet eller brug skyderen nedenfor
+            </p>
+            <div class="range-input-container">
+              <div id="range-popup" class="range-popup">
+                <span id="range-popup-value"></span>
+              </div>
+              <div class="slider-fill" id="slider-fill"></div>
+              <div class="slider-background"></div>
+              <input
+                type="range"
+                name="area"
+                id="area-range"
+                min="5"
+                max="300"
+                value="50"
+                data-category="Angiv terrasseareal&nbsp;i&nbsp;m²"
+              />
+              <label for="area-range" class="range-option-label">
+                <span>5 m²</span>
+                <span>300 m²</span>
+              </label>
+            </div>
+          </div>
+        </section>
+
+        <div id="dynamic-fields" class="animated"></div>
+      </form>
+
+      <section id="summary" class="section hidden">
+        <div class="container">
+          <h2 class="section-title">Du har valgt:</h2>
+          <table id="summary-table"></table>
+        </div>
+      </section>
+      <section id="calculated" class="section hidden">
+        <div class="container">
+          <div class="calculated-panel">
+            <h2 class="calculated-title">Forventet pris for din terrasse:</h2>
+            <p id="calculated-value"></p>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script type="module" src="script.js"></script>
+  </body>
+</html>
