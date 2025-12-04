@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, startTransition } from "react";
 import InputArrow from "../shared/icons/InputArrow";
 
 interface AreaInputProps {
@@ -9,24 +9,33 @@ interface AreaInputProps {
 
 export default function AreaInput({ value, onChange }: AreaInputProps) {
     const [isDragging, setIsDragging] = useState(false);
+    const [localValue, setLocalValue] = useState(value);
     const rangeRef = useRef<HTMLInputElement>(null);
     const popupRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
+    const prevValueRef = useRef(value);
 
     const min = 5;
     const max = 200;
 
-    const percent = ((value - min) / (max - min)) * 100;
-
+    // Sync localValue with value prop when not dragging
+    // This is necessary to keep the range input in sync with external value changes
+    // while allowing local state during dragging for better performance
     useEffect(() => {
-        if (!rangeRef.current || !popupRef.current) return;
+        if (!isDragging && prevValueRef.current !== value) {
+            prevValueRef.current = value;
+            // Use startTransition to prevent cascading renders
+            startTransition(() => {
+                setLocalValue(value);
+            });
+        }
+    }, [value, isDragging]);
 
-        const thumbSize = 16;
-        const thumbPosition =
-            (percent / 100) * (rangeRef.current.clientWidth - thumbSize) +
-            thumbSize / 2;
-        popupRef.current.style.left = `${thumbPosition}px`;
-    }, [value, percent]);
+    // Use localValue when dragging, value when not dragging
+    const displayValue = isDragging ? localValue : value;
+    const percent = ((displayValue - min) / (max - min)) * 100;
+    // Calculate offset based on percentage: 8px at 0%, -8px at 100%
+    const thumbOffset = 8 * (1 - percent / 50);
 
     const handleNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         let numValue = parseInt(e.target.value) || min;
@@ -35,8 +44,14 @@ export default function AreaInput({ value, onChange }: AreaInputProps) {
         onChange(numValue);
     };
 
+    const handleRangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const newValue = parseInt(e.target.value);
+        setLocalValue(newValue);
+    };
+
     const handleRangeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        onChange(parseInt(e.target.value));
+        const newValue = parseInt(e.target.value);
+        setLocalValue(newValue);
     };
 
     const handleIncrement = () => {
@@ -65,7 +80,7 @@ export default function AreaInput({ value, onChange }: AreaInputProps) {
                         id="area-input"
                         min={min}
                         max={max}
-                        value={value}
+                        value={displayValue}
                         onChange={handleNumberChange}
                         className="w-full h-12 rounded-full border border-gradient-brown px-8 pr-12 py-1.5 text-[18px] leading-[125%] bg-transparent text-white [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                     />
@@ -96,97 +111,26 @@ export default function AreaInput({ value, onChange }: AreaInputProps) {
                 <div className="relative" id="area-range-container">
                     <div
                         ref={popupRef}
-                        className={`absolute bottom-full left-0 z-10 mb-1 whitespace-nowrap rounded-lg bg-[#653409] px-3 py-1 text-sm leading-[17px] shadow-[0px_0px_1px_0px_rgba(0,0,0,0.3),0px_2px_30px_0px_rgba(0,0,0,0.08),0px_0px_15px_0px_rgba(0,0,0,0.03)] transition-opacity duration-200 ${
+                        className={`absolute bottom-full z-10 mb-2 whitespace-nowrap rounded-lg bg-gradient-brown px-3 py-1 text-[14px] leading-[150%] font-light shadow-[0px_0px_1px_0px_rgba(0,0,0,0.3),0px_2px_30px_0px_rgba(0,0,0,0.08),0px_0px_15px_0px_rgba(0,0,0,0.03)] transition-opacity duration-200 will-change-transform ${
                             isDragging ? "opacity-100" : "opacity-0"
                         }`}
-                        style={{ transform: "translateX(-50%)" }}
+                        style={{ left: `calc(${percent}% + ${thumbOffset}px)`, transform: 'translateX(-50%)' }}
                     >
-                        <span>{value} m²</span>
-                        <div className="absolute bottom-[-5%] left-1/2 h-2.5 w-2.5 -translate-x-1/2 rotate-45 bg-[#653409]"></div>
+                        <span>{displayValue} m²</span>
+                        <div className="absolute bottom-[-15%] left-1/2 h-2.5 w-2.5 -translate-x-1/2 rotate-45 bg-gradient-brown"></div>
                     </div>
-                    <div id="area-range-slider" className="relative w-full h-4">
+                    <div 
+                        id="area-range-slider" 
+                        className="relative w-full h-4"
+                        style={{ '--percent': `${percent}%` } as React.CSSProperties}
+                    >
                         <div
                             id="area-range-slider-fill"
                             className="pointer-events-none z-1 absolute top-1/2 -translate-y-1/2 left-0 right-0 h-1 rounded-full"
-                            style={{
-                                background: `linear-gradient(90deg, var(--color-gradient-brown) 0%, var(--color-gradient-brown) ${percent}%, transparent ${percent}%, transparent 100%)`,
-                            }}
                         />
                         <div
                             id="area-range-slider-background"
                             className="pointer-events-none absolute top-1/2 -translate-y-1/2 left-0 right-0 h-0 rounded-full border-2 border-dashed border-black/10 bg-grey-light"
-                        />
-                        <div
-                            id="area-range-slider-thumb"
-                            className="absolute z-2 top-1/2 -translate-y-1/2 size-4 rounded-full bg-white border-2 border-gradient-brown"
-                            style={{
-                                left: `calc(${percent}% - ${(percent / 100) * 16}px)`,
-                            }}
-                        />
-                        <style
-                            dangerouslySetInnerHTML={{
-                                __html: `
-                            #area-range {
-                                width: 100%;
-                                height: 4px;
-                                border-radius: 4px;
-                                background: none;
-                                outline: none;
-                                -webkit-appearance: none;
-                                appearance: none;
-                                cursor: pointer;
-                                position: absolute;
-                                top: 50%;
-                                transform: translateY(-50%);
-                                left: 0;
-                                right: 0;
-                                z-index: 5;
-                                padding: 0;
-                                margin: 0;
-                            }
-                            
-                            #area-range::-webkit-slider-thumb {
-                                padding: 0;
-                                margin-top: -6px;
-                                -webkit-appearance: none;
-                                appearance: none;
-                                width: 16px;
-                                height: 16px;
-                                background: transparent;
-                                border: none;
-                                cursor: pointer;
-                            }
-                            
-                            #area-range::-moz-range-thumb {
-                                width: 16px;
-                                height: 16px;
-                                background: transparent;
-                                border: none;
-                                cursor: pointer;
-                                -moz-appearance: none;
-                                appearance: none;
-                            }
-                            
-                            #area-range::-webkit-slider-runnable-track {
-                                width: 100%;
-                                height: 4px;
-                                background: none;
-                                padding: 0;
-                                margin: 0 !important;
-                            }
-                            
-                            #area-range::-moz-range-track {
-                                width: 100%;
-                                height: 4px;
-                            }
-                            
-                            #area-range::-moz-range-progress {
-                                background: none;
-                                height: 4px;
-                                border: none;
-                            }
-                        `,
-                            }}
                         />
                         <input
                             ref={rangeRef}
@@ -195,12 +139,20 @@ export default function AreaInput({ value, onChange }: AreaInputProps) {
                             id="area-range"
                             min={min}
                             max={max}
-                            value={value}
+                            value={localValue}
+                            onInput={handleRangeInput}
                             onChange={handleRangeChange}
                             onMouseDown={() => setIsDragging(true)}
-                            onMouseUp={() => setIsDragging(false)}
+                            onMouseUp={(e) => {
+                                setIsDragging(false);
+                                onChange(parseInt(e.currentTarget.value));
+                            }}
                             onTouchStart={() => setIsDragging(true)}
-                            onTouchEnd={() => setIsDragging(false)}
+                            onTouchEnd={(e) => {
+                                setIsDragging(false);
+                                onChange(parseInt(e.currentTarget.value));
+                            }}
+                            className="w-full h-1 absolute top-1/2 -translate-y-1/2 rounded bg-transparent outline-none cursor-pointer z-[5] p-0 m-0 [appearance:none] [-webkit-appearance:none]"
                         />
                     </div>
 

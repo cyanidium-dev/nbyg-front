@@ -31,12 +31,12 @@ export const CalcSection = ({
     return (
         <>
             {title && (
-                <h2 className="text-[20px] lg:text-[24px] leading-[125%] font-find-sans-pro font-light mb-6 before:content-[counter(calc-section)_'.'] before:mr-2">
+                <h2 className={`text-[20px] lg:text-[24px] leading-[125%] font-find-sans-pro font-light ${description ? "mb-2" : "mb-6"} before:content-[counter(calc-section)_'.'] before:mr-2`}>
                     {title}
                 </h2>
             )}
             {description && (
-                <p className="mb-6 text-lg leading-[22px]">{description}</p>
+                <p className="mb-6 text-[18px] leading-[125%]">{description}</p>
             )}
             <fieldset className="flex flex-wrap gap-x-[14px] gap-y-6 border-none p-0 m-0 lg:gap-6">
                 {fields.map(field => {

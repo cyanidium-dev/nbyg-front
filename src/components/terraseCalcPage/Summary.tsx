@@ -49,9 +49,9 @@ export default function Summary({ values }: SummaryProps) {
     };
 
     return (
-        <section className="w-full py-6 lg:py-12">
+        <section className="w-full py-6">
             <div className="max-w-[360px] w-auto px-4 mx-auto sm:max-w-full sm:px-8 lg:max-w-[1040px] lg:px-10">
-                <h2 className="mb-6 font-serif text-2xl leading-[41px] tracking-[-0.004em] lg:mb-6">
+                <h2 className="mb-6 text-[20px] lg:text-[24px] leading-[125%] font-find-sans-pro font-light">
                     Du har valgt:
                 </h2>
                 <table className="w-full">
@@ -65,16 +65,16 @@ export default function Summary({ values }: SummaryProps) {
                                     key={key}
                                     className="flex border-b border-white/10 last:border-b-0"
                                 >
-                                    <td className="flex w-1/2 shrink-0 items-center border-r border-white/10 px-3 py-3 text-lg leading-[22px] lg:w-[270px] lg:px-4">
+                                    <td className="flex w-1/2 shrink-0 items-center border-r border-white/10 p-3 text-[12px] leading-[125%] font-medium lg:w-[270px] lg:px-4">
                                         {fieldData.category}
                                     </td>
-                                    <td className="flex w-1/2 flex-grow items-center justify-center px-3 py-3 text-center text-lg leading-[22px]">
+                                    <td className="flex w-1/2 flex-grow items-center justify-center p-3 text-center text-[12px] leading-[125%] font-light">
                                         {key === "padding" ? (
-                                            <div className="flex h-5 w-5 items-center justify-center rounded-full bg-[#653409] border-none">
+                                            <div className="flex size-5 items-center justify-center rounded-full bg-gradient-brown border-none">
                                                 {Number(fieldData.value) > 0 ? (
-                                                    <TickIcon className="block h-3 w-3 fill-white" />
+                                                    <TickIcon className="block size-3 text-white" />
                                                 ) : (
-                                                    <BlockedIcon className="block h-3 w-3 fill-white" />
+                                                    <BlockedIcon className="block size-3 text-white" />
                                                 )}
                                             </div>
                                         ) : (
