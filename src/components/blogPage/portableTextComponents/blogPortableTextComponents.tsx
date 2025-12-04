@@ -59,7 +59,7 @@ export const blogPortableTextComponents: Partial<PortableTextComponents> = {
   list: {
     bullet: ({ children }) => (
       <ul
-        className="space-y-2 not-last:mb-4"
+        className="space-y-2 not-last:mb-4 leading-[150%]"
         style={{ listStyle: "disc", paddingLeft: "1.5rem" }}
       >
         {children}
@@ -67,7 +67,7 @@ export const blogPortableTextComponents: Partial<PortableTextComponents> = {
     ),
     number: ({ children }) => (
       <ol
-        className="space-y-2 not-last:mb-4"
+        className="space-y-2 not-last:mb-4 leading-[150%]"
         style={{ listStyle: "decimal", paddingLeft: "1.5rem" }}
       >
         {children}
@@ -109,7 +109,7 @@ export const blogPortableTextComponents: Partial<PortableTextComponents> = {
       const alt = value?.alt || "blog image";
 
       return (
-        <div className="relative w-full h-[120px] lg:h-[240px] rounded-[12px] overflow-hidden my-4 lg:my-6">
+        <div className="relative w-full h-30 lg:h-60 rounded-[12px] overflow-hidden my-4 lg:my-6">
           <Image src={imageUrl} fill alt={alt} className="object-cover" />
         </div>
       );
@@ -128,8 +128,13 @@ export const blogPortableTextComponents: Partial<PortableTextComponents> = {
         <div className="w-full my-8 overflow-x-auto">
           <table
             className="w-full border-collapse"
-            style={{ borderSpacing: 0 }}
+            style={{ borderSpacing: 0, tableLayout: "fixed" }}
           >
+            <colgroup>
+              {Array.from({ length: columnCount }).map((_, index) => (
+                <col key={index} style={{ width: `${100 / columnCount}%` }} />
+              ))}
+            </colgroup>
             <thead>
               <tr>
                 {headerCells.map((cell, index) => {
@@ -139,7 +144,7 @@ export const blogPortableTextComponents: Partial<PortableTextComponents> = {
                       key={index}
                       className="text-[12px] lg:text-[16px] font-medium text-center align-middle p-5"
                       style={{
-                        width: `${100 / columnCount}%`,
+                        boxSizing: "border-box",
                         borderRight: isLastColumn
                           ? "none"
                           : "0.5px solid rgba(255, 255, 255, 0.1)",
@@ -164,6 +169,7 @@ export const blogPortableTextComponents: Partial<PortableTextComponents> = {
                           key={cellIndex}
                           className="text-[12px] lg:text-[16px] font-light text-center align-middle p-5"
                           style={{
+                            boxSizing: "border-box",
                             borderRight: isLastColumn
                               ? "none"
                               : "0.5px solid rgba(255, 255, 255, 0.1)",
