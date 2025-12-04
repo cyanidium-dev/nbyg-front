@@ -41,9 +41,14 @@ export const blogPortableTextComponents: Partial<PortableTextComponents> = {
       );
     },
     h3: ({ children }) => (
-      <h3 className="not-last:mb-8 not-first:mt-14 font-find-sans-pro text-[18px] lg:text-[24px] font-light leading-[120%] uppercase mb-4 lg:mb-6">
+      <h3 className="not-last:mb-8 not-first:mt-14 font-find-sans-pro text-[18px] lg:text-[24px] font-light leading-[120%] uppercase">
         {children}
       </h3>
+    ),
+    h4: ({ children }) => (
+      <h4 className="not-last:mb-4 not-first:mt-4 text-[14px] lg:text-[16px] font-semibold leading-[150%]">
+        {children}
+      </h4>
     ),
   },
   list: {
@@ -71,7 +76,9 @@ export const blogPortableTextComponents: Partial<PortableTextComponents> = {
     ),
   },
   marks: {
-    strong: ({ children }) => <strong className="font-bold">{children}</strong>,
+    strong: ({ children }) => (
+      <strong className="font-semibold">{children}</strong>
+    ),
     em: ({ children }) => <em className="italic">{children}</em>,
     link: ({ value, children }) => {
       const href = value?.href || "#";
