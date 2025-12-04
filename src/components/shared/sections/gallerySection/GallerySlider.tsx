@@ -13,7 +13,7 @@ import { fadeInAnimation } from "@/utils/animationVariants";
 interface GallerySliderProps {
   items: Array<{
     _key?: string;
-    image?: SanityImage;
+    image?: SanityImage | string;
   }>;
   uniqueKey?: string;
 }
@@ -120,7 +120,7 @@ export default function GallerySlider({
                   onClick={handleImageClick}
                 >
                   <Image
-                    src={urlForSanityImage(item.image).fit("crop").url()}
+                    src={typeof item.image === "string" ? item.image : urlForSanityImage(item.image).fit("crop").url()}
                     alt={`Gallery image ${idx + 1}`}
                     fill
                     className="object-cover rounded-[14px]"
