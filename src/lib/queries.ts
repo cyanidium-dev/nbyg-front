@@ -183,7 +183,7 @@ export const ALL_GALLERIES_QUERY = `
 [
   defined(gallery)
 ] 
-|| order(galleryOrder asc)
+| order(galleryOrder asc)
 `;
 
 export const BLOG_POST_BY_SLUG_QUERY = `*[
