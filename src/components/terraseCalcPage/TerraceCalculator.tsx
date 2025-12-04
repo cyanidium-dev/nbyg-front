@@ -306,17 +306,16 @@ export default function TerraceCalculator() {
                                         />
                                     </section>
                                 )}
+                                {/* Summary and Calculated Price */}
+                                {hasSelections && materialType && (
+                                    <>
+                                        <Summary values={values} />
+                                        {total > 0 && (
+                                            <CalculatedPrice total={total} />
+                                        )}
+                                    </>
+                                )}
                             </Container>
-
-                            {/* Summary and Calculated Price */}
-                            {hasSelections && materialType && (
-                                <>
-                                    <Summary values={values} />
-                                    {total > 0 && (
-                                        <CalculatedPrice total={total} />
-                                    )}
-                                </>
-                            )}
                         </main>
                     </Form>
                 );

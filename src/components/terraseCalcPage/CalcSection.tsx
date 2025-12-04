@@ -1,3 +1,5 @@
+import { fadeInAnimation } from "@/utils/animationVariants";
+import * as motion from "motion/react-client";
 import TickIcon from "../shared/icons/TickIcon";
 import Image from "next/image";
 
@@ -31,21 +33,40 @@ export const CalcSection = ({
     return (
         <>
             {title && (
-                <h2
+                <motion.h2
+                    initial="hidden"
+                    whileInView="visible"
+                    exit="exit"
+                    viewport={{ once: true, amount: 0.1 }}
+                    variants={fadeInAnimation({ scale: 0.85, y: 30 })}
                     className={`text-[20px] lg:text-[24px] leading-[125%] font-find-sans-pro font-light ${description ? "mb-2" : "mb-6"} before:content-[counter(calc-section)_'.'] before:mr-2`}
                 >
                     {title}
-                </h2>
+                </motion.h2>
             )}
             {description && (
-                <p className="mb-6 text-[18px] leading-[125%]">{description}</p>
+                <motion.p
+                    initial="hidden"
+                    whileInView="visible"
+                    exit="exit"
+                    viewport={{ once: true, amount: 0.1 }}
+                    variants={fadeInAnimation({ scale: 0.85, y: 30 })}
+                    className="mb-6 text-[18px] leading-[125%]"
+                >
+                    {description}
+                </motion.p>
             )}
             <fieldset className="flex flex-wrap gap-x-[14px] gap-y-6 border-none p-0 m-0 lg:gap-6">
                 {fields.map(field => {
                     const fieldValue = String(field.value ?? "");
                     const isSelected = selectedValue === fieldValue;
                     return (
-                        <label
+                        <motion.label
+                            initial="hidden"
+                            whileInView="visible"
+                            exit="exit"
+                            viewport={{ once: true, amount: 0.1 }}
+                            variants={fadeInAnimation({ scale: 0.85, y: 30 })}
                             key={field.id}
                             htmlFor={field.id}
                             className={`group flex w-[157px] cursor-pointer flex-col rounded-[4.13px] transition duration-[250ms] ease-in-out hover:bg-white/10 focus:bg-white/10 xl:w-[272px] lg:rounded-lg ${
@@ -94,7 +115,7 @@ export const CalcSection = ({
                                     {field.label}
                                 </span>
                             </div>
-                        </label>
+                        </motion.label>
                     );
                 })}
             </fieldset>
