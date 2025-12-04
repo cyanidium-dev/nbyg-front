@@ -72,7 +72,7 @@ export default function AreaInput({ value, onChange }: AreaInputProps) {
                 Angiv terrasseareal i m²
             </h2>
             <div className="flex flex-col">
-                <div className="relative mb-6">
+                <div className="relative mb-6 xl:max-w-[118px]">
                     <input
                         ref={inputRef}
                         name="area"
@@ -114,15 +114,22 @@ export default function AreaInput({ value, onChange }: AreaInputProps) {
                         className={`absolute bottom-full z-10 mb-2 whitespace-nowrap rounded-lg bg-gradient-brown px-3 py-1 text-[14px] leading-[150%] font-light shadow-[0px_0px_1px_0px_rgba(0,0,0,0.3),0px_2px_30px_0px_rgba(0,0,0,0.08),0px_0px_15px_0px_rgba(0,0,0,0.03)] transition-opacity duration-200 will-change-transform ${
                             isDragging ? "opacity-100" : "opacity-0"
                         }`}
-                        style={{ left: `calc(${percent}% + ${thumbOffset}px)`, transform: 'translateX(-50%)' }}
+                        style={{
+                            left: `calc(${percent}% + ${thumbOffset}px)`,
+                            transform: "translateX(-50%)",
+                        }}
                     >
                         <span>{displayValue} m²</span>
                         <div className="absolute bottom-[-15%] left-1/2 h-2.5 w-2.5 -translate-x-1/2 rotate-45 bg-gradient-brown"></div>
                     </div>
-                    <div 
-                        id="area-range-slider" 
+                    <div
+                        id="area-range-slider"
                         className="relative w-full h-4"
-                        style={{ '--percent': `${percent}%` } as React.CSSProperties}
+                        style={
+                            {
+                                "--percent": `${percent}%`,
+                            } as React.CSSProperties
+                        }
                     >
                         <div
                             id="area-range-slider-fill"
@@ -143,12 +150,12 @@ export default function AreaInput({ value, onChange }: AreaInputProps) {
                             onInput={handleRangeInput}
                             onChange={handleRangeChange}
                             onMouseDown={() => setIsDragging(true)}
-                            onMouseUp={(e) => {
+                            onMouseUp={e => {
                                 setIsDragging(false);
                                 onChange(parseInt(e.currentTarget.value));
                             }}
                             onTouchStart={() => setIsDragging(true)}
-                            onTouchEnd={(e) => {
+                            onTouchEnd={e => {
                                 setIsDragging(false);
                                 onChange(parseInt(e.currentTarget.value));
                             }}

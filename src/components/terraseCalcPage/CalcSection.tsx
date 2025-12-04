@@ -31,7 +31,9 @@ export const CalcSection = ({
     return (
         <>
             {title && (
-                <h2 className={`text-[20px] lg:text-[24px] leading-[125%] font-find-sans-pro font-light ${description ? "mb-2" : "mb-6"} before:content-[counter(calc-section)_'.'] before:mr-2`}>
+                <h2
+                    className={`text-[20px] lg:text-[24px] leading-[125%] font-find-sans-pro font-light ${description ? "mb-2" : "mb-6"} before:content-[counter(calc-section)_'.'] before:mr-2`}
+                >
                     {title}
                 </h2>
             )}
@@ -46,7 +48,7 @@ export const CalcSection = ({
                         <label
                             key={field.id}
                             htmlFor={field.id}
-                            className={`group flex w-[157px] cursor-pointer flex-col rounded-[4.13px] transition duration-[250ms] ease-in-out hover:bg-white/10 focus:bg-white/10 lg:w-[272px] lg:rounded-lg ${
+                            className={`group flex w-[157px] cursor-pointer flex-col rounded-[4.13px] transition duration-[250ms] ease-in-out hover:bg-white/10 focus:bg-white/10 xl:w-[272px] lg:rounded-lg ${
                                 isSelected ? "bg-white/10" : ""
                             }`}
                         >
@@ -66,9 +68,9 @@ export const CalcSection = ({
                                 alt={field.id}
                                 width={157}
                                 height={157}
-                                className="overflow-hidden rounded-[4px] object-cover transition duration-[250ms] ease-in-out mb-1 lg:h-[272px] lg:w-[272px] lg:rounded-[12px]"
+                                className="overflow-hidden rounded-[4px] object-cover transition duration-[250ms] ease-in-out mb-1 xl:mb-2 xl:h-[272px] xl:w-[272px] lg:rounded-[12px]"
                             />
-                            <div className="flex items-center gap-2 rounded-[4px] p-[6px] transition duration-[250ms] ease-in-out lg:px-2 lg:py-2">
+                            <div className="flex grow-1 shrink-0 items-center gap-2 rounded-[4px] p-[6px] xl:p-2 transition duration-[250ms] ease-in-out lg:px-2 lg:py-2 min-h-[43px]">
                                 <div
                                     className={`flex size-4 shrink-0 items-center justify-center rounded-md border border-white transition duration-[250ms] ease-in-out ${
                                         isSelected
@@ -83,7 +85,7 @@ export const CalcSection = ({
                                     />
                                 </div>
                                 <span
-                                    className={`text-[12px] leading-[125%] lg:text-[18px] ${
+                                    className={`text-[12px] leading-[150%] lg:text-[18px] ${
                                         isSelected
                                             ? "font-medium"
                                             : "font-light "

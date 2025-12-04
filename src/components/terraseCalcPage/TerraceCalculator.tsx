@@ -136,10 +136,10 @@ export default function TerraceCalculator() {
 
                 return (
                     <Form>
-                        <main className="pt-19 flex flex-col items-center justify-center font-montserrat [counter-reset:calc-section]">
-                            <Container className="max-w-[360px] sm:max-w-full lg:max-w-[1040px] px-4 sm:px-8 lg:px-10">
+                        <main className="pt-19 lg:pt-[239px] flex flex-col items-center justify-center font-montserrat [counter-reset:calc-section]">
+                            <Container>
                                 {/* Material Type Selection - Always shown */}
-                                <section className="w-full py-6 pt-8 lg:py-12 lg:pt-10 [counter-increment:calc-section]">
+                                <section className="w-full pb-6 pt-8 xl:pt-0 xl:pb-12 [counter-increment:calc-section]">
                                     <CalcSection
                                         id="materialtype"
                                         title="Vælg materialetype"
