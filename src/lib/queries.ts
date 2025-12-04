@@ -183,5 +183,61 @@ export const ALL_GALLERIES_QUERY = `
 [
   defined(gallery)
 ] 
-| order(galleryOrder asc)
+|| order(galleryOrder asc)
 `;
+
+export const BLOG_POST_BY_SLUG_QUERY = `*[
+  _type == "blogPost" &&
+  slug.current == $slug
+][0]{
+  heroTitle,
+  heroDescription,
+  heroDesktopImage,
+  heroMobileImage,
+  "slug": slug.current,
+  content[]{
+    ...,
+    _type == "image" => {
+      _key,
+      _type,
+      asset,
+      crop,
+      hotspot,
+      alt
+    },
+    _type == "table" => {
+      _key,
+      _type,
+      rows[]{
+        cells[]
+      }
+    },
+    markDefs[]{
+      ...,
+      _type == "link" => {
+        _key,
+        _type,
+        href,
+        blank
+      }
+    }
+  },
+  faq{
+    _type,
+    "type": _type,
+    description,
+    items[]{
+      _key,
+      question,
+      answer,
+      buttons
+    }
+  },
+  seo{
+    metaTitle,
+    metaDescription,
+    keywords,
+    opengraphImage,
+    schemaJson
+  }
+}`;
