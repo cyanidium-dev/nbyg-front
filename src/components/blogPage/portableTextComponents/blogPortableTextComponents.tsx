@@ -71,8 +71,8 @@ export const blogPortableTextComponents: Partial<PortableTextComponents> = {
     ),
   },
   marks: {
-    strong: ({ children }) => <strong>{children}</strong>,
-    em: ({ children }) => <em>{children}</em>,
+    strong: ({ children }) => <strong className="font-bold">{children}</strong>,
+    em: ({ children }) => <em className="italic">{children}</em>,
     link: ({ value, children }) => {
       const href = value?.href || "#";
       const blank = value?.blank || false;

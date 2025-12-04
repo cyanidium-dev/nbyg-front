@@ -197,6 +197,13 @@ export const BLOG_POST_BY_SLUG_QUERY = `*[
   "slug": slug.current,
   content[]{
     ...,
+    _type == "block" => {
+      ...,
+      children[]{
+        ...,
+        marks[]
+      }
+    },
     _type == "image" => {
       _key,
       _type,
