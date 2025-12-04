@@ -1,4 +1,4 @@
-import type { ComponentType } from "react";
+import { Suspense, type ComponentType } from "react";
 import HeroSection from "@/components/shared/sections/heroSection/HeroSection";
 import CtaSection from "@/components/shared/sections/ctaSection/CtaSection";
 import TableSection from "@/components/shared/sections/tableSection/TableSection";
@@ -15,6 +15,7 @@ import Container from "@/components/shared/container/Container";
 import { PAGE_BY_SLUG_QUERY } from "@/lib/queries";
 import { fetchSanityData } from "@/utils/fetchSanityData";
 import type { PageSection, SanityPage } from "@/types/page";
+import Loader from "@/components/shared/loader/Loader";
 
 interface ServicePageProps {
   params: Promise<{ service: string }>;
@@ -32,7 +33,8 @@ const sectionComponentMap: Partial<
   imageTextButtonSection: ImageTextButtonSection as ComponentType<PageSection>,
   faqSection: FaqSection as ComponentType<PageSection>,
   tableWithImageSection: TableWithImageSection as ComponentType<PageSection>,
-  textReavealCardsSliderSection: TextRevealCardsSliderSection as ComponentType<PageSection>,
+  textReavealCardsSliderSection:
+    TextRevealCardsSliderSection as ComponentType<PageSection>,
   roofTypesSection: RoofTypesSection as ComponentType<PageSection>,
   largeTableSection: LargeTableSection as ComponentType<PageSection>,
 };
@@ -51,36 +53,38 @@ export default async function ServicePage({ params }: ServicePageProps) {
 
   return (
     <>
-      {currentService.sections?.map((section, index) => {
-        // Filter gallerySection - only show if showOnServicesPage is true
-        if (
-          section._type === "gallerySection" &&
-          !(section as { showOnServicesPage?: boolean }).showOnServicesPage
-        ) {
-          return null;
-        }
+      <Suspense fallback={<Loader />}>
+        {currentService.sections?.map((section, index) => {
+          // Filter gallerySection - only show if showOnServicesPage is true
+          if (
+            section._type === "gallerySection" &&
+            !(section as { showOnServicesPage?: boolean }).showOnServicesPage
+          ) {
+            return null;
+          }
 
-        const SectionComponent = sectionComponentMap[section._type];
+          const SectionComponent = sectionComponentMap[section._type];
 
-        if (!SectionComponent) {
-          return null;
-        }
+          if (!SectionComponent) {
+            return null;
+          }
 
-        const key =
-          (section as { _key?: string })._key ??
-          `${service}-${section._type}-${index}`;
+          const key =
+            (section as { _key?: string })._key ??
+            `${service}-${section._type}-${index}`;
 
-        // Обгортаємо FaqSection в Container на сторінках service
-        if (section._type === "faqSection") {
-          return (
-            <Container key={key}>
-              <SectionComponent {...section} uniqueKey={key} />
-            </Container>
-          );
-        }
+          // Обгортаємо FaqSection в Container на сторінках service
+          if (section._type === "faqSection") {
+            return (
+              <Container key={key}>
+                <SectionComponent {...section} uniqueKey={key} />
+              </Container>
+            );
+          }
 
-        return <SectionComponent key={key} {...section} uniqueKey={key} />;
-      })}
+          return <SectionComponent key={key} {...section} uniqueKey={key} />;
+        })}
+      </Suspense>
     </>
   );
 }
