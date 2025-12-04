@@ -8,8 +8,6 @@ export default async function BlogPage() {
   const blogPosts =
     await fetchSanityData<BlogPostPreview[]>(ALL_BLOG_POSTS_QUERY);
 
-  console.log(blogPosts);
-
   return (
     <>
       <Hero />

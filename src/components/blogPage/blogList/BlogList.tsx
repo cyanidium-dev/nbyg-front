@@ -12,9 +12,12 @@ export default function BlogList({ blogPosts }: BlogListProps) {
   return (
     <section className="py-25 lg:pt-[153px] lg:pb-0">
       <Container>
-        <ul className="flex flex-col gap-6 md:gap-[29px]">
+        <ul className="flex flex-col sm:flex-row sm:flex-wrap gap-6 md:gap-[29px]">
           {blogPosts.map((post) => (
-            <li key={post.slug} className="h-full">
+            <li
+              key={post.slug}
+              className="sm:w-[calc(50%-12px)] md:w-[calc(50%-14.5px)] lg:w-[calc(33.33%-19.33px)] h-auto"
+            >
               <BlogCard post={post} />
             </li>
           ))}

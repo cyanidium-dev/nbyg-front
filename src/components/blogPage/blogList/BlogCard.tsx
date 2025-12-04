@@ -49,7 +49,7 @@ export default function BlogCard({ post }: BlogCardProps) {
         <p className="flex gap-1.5 items-center w-fit ml-auto text-[16px] font-medium leading-[120%] text-shadow-white">
           Læs mere{" "}
           <span className="font-find-sans-pro text-[11px] text-shadow-white">
-            →{" "}
+            →
           </span>
         </p>
       </div>
