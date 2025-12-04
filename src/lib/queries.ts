@@ -186,6 +186,14 @@ export const ALL_GALLERIES_QUERY = `
 | order(galleryOrder asc)
 `;
 
+export const ALL_BLOG_POSTS_QUERY = `*[_type == "blogPost"] | order(_createdAt desc){
+  heroTitle,
+  heroDescription,
+  heroMobileImage,
+  "slug": slug.current,
+  _createdAt
+}`;
+
 export const BLOG_POST_BY_SLUG_QUERY = `*[
   _type == "blogPost" &&
   slug.current == $slug

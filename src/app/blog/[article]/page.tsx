@@ -20,8 +20,6 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     }
   );
 
-  console.log(currentArticle);
-
   if (!currentArticle) {
     return null;
   }
