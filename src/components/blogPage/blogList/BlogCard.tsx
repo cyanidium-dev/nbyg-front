@@ -12,8 +12,8 @@ export default function BlogCard({ post }: BlogCardProps) {
 
   return (
     <Link
-      href={slug}
-      className="group relative flex flex-col rounded-[12px] overflow-hidden h-full"
+      href={`/blog/${slug}`}
+      className="group relative flex flex-col rounded-[12px] overflow-hidden h-full bg-black"
     >
       <div
         className="absolute inset-0 rounded-[12px] pointer-events-none"
