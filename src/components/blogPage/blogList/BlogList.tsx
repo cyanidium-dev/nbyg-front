@@ -22,7 +22,7 @@ export default function BlogList({ blogPosts }: BlogListProps) {
   return (
     <section
       ref={sectionRef}
-      className="py-25 lg:pt-[153px] lg:pb-0 scroll-mt-20"
+      className="py-25 lg:pt-[153px] lg:pb-0 scroll-mt-14"
     >
       <Container>
         <Pagination

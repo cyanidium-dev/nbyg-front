@@ -11,7 +11,7 @@ export const useBlogArticlesPerPage = () => {
       if (width < 640) {
         setItemsPerPage(6);
       } else {
-        setItemsPerPage(6);
+        setItemsPerPage(12);
       }
     };
 

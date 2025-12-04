@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect, ReactNode, RefObject } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import Image from "next/image";
 import ShevronIcon from "../icons/ShevronIcon";
 
 interface PaginationProps<T> {
@@ -10,7 +9,6 @@ interface PaginationProps<T> {
   useItemsPerPage: () => number;
   scrollTargetRef: RefObject<HTMLElement | null>;
   className?: string;
-  variant?: "blue" | "beige";
 }
 
 export default function Pagination<T>({
@@ -19,7 +17,6 @@ export default function Pagination<T>({
   useItemsPerPage,
   scrollTargetRef,
   className = "",
-  variant = "blue",
 }: PaginationProps<T>) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -52,6 +49,59 @@ export default function Pagination<T>({
     router.push(`?${params.toString()}`, { scroll: false });
   };
 
+  const getPageButtons = (): (number | string)[] => {
+    const pages: (number | string)[] = [];
+
+    if (totalPages <= 5) {
+      return Array.from({ length: totalPages }, (_, i) => i + 1);
+    }
+
+    if (currentPage <= 3) {
+      pages.push(1, 2, 3);
+      if (currentPage === 3) pages.push(4);
+      pages.push("...", totalPages - 1, totalPages);
+    } else if (currentPage === 4) {
+      pages.push(1, "...", 3, 4, 5, "...", totalPages - 1, totalPages);
+    } else if (currentPage === totalPages - 3) {
+      pages.push(
+        1,
+        "...",
+        currentPage - 1,
+        currentPage,
+        currentPage + 1,
+        "...",
+        totalPages - 1,
+        totalPages
+      );
+    } else if (currentPage === totalPages - 2) {
+      pages.push(
+        1,
+        "...",
+        totalPages - 3,
+        totalPages - 2,
+        totalPages - 1,
+        totalPages
+      );
+    } else if (currentPage >= totalPages - 1) {
+      pages.push(1, "...", totalPages - 2, totalPages - 1, totalPages);
+    } else {
+      pages.push(
+        1,
+        "...",
+        currentPage - 1,
+        currentPage,
+        currentPage + 1,
+        "...",
+        totalPages - 1,
+        totalPages
+      );
+    }
+
+    return pages;
+  };
+
+  const pageButtons = getPageButtons();
+
   return (
     <>
       <div key={currentPage} className={`${className}`}>
@@ -63,26 +113,48 @@ export default function Pagination<T>({
         <button
           aria-label="left"
           className={`group enabled:cursor-pointer flex justify-center items-center size-[54px] border-[1.5px] border-white rounded-full 
-            transition duration-300 ease-in-out
+            transition duration-300 ease-in-out shrink-0
           enabled:xl:hover:opacity-85 enabled:active:scale-95 enabled:focus-visible:opacity-85
           disabled:bg-transparent bg-white`}
           onClick={() => handlePageChange(currentPage - 1)}
-          disabled={page === 1}
+          disabled={currentPage === 1}
         >
           <ShevronIcon className="text-black group-disabled:text-white -rotate-90 transition duration-300 ease-in-out" />
         </button>
 
-        <p className="font-evolenta text-[15px] font-normal leading-[133%]">
-          {currentPage}/{totalPages}
-        </p>
+        <div className="flex items-center gap-3">
+          {pageButtons.map((item, index) =>
+            item === "..." ? (
+              <span
+                key={`dots-${index}`}
+                className="text-[14px] font-normal leading-[133%]"
+              >
+                ...
+              </span>
+            ) : (
+              <button
+                key={item}
+                onClick={() => handlePageChange(Number(item))}
+                className={`cursor-pointer text-[14px] font-normal leading-[133%] transition duration-300 ease-in-out
+                  ${
+                    currentPage === item
+                      ? "bg-white text-black rounded-full size-8 flex items-center justify-center"
+                      : "xl:hover:opacity-85"
+                  }`}
+              >
+                {item}
+              </button>
+            )
+          )}
+        </div>
 
         <button
           aria-label="right"
           className={`group enabled:cursor-pointer flex justify-center items-center size-[54px] rounded-full border-[1.5px] border-white transition duration-300 ease-in-out
-          enabled:xl:hover:opacity-85 enabled:active:scale-95 enabled:focus-visible:opacity-85
+          enabled:xl:hover:opacity-85 enabled:active:scale-95 enabled:focus-visible:opacity-85 shrink-0
           disabled:bg-transparent bg-white`}
           onClick={() => handlePageChange(currentPage + 1)}
-          disabled={page === totalPages}
+          disabled={currentPage === totalPages}
         >
           <ShevronIcon className="text-black group-disabled:text-white rotate-90 transition duration-300 ease-in-out" />
         </button>

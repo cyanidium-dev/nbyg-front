@@ -2,7 +2,6 @@ import { BlogPostPreview } from "@/types/blogPost";
 import Image from "next/image";
 import { urlForSanityImage } from "@/utils/getUrlForSanityImage";
 import Link from "next/link";
-import ArrowIcon from "@/components/shared/icons/ArrowIcon";
 
 interface BlogCardProps {
   post: BlogPostPreview;
