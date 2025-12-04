@@ -36,7 +36,7 @@ const GallerySection = (props: GallerySectionProps) => {
               className="w-fit"
             >
               <Link
-                href="/gallery"
+                href="/galleri"
                 className="group flex items-center justify-center size-10 lg:size-15 bg-white rounded-full active:scale-95 transition duration-300 ease-in-out outline-none"
                 aria-label="Open gallery"
               >
