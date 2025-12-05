@@ -16,7 +16,7 @@ export default function Hero() {
       className="relative rounded-b-[18px] overflow-hidden"
     >
       <Image
-        src="/images/byggeydelserPage/hero/hero.webp"
+        src="/images/byggeydelserPage/hero/hero-image.webp"
         fill
         alt="blog hero image"
         sizes="100vw"
