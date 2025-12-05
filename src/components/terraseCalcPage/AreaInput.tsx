@@ -99,7 +99,7 @@ export default function AreaInput({ value, onChange }: AreaInputProps) {
                             type="button"
                             onClick={handleIncrement}
                             disabled={value >= max}
-                            className="flex items-center justify-center size-4 text-white disabled:opacity-30 disabled:cursor-not-allowed button-shadow-white"
+                            className="flex items-center justify-center size-4 text-white disabled:opacity-30 disabled:cursor-not-allowed button-shadow-white cursor-pointer"
                             aria-label="Increment value"
                         >
                             <InputArrow direction="up" className="size-4" />
@@ -108,7 +108,7 @@ export default function AreaInput({ value, onChange }: AreaInputProps) {
                             type="button"
                             onClick={handleDecrement}
                             disabled={value <= min}
-                            className="flex items-center justify-center size-4 text-white disabled:opacity-30 disabled:cursor-not-allowed button-shadow-white"
+                            className="flex items-center justify-center size-4 text-white disabled:opacity-30 disabled:cursor-not-allowed button-shadow-white cursor-pointer"
                             aria-label="Decrement value"
                         >
                             <InputArrow direction="down" className="size-4" />
