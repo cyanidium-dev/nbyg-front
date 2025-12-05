@@ -48,7 +48,10 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
             )}
           </div>
           <div className="hidden lg:block w-80 shrink-0">
-            <RecommendedPostsDesktop posts={blogPosts} />
+            <RecommendedPostsDesktop
+              posts={blogPosts}
+              uniqueKey={`blog-${currentArticle.slug}-recommended-posts-mobile`}
+            />
           </div>
         </Container>
         <div className="lg:hidden">
