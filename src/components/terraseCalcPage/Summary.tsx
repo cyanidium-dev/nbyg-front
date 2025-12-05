@@ -38,7 +38,16 @@ export default function Summary({ values }: SummaryProps) {
             "label" in value &&
             "category" in value
         ) {
-            return value as FieldData;
+            const fieldData = value as FieldData;
+            if (
+                typeof fieldData.label === "string" &&
+                fieldData.label.trim() !== "" &&
+                typeof fieldData.category === "string" &&
+                fieldData.category.trim() !== ""
+            ) {
+                return fieldData;
+            }
+            return null;
         }
 
         if (key === "area") {
@@ -51,6 +60,13 @@ export default function Summary({ values }: SummaryProps) {
 
         return null;
     };
+
+    const fieldsKey = fieldOrder
+        .filter(key => {
+            const fieldData = getFieldData(key);
+            return fieldData && fieldData.label && fieldData.category;
+        })
+        .join("-");
 
     return (
         <motion.section
@@ -72,10 +88,10 @@ export default function Summary({ values }: SummaryProps) {
                 Du har valgt:
             </motion.h2>
             <motion.table
+                key={fieldsKey}
                 initial="hidden"
-                whileInView="visible"
+                animate="visible"
                 exit="exit"
-                viewport={{ once: true, amount: 0.1 }}
                 variants={listVariants({
                     staggerChildren: 0.1,
                     delayChildren: 0.2,
@@ -85,16 +101,24 @@ export default function Summary({ values }: SummaryProps) {
                 <tbody>
                     {fieldOrder.map(key => {
                         const fieldData = getFieldData(key);
-                        if (!fieldData) return null;
+                        if (
+                            !fieldData ||
+                            !fieldData.label ||
+                            !fieldData.category
+                        )
+                            return null;
 
                         return (
                             <motion.tr
                                 key={key}
+                                initial="hidden"
+                                animate="visible"
+                                exit="exit"
                                 variants={listItemVariantsLeft}
                                 className="flex border-b border-white/10 last:border-b-0"
                             >
                                 <td className="flex w-1/2 shrink-0 items-center border-r border-white/10 p-3 text-[12px] leading-[125%] lg:text-[18px] lg:leading-[150%] font-medium lg:w-[270px] lg:px-4">
-                                    {fieldData.category}
+                                    {fieldData.category || ""}
                                 </td>
                                 <td className="flex w-1/2 flex-grow items-center justify-center p-3 text-center text-[12px] leading-[125%] lg:text-[18px] lg:leading-[150%] font-light">
                                     {key === "padding" ? (
@@ -106,7 +130,7 @@ export default function Summary({ values }: SummaryProps) {
                                             )}
                                         </div>
                                     ) : (
-                                        fieldData.label
+                                        fieldData.label || ""
                                     )}
                                 </td>
                             </motion.tr>
