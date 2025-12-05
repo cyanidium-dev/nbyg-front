@@ -76,9 +76,10 @@ const CtaSection = (_props: CtaSectionProps) => {
                 </MainButton>
               </Link>
             ) : (
-              <MainButton className="hidden md:block h-[58px]">
-                Kontakt os
-              </MainButton>
+              <Link href="/kontakt-os" className="hidden md:block">
+                {" "}
+                <MainButton className="h-[58px]">Kontakt os</MainButton>
+              </Link>
             )}
           </motion.div>
           <motion.div
@@ -117,7 +118,9 @@ const CtaSection = (_props: CtaSectionProps) => {
                 </MainButton>
               </Link>
             ) : (
-              <MainButton className="h-[58px]">Kontakt os</MainButton>
+              <Link href="/kontakt-os">
+                <MainButton className="h-[58px]">Kontakt os</MainButton>
+              </Link>
             )}
           </motion.div>
         </div>

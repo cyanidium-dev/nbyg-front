@@ -9,7 +9,7 @@ export default function Loader({ className = "" }: LoaderProps) {
   return (
     <div
       className={twMerge(
-        clsx(`w-full h-[220px] lg:h-[350px] flex items-center justify-center`),
+        clsx(`w-full h-dvh flex items-center justify-center`),
         className
       )}
     >

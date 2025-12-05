@@ -142,6 +142,10 @@
         }
     }
 
+    .swiper.recommended-posts-slider {
+      padding: 0px 0px 32px 0px !important;
+    }
+
     .swiper.text-reveal-cards-slider,
     .swiper.large-table-slider {
         padding: 12px 0px 24px 0px !important;
