@@ -135,139 +135,81 @@ export default function TerraceCalculator() {
                 const hasSelections = Object.keys(values).length > 2;
 
                 return (
-                    <Form>
-                        <main className="pt-19 lg:pt-[239px] flex flex-col items-center justify-center font-montserrat [counter-reset:calc-section]">
-                            <Container>
-                                {/* Material Type Selection - Always shown */}
-                                <section className="w-full pb-6 pt-8 xl:pt-0 xl:pb-12 [counter-increment:calc-section]">
-                                    <CalcSection
-                                        id="materialtype"
-                                        title="Vælg materialetype"
-                                        fields={fieldsData.materialtype.map(
-                                            field => ({
-                                                id: field.id,
-                                                label: field.label,
-                                                value: field.value,
-                                                image: field.image,
-                                            })
-                                        )}
-                                        selectedValue={
-                                            typeof values.materialtype ===
-                                            "string"
-                                                ? values.materialtype
-                                                : String(
-                                                      (
-                                                          values.materialtype as FieldData
-                                                      ).value
-                                                  )
-                                        }
-                                        onChange={(id, value) => {
-                                            const materialField =
-                                                fieldsData.materialtype.find(
-                                                    f => f.value === value
-                                                );
-                                            handleMaterialTypeChange(
-                                                id,
-                                                value,
-                                                materialField?.label || "",
-                                                "Vælg materialetype"
+                    <Form className="pt-19 lg:pt-[239px] font-montserrat [counter-reset:calc-section]">
+                        <Container>
+                            {/* Material Type Selection - Always shown */}
+                            <section className="w-full pb-6 pt-8 lg:pt-0 xl:pb-12 [counter-increment:calc-section]">
+                                <CalcSection
+                                    id="materialtype"
+                                    title="Vælg materialetype"
+                                    fields={fieldsData.materialtype.map(
+                                        field => ({
+                                            id: field.id,
+                                            label: field.label,
+                                            value: field.value,
+                                            image: field.image,
+                                        })
+                                    )}
+                                    selectedValue={
+                                        typeof values.materialtype === "string"
+                                            ? values.materialtype
+                                            : String(
+                                                  (
+                                                      values.materialtype as FieldData
+                                                  ).value
+                                              )
+                                    }
+                                    onChange={(id, value) => {
+                                        const materialField =
+                                            fieldsData.materialtype.find(
+                                                f => f.value === value
                                             );
-                                        }}
-                                    />
-                                </section>
+                                        handleMaterialTypeChange(
+                                            id,
+                                            value,
+                                            materialField?.label || "",
+                                            "Vælg materialetype"
+                                        );
+                                    }}
+                                />
+                            </section>
 
-                                {/* Area Input - Always shown */}
-                                <div className="[counter-increment:calc-section]">
-                                    <AreaInput
-                                        value={
-                                            typeof values.area === "object"
-                                                ? Number(
-                                                      (values.area as FieldData)
-                                                          .value
-                                                  )
-                                                : Number(values.area)
-                                        }
-                                        onChange={value =>
-                                            setFieldValue("area", {
-                                                value,
-                                                label: `${value} m²`,
-                                                category:
-                                                    "Angiv terrasseareal i m²",
-                                            })
-                                        }
-                                    />
-                                </div>
+                            {/* Area Input - Always shown */}
+                            <div className="[counter-increment:calc-section]">
+                                <AreaInput
+                                    value={
+                                        typeof values.area === "object"
+                                            ? Number(
+                                                  (values.area as FieldData)
+                                                      .value
+                                              )
+                                            : Number(values.area)
+                                    }
+                                    onChange={value =>
+                                        setFieldValue("area", {
+                                            value,
+                                            label: `${value} m²`,
+                                            category:
+                                                "Angiv terrasseareal i m²",
+                                        })
+                                    }
+                                />
+                            </div>
 
-                                {/* Dynamic Sections - Based on material type */}
-                                {materialSections.map((section, index) => {
-                                    return (
-                                        <section
-                                            key={section.id}
-                                            className={`w-full border-y border-white/10 py-6 lg:py-12 [counter-increment:calc-section] ${
-                                                index === 0 ? "border-t-0" : ""
-                                            }`}
-                                        >
-                                            <CalcSection
-                                                id={section.id}
-                                                title={section.sectionTitle}
-                                                description={
-                                                    section.description
-                                                }
-                                                fields={section.fields.map(
-                                                    field => ({
-                                                        id: field.id,
-                                                        label: field.label,
-                                                        value: String(
-                                                            field.value
-                                                        ),
-                                                        image: `/images/calculator-terrasser/${field.image}`,
-                                                    })
-                                                )}
-                                                selectedValue={
-                                                    typeof values[
-                                                        section.id
-                                                    ] === "object"
-                                                        ? String(
-                                                              (
-                                                                  values[
-                                                                      section.id
-                                                                  ] as FieldData
-                                                              ).value
-                                                          )
-                                                        : String(
-                                                              values[section.id]
-                                                          )
-                                                }
-                                                onChange={(
-                                                    fieldId,
-                                                    value,
-                                                    label,
-                                                    category
-                                                ) => {
-                                                    // Remove section number from category (e.g., "3. Vælg materiale" -> "Vælg materiale")
-                                                    const cleanCategory =
-                                                        category.replace(
-                                                            /^\d+\.\s*/,
-                                                            ""
-                                                        );
-                                                    setFieldValue(fieldId, {
-                                                        value,
-                                                        label,
-                                                        category: cleanCategory,
-                                                    });
-                                                }}
-                                            />
-                                        </section>
-                                    );
-                                })}
-
-                                {/* Padding Section - Always shown if material type selected */}
-                                {materialType && (
-                                    <section className="w-full border-y border-white/10 py-6 lg:py-12 [counter-increment:calc-section]">
+                            {/* Dynamic Sections - Based on material type */}
+                            {materialSections.map((section, index) => {
+                                return (
+                                    <section
+                                        key={section.id}
+                                        className={`w-full border-y border-white/10 py-6 lg:py-12 [counter-increment:calc-section] ${
+                                            index === 0 ? "border-t-0" : ""
+                                        }`}
+                                    >
                                         <CalcSection
-                                            id="padding"
-                                            title="Bund"
-                                            fields={fieldsData.padding[0].fields.map(
+                                            id={section.id}
+                                            title={section.sectionTitle}
+                                            description={section.description}
+                                            fields={section.fields.map(
                                                 field => ({
                                                     id: field.id,
                                                     label: field.label,
@@ -276,14 +218,16 @@ export default function TerraceCalculator() {
                                                 })
                                             )}
                                             selectedValue={
-                                                typeof values.padding ===
+                                                typeof values[section.id] ===
                                                 "object"
                                                     ? String(
                                                           (
-                                                              values.padding as FieldData
+                                                              values[
+                                                                  section.id
+                                                              ] as FieldData
                                                           ).value
                                                       )
-                                                    : String(values.padding)
+                                                    : String(values[section.id])
                                             }
                                             onChange={(
                                                 fieldId,
@@ -291,7 +235,7 @@ export default function TerraceCalculator() {
                                                 label,
                                                 category
                                             ) => {
-                                                // Remove section number from category (e.g., "4. Bund" -> "Bund")
+                                                // Remove section number from category (e.g., "3. Vælg materiale" -> "Vælg materiale")
                                                 const cleanCategory =
                                                     category.replace(
                                                         /^\d+\.\s*/,
@@ -305,18 +249,63 @@ export default function TerraceCalculator() {
                                             }}
                                         />
                                     </section>
-                                )}
-                                {/* Summary and Calculated Price */}
-                                {hasSelections && materialType && (
-                                    <>
-                                        <Summary values={values} />
-                                        {total > 0 && (
-                                            <CalculatedPrice total={total} />
+                                );
+                            })}
+
+                            {/* Padding Section - Always shown if material type selected */}
+                            {materialType && (
+                                <section className="w-full border-y border-white/10 py-6 lg:py-12 [counter-increment:calc-section]">
+                                    <CalcSection
+                                        id="padding"
+                                        title="Bund"
+                                        fields={fieldsData.padding[0].fields.map(
+                                            field => ({
+                                                id: field.id,
+                                                label: field.label,
+                                                value: String(field.value),
+                                                image: `/images/calculator-terrasser/${field.image}`,
+                                            })
                                         )}
-                                    </>
-                                )}
-                            </Container>
-                        </main>
+                                        selectedValue={
+                                            typeof values.padding === "object"
+                                                ? String(
+                                                      (
+                                                          values.padding as FieldData
+                                                      ).value
+                                                  )
+                                                : String(values.padding)
+                                        }
+                                        onChange={(
+                                            fieldId,
+                                            value,
+                                            label,
+                                            category
+                                        ) => {
+                                            // Remove section number from category (e.g., "4. Bund" -> "Bund")
+                                            const cleanCategory =
+                                                category.replace(
+                                                    /^\d+\.\s*/,
+                                                    ""
+                                                );
+                                            setFieldValue(fieldId, {
+                                                value,
+                                                label,
+                                                category: cleanCategory,
+                                            });
+                                        }}
+                                    />
+                                </section>
+                            )}
+                            {/* Summary and Calculated Price */}
+                            {hasSelections && materialType && (
+                                <>
+                                    <Summary values={values} />
+                                    {total > 0 && (
+                                        <CalculatedPrice total={total} />
+                                    )}
+                                </>
+                            )}
+                        </Container>
                     </Form>
                 );
             }}

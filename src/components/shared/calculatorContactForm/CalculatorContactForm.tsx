@@ -14,7 +14,7 @@ export default function CalculatorContactForm() {
                     whileInView="visible"
                     exit="exit"
                     viewport={{ once: true, amount: 0.1 }}
-                    className="absolute -z-10 right-[-154px] md:right-auto md:left-[313px] top-[13px] md:top-auto md:bottom-[-218px] rotate-[-34deg] md:rotate-[240deg]"
+                    className="lg:block hidden absolute -z-10 left-[313px] bottom-[-218px] rotate-[240deg]"
                 >
                     <Image
                         src="/images/decorations/ellipsis.svg"

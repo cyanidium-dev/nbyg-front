@@ -56,7 +56,10 @@ export const CalcSection = ({
                     {description}
                 </motion.p>
             )}
-            <fieldset className="flex flex-wrap gap-x-[14px] gap-y-6 border-none p-0 m-0 lg:gap-6">
+            <fieldset
+                className="grid grid-cols-[repeat(auto-fit,minmax(157px,1fr))]
+        md:grid-cols-[repeat(4,minmax(157px,1fr))] gap-x-[14px] gap-y-6 lg:gap-6 border-none p-0 m-0"
+            >
                 {fields.map(field => {
                     const fieldValue = String(field.value ?? "");
                     const isSelected = selectedValue === fieldValue;
@@ -69,9 +72,12 @@ export const CalcSection = ({
                             variants={fadeInAnimation({ scale: 0.85, y: 30 })}
                             key={field.id}
                             htmlFor={field.id}
-                            className={`group flex w-[157px] cursor-pointer flex-col rounded-[4.13px] transition duration-[250ms] ease-in-out hover:bg-white/10 focus:bg-white/10 xl:w-[272px] lg:rounded-lg ${
-                                isSelected ? "bg-white/10" : ""
-                            }`}
+                            className={`
+                                group flex flex-col cursor-pointer rounded-lg 
+                                transition duration-250 ease-in-out
+                                hover:bg-white/10
+                                ${isSelected ? "bg-white/10" : ""}                                
+                            `}
                         >
                             <input
                                 type="radio"
@@ -84,16 +90,17 @@ export const CalcSection = ({
                                 }
                                 className="hidden"
                             />
-                            <Image
-                                src={field.image}
-                                alt={field.id}
-                                width={157}
-                                height={157}
-                                className="overflow-hidden rounded-[4px] object-cover transition duration-[250ms] ease-in-out mb-1 xl:mb-2 xl:h-[272px] xl:w-[272px] lg:rounded-[12px]"
-                            />
-                            <div className="flex grow-1 shrink-0 items-center gap-2 rounded-[4px] p-[6px] xl:p-2 transition duration-[250ms] ease-in-out lg:px-2 lg:py-2 min-h-[43px]">
+                            <div className="relative mb-1 xl:mb-2 aspect-square w-full overflow-hidden rounded-[4px] lg:rounded-[12px]">
+                                <Image
+                                    src={field.image}
+                                    alt={field.id}
+                                    fill
+                                    className="object-cover"
+                                />
+                            </div>
+                            <div className="flex items-center gap-2 p-[6px] xl:p-2 transition duration-[250ms] ease-in-out lg:px-2 lg:py-2 min-h-[43px]">
                                 <div
-                                    className={`flex size-4 shrink-0 items-center justify-center rounded-md border border-white transition duration-[250ms] ease-in-out ${
+                                    className={`flex size-4 shrink-0 items-center justify-center rounded-[4px] border border-white transition duration-[250ms] ease-in-out ${
                                         isSelected
                                             ? "border-none bg-gradient-brown"
                                             : "bg-transparent"
