@@ -23,7 +23,7 @@ export default function Notification({
             setIsModalShown={setIsNotificationShown}
             variant="notification"
         >
-            <div className="p-6 lg:p-10 relative flex flex-col justify-center items-center w-full max-w-[560px] z-20">
+            <div className="p-6 pt-14 lg:p-10 relative flex flex-col justify-center items-center w-full max-w-[560px] z-20">
                 <h3 className="mb-8 text-[24px] lg:text-[48px] font-find-sans-pro font-light leading-[120%] text-center uppercase">
                     {title}
                 </h3>
