@@ -45,9 +45,9 @@ export async function POST(req: Request) {
             process.env.VERCEL_ENV === "preview" ||
             process.env.VERCEL_ENV === "development";
 
-        setTimeout(async () => {
-            await Promise.resolve();
-        }, 1000);
+        const delay = (ms: number) =>
+            new Promise(resolve => setTimeout(resolve, ms));
+        await delay(2000);
 
         return NextResponse.json({
             message: "Email sent successfully",
