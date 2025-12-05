@@ -7,6 +7,9 @@ import AreaInput from "./AreaInput";
 import Summary from "./Summary";
 import CalculatedPrice from "./CalculatedPrice";
 import { fieldsData } from "./fieldsData";
+import { fadeInAnimation } from "@/utils/animationVariants";
+import * as motion from "motion/react-client";
+import { AnimatePresence } from "framer-motion";
 
 interface FieldData {
     value: string | number;
@@ -38,11 +41,9 @@ export default function TerraceCalculator() {
         <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
-            onSubmit={() => {
-                // Form submission handled by calculation display
-            }}
+            onSubmit={() => {}}
         >
-            {({ values, setFieldValue, setValues }) => {
+            {({ values, setFieldValue }) => {
                 const materialType =
                     typeof values.materialtype === "string"
                         ? values.materialtype
@@ -75,34 +76,19 @@ export default function TerraceCalculator() {
                           }>)
                         : [];
 
-                // Handle material type change - preserve only area
                 const handleMaterialTypeChange = (
                     fieldId: string,
                     value: string,
                     label: string,
                     category: string
                 ) => {
-                    const currentArea =
-                        typeof values.area === "object"
-                            ? values.area
-                            : {
-                                  value: values.area as number,
-                                  label: `${values.area} m²`,
-                                  category: "Angiv terrasseareal i m²",
-                              };
-                    // Reset all fields except area
-                    const newValues: FormValues = {
-                        materialtype: {
-                            value,
-                            label,
-                            category,
-                        },
-                        area: currentArea,
-                    };
-                    setValues(newValues);
+                    setFieldValue("materialtype", {
+                        value,
+                        label,
+                        category,
+                    });
                 };
 
-                // Calculate total price
                 const calculateTotal = () => {
                     const prices = Object.entries(values)
                         .filter(
@@ -137,8 +123,16 @@ export default function TerraceCalculator() {
                 return (
                     <Form className="pt-19 lg:pt-[239px] font-montserrat [counter-reset:calc-section]">
                         <Container>
-                            {/* Material Type Selection - Always shown */}
-                            <section className="w-full pb-6 pt-8 lg:pt-0 xl:pb-12 [counter-increment:calc-section]">
+                            <motion.section
+                                initial="hidden"
+                                whileInView="visible"
+                                exit="exit"
+                                viewport={{ once: true, amount: 0.1 }}
+                                variants={fadeInAnimation({
+                                    y: 100,
+                                })}
+                                className="w-full pb-6 pt-8 lg:pt-0 xl:pb-12 [counter-increment:calc-section]"
+                            >
                                 <CalcSection
                                     id="materialtype"
                                     title="Vælg materialetype"
@@ -172,10 +166,19 @@ export default function TerraceCalculator() {
                                         );
                                     }}
                                 />
-                            </section>
+                            </motion.section>
 
-                            {/* Area Input - Always shown */}
-                            <div className="[counter-increment:calc-section]">
+                            <motion.section
+                                initial="hidden"
+                                whileInView="visible"
+                                exit="exit"
+                                viewport={{ once: true, amount: 0.1 }}
+                                variants={fadeInAnimation({
+                                    y: 100,
+                                    delay: 0.2,
+                                })}
+                                className="[counter-increment:calc-section]"
+                            >
                                 <AreaInput
                                     value={
                                         typeof values.area === "object"
@@ -194,22 +197,113 @@ export default function TerraceCalculator() {
                                         })
                                     }
                                 />
-                            </div>
+                            </motion.section>
 
-                            {/* Dynamic Sections - Based on material type */}
-                            {materialSections.map((section, index) => {
-                                return (
-                                    <section
-                                        key={section.id}
-                                        className={`w-full border-y border-white/10 py-6 lg:py-12 [counter-increment:calc-section] ${
-                                            index === 0 ? "border-t-0" : ""
-                                        }`}
+                            <AnimatePresence>
+                                {materialSections.map((section, index) => {
+                                    return (
+                                        <motion.section
+                                            key={`${materialType}-${section.id}`}
+                                            initial="hidden"
+                                            animate="visible"
+                                            exit={{
+                                                opacity: 0,
+                                                transform:
+                                                    "translate3d(0, -100px, 0)",
+                                                transition: {
+                                                    duration: 0.3,
+                                                    ease: [
+                                                        0.42, 0, 1, 1,
+                                                    ] as const,
+                                                },
+                                            }}
+                                            variants={fadeInAnimation({
+                                                y: 100,
+                                                delay: 0.4 + index * 0.2,
+                                            })}
+                                            className={`w-full border-y border-white/10 py-6 lg:py-12 [counter-increment:calc-section] ${
+                                                index === 0 ? "border-t-0" : ""
+                                            }`}
+                                        >
+                                            <CalcSection
+                                                id={section.id}
+                                                title={section.sectionTitle}
+                                                description={
+                                                    section.description
+                                                }
+                                                fields={section.fields.map(
+                                                    field => ({
+                                                        id: field.id,
+                                                        label: field.label,
+                                                        value: String(
+                                                            field.value
+                                                        ),
+                                                        image: `/images/calculator-terrasser/${field.image}`,
+                                                    })
+                                                )}
+                                                selectedValue={
+                                                    typeof values[
+                                                        section.id
+                                                    ] === "object"
+                                                        ? String(
+                                                              (
+                                                                  values[
+                                                                      section.id
+                                                                  ] as FieldData
+                                                              ).value
+                                                          )
+                                                        : String(
+                                                              values[section.id]
+                                                          )
+                                                }
+                                                onChange={(
+                                                    fieldId,
+                                                    value,
+                                                    label,
+                                                    category
+                                                ) => {
+                                                    const cleanCategory =
+                                                        category.replace(
+                                                            /^\d+\.\s*/,
+                                                            ""
+                                                        );
+                                                    setFieldValue(fieldId, {
+                                                        value,
+                                                        label,
+                                                        category: cleanCategory,
+                                                    });
+                                                }}
+                                            />
+                                        </motion.section>
+                                    );
+                                })}
+                            </AnimatePresence>
+
+                            <AnimatePresence>
+                                {materialType && (
+                                    <motion.section
+                                        key={`${materialType}-padding`}
+                                        initial="hidden"
+                                        animate="visible"
+                                        exit={{
+                                            opacity: 0,
+                                            transform:
+                                                "translate3d(0, -100px, 0)",
+                                            transition: {
+                                                duration: 0.3,
+                                                ease: [0.42, 0, 1, 1] as const,
+                                            },
+                                        }}
+                                        variants={fadeInAnimation({
+                                            y: 100,
+                                            delay: 0.6,
+                                        })}
+                                        className="w-full border-y border-white/10 py-6 lg:py-12 [counter-increment:calc-section]"
                                     >
                                         <CalcSection
-                                            id={section.id}
-                                            title={section.sectionTitle}
-                                            description={section.description}
-                                            fields={section.fields.map(
+                                            id="padding"
+                                            title="Bund"
+                                            fields={fieldsData.padding[0].fields.map(
                                                 field => ({
                                                     id: field.id,
                                                     label: field.label,
@@ -218,16 +312,14 @@ export default function TerraceCalculator() {
                                                 })
                                             )}
                                             selectedValue={
-                                                typeof values[section.id] ===
+                                                typeof values.padding ===
                                                 "object"
                                                     ? String(
                                                           (
-                                                              values[
-                                                                  section.id
-                                                              ] as FieldData
+                                                              values.padding as FieldData
                                                           ).value
                                                       )
-                                                    : String(values[section.id])
+                                                    : String(values.padding)
                                             }
                                             onChange={(
                                                 fieldId,
@@ -235,7 +327,6 @@ export default function TerraceCalculator() {
                                                 label,
                                                 category
                                             ) => {
-                                                // Remove section number from category (e.g., "3. Vælg materiale" -> "Vælg materiale")
                                                 const cleanCategory =
                                                     category.replace(
                                                         /^\d+\.\s*/,
@@ -248,55 +339,9 @@ export default function TerraceCalculator() {
                                                 });
                                             }}
                                         />
-                                    </section>
-                                );
-                            })}
-
-                            {/* Padding Section - Always shown if material type selected */}
-                            {materialType && (
-                                <section className="w-full border-y border-white/10 py-6 lg:py-12 [counter-increment:calc-section]">
-                                    <CalcSection
-                                        id="padding"
-                                        title="Bund"
-                                        fields={fieldsData.padding[0].fields.map(
-                                            field => ({
-                                                id: field.id,
-                                                label: field.label,
-                                                value: String(field.value),
-                                                image: `/images/calculator-terrasser/${field.image}`,
-                                            })
-                                        )}
-                                        selectedValue={
-                                            typeof values.padding === "object"
-                                                ? String(
-                                                      (
-                                                          values.padding as FieldData
-                                                      ).value
-                                                  )
-                                                : String(values.padding)
-                                        }
-                                        onChange={(
-                                            fieldId,
-                                            value,
-                                            label,
-                                            category
-                                        ) => {
-                                            // Remove section number from category (e.g., "4. Bund" -> "Bund")
-                                            const cleanCategory =
-                                                category.replace(
-                                                    /^\d+\.\s*/,
-                                                    ""
-                                                );
-                                            setFieldValue(fieldId, {
-                                                value,
-                                                label,
-                                                category: cleanCategory,
-                                            });
-                                        }}
-                                    />
-                                </section>
-                            )}
-                            {/* Summary and Calculated Price */}
+                                    </motion.section>
+                                )}
+                            </AnimatePresence>
                             {hasSelections && materialType && (
                                 <>
                                     <Summary values={values} />

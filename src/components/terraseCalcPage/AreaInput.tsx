@@ -1,6 +1,8 @@
 "use client";
 import { useState, useRef, useEffect, startTransition } from "react";
 import InputArrow from "../shared/icons/InputArrow";
+import { fadeInAnimation } from "@/utils/animationVariants";
+import * as motion from "motion/react-client";
 
 interface AreaInputProps {
     value: number;
@@ -18,23 +20,17 @@ export default function AreaInput({ value, onChange }: AreaInputProps) {
     const min = 5;
     const max = 200;
 
-    // Sync localValue with value prop when not dragging
-    // This is necessary to keep the range input in sync with external value changes
-    // while allowing local state during dragging for better performance
     useEffect(() => {
         if (!isDragging && prevValueRef.current !== value) {
             prevValueRef.current = value;
-            // Use startTransition to prevent cascading renders
             startTransition(() => {
                 setLocalValue(value);
             });
         }
     }, [value, isDragging]);
 
-    // Use localValue when dragging, value when not dragging
     const displayValue = isDragging ? localValue : value;
     const percent = ((displayValue - min) / (max - min)) * 100;
-    // Calculate offset based on percentage: 8px at 0%, -8px at 100%
     const thumbOffset = 8 * (1 - percent / 50);
 
     const handleNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,11 +63,25 @@ export default function AreaInput({ value, onChange }: AreaInputProps) {
     };
 
     return (
-        <section className="w-full border-y border-white/10 py-6 lg:py-12">
-            <h2 className="mb-6 text-[20px] lg:text-[24px] leading-[125%] font-find-sans-pro font-light before:content-[counter(calc-section)_'.'] before:mr-2">
+        <>
+            <motion.h2
+                initial="hidden"
+                whileInView="visible"
+                exit="exit"
+                viewport={{ once: true, amount: 0.1 }}
+                variants={fadeInAnimation({ scale: 0.85, y: 20, delay: 0.1 })}
+                className="mb-6 text-[20px] lg:text-[24px] leading-[125%] font-find-sans-pro font-light before:content-[counter(calc-section)_'.'] before:mr-2"
+            >
                 Angiv terrasseareal i m²
-            </h2>
-            <div className="flex flex-col">
+            </motion.h2>
+            <motion.div
+                initial="hidden"
+                whileInView="visible"
+                exit="exit"
+                viewport={{ once: true, amount: 0.1 }}
+                variants={fadeInAnimation({ scale: 0.85, y: 20, delay: 0.2 })}
+                className="flex flex-col"
+            >
                 <div className="relative mb-6 xl:max-w-[118px]">
                     <input
                         ref={inputRef}
@@ -186,7 +196,7 @@ export default function AreaInput({ value, onChange }: AreaInputProps) {
                         </li>
                     </ul>
                 </div>
-            </div>
-        </section>
+            </motion.div>
+        </>
     );
 }

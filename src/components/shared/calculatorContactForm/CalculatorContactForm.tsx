@@ -25,7 +25,15 @@ export default function CalculatorContactForm() {
                     />
                 </motion.div>
                 <div className="bottom-[-59px] left-[220px] absolute -z-10 w-[416px] h-[309px] bg-black blur-[48.1453px]" />
-                <div
+                <motion.div
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.1 }}
+                    variants={fadeInAnimation({
+                        scale: 0.95,
+                        y: 30,
+                        delay: 0.1,
+                    })}
                     className="p-px rounded-[16px] mb-6 lg:mb-12"
                     style={{
                         backgroundImage:
@@ -33,24 +41,63 @@ export default function CalculatorContactForm() {
                     }}
                 >
                     <div className="p-4 lg:p-8 bg-black rounded-[16px]">
-                        <h2 className="text-[20px] lg:text-[24px] leading-[125%] font-find-sans-pro font-light mb-2">
+                        <motion.h2
+                            initial="hidden"
+                            whileInView="visible"
+                            viewport={{ once: true, amount: 0.1 }}
+                            variants={fadeInAnimation({
+                                scale: 0.9,
+                                y: 20,
+                                delay: 0.2,
+                            })}
+                            className="text-[20px] lg:text-[24px] leading-[125%] font-find-sans-pro font-light mb-2"
+                        >
                             Tak fordi du brugte vores prisberegner.
-                        </h2>
-                        <p className="text-[12px] lg:text-[18px] leading-[125%] font-light mb-6 max-w-[672px]">
+                        </motion.h2>
+                        <motion.p
+                            initial="hidden"
+                            whileInView="visible"
+                            viewport={{ once: true, amount: 0.1 }}
+                            variants={fadeInAnimation({
+                                scale: 0.9,
+                                y: 20,
+                                delay: 0.3,
+                            })}
+                            className="text-[12px] lg:text-[18px] leading-[125%] font-light mb-6 max-w-[672px]"
+                        >
                             Hvis du har spørgsmål eller har brug for hjælp til
                             at vælge den rette løsning, er du velkommen til at
                             skrive din e-mail herunder.
-                        </p>
-                        <input
+                        </motion.p>
+                        <motion.input
+                            initial="hidden"
+                            whileInView="visible"
+                            viewport={{ once: true, amount: 0.1 }}
+                            variants={fadeInAnimation({
+                                scale: 0.9,
+                                y: 20,
+                                delay: 0.4,
+                            })}
                             type="email"
                             placeholder="E-mail"
                             className="w-full sm:max-w-[361px] mr-auto p-4 h-[49px] rounded-full border border-grey-light-2/60 text-[14px] leading-[121.4%] font-light placeholder:text-grey-light-2/60"
                         />
                     </div>
-                </div>
-                <MainButton className="w-full h-[58px] sm:w-[320px] sm:ml-auto">
-                    Send
-                </MainButton>
+                </motion.div>
+                <motion.div
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.1 }}
+                    variants={fadeInAnimation({
+                        scale: 0.9,
+                        y: 20,
+                        delay: 0.5,
+                    })}
+                >
+                    <MainButton className="w-full h-[58px] sm:w-[320px] sm:ml-auto">
+                        Send
+                    </MainButton>
+                </motion.div>
             </Container>
         </section>
     );

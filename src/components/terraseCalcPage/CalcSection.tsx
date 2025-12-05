@@ -60,70 +60,82 @@ export const CalcSection = ({
                 className="grid grid-cols-[repeat(2,minmax(157px,1fr))]
         md:grid-cols-[repeat(4,minmax(157px,1fr))] gap-x-[14px] gap-y-6 lg:gap-6 border-none p-0 m-0 justify-items-center"
             >
-                {fields.map(field => {
+                {fields.map((field, index) => {
                     const fieldValue = String(field.value ?? "");
                     const isSelected = selectedValue === fieldValue;
                     return (
-                        <motion.label
+                        <motion.div
+                            key={field.id}
                             initial="hidden"
                             whileInView="visible"
-                            exit="exit"
                             viewport={{ once: true, amount: 0.1 }}
-                            variants={fadeInAnimation({ scale: 0.85, y: 30 })}
-                            key={field.id}
-                            htmlFor={field.id}
-                            className={`
+                            variants={fadeInAnimation({
+                                scale: 0.9,
+                                y: 20,
+                                delay: index * 0.1,
+                                duration: 0.5,
+                            })}
+                            className="w-full min-w-[157px] max-w-[272px]"
+                        >
+                            <label
+                                htmlFor={field.id}
+                                className={`
                                 group flex flex-col cursor-pointer rounded-lg 
                                 transition duration-250 ease-in-out
                                 hover:bg-white/10
-                                w-full min-w-[157px] max-w-[272px]
                                 ${isSelected ? "bg-white/10" : ""}                                
                             `}
-                        >
-                            <input
-                                type="radio"
-                                id={field.id}
-                                name={id}
-                                value={fieldValue}
-                                checked={isSelected}
-                                onChange={() =>
-                                    onChange(id, fieldValue, field.label, title)
-                                }
-                                className="hidden"
-                            />
-                            <div className="relative mb-1 xl:mb-2 aspect-square w-full overflow-hidden rounded-[4px] lg:rounded-[12px]">
-                                <Image
-                                    src={field.image}
-                                    alt={field.id}
-                                    fill
-                                    className="object-cover"
+                            >
+                                <input
+                                    type="radio"
+                                    id={field.id}
+                                    name={id}
+                                    value={fieldValue}
+                                    checked={isSelected}
+                                    onChange={() =>
+                                        onChange(
+                                            id,
+                                            fieldValue,
+                                            field.label,
+                                            title
+                                        )
+                                    }
+                                    className="hidden"
                                 />
-                            </div>
-                            <div className="flex items-center gap-2 p-[6px] xl:p-2 transition duration-[250ms] ease-in-out lg:px-2 lg:py-2 min-h-[43px]">
-                                <div
-                                    className={`flex size-4 shrink-0 items-center justify-center rounded-[4px] border border-white transition duration-[250ms] ease-in-out ${
-                                        isSelected
-                                            ? "border-none bg-gradient-brown"
-                                            : "bg-transparent"
-                                    }`}
-                                >
-                                    <TickIcon
-                                        className={`h-3 w-3 text-white ${
-                                            isSelected ? "block" : "hidden"
-                                        }`}
+                                <div className="relative mb-1 xl:mb-2 aspect-square w-full overflow-hidden rounded-[4px] lg:rounded-[12px]">
+                                    <Image
+                                        src={field.image}
+                                        alt={field.id}
+                                        fill
+                                        className="object-cover"
                                     />
                                 </div>
-                                <span
-                                    className={`text-[12px] leading-[150%] lg:text-[18px] ${
-                                        isSelected
-                                            ? "font-medium"
-                                            : "font-light "
-                                    }`}
-                                >
-                                    {field.label}
-                                </span>
-                            </div>
-                        </motion.label>
+                                <div className="flex items-center gap-2 p-[6px] xl:p-2 lg:px-2 lg:py-2 min-h-[43px]">
+                                    <div
+                                        className={`flex size-4 shrink-0 items-center justify-center rounded-[4px] border border-white transition duration-[250ms] ease-in-out ${
+                                            isSelected
+                                                ? "border-none bg-gradient-brown"
+                                                : "bg-transparent"
+                                        }`}
+                                    >
+                                        <TickIcon
+                                            className={`h-3 w-3 text-white ${
+                                                isSelected ? "block" : "hidden"
+                                            }`}
+                                        />
+                                    </div>
+                                    <span
+                                        className={`text-[12px] leading-[150%] lg:text-[18px] ${
+                                            isSelected
+                                                ? "font-medium"
+                                                : "font-light "
+                                        }`}
+                                    >
+                                        {field.label}
+                                    </span>
+                                </div>
+                            </label>
+                        </motion.div>
                     );
                 })}
             </fieldset>
