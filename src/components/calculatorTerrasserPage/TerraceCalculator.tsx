@@ -61,7 +61,10 @@ export default function TerraceCalculator() {
                         fields: Array<{
                             id: string;
                             label: string;
-                            image: string;
+                            image: {
+                                link: string;
+                                priority?: boolean;
+                            };
                             value: number;
                         }>;
                     }> =
@@ -76,7 +79,10 @@ export default function TerraceCalculator() {
                                   fields: Array<{
                                       id: string;
                                       label: string;
-                                      image: string;
+                                      image: {
+                                          link: string;
+                                          priority?: boolean;
+                                      };
                                       value: number;
                                   }>;
                               }>)
@@ -273,7 +279,19 @@ export default function TerraceCalculator() {
                                                             value: String(
                                                                 field.value
                                                             ),
-                                                            image: `/images/calculator-terrasser/${field.image}`,
+                                                            image: {
+                                                                link: field
+                                                                    .image.link,
+                                                                priority:
+                                                                    (
+                                                                        field.image as {
+                                                                            link: string;
+                                                                            priority?: boolean;
+                                                                        }
+                                                                    )
+                                                                        ?.priority ??
+                                                                    false,
+                                                            },
                                                         })
                                                     )}
                                                     selectedValue={
@@ -351,7 +369,18 @@ export default function TerraceCalculator() {
                                                         value: String(
                                                             field.value
                                                         ),
-                                                        image: `/images/calculator-terrasser/${field.image}`,
+                                                        image: {
+                                                            link: field.image
+                                                                .link,
+                                                            priority:
+                                                                (
+                                                                    field.image as {
+                                                                        link: string;
+                                                                        priority?: boolean;
+                                                                    }
+                                                                )?.priority ??
+                                                                false,
+                                                        },
                                                     })
                                                 )}
                                                 selectedValue={

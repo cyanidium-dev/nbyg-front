@@ -1,4 +1,4 @@
-import TerraceCalculator from "@/components/terraseCalcPage/TerraceCalculator";
+import TerraceCalculator from "@/components/calculatorTerrasserPage/TerraceCalculator";
 
 export default function CalculatorTerrasserPage() {
     return (

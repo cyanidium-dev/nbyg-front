@@ -11,7 +11,10 @@ interface CalcSectionProps {
         id: string;
         label: string;
         value: string;
-        image: string;
+        image: {
+            link: string;
+            priority: boolean;
+        };
     }[];
     selectedValue?: string;
     onChange: (
@@ -104,10 +107,11 @@ export const CalcSection = ({
                                 />
                                 <div className="relative mb-1 xl:mb-2 aspect-square w-full overflow-hidden rounded-[4px] lg:rounded-[12px]">
                                     <Image
-                                        src={field.image}
+                                        src={field.image.link}
                                         alt={field.id}
                                         fill
                                         className="object-cover"
+                                        priority={field.image.priority}
                                     />
                                 </div>
                                 <div className="flex grow-1 items-center gap-2 p-[6px] xl:p-2 lg:px-2 lg:py-2 min-h-[43px]">
