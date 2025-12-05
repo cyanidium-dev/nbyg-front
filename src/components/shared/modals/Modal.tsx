@@ -39,7 +39,10 @@ export default function Modal({
             )}
         >
             <div
-                className="absolute inset-0 md:rounded-[12px] pointer-events-none"
+                className={twMerge(
+                    "absolute inset-0 md:rounded-[12px] pointer-events-none",
+                    variant === "notification" && "rounded-[12px]"
+                )}
                 style={{
                     background: variants[variant],
                     padding: "1px",
