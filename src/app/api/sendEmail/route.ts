@@ -39,11 +39,20 @@ export async function POST(req: Request) {
 
         // Add sending email logic here
         console.log(html);
+
+        const isDevelopmentOrPreview =
+            process.env.NODE_ENV === "development" ||
+            process.env.VERCEL_ENV === "preview" ||
+            process.env.VERCEL_ENV === "development";
+
         setTimeout(async () => {
             await Promise.resolve();
         }, 1000);
 
-        return NextResponse.json({ message: "Email sent successfully" });
+        return NextResponse.json({
+            message: "Email sent successfully",
+            ...(isDevelopmentOrPreview && { html }),
+        });
     } catch (error) {
         console.error("Error sending email:", error);
         return NextResponse.json(
