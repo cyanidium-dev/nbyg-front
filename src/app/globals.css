@@ -151,6 +151,10 @@
     }
   }
 
+  .swiper.recommended-posts-slider {
+    padding: 0px 0px 32px 0px !important;
+  }
+
   /* Синхронізація висоти таблиць у слайдері */
   .large-table-slider {
     display: flex;

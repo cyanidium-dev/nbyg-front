@@ -1,12 +1,14 @@
 import Hero from "@/components/articlePage/hero/Hero";
-import { BLOG_POST_BY_SLUG_QUERY } from "@/lib/queries";
-import { BlogPost } from "@/types/blogPost";
+import { BLOG_POST_BY_SLUG_QUERY, ALL_BLOG_POSTS_QUERY } from "@/lib/queries";
+import { BlogPost, BlogPostPreview } from "@/types/blogPost";
 import { fetchSanityData } from "@/utils/fetchSanityData";
 import FaqSection from "@/components/shared/sections/faqSection/FaqSection";
 import ContentSection from "@/components/articlePage/contentSection/ContentSection";
 import Container from "@/components/shared/container/Container";
 import { Suspense } from "react";
 import Loader from "@/components/shared/loader/Loader";
+import RecommendedPostsMobile from "@/components/articlePage/recommendedPosts/RecommendedPostsMobile";
+import RecommendedPostsDesktop from "@/components/articlePage/recommendedPosts/RecommendedPostsDesktop";
 
 interface ArticlePageProps {
   params: Promise<{ article: string }>;
@@ -21,6 +23,9 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
       slug: article,
     }
   );
+
+  const blogPosts =
+    await fetchSanityData<BlogPostPreview[]>(ALL_BLOG_POSTS_QUERY);
 
   if (!currentArticle) {
     return null;
@@ -42,8 +47,19 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               />
             )}
           </div>
-          <div className="hidden lg:block w-80 shrink-0"></div>
+          <div className="hidden lg:block w-80 shrink-0">
+            <RecommendedPostsDesktop
+              posts={blogPosts}
+              uniqueKey={`blog-${currentArticle.slug}-recommended-posts-mobile`}
+            />
+          </div>
         </Container>
+        <div className="lg:hidden">
+          <RecommendedPostsMobile
+            posts={blogPosts}
+            uniqueKey={`blog-${currentArticle.slug}-recommended-posts-mobile`}
+          />
+        </div>
       </Suspense>
     </>
   );
