@@ -1,6 +1,7 @@
 "use client";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
+import { useState, useRef } from "react";
 import Container from "@/components/shared/container/Container";
 import { CalcSection } from "./CalcSection";
 import AreaInput from "./AreaInput";
@@ -42,6 +43,9 @@ const initialValues: FormValues = {
 };
 
 export default function TerraceCalculator() {
+    const [showContactForm, setShowContactForm] = useState(false);
+    const previousShouldShowFormRef = useRef(false);
+
     return (
         <>
             <Formik
@@ -153,6 +157,14 @@ export default function TerraceCalculator() {
 
                     const total = calculateTotal();
                     const hasSelections = Object.keys(values).length > 2;
+                    const shouldShowForm = total > 0 && hasSelections;
+
+                    if (shouldShowForm !== previousShouldShowFormRef.current) {
+                        previousShouldShowFormRef.current = shouldShowForm;
+                        setTimeout(() => {
+                            setShowContactForm(shouldShowForm);
+                        }, 0);
+                    }
 
                     return (
                         <Form className="pt-19 lg:pt-[239px] font-montserrat [counter-reset:calc-section]">
@@ -423,13 +435,15 @@ export default function TerraceCalculator() {
                                     </>
                                 )}
                             </Container>
-                            <AnimatePresence>
-                                {hasSelections && <CalculatorContactForm />}
-                            </AnimatePresence>
                         </Form>
                     );
                 }}
             </Formik>
+            <Container>
+                <AnimatePresence>
+                    {showContactForm && <CalculatorContactForm />}
+                </AnimatePresence>
+            </Container>
         </>
     );
 }

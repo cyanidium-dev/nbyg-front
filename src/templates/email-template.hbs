@@ -1,0 +1,41 @@
+<html lang="da">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    </head>
+    <body
+        style="font-family: Arial, sans-serif; font-size: 12px; line-height: 1.167; color: #000000; padding: 48px;"
+    >
+        <h1 style="font-size: 20px; line-height: 150%; margin: 0 0 40px 0;">Ny
+            henvendelse fra kontaktformularen</h1>
+        <p style="margin: 0 0 24px 0;">Du har modtaget en ny besked fra
+            formularen "{{source}}".</p>
+        <ul style="list-style: none; padding: 0; margin: 0 0 24px 0;">
+            {{#if name}}
+                <li style="margin-bottom: 16px;"><strong>Navn: </strong>
+                    {{name}}</li>
+            {{/if}}
+            {{#if phone}}
+                <li style="margin-bottom: 16px;"><strong>Telefon: </strong>
+                    {{phone}}</li>
+            {{/if}}
+            <li style="margin-bottom: 16px;"><strong>Email: </strong>
+                {{email}}</li>
+            {{#if address}}
+                <li style="margin-bottom: 16px;"><strong>Adresse: </strong>
+                    {{address}}</li>
+            {{/if}}
+            {{#if message}}
+                <li style="margin-bottom: 16px;"><strong>Besked: </strong>
+                    {{message}}</li>
+            {{/if}}
+        </ul>
+        {{#if date}}
+            <p style="margin: 0 0 40px 0;"><strong>Sendt den:
+                </strong>{{date}}</p>
+        {{/if}}
+        <p>Denne e-mail er genereret automatisk. Ignorér den, hvis den er
+            modtaget ved en fejl.</p>
+        <p>© Nbyg</p>
+    </body>
+</html>
