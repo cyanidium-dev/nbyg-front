@@ -125,7 +125,7 @@ export const CalcSection = ({
                                         />
                                     </div>
                                     <span
-                                        className={`text-[12px] leading-[150%] lg:text-[18px] ${
+                                        className={`text-[12px] leading-[150%] xs:text-[18px] md:text-[12px] lg:text-[18px] ${
                                             isSelected
                                                 ? "font-medium"
                                                 : "font-light "
