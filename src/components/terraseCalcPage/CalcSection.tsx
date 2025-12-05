@@ -80,7 +80,7 @@ export const CalcSection = ({
                             <label
                                 htmlFor={field.id}
                                 className={`
-                                group flex flex-col cursor-pointer rounded-lg 
+                                group flex flex-col h-full cursor-pointer rounded-lg 
                                 transition duration-250 ease-in-out
                                 hover:bg-white/10
                                 ${isSelected ? "bg-white/10" : ""}                                
@@ -110,7 +110,7 @@ export const CalcSection = ({
                                         className="object-cover"
                                     />
                                 </div>
-                                <div className="flex items-center gap-2 p-[6px] xl:p-2 lg:px-2 lg:py-2 min-h-[43px]">
+                                <div className="flex grow-1 items-center gap-2 p-[6px] xl:p-2 lg:px-2 lg:py-2 min-h-[43px]">
                                     <div
                                         className={`flex size-4 shrink-0 items-center justify-center rounded-[4px] border border-white transition duration-[250ms] ease-in-out ${
                                             isSelected
