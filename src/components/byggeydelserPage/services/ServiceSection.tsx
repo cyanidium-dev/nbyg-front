@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import ServiceSectionDecorations from "./ServiceSectionDecorations";
 import * as motion from "motion/react-client";
-import { fadeInAnimation, headerVariants } from "@/utils/animationVariants";
+import { fadeInAnimation } from "@/utils/animationVariants";
 
 interface ServiceSectionProps {
   service: {

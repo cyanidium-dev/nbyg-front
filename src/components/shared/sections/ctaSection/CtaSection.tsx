@@ -92,7 +92,11 @@ const CtaSection = (_props: CtaSectionProps) => {
             className="relative h-50 md:h-auto md:w-[calc(50%-20px)] xl:w-[calc(50%-54.5px)] rounded-[8px] overflow-hidden"
           >
             <Image
-              src={urlForSanityImage(image).fit("crop").url()}
+              src={
+                typeof image === "string"
+                  ? image
+                  : urlForSanityImage(image).fit("crop").url()
+              }
               alt="cta image"
               fill
               className="object-cover"
