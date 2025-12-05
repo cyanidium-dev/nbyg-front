@@ -37,7 +37,6 @@ export default function CalculatorContactForm() {
         formikHelpers: FormikHelpers<FormValues>
     ) => {
         const { resetForm } = formikHelpers;
-        console.log(values.email);
         try {
             setIsError(false);
             setIsLoading(true);
