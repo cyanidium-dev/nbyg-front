@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-// import nodemailer from "nodemailer";
 import handlebars from "handlebars";
 import fs from "fs/promises";
 import path from "path";
@@ -23,6 +22,7 @@ export async function POST(req: Request) {
             "templates",
             "email-template.hbs"
         );
+
         const templateContent = await fs.readFile(templatePath, "utf-8");
 
         const template = handlebars.compile(templateContent);
