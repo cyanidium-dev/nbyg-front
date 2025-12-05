@@ -1,3 +1,4 @@
+"use client";
 import * as motion from "motion/react-client";
 import MainButton from "../buttons/MainButton";
 import Image from "next/image";
