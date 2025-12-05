@@ -57,8 +57,8 @@ export const CalcSection = ({
                 </motion.p>
             )}
             <fieldset
-                className="grid grid-cols-[repeat(auto-fit,minmax(157px,1fr))]
-        md:grid-cols-[repeat(4,minmax(157px,1fr))] gap-x-[14px] gap-y-6 lg:gap-6 border-none p-0 m-0"
+                className="grid grid-cols-[repeat(2,minmax(157px,1fr))]
+        md:grid-cols-[repeat(4,minmax(157px,1fr))] gap-x-[14px] gap-y-6 lg:gap-6 border-none p-0 m-0 justify-items-center"
             >
                 {fields.map(field => {
                     const fieldValue = String(field.value ?? "");
@@ -76,6 +76,7 @@ export const CalcSection = ({
                                 group flex flex-col cursor-pointer rounded-lg 
                                 transition duration-250 ease-in-out
                                 hover:bg-white/10
+                                w-full min-w-[157px] max-w-[272px]
                                 ${isSelected ? "bg-white/10" : ""}                                
                             `}
                         >
