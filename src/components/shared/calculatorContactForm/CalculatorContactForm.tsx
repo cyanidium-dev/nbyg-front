@@ -80,7 +80,7 @@ export default function CalculatorContactForm() {
                             })}
                             type="email"
                             placeholder="E-mail"
-                            className="w-full sm:max-w-[361px] mr-auto p-4 h-[49px] rounded-full border border-grey-light-2/60 text-[14px] leading-[121.4%] font-light placeholder:text-grey-light-2/60"
+                            className="w-full sm:max-w-[361px] mr-auto p-4 h-[49px] rounded-full border border-white/60 text-[14px] leading-[121.4%] font-light placeholder:text-white/60"
                         />
                     </div>
                 </motion.div>

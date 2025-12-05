@@ -147,7 +147,7 @@ export default function AreaInput({ value, onChange }: AreaInputProps) {
                         />
                         <div
                             id="area-range-slider-background"
-                            className="pointer-events-none absolute top-1/2 -translate-y-1/2 left-0 right-0 h-0 rounded-full border-2 border-dashed border-black/10 bg-grey-light"
+                            className="pointer-events-none absolute top-1/2 -translate-y-1/2 left-0 right-0 h-0 rounded-full border-2 border-dashed border-black/10 bg-grey"
                         />
                         <input
                             ref={rangeRef}
