@@ -44,7 +44,7 @@ export default function CalculatorContactForm() {
 
             const response = await axios({
                 method: "POST",
-                url: "/api/sendEmail",
+                url: "/api/send-email",
                 data: JSON.stringify({
                     source: "Calculator Terrasser",
                     email: values.email,
