@@ -95,7 +95,7 @@ const HeroSection = (_props: HeroSectionProps) => {
             </MainButton>
           )}
           {showCalculatorTerraceButton && (
-            <Link href="/calculator-terrasse">
+            <Link href="/calculator-terrasser">
               <MainButton variant="gradient" className="h-12 sm:w-[275px]">
                 Beregn din terrasse <ShevronIcon className="size-5 rotate-90" />
               </MainButton>
