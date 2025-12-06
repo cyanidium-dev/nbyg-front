@@ -31,7 +31,7 @@ export default function BlogCard({ post }: BlogCardProps) {
         <Image
           src={urlForSanityImage(heroMobileImage).fit("crop").url()}
           fill
-          alt="blog post image"
+          alt={heroMobileImage?.alt || "Blog indlæg billede"}
           sizes="(max-width: 440px) 100vw, 328px"
           className="object-cover"
         />
