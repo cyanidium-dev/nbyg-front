@@ -120,7 +120,7 @@ export default function Summary({ values }: SummaryProps) {
                                 <td className="flex w-1/2 shrink-0 items-center border-r border-white/10 p-3 text-[12px] leading-[125%] lg:text-[18px] lg:leading-[150%] font-medium lg:w-[270px] lg:px-4">
                                     {fieldData.category || ""}
                                 </td>
-                                <td className="flex w-1/2 flex-grow items-center justify-center p-3 text-center text-[12px] leading-[125%] lg:text-[18px] lg:leading-[150%] font-light">
+                                <td className="flex w-1/2 grow items-center justify-center p-3 text-center text-[12px] leading-[125%] lg:text-[18px] lg:leading-[150%] font-light">
                                     {key === "padding" ? (
                                         <div className="flex size-5 items-center justify-center rounded-full bg-gradient-brown border-none">
                                             {Number(fieldData.value) > 0 ? (

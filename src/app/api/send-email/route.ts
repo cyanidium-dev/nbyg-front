@@ -40,18 +40,12 @@ export async function POST(req: Request) {
         // Add sending email logic here
         console.log(html);
 
-        const isDevelopmentOrPreview =
-            process.env.NODE_ENV === "development" ||
-            process.env.VERCEL_ENV === "preview" ||
-            process.env.VERCEL_ENV === "development";
-
         const delay = (ms: number) =>
             new Promise(resolve => setTimeout(resolve, ms));
         await delay(2000);
 
         return NextResponse.json({
             message: "Email sent successfully",
-            ...(isDevelopmentOrPreview && { html }),
         });
     } catch (error) {
         console.error("Error sending email:", error);

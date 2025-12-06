@@ -46,7 +46,7 @@ export default function Footer() {
                             >
                                 {CONTACT_PHONE.replace(
                                     contactsPhoneRegex,
-                                    "+45 $1"
+                                    "+45 $1 $2 $3 $4"
                                 )}
                             </motion.a>
                             <motion.a

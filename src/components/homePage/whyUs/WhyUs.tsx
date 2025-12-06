@@ -9,8 +9,8 @@ import Link from "next/link";
 
 export default function WhyUs() {
     return (
-        <section className="relative py-25 lg:pt-[152px] lg:pb-[1px] overflow-hidden">
-            <div className="hidden lg:block absolute bottom-0 left-0 z-[-1] w-[1134px] h-[388px] left-[-51px] top-[494px] bg-black blur-[53.3px]" />
+        <section className="relative py-25 lg:pt-[152px] lg:pb-px overflow-hidden">
+            <div className="hidden lg:block absolute bottom-0 left-[-51px] z-[-1] w-[1134px] h-[388px] top-[494px] bg-black blur-[53.3px]" />
             <Container className="relative">
                 <motion.div
                     initial="hidden"
@@ -240,7 +240,7 @@ export default function WhyUs() {
                                     tiden. Derfor arbejder vi effektivt og
                                     målrettet for at sikre rettidig udførelse af
                                     arbejdet uden at gå på kompromis med
-                                    kvaliteten.renovering af Hus
+                                    kvaliteten renovering af Hus
                                 </motion.p>
                             </div>
                             <motion.div
