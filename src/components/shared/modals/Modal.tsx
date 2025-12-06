@@ -9,6 +9,7 @@ interface ModalProps {
     setIsModalShown: Dispatch<SetStateAction<boolean>>;
     children: ReactNode;
     className?: string;
+    closeButtonClassName?: string;
     variant?: "notification" | "default";
 }
 
@@ -17,6 +18,7 @@ export default function Modal({
     setIsModalShown,
     children,
     className = "",
+    closeButtonClassName = "",
     variant = "default",
 }: ModalProps) {
     const variants = {
@@ -54,7 +56,10 @@ export default function Modal({
             />
             <IconButton
                 handleClick={() => setIsModalShown(false)}
-                className="absolute top-5 md:top-5 right-4 md:right-5 w-8 h-8 z-30"
+                className={twMerge(
+                    "absolute top-8 md:top-5 right-4 md:right-5 w-8 h-8 z-30",
+                    closeButtonClassName
+                )}
             >
                 {<CloseIcon className="size-6" />}
             </IconButton>
