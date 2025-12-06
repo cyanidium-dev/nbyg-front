@@ -439,10 +439,11 @@ export default function TerraceCalculator() {
                     );
                 }}
             </Formik>
-
-            <AnimatePresence>
-                {showContactForm && <CalculatorContactForm />}
-            </AnimatePresence>
+            <Container>
+                <AnimatePresence>
+                    {showContactForm && <CalculatorContactForm />}
+                </AnimatePresence>
+            </Container>
         </>
     );
 }
