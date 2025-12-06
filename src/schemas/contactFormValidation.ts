@@ -10,7 +10,7 @@ export const contactFormValidation = Yup.object().shape({
             nameRegex,
             "Tilladte bogstaver og bindestreger, apostroffer og anførselstegn"
         )
-        .required("Dette felt er påkrævet"),
+        .required("Navn er påkrævet."),
     phone: Yup.string()
         .required("Telefonnummer er påkrævet")
         .test(
