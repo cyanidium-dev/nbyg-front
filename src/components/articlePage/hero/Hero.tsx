@@ -26,7 +26,7 @@ export default function Hero({ article }: HeroProps) {
       <Image
         src={urlForSanityImage(heroMobileImage).fit("crop").url()}
         fill
-        alt="blog post hero image"
+        alt={heroMobileImage?.alt || "Blog indlæg hero billede"}
         sizes="100vw"
         className="md:hidden object-cover -z-20"
         priority
@@ -35,7 +35,7 @@ export default function Hero({ article }: HeroProps) {
       <Image
         src={urlForSanityImage(heroDesktopImage).fit("crop").url()}
         fill
-        alt="blog post hero image"
+        alt={heroDesktopImage?.alt || "Blog indlæg hero billede"}
         sizes="100vw"
         className="hidden md:block object-cover -z-20"
         priority

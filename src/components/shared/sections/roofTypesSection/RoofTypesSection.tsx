@@ -129,7 +129,7 @@ const RoofTypesSection = (_props: RoofTypesSectionProps) => {
               <Image
                 src={urlForSanityImage(image).fit("crop").url()}
                 fill
-                alt="roof types"
+                alt={image?.alt || "Tagtyper"}
                 className="object-cover"
               />
             </motion.div>

@@ -121,7 +121,7 @@ export default function GallerySlider({
                 >
                   <Image
                     src={typeof item.image === "string" ? item.image : urlForSanityImage(item.image).fit("crop").url()}
-                    alt={`Gallery image ${idx + 1}`}
+                    alt={typeof item.image === "string" ? `Galleri billede ${idx + 1}` : item.image?.alt || `Galleri billede ${idx + 1}`}
                     fill
                     className="object-cover rounded-[14px]"
                   />

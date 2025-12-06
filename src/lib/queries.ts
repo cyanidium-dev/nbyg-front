@@ -36,8 +36,14 @@ export const PAGE_BY_SLUG_QUERY = `*[
       "type": _type,
       title,
       description,
-      desktopImage,
-      mobileImage,
+      "desktopImage": desktopImage{
+        ...,
+        "alt": alt
+      },
+      "mobileImage": mobileImage{
+        ...,
+        "alt": alt
+      },
       showDiscussButton,
       showCalculatorTerraceButton,
       showCalculatorRoofButton
@@ -47,14 +53,20 @@ export const PAGE_BY_SLUG_QUERY = `*[
       title,
       description,
       showMoreOnMobile,
-      image,
+      "image": image{
+        ...,
+        "alt": alt
+      },
       buttonType
     },
     _type == "gallerySection" => {
       "type": _type,
       description,
       items[]{
-        image
+        "image": image{
+          ...,
+          "alt": alt
+        }
       },
       showOnServicesPage
     },
@@ -81,8 +93,14 @@ export const PAGE_BY_SLUG_QUERY = `*[
     _type == "beforeAfterSection" => {
       "type": _type,
       items[]{
-        beforeImage,
-        afterImage
+        "beforeImage": beforeImage{
+          ...,
+          "alt": alt
+        },
+        "afterImage": afterImage{
+          ...,
+          "alt": alt
+        }
       }
     },
     _type == "materialSliderSection" => {
@@ -93,7 +111,10 @@ export const PAGE_BY_SLUG_QUERY = `*[
       description1,
       description2,
       slides[]{
-        image,
+        "image": image{
+          ...,
+          "alt": alt
+        },
         title,
         description
       }
@@ -103,7 +124,10 @@ export const PAGE_BY_SLUG_QUERY = `*[
       title,
       titlePosition,
       imagePosition,
-      image,
+      "image": image{
+        ...,
+        "alt": alt
+      },
       description,
       buttonStyle,
       buttonText,
@@ -113,7 +137,10 @@ export const PAGE_BY_SLUG_QUERY = `*[
       "type": _type,
       title,
       tablePosition,
-      image,
+      "image": image{
+        ...,
+        "alt": alt
+      },
       columns[]{
         title,
         values
@@ -128,7 +155,10 @@ export const PAGE_BY_SLUG_QUERY = `*[
         _key,
         title,
         description,
-        image
+        "image": image{
+          ...,
+          "alt": alt
+        }
       }
     },
     _type == "roofTypesSection" => {
@@ -138,7 +168,10 @@ export const PAGE_BY_SLUG_QUERY = `*[
       description2,
       description3,
       subtitle,
-      image,
+      "image": image{
+        ...,
+        "alt": alt
+      },
       roofTypes[]{
         _key,
         title,
@@ -150,7 +183,10 @@ export const PAGE_BY_SLUG_QUERY = `*[
       title,
       description,
       description2,
-      image,
+      "image": image{
+        ...,
+        "alt": alt
+      },
       columns[]{
         title,
         values
@@ -163,7 +199,10 @@ export const PAGE_BY_SLUG_QUERY = `*[
     metaTitle,
     metaDescription,
     keywords,
-    opengraphImage,
+    "opengraphImage": opengraphImage{
+      ...,
+      "alt": alt
+    },
     schemaJson
   }
 }`;
@@ -175,7 +214,12 @@ export const ALL_GALLERIES_QUERY = `
   "gallery": sections[_type == "gallerySection"][0]{
     order,
     description,
-    items[]{ image },
+    items[]{ 
+      "image": image{
+        ...,
+        "alt": alt
+      }
+    },
     showOnServicesPage
   },
   "galleryOrder": sections[_type == "gallerySection"][0].order
@@ -189,7 +233,10 @@ export const ALL_GALLERIES_QUERY = `
 export const ALL_BLOG_POSTS_QUERY = `*[_type == "blogPost"] | order(_createdAt desc){
   heroTitle,
   heroDescription,
-  heroMobileImage,
+  "heroMobileImage": heroMobileImage{
+    ...,
+    "alt": alt
+  },
   "slug": slug.current,
   _createdAt
 }`;
@@ -200,8 +247,14 @@ export const BLOG_POST_BY_SLUG_QUERY = `*[
 ][0]{
   heroTitle,
   heroDescription,
-  heroDesktopImage,
-  heroMobileImage,
+  "heroDesktopImage": heroDesktopImage{
+    ...,
+    "alt": alt
+  },
+  "heroMobileImage": heroMobileImage{
+    ...,
+    "alt": alt
+  },
   "slug": slug.current,
   content[]{
     ...,
@@ -252,7 +305,10 @@ export const BLOG_POST_BY_SLUG_QUERY = `*[
     metaTitle,
     metaDescription,
     keywords,
-    opengraphImage,
+    "opengraphImage": opengraphImage{
+      ...,
+      "alt": alt
+    },
     schemaJson
   }
 }`;
