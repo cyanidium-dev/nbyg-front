@@ -19,7 +19,9 @@ export default function ContactFormBlock() {
             }}
         >
             <div className="px-6 py-8 bg-black rounded-[16px] w-full h-full">
-                <SectionTitle className="mb-6">Kontakt os</SectionTitle>
+                <SectionTitle className="mb-6 tracking-[-0.02rem]">
+                    Kontakt os
+                </SectionTitle>
                 <motion.p
                     variants={fadeInAnimation({ delay: 0.4, y: 20 })}
                     initial="hidden"
