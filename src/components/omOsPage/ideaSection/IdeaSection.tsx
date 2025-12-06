@@ -96,8 +96,8 @@ export default function IdeaSection() {
         </Container>
       </section>
       <ModalContactForm
-      isModalShown={isModalShown}
-      setIsModalShown={setIsModalShown}
+        isModalShown={isModalShown}
+        setIsModalShown={setIsModalShown}
       />
   </>
   );
