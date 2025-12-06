@@ -65,14 +65,11 @@ export default function CustomizedInput({
                         const commonProps = {
                             id: inputId,
                             className: twMerge(
-                                clsx(
-                                    `relative w-full outline-none resize-none transition duration-300 ease-out ${
-                                        meta.touched && meta.error
-                                            ? "border-red-500"
-                                            : "border-white/60"
-                                    }`,
-                                    fieldClassName
-                                )
+                                "relative w-full outline-none resize-none transition duration-300 ease-out",
+                                fieldClassName,
+                                meta.touched && meta.error
+                                    ? "border-red-error"
+                                    : "border-white/60"
                             ),
                         };
 
@@ -109,7 +106,7 @@ export default function CustomizedInput({
             <ErrorMessage
                 name={fieldName}
                 component="p"
-                className="absolute bottom-[-14px] left-2 text-[10px] lg:text-[16px] lg:bottom-[-20px] font-normal leading-none text-red-300 truncate"
+                className="absolute bottom-[-12px] left-4 text-[8px] lg:text-[10px] lg:bottom-[-14px] font-light leading-[125%] lg:leading-[120%] text-red-error truncate"
             />
         </label>
     );

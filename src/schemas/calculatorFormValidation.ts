@@ -3,6 +3,9 @@ import * as Yup from "yup";
 
 export const calculatorFormValidation = Yup.object().shape({
     email: Yup.string()
-        .matches(emailRegex, "Ugyldig e-mail")
+        .matches(
+            emailRegex,
+            "Ugyldigt format – tjek venligst de indtastede oplysninger."
+        )
         .required("E-mailadresse er påkrævet"),
 });

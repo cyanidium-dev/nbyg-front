@@ -116,7 +116,7 @@ export default function CalculatorContactForm() {
                                             "linear-gradient(0deg, rgba(4, 4, 4, 0.4), rgba(4, 4, 4, 0.4)), linear-gradient(129.15deg, #6D3A0B 21.74%, #000000 103.38%)",
                                     }}
                                 >
-                                    <div className="p-4 lg:p-8 bg-black rounded-[16px]">
+                                    <div className="px-4 py-6 lg:p-8 bg-black rounded-[16px]">
                                         <motion.h2
                                             initial="hidden"
                                             whileInView="visible"
