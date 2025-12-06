@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "react-phone-number-input/style.css";
 
 @theme inline {
     --breakpoint-xs: 27rem;
@@ -472,14 +473,25 @@
 
     /* Phone Input Customization */
     .PhoneInput {
+        --PhoneInputCountryFlag-aspectRatio: 1.333;
+        --PhoneInputCountryFlag-height: 24px;
+        --PhoneInputCountrySelect-marginRight: 10px;
         display: flex;
         align-items: stretch;
     }
 
+    .PhoneInputCountryFlag {
+        height: 24px !important;
+    }
+
     .PhoneInputCountry {
         border-right: 1px solid rgba(255, 255, 255, 0.6);
-        padding-right: 8px;
-        margin-right: 8px;
+        padding-right: 12px;
+    }
+
+    .PhoneInputCountryIcon {
+        width: 32px;
+        margin-right: 10px;
     }
 
     .PhoneInputInput {
@@ -492,5 +504,50 @@
     .PhoneInputInput:focus {
         outline: none !important;
         box-shadow: none !important;
+    }
+
+    /* Phone Input Dropdown Styles */
+    .PhoneInputCountrySelect {
+        background-color: var(--color-black) !important;
+        border: 1px solid rgba(255, 255, 255, 0.6) !important;
+        border-radius: 8px !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+        max-height: 300px !important;
+        overflow-y: auto !important;
+        z-index: 1000 !important;
+    }
+
+    .PhoneInputCountrySelectOption {
+        background-color: var(--color-black) !important;
+        color: var(--color-white) !important;
+        padding: 8px 12px !important;
+    }
+
+    .PhoneInputCountrySelectOption:hover,
+    .PhoneInputCountrySelectOption:focus {
+        background-color: rgba(255, 255, 255, 0.1) !important;
+        color: var(--color-white) !important;
+    }
+
+    .PhoneInputCountrySelectOption--selected {
+        background-color: rgba(255, 255, 255, 0.15) !important;
+    }
+
+    /* Scrollbar styling for dropdown */
+    .PhoneInputCountrySelect::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .PhoneInputCountrySelect::-webkit-scrollbar-track {
+        background: var(--color-black);
+    }
+
+    .PhoneInputCountrySelect::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 3px;
+    }
+
+    .PhoneInputCountrySelect::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.5);
     }
 }

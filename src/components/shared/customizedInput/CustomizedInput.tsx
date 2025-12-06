@@ -8,8 +8,7 @@ import {
 import { useId } from "react";
 import clsx from "clsx";
 import { twMerge } from "tailwind-merge";
-import PhoneInput, { isValidPhoneNumber } from "react-phone-number-input";
-import "react-phone-number-input/style.css";
+import PhoneInput from "react-phone-number-input";
 import ShevronIcon from "../icons/ShevronIcon";
 
 interface Values {
@@ -37,7 +36,7 @@ export default function CustomizedInput({
     isLabelHidden = false,
     as,
 }: CustomizedInputProps) {
-    const { setFieldValue } = useFormikContext<Values>();
+    const { setFieldValue, setFieldTouched } = useFormikContext<Values>();
     const inputId = useId();
 
     return (
@@ -86,18 +85,12 @@ export default function CustomizedInput({
                                     {...field}
                                     {...commonProps}
                                     onChange={value => {
-                                        setFieldValue(fieldName, value);
+                                        setFieldValue(fieldName, value || "");
+                                        setFieldTouched(fieldName, true, false);
                                     }}
-                                    error={
-                                        field.value
-                                            ? isValidPhoneNumber(field.value)
-                                                ? undefined
-                                                : "Invalid phone number"
-                                            : "Phone number required"
-                                    }
                                     countrySelectProps={{
                                         arrowComponent: () => (
-                                            <ShevronIcon className="w-4 h-4 fill-white" />
+                                            <ShevronIcon className="size-6 text-white rotate-180" />
                                         ),
                                     }}
                                 />
@@ -110,6 +103,7 @@ export default function CustomizedInput({
                                     {...field}
                                     {...commonProps}
                                     autoComplete="on"
+                                    placeholder={placeholder}
                                 />
                             );
                         }

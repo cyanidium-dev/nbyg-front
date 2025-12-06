@@ -90,7 +90,7 @@ export default function ContactForm() {
             >
                 {({ dirty, isValid }) => (
                     <Form>
-                        <div className="flex flex-col gap-5">
+                        <div className="flex flex-col gap-5 mb-6">
                             <CustomizedInput
                                 fieldName="name"
                                 label="Dit navn"
@@ -104,7 +104,7 @@ export default function ContactForm() {
                                 placeholder="Telefonnummer"
                                 inputType="tel"
                                 isLabelHidden={true}
-                                fieldClassName="p-4 h-[49px] rounded-full text-[14px] leading-[121.4%] font-light placeholder:text-white/60"
+                                fieldClassName="px-6 h-[49px] rounded-full text-[14px] leading-[121.4%] font-light placeholder:text-white/60"
                             />
                             <CustomizedInput
                                 fieldName="email"
@@ -126,7 +126,8 @@ export default function ContactForm() {
                                 placeholder="Besked"
                                 as="textarea"
                                 isLabelHidden={true}
-                                fieldClassName="p-4 h-[120px] rounded-2xl text-[14px] leading-[121.4%] font-light placeholder:text-white/60"
+                                labelClassName="h-[147px] md:h-[120px]"
+                                fieldClassName="p-4 rounded-[24px] h-[147px] text-[14px] leading-[121.4%] font-light placeholder:text-white/60"
                             />
                         </div>
                         <motion.div
@@ -144,9 +145,9 @@ export default function ContactForm() {
                                 disabled={!(dirty && isValid) || isLoading}
                                 isLoading={isLoading}
                                 loadingText="Sender..."
-                                className="w-full h-[58px]"
+                                className="w-full h-[48px]"
                             >
-                                Send
+                                Send besked
                             </MainButton>
                         </motion.div>
                     </Form>

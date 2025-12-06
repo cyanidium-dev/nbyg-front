@@ -1,9 +1,16 @@
 import { emailRegex } from "@/regex/regex";
 import * as Yup from "yup";
+import { isValidPhoneNumber } from "react-phone-number-input";
 
 export const contactFormValidation = Yup.object().shape({
     name: Yup.string().required("Navn er påkrævet"),
-    phone: Yup.string().required("Telefonnummer er påkrævet"),
+    phone: Yup.string()
+        .required("Telefonnummer er påkrævet")
+        .test(
+            "is-valid-phone",
+            "Ugyldigt telefonnummer",
+            (value) => !value || isValidPhoneNumber(value)
+        ),
     email: Yup.string()
         .matches(
             emailRegex,
