@@ -1,6 +1,6 @@
 "use client";
 import { Form, Formik, FormikHelpers } from "formik";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import CustomizedInput from "../customizedInput/CustomizedInput";
 import { createPortal } from "react-dom";
 import Backdrop from "../backdrop/Backdrop";
@@ -19,7 +19,15 @@ interface ContactFormValues {
     message: string;
 }
 
-export default function ContactForm() {
+interface ContactFormProps {
+    isModalShown?: boolean;
+    setIsModalShown?: Dispatch<SetStateAction<boolean>>;
+}
+
+export default function ContactForm({
+    isModalShown,
+    setIsModalShown,
+}: ContactFormProps) {
     const [isLoading, setIsLoading] = useState(false);
     const [isNotificationShown, setIsNotificationShown] = useState(false);
     const [isError, setIsError] = useState(false);
@@ -71,6 +79,9 @@ export default function ContactForm() {
             }
 
             resetForm();
+            if (isModalShown && setIsModalShown) {
+                setIsModalShown(false);
+            }
             setIsNotificationShown(true);
         } catch (error) {
             setIsError(true);
@@ -161,6 +172,7 @@ export default function ContactForm() {
                             onClick={() => {
                                 setIsNotificationShown(false);
                             }}
+                            className="z-90"
                         />
                         <Notification
                             title={
