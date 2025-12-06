@@ -11,6 +11,7 @@
   --color-gradient-brown: #b86d29;
   --color-gradient-brown-dark: #6d3a0b;
   --color-beige: #ffc189;
+  --color-red-error: #B3261E;
 
   --font-montserrat: var(--font-montserrat), sans-serif;
   --font-find-sans-pro: var(--font-find-sans-pro), sans-serif;
@@ -58,6 +59,19 @@
 }
 
 @layer utilities {
+  @keyframes rotation {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  .rotation {
+    animation: rotation 1600ms linear infinite;
+  }
+
   .text-shadow-white {
     text-shadow: none;
     transition: text-shadow 300ms ease-in-out;
