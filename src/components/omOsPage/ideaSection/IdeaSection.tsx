@@ -74,7 +74,7 @@ export default function IdeaSection() {
           viewport={{ once: true, amount: 0.1 }}
           variants={fadeInAnimation({
             scale: 0.85,
-            x: 70,
+            x: -70,
             y: 30,
             delay: 0.4,
           })}
