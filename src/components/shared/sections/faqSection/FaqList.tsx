@@ -1,6 +1,7 @@
 import FaqItem from "./FaqItem";
 import * as motion from "motion/react-client";
 import { listVariants } from "@/utils/animationVariants";
+import { Dispatch, SetStateAction } from "react";
 
 interface FaqListProps {
   faqList: Array<{
@@ -10,9 +11,10 @@ interface FaqListProps {
     buttons?: string[];
   }>;
   uniqueKey?: string;
+  setIsModalShown?: Dispatch<SetStateAction<boolean>>;
 }
 
-export default function FaqList({ faqList, uniqueKey }: FaqListProps) {
+export default function FaqList({ faqList, uniqueKey, setIsModalShown }: FaqListProps) {
   if (!faqList || !faqList?.length) return null;
 
   return (
@@ -26,7 +28,7 @@ export default function FaqList({ faqList, uniqueKey }: FaqListProps) {
       className="flex flex-col gap-4 lg:gap-6"
     >
       {faqList.map((faqItem, idx) => (
-        <FaqItem key={idx} faqItem={faqItem} />
+        <FaqItem key={idx} faqItem={faqItem} setIsModalShown={setIsModalShown} />
       ))}
     </motion.ul>
   );

@@ -1,11 +1,10 @@
 "use client";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import * as motion from "motion/react-client";
 import { listItemVariantsLeft } from "@/utils/animationVariants";
 import ShevronIcon from "../../icons/ShevronIcon";
 import Link from "next/link";
 import MainButton from "../../buttons/MainButton";
-import ModalContactForm from "../../form/ModalContactForm";
 
 interface FaqItemProps {
   faqItem: {
@@ -14,6 +13,7 @@ interface FaqItemProps {
     answer: string;
     buttons?: string[];
   };
+  setIsModalShown?: Dispatch<SetStateAction<boolean>>;
 }
 
 const buttonConfig: Record<
@@ -38,9 +38,8 @@ const buttonConfig: Record<
   },
 };
 
-export default function FaqItem({ faqItem }: FaqItemProps) {
+export default function FaqItem({ faqItem, setIsModalShown }: FaqItemProps) {
   const [isShownMore, setIsShownMore] = useState(false);
-  const [isModalShown, setIsModalShown] = useState(false);
 
   const toggleShowMore = () => setIsShownMore(!isShownMore);
   const { question, answer, buttons } = faqItem;
@@ -101,7 +100,7 @@ export default function FaqItem({ faqItem }: FaqItemProps) {
                     key={btnKey}
                     variant="outline"
                     className="w-fit h-12 min-w-[210px] px-11"
-                    onClick={() => setIsModalShown(true)}
+                    onClick={() => setIsModalShown?.(true)}
                   >
                     {cfg.label}
                   </MainButton>
@@ -113,10 +112,6 @@ export default function FaqItem({ faqItem }: FaqItemProps) {
           </div>
         )}
       </div>
-      <ModalContactForm
-        isModalShown={isModalShown}
-        setIsModalShown={setIsModalShown}
-      />
     </motion.li>
   );
 }
