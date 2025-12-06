@@ -30,7 +30,7 @@ const buttonConfig: Record<
   },
   services: {
     label: "Byggeydelser",
-    href: "/byggeydesler",
+    href: "/byggeydelser",
   },
   contact: {
     label: "Kontakt os",
