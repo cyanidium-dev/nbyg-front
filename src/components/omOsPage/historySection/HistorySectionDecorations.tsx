@@ -19,7 +19,7 @@ export default function HistorySectionDecorations() {
           width="337"
           height="421"
           alt="ellipsis"
-          className={`relative -z-20 w-[337px] lg:w-[634px] h-auto -rotate-130`}
+          className={`relative -z-20 w-[337px] lg:w-[634px] h-auto lg:-rotate-130`}
         />
         <div
           className={`hidden lg:block absolute w-[1134px] h-[504px] rounded-full bg-black supports-backdrop-filter:blur-[53px] 
