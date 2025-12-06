@@ -8,7 +8,7 @@ export default function KontaktOsPage() {
         <>
             <Hero />
             <Container>
-                <div className="flex flex-col md:flex-row-reverse md:items-stretch gap-25 md:gap-6 py-25">
+                <div className="flex flex-col md:flex-row-reverse md:items-stretch gap-25 md:gap-6 py-25 md:pt-[127px] md:pb-[5px]">
                     <ContactFormBlock />
                     <ContactsBlock />
                 </div>

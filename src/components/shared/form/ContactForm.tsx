@@ -127,7 +127,7 @@ export default function ContactForm() {
                                 as="textarea"
                                 isLabelHidden={true}
                                 labelClassName="h-[147px] md:h-[120px]"
-                                fieldClassName="p-4 rounded-[24px] h-[147px] text-[14px] leading-[121.4%] font-light placeholder:text-white/60"
+                                fieldClassName="p-4 rounded-[24px] h-[147px] md:h-[120px] text-[14px] leading-[121.4%] font-light placeholder:text-white/60"
                             />
                         </div>
                         <motion.div

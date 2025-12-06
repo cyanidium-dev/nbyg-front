@@ -44,7 +44,7 @@ export default function ContactsBlock() {
                 <div className="p-8 pr-4 md:pr-8 bg-black rounded-[16px] h-full w-full">
                     <h2 className="sr-only">kontakter</h2>
                     <address className="not-italic decoration-none">
-                        <ul className="flex flex-col gap-y-14 lg:grid lg:grid-cols-2 lg:gap-x-6">
+                        <ul className="flex flex-col gap-y-14 lg:grid lg:grid-cols-2 lg:grid-rows-2 lg:grid-flow-col lg:gap-x-6">
                             <motion.li
                                 variants={fadeInAnimation({
                                     delay: 0.7,
@@ -130,7 +130,7 @@ export default function ContactsBlock() {
                                     >
                                         {CONTACT_PHONE.replace(
                                             contactsPhoneRegex,
-                                            "+45 $1"
+                                            "+45 $1 $2 $3 $4"
                                         )}
                                     </a>
                                 </div>
