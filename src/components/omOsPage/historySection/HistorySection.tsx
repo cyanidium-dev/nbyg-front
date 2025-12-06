@@ -3,27 +3,28 @@ import SectionTitle from "@/components/shared/titles/SectionTitle";
 import Image from "next/image";
 import * as motion from "motion/react-client";
 import { fadeInAnimation } from "@/utils/animationVariants";
+import HistorySectionDecorations from "./HistorySectionDecorations";
 
 export default function HistorySection() {
   return (
-    <section>
-      <Container className="md:flex md:gap-9 py-25 lg:pt-[127px] lg:pb-0">
+    <section className="lg:overflow-hidden">
+      <Container className="relative md:flex md:gap-9 py-25 lg:pt-[127px] lg:pb-0">
+        <HistorySectionDecorations />
         <div>
           <SectionTitle className="mb-8 lg:mb-9">
             Det hele begyndte med et gammelt hus på Bornholm.
           </SectionTitle>
           <motion.div
+            key="mob"
             initial="hidden"
             whileInView="visible"
             exit="exit"
-            viewport={{ once: true, amount: 0.1 }}
+            viewport={{ once: true, amount: 0.01 }}
             variants={fadeInAnimation({
               scale: 0.85,
-              x: 70,
-              y: 30,
               delay: 0.4,
             })}
-            className="md:hidden relative h-[328px] mb-8 rounded-[12px] overflow-hidden"
+            className="md:hidden relative z-10 w-full h-[328px] mb-8 rounded-[12px] overflow-hidden"
           >
             <Image
               src="/images/omOsPage/history/history.jpg"
@@ -40,7 +41,7 @@ export default function HistorySection() {
             viewport={{ once: true, amount: 0.1 }}
             variants={fadeInAnimation({
               scale: 0.85,
-              x: 70,
+              x: -70,
               y: 30,
               delay: 0.4,
             })}
@@ -52,6 +53,7 @@ export default function HistorySection() {
           </motion.p>
         </div>
         <motion.div
+          key="desk"
           initial="hidden"
           whileInView="visible"
           exit="exit"
