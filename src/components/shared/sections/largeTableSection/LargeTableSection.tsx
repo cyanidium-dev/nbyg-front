@@ -107,7 +107,7 @@ const LargeTableSection = (_props: LargeTableSectionProps) => {
             <Image
               src={urlForSanityImage(image).fit("crop").url()}
               fill
-              alt="image"
+              alt={image?.alt || "Billede"}
               className="object-cover"
             />
           </motion.div>

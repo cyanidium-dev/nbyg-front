@@ -25,7 +25,7 @@ export default function BeforeAfterCard({ slide }: BeforeAfterCardProps) {
                             : urlForSanityImage(beforeImage).fit("crop").url()
                     }
                     fill
-                    alt="image"
+                    alt={typeof beforeImage === "string" ? "Før billede" : beforeImage?.alt || "Før billede"}
                     className="object-cover"
                 />
                 <div
@@ -43,7 +43,7 @@ export default function BeforeAfterCard({ slide }: BeforeAfterCardProps) {
                             : urlForSanityImage(afterImage).fit("crop").url()
                     }
                     fill
-                    alt="image"
+                    alt={typeof afterImage === "string" ? "Efter billede" : afterImage?.alt || "Efter billede"}
                     className="object-cover"
                 />
                 <div

@@ -27,7 +27,7 @@ export default function TextRevealCard({ slide }: TextRevealCardProps) {
     <div className="relative flex flex-col justify-end h-[399px] rounded-[8px]">
       <Image
         src={typeof image === "string" ? image : urlForSanityImage(image).fit("crop").url()}
-        alt={title}
+        alt={typeof image === "string" ? title : image?.alt || title}
         fill
         className="-z-10 object-cover rounded-[8px]"
       />
