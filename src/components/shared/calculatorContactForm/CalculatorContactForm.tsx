@@ -3,8 +3,7 @@ import * as motion from "motion/react-client";
 import MainButton from "../buttons/MainButton";
 import Image from "next/image";
 import { fadeInAnimation } from "@/utils/animationVariants";
-import { useEffect, useState } from "react";
-import { createPortal } from "react-dom";
+import { useState } from "react";
 import Backdrop from "../backdrop/Backdrop";
 import Notification from "../notification/Notification";
 import { Form, Formik, FormikHelpers } from "formik";
@@ -21,14 +20,6 @@ export default function CalculatorContactForm() {
     const [isLoading, setIsLoading] = useState(false);
     const [isNotificationShown, setIsNotificationShown] = useState(false);
     const [isError, setIsError] = useState(false);
-    const [isMounted, setIsMounted] = useState(false);
-
-    useEffect(() => {
-        (async () => {
-            setIsMounted(true);
-        })();
-        return () => setIsMounted(false);
-    }, []);
 
     const initialValues = {
         email: "",
@@ -200,33 +191,23 @@ export default function CalculatorContactForm() {
                     </Formik>
                 </Container>
             </section>
-            {isMounted &&
-                createPortal(
-                    <>
-                        <Backdrop
-                            isVisible={isNotificationShown}
-                            onClick={() => {
-                                setIsNotificationShown(false);
-                            }}
-                        />
-                        <Notification
-                            title={
-                                isError
-                                    ? "Noget gik galt"
-                                    : "Tak for din henvendelse!"
-                            }
-                            description={
-                                isError
-                                    ? "Der opstod en fejl, og din besked blev ikke sendt. Kontroller venligst, at alle felter er udfyldt korrekt, og prøv igen."
-                                    : "Vi har modtaget din besked og kontakter dig snarest muligt. Tak fordi du valgte Nbyg."
-                            }
-                            buttonText="Luk"
-                            isNotificationShown={isNotificationShown}
-                            setIsNotificationShown={setIsNotificationShown}
-                        />
-                    </>,
-                    document.body
-                )}
+            <Backdrop
+                isVisible={isNotificationShown}
+                onClick={() => {
+                    setIsNotificationShown(false);
+                }}
+            />
+            <Notification
+                title={isError ? "Noget gik galt" : "Tak for din henvendelse!"}
+                description={
+                    isError
+                        ? "Der opstod en fejl, og din besked blev ikke sendt. Kontroller venligst, at alle felter er udfyldt korrekt, og prøv igen."
+                        : "Vi har modtaget din besked og kontakter dig snarest muligt. Tak fordi du valgte Nbyg."
+                }
+                buttonText="Luk"
+                isNotificationShown={isNotificationShown}
+                setIsNotificationShown={setIsNotificationShown}
+            />
         </>
     );
 }
