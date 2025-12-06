@@ -54,10 +54,7 @@ export default function Modal({
             />
             <IconButton
                 handleClick={() => setIsModalShown(false)}
-                className={twMerge(
-                    "absolute top-8 md:top-5 right-4 md:right-5 w-8 h-8 z-30",
-                    variant === "notification" && "top-4"
-                )}
+                className="absolute top-5 md:top-5 right-4 md:right-5 w-8 h-8 z-30"
             >
                 {<CloseIcon className="size-6" />}
             </IconButton>
