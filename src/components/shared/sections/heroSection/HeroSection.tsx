@@ -46,7 +46,7 @@ const HeroSection = (_props: HeroSectionProps) => {
       />
       <Image
         src={urlForSanityImage(mobileImage).fit("crop").url()}
-        alt="hero image"
+        alt={mobileImage?.alt || "Hero billede"}
         fill
         sizes="100vw"
         priority
@@ -55,7 +55,7 @@ const HeroSection = (_props: HeroSectionProps) => {
       />
       <Image
         src={urlForSanityImage(desktopImage).fit("crop").url()}
-        alt="hero image"
+        alt={desktopImage?.alt || "Hero billede"}
         fill
         sizes="100vw"
         priority

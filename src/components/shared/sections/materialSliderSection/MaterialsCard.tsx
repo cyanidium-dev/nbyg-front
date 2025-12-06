@@ -34,7 +34,7 @@ export default function MaterialsCard({ slide }: MaterialCardProps) {
       >
         <Image
           src={urlForSanityImage(image).fit("crop").url()}
-          alt={title}
+          alt={image?.alt || title}
           fill
           className="object-cover"
         />

@@ -97,7 +97,7 @@ const CtaSection = (_props: CtaSectionProps) => {
                   ? image
                   : urlForSanityImage(image).fit("crop").url()
               }
-              alt="cta image"
+              alt={typeof image === "string" ? "CTA billede" : image?.alt || "CTA billede"}
               fill
               className="object-cover"
             />

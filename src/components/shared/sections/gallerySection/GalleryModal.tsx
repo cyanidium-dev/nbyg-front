@@ -108,7 +108,7 @@ export default function GalleryModal({
                   <div className="relative w-full h-[202px] xs:h-[302px] sm:h-[402px] xl:h-[523px] flex items-center justify-center">
                     <Image
                       src={typeof item.image === "string" ? item.image : urlForSanityImage(item.image).fit("crop").url()}
-                      alt={`Gallery image ${idx + 1}`}
+                      alt={typeof item.image === "string" ? `Galleri billede ${idx + 1}` : item.image?.alt || `Galleri billede ${idx + 1}`}
                       fill
                       className="object-cover"
                       sizes="(max-width: 260px) 240px, 1280px"
@@ -140,7 +140,7 @@ export default function GalleryModal({
                   <div className="relative w-full h-12 xs:h-18 lg:h-25 flex items-center justify-center rounded-[8px]">
                     <Image
                       src={typeof item.image === "string" ? item.image : urlForSanityImage(item.image).fit("crop").url()}
-                      alt={`Gallery image ${idx + 1}`}
+                      alt={typeof item.image === "string" ? `Galleri billede ${idx + 1}` : item.image?.alt || `Galleri billede ${idx + 1}`}
                       fill
                       className="object-cover rounded-[8px]"
                       sizes="120px"
