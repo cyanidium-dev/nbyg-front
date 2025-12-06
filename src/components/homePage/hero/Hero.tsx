@@ -12,6 +12,7 @@ import ModalContactForm from "@/components/shared/form/ModalContactForm";
 
 export default function Hero() {
     const [isModalShown, setIsModalShown] = useState(false);
+
     return (
         <>
             <motion.section

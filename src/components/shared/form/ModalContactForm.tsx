@@ -1,8 +1,11 @@
+"use client";
+import { useState } from "react";
 import { Dispatch, SetStateAction } from "react";
 import Modal from "../modals/Modal";
 import ContactForm from "./ContactForm";
 import SectionTitle from "../titles/SectionTitle";
 import Backdrop from "../backdrop/Backdrop";
+import Notification from "../notification/Notification";
 
 interface ModalContactFormProps {
     isModalShown: boolean;
@@ -13,6 +16,9 @@ export default function ModalContactForm({
     isModalShown,
     setIsModalShown,
 }: ModalContactFormProps) {
+    const [isNotificationShown, setIsNotificationShown] = useState(false);
+    const [isError, setIsError] = useState(false);
+
     return (
         <>
             <Modal
@@ -30,15 +36,28 @@ export default function ModalContactForm({
                         rådgivning eller et uforpligtende tilbud.
                     </p>
                     <ContactForm
-                        isModalShown={isModalShown}
                         setIsModalShown={setIsModalShown}
+                        setIsError={setIsError}
+                        setIsNotificationShown={setIsNotificationShown}
                     />
                 </div>
             </Modal>
+            <Notification
+                title={isError ? "Noget gik galt" : "Tak for din henvendelse!"}
+                description={
+                    isError
+                        ? "Der opstod en fejl, og din besked blev ikke sendt. Kontroller venligst, at alle felter er udfyldt korrekt, og prøv igen."
+                        : "Vi har modtaget din besked og kontakter dig snarest muligt. Tak fordi du valgte Nbyg."
+                }
+                buttonText="Luk"
+                isNotificationShown={isNotificationShown}
+                setIsNotificationShown={setIsNotificationShown}
+            />
             <Backdrop
-                isVisible={isModalShown}
+                isVisible={isModalShown || isNotificationShown}
                 onClick={() => {
                     setIsModalShown(false);
+                    setIsNotificationShown(false);
                 }}
             />
         </>

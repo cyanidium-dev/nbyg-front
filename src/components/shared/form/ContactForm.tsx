@@ -1,10 +1,7 @@
 "use client";
 import { Form, Formik, FormikHelpers } from "formik";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import CustomizedInput from "../customizedInput/CustomizedInput";
-import { createPortal } from "react-dom";
-import Backdrop from "../backdrop/Backdrop";
-import Notification from "../notification/Notification";
 import axios from "axios";
 import { contactFormValidation } from "@/schemas/contactFormValidation";
 import * as motion from "motion/react-client";
@@ -20,25 +17,17 @@ interface ContactFormValues {
 }
 
 interface ContactFormProps {
-    isModalShown?: boolean;
+    setIsError: Dispatch<SetStateAction<boolean>>;
+    setIsNotificationShown: Dispatch<SetStateAction<boolean>>;
     setIsModalShown?: Dispatch<SetStateAction<boolean>>;
 }
 
 export default function ContactForm({
-    isModalShown,
+    setIsError,
+    setIsNotificationShown,
     setIsModalShown,
 }: ContactFormProps) {
     const [isLoading, setIsLoading] = useState(false);
-    const [isNotificationShown, setIsNotificationShown] = useState(false);
-    const [isError, setIsError] = useState(false);
-    const [isMounted, setIsMounted] = useState(false);
-
-    useEffect(() => {
-        (async () => {
-            setIsMounted(true);
-        })();
-        return () => setIsMounted(false);
-    }, []);
 
     const initialValues: ContactFormValues = {
         name: "",
@@ -52,7 +41,6 @@ export default function ContactForm({
         values: ContactFormValues,
         formikHelpers: FormikHelpers<ContactFormValues>
     ) => {
-        console.log(values);
         const { resetForm } = formikHelpers;
         try {
             setIsError(false);
@@ -79,12 +67,15 @@ export default function ContactForm({
             }
 
             resetForm();
-            if (isModalShown && setIsModalShown) {
+            if (setIsModalShown) {
                 setIsModalShown(false);
             }
             setIsNotificationShown(true);
         } catch (error) {
             setIsError(true);
+            if (setIsModalShown) {
+                setIsModalShown(false);
+            }
             setIsNotificationShown(true);
             return error;
         } finally {
@@ -164,34 +155,6 @@ export default function ContactForm({
                     </Form>
                 )}
             </Formik>
-            {isMounted &&
-                createPortal(
-                    <>
-                        <Backdrop
-                            isVisible={isNotificationShown}
-                            onClick={() => {
-                                setIsNotificationShown(false);
-                            }}
-                            className="z-90"
-                        />
-                        <Notification
-                            title={
-                                isError
-                                    ? "Noget gik galt"
-                                    : "Tak for din henvendelse!"
-                            }
-                            description={
-                                isError
-                                    ? "Der opstod en fejl, og din besked blev ikke sendt. Kontroller venligst, at alle felter er udfyldt korrekt, og prøv igen."
-                                    : "Vi har modtaget din besked og kontakter dig snarest muligt. Tak fordi du valgte Nbyg."
-                            }
-                            buttonText="Luk"
-                            isNotificationShown={isNotificationShown}
-                            setIsNotificationShown={setIsNotificationShown}
-                        />
-                    </>,
-                    document.body
-                )}
         </>
     );
 }
