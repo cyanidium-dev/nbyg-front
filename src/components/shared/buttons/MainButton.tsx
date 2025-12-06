@@ -69,7 +69,7 @@ export default function MainButton({
           </span>
         ) : null}
       </div>
-      {isLoading ? <LoaderIcon /> : null}
+      {isLoading ? <LoaderIcon variant={variant === "fill" ? "black" : variant === "outline" ? "white" : "gradient"} /> : null}
     </button>
   );
 }

@@ -35,7 +35,7 @@ export default function Modal({
                     isModalShown
                         ? " -translate-y-[calc(50dvh-50%)] opacity-100 scale-100"
                         : "pointer-events-none opacity-0 scale-90"
-                } fixed left-1/2 bottom-0 transform -translate-x-1/2 flex flex-col transition duration-600 ease-out z-70 max-h-[90vh] md:max-h-dvh
+                } fixed left-1/2 bottom-0 transform -translate-x-1/2 flex transition duration-600 ease-out z-70 max-h-dvh
       md:rounded-[12px] shadow-md bg-black`,
                 className
             )}
