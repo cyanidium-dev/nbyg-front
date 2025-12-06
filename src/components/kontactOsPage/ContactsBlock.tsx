@@ -23,17 +23,24 @@ export default function ContactsBlock() {
             exit="exit"
             viewport={{ once: true, amount: 0.01 }}
             variants={headerVariants}
-            className="relative w-full"
+            className="w-full md:mt-[352px] lg:mt-0"
         >
-            <div className="relative w-full h-[240px] md:h-[332px] rounded-[16px] overflow-hidden mb-6">
+            <motion.div
+                variants={fadeInAnimation({ delay: 0.2, y: 20 })}
+                initial="hidden"
+                whileInView="visible"
+                exit="exit"
+                viewport={{ once: true, amount: 0.1 }}
+                className="relative md:absolute lg:relative md:top-[127px] lg:top-0 md:left-4 lg:left-0 md:right-4 lg:right-0 w-full max-w-[736px] h-[240px] md:h-[332px] rounded-[16px] overflow-hidden mb-6"
+            >
                 <Image
                     src="/images/kontaktOsPage/contactsImage.webp"
                     alt="kontakt os contacts image"
                     fill
                     sizes="100vw"
-                    className="object-cover"
+                    className="object-cover object-top"
                 />
-            </div>
+            </motion.div>
             <div
                 className="p-px rounded-[16px]"
                 style={{
@@ -47,7 +54,7 @@ export default function ContactsBlock() {
                         <ul className="flex flex-col gap-y-14 lg:grid lg:grid-cols-2 lg:grid-rows-2 lg:grid-flow-col lg:gap-x-6">
                             <motion.li
                                 variants={fadeInAnimation({
-                                    delay: 0.7,
+                                    delay: 0.4,
                                     y: 20,
                                 })}
                                 initial="hidden"
@@ -76,7 +83,7 @@ export default function ContactsBlock() {
                             </motion.li>
                             <motion.li
                                 variants={fadeInAnimation({
-                                    delay: 0.7,
+                                    delay: 0.5,
                                     y: 20,
                                 })}
                                 initial="hidden"
@@ -105,7 +112,7 @@ export default function ContactsBlock() {
                             </motion.li>
                             <motion.li
                                 variants={fadeInAnimation({
-                                    delay: 0.7,
+                                    delay: 0.6,
                                     y: 20,
                                 })}
                                 initial="hidden"
@@ -137,7 +144,7 @@ export default function ContactsBlock() {
                             </motion.li>
                             <motion.li
                                 variants={fadeInAnimation({
-                                    delay: 0.7,
+                                    delay: 0.8,
                                     y: 20,
                                 })}
                                 initial="hidden"
