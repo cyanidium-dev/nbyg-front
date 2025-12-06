@@ -22,9 +22,9 @@ export default function Notification({
             isModalShown={isNotificationShown}
             setIsModalShown={setIsNotificationShown}
             variant="notification"
-            className="rounded-[12px]"
+            className="rounded-[12px] min-w-[328px]"
         >
-            <div className="p-4 pt-14 md:p-6 md:pt-14 lg:p-10 relative flex flex-col justify-center items-center w-full min-w-[256px] max-w-[560px] z-20">
+            <div className="p-4 pt-14 md:p-6 md:pt-14 lg:p-10 relative flex flex-col justify-center items-center w-full max-w-[560px] z-20">
                 <h3 className="mb-8 text-[24px] lg:text-[48px] font-find-sans-pro font-light leading-[120%] text-center uppercase">
                     {title}
                 </h3>
