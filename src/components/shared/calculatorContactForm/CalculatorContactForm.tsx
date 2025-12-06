@@ -43,7 +43,7 @@ export default function CalculatorContactForm() {
             setIsError(false);
             setIsLoading(true);
 
-            const response = await axios({
+            await axios({
                 method: "POST",
                 url: "/api/send-email",
                 data: JSON.stringify({
@@ -54,10 +54,6 @@ export default function CalculatorContactForm() {
                     "Content-Type": "application/json",
                 },
             });
-
-            if (response.data.html) {
-                console.log("Email HTML:", response.data.html);
-            }
 
             resetForm();
             setIsNotificationShown(true);

@@ -46,7 +46,7 @@ export default function ContactForm({
             setIsError(false);
             setIsLoading(true);
 
-            const response = await axios({
+            await axios({
                 method: "POST",
                 url: "/api/send-email",
                 data: JSON.stringify({
@@ -61,10 +61,6 @@ export default function ContactForm({
                     "Content-Type": "application/json",
                 },
             });
-
-            if (response.data.html) {
-                console.log("Email HTML:", response.data.html);
-            }
 
             resetForm();
             if (setIsModalShown) {
