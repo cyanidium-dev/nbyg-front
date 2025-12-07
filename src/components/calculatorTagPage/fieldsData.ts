@@ -5,6 +5,7 @@ export const fieldsData = [
         title: "Tagtype",
         description:
             "Du kan vælge flere tagtyper samtidig – KLIK på ALLE de BILLEDER, du vil have med.",
+        summaryLabel: "Tagtype",
         options: [
             {
                 id: "staltag",
@@ -12,6 +13,7 @@ export const fieldsData = [
                 image: {
                     link: "/images/calculatorTagPage/staltag.webp",
                 },
+                value: 850,
             },
             {
                 id: "eternittag",
@@ -19,6 +21,7 @@ export const fieldsData = [
                 image: {
                     link: "/images/calculatorTagPage/eternittag.webp",
                 },
+                value: 800,
             },
             {
                 id: "skiferTag",
@@ -26,6 +29,7 @@ export const fieldsData = [
                 image: {
                     link: "/images/calculatorTagPage/skiferTag.webp",
                 },
+                value: 1600,
             },
             {
                 id: "tagpapTag",
@@ -33,6 +37,7 @@ export const fieldsData = [
                 image: {
                     link: "/images/calculatorTagPage/tagpapTag.webp",
                 },
+                value: 900,
             },
             {
                 id: "tegletag",
@@ -40,13 +45,15 @@ export const fieldsData = [
                 image: {
                     link: "/images/calculatorTagPage/tegletag.webp",
                 },
+                value: 1100,
             },
             {
-                id: "traditionelDanskRødTegl",
+                id: "traditionelDanskRodTegl",
                 label: "Traditionel dansk rød tegl",
                 image: {
-                    link: "/images/calculatorTagPage/traditionelDanskRødTegl.webp",
+                    link: "/images/calculatorTagPage/traditionelDanskRodTegl.webp",
                 },
+                value: 1400,
             },
             {
                 id: "trapezogtermotag",
@@ -54,6 +61,7 @@ export const fieldsData = [
                 image: {
                     link: "/images/calculatorTagPage/trapezogtermotag.webp",
                 },
+                value: 350,
             },
         ],
     },
@@ -61,6 +69,7 @@ export const fieldsData = [
         id: "tagform",
         type: "radio",
         title: "Vælg tagets form",
+        summaryLabel: "Tagets form",
         options: [
             {
                 id: "pulttag",
@@ -68,6 +77,7 @@ export const fieldsData = [
                 image: {
                     link: "/images/calculatorTagPage/pulttag.webp",
                 },
+                value: 100,
             },
             {
                 id: "sadeltag",
@@ -75,6 +85,7 @@ export const fieldsData = [
                 image: {
                     link: "/images/calculatorTagPage/sadeltag.webp",
                 },
+                value: 100,
             },
             {
                 id: "pyramidetag",
@@ -82,6 +93,7 @@ export const fieldsData = [
                 image: {
                     link: "/images/calculatorTagPage/pyramidetag.webp",
                 },
+                value: 100,
             },
             {
                 id: "halvvalmettag",
@@ -89,6 +101,7 @@ export const fieldsData = [
                 image: {
                     link: "/images/calculatorTagPage/halvvalmettag.webp",
                 },
+                value: 100,
             },
             {
                 id: "helvalmettag",
@@ -96,6 +109,7 @@ export const fieldsData = [
                 image: {
                     link: "/images/calculatorTagPage/helvalmettag.webp",
                 },
+                value: 100,
             },
             {
                 id: "komplektSadeltag",
@@ -103,6 +117,7 @@ export const fieldsData = [
                 image: {
                     link: "/images/calculatorTagPage/komplektSadeltag.webp",
                 },
+                value: 100,
             },
             {
                 id: "mansardtTag",
@@ -110,6 +125,7 @@ export const fieldsData = [
                 image: {
                     link: "/images/calculatorTagPage/mansardtTag.webp",
                 },
+                value: 100,
             },
             {
                 id: "fladtTag",
@@ -117,6 +133,7 @@ export const fieldsData = [
                 image: {
                     link: "/images/calculatorTagPage/fladtTag.webp",
                 },
+                value: 100,
             },
         ],
     },
@@ -125,12 +142,14 @@ export const fieldsData = [
         type: "area",
         title: "Angiv tagets størrelse i m²",
         description: "Angiv tagets areal i m² – eller brug skyderen nedenfor.",
+        summaryLabel: "Tagets størrelse",
         options: { min: 5, max: 500 },
     },
     {
         id: "hældning",
         type: "radio",
         title: "Vælg tagets hældning",
+        summaryLabel: "Tagets hældning",
         options: [
             {
                 id: "0-30 grader",
@@ -138,13 +157,15 @@ export const fieldsData = [
                 image: {
                     link: "/images/calculatorTagPage/0-30grader.webp",
                 },
+                value: 100,
             },
             {
-                id: "30-45 grader",
-                label: "30-45 grader",
+                id: "31-50 grader",
+                label: "31-50 grader",
                 image: {
-                    link: "/images/calculatorTagPage/45-60grader.webp",
+                    link: "/images/calculatorTagPage/31-50grader.webp",
                 },
+                value: 100,
             },
             {
                 id: "graderChart",
@@ -169,6 +190,8 @@ export const fieldsData = [
         type: "dropdown",
         title: "Vælg antal ovenlysvinduer",
         description: "Vejledende pris for montering, ekskl. vinduets pris.",
+        summaryLabel: "Antal ovenlysvinduer",
+        value: 100,
         options: [
             {
                 min: 0,
@@ -188,6 +211,8 @@ export const fieldsData = [
         id: "antalKviste",
         type: "dropdown",
         title: "Vælg antal kviste",
+        summaryLabel: "Antal kviste",
+        value: 100,
         options: [
             {
                 min: 0,
@@ -209,7 +234,9 @@ export const fieldsData = [
         title: "Angiv antal meter vindskeder",
         description:
             "Skriv cirka, hvor mange meter vindskeder der er på dit tag.",
+        summaryLabel: "Meter vindskeder",
         hint: "Du kan sagtens springe dette felt over, hvis du ikke har målene lige ved hånden.",
+        value: 100,
     },
     {
         id: "antalMeterTagrender",
@@ -217,6 +244,8 @@ export const fieldsData = [
         title: "Angiv antal meter tagrender",
         description:
             "Skriv cirka, hvor mange meter tagrender der er på dit hus.",
+        summaryLabel: "Meter tagrender",
         hint: "Du kan sagtens springe dette felt over, hvis du ikke har målene lige ved hånden.",
+        value: 100,
     },
 ];

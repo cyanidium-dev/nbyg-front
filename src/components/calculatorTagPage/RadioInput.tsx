@@ -12,7 +12,7 @@ interface RadioInputProps {
     options: {
         id: string;
         label: string;
-        value?: string;
+        value?: string | number;
         type?: "image" | "number";
         variant?: "hidden";
         image?: {
@@ -26,11 +26,11 @@ interface RadioInputProps {
     numberValue?: number;
     onChange: (
         id: string,
-        value: string,
-        label: string,
-        category: string
+        optionId: string,
+        optionLabel: string,
+        optionValue: number
     ) => void;
-    onNumberChange?: (value: number) => void;
+    onNumberChange?: (numberFieldId: string, value: number) => void;
 }
 
 export const RadioInput = ({
@@ -107,11 +107,11 @@ export const RadioInput = ({
                         option.max !== undefined &&
                         onNumberChange
                     ) {
-                        // Show if variant is not "hidden", or if variant is "hidden" but there's a selected value
+                        // Show if variant is not "hidden", or if variant is "hidden" and "31-50 grader" is selected
                         const shouldShow =
                             option.variant !== "hidden" ||
                             (option.variant === "hidden" &&
-                                selectedOptionValue);
+                                selectedOptionValue === "31-50 grader");
                         if (!shouldShow) return null;
 
                         return (
@@ -131,8 +131,13 @@ export const RadioInput = ({
                                 <NumberInput
                                     ref={numberInputRef}
                                     id={option.id}
+                                    label={option.label}
                                     value={numberValue ?? option.min}
-                                    onChange={onNumberChange}
+                                    onChange={value => {
+                                        if (onNumberChange) {
+                                            onNumberChange(option.id, value);
+                                        }
+                                    }}
                                     min={option.min}
                                     max={option.max}
                                 />
@@ -141,10 +146,19 @@ export const RadioInput = ({
                     }
 
                     // Handle regular radio options
-                    const optionValue = String(option.value ?? "");
-                    const isSelected = selectedOptionValue === optionValue;
+                    const optionValue = option.value ?? option.id;
+                    const isSelected = selectedOptionValue === option.label;
 
                     if (!option.image) return null;
+
+                    const handleRadioChange = () => {
+                        onChange(
+                            id,
+                            option.id,
+                            option.label,
+                            typeof optionValue === "number" ? optionValue : 100
+                        );
+                    };
 
                     return (
                         <motion.div
@@ -163,13 +177,12 @@ export const RadioInput = ({
                             <CheckboxCard
                                 id={option.id}
                                 name={id}
-                                title={title}
                                 label={option.label}
-                                value={optionValue}
+                                value={option.id}
                                 image={option.image}
                                 isSelected={isSelected}
                                 type="radio"
-                                onChange={onChange}
+                                onChange={handleRadioChange}
                             />
                         </motion.div>
                     );

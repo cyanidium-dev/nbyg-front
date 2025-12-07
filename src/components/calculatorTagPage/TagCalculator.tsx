@@ -1,6 +1,6 @@
 "use client";
-import { Formik, Form } from "formik";
-import { useState, useRef } from "react";
+import { Formik, Form, useFormikContext } from "formik";
+import { useState, useRef, useEffect } from "react";
 import Container from "@/components/shared/container/Container";
 import AreaInput from "./AreaInput";
 import CheckboxInput from "./CheckboxInput";
@@ -14,18 +14,78 @@ import * as motion from "motion/react-client";
 import { AnimatePresence } from "framer-motion";
 import CalculatorContactForm from "../shared/calculatorContactForm/CalculatorContactForm";
 
+// Form value types
+type CheckboxFieldValue = {
+    summaryLabel: string;
+    values: Array<{ label: string; value: number }>;
+};
+
+type SingleSelectFieldValue = {
+    summaryLabel: string;
+    label: string;
+    value: number;
+};
+
+type NumberFieldValue = {
+    summaryLabel: string;
+    value: number;
+};
+
+type OptionalFieldValue = {
+    label: string;
+    value: number;
+};
+
+type FormFieldValue =
+    | CheckboxFieldValue
+    | SingleSelectFieldValue
+    | NumberFieldValue
+    | OptionalFieldValue
+    | undefined;
+
 interface FormValues {
-    [key: string]: string | number | string[] | undefined;
+    [key: string]: FormFieldValue;
 }
 
-const initialValues: FormValues = {
-    tagtype: [],
-    area: 50,
-};
+const initialValues: FormValues = {};
+
+// Component to handle contact form visibility based on form values
+function ContactFormController({
+    onVisibilityChange,
+}: {
+    onVisibilityChange: (show: boolean) => void;
+}) {
+    const { values } = useFormikContext<FormValues>();
+    const previousShouldShowFormRef = useRef(false);
+
+    useEffect(() => {
+        const hasSelections = Object.keys(values).some(key => {
+            const value = values[key];
+            if (!value) return false;
+            if ("values" in value) {
+                // Checkbox field
+                return value.values.length > 0;
+            }
+            if ("value" in value) {
+                // Single select, number, or optional field
+                return value.value > 0;
+            }
+            return false;
+        });
+
+        const shouldShowForm = hasSelections;
+        if (shouldShowForm !== previousShouldShowFormRef.current) {
+            previousShouldShowFormRef.current = shouldShowForm;
+            onVisibilityChange(shouldShowForm);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [values]);
+
+    return null;
+}
 
 export default function TagCalculator() {
     const [showContactForm, setShowContactForm] = useState(false);
-    const previousShouldShowFormRef = useRef(false);
 
     return (
         <>
@@ -33,25 +93,23 @@ export default function TagCalculator() {
                 {({ values, setFieldValue }) => {
                     const hasSelections = Object.keys(values).some(key => {
                         const value = values[key];
-                        if (Array.isArray(value)) {
-                            return value.length > 0;
+                        if (!value) return false;
+                        if ("values" in value) {
+                            // Checkbox field
+                            return value.values.length > 0;
                         }
-                        if (typeof value === "number") {
-                            return value > 0;
+                        if ("value" in value) {
+                            // Single select, number, or optional field
+                            return value.value > 0;
                         }
-                        return !!value;
+                        return false;
                     });
 
-                    const shouldShowForm = hasSelections;
-                    if (shouldShowForm !== previousShouldShowFormRef.current) {
-                        previousShouldShowFormRef.current = shouldShowForm;
-                        setTimeout(() => {
-                            setShowContactForm(shouldShowForm);
-                        }, 0);
-                    }
-
                     return (
-                        <Form className="pt-19 lg:pt-[239px] font-montserrat [counter-reset:calc-section]">
+                        <Form className="pt-12 lg:pt-20 font-montserrat [counter-reset:calc-section]">
+                            <ContactFormController
+                                onVisibilityChange={setShowContactForm}
+                            />
                             <Container>
                                 {fieldsData.map((field, index) => {
                                     const fieldId = field.id;
@@ -90,6 +148,7 @@ export default function TagCalculator() {
                                                                 ): opt is {
                                                                     id: string;
                                                                     label: string;
+                                                                    value: number;
                                                                     image: {
                                                                         link: string;
                                                                     };
@@ -100,6 +159,14 @@ export default function TagCalculator() {
                                                                         opt &&
                                                                     "image" in
                                                                         opt &&
+                                                                    "value" in
+                                                                        opt &&
+                                                                    typeof (
+                                                                        opt as {
+                                                                            value: unknown;
+                                                                        }
+                                                                    ).value ===
+                                                                        "number" &&
                                                                     !(
                                                                         "type" in
                                                                         opt
@@ -108,27 +175,32 @@ export default function TagCalculator() {
                                                             .map(opt => ({
                                                                 id: opt.id,
                                                                 label: opt.label,
-                                                                value: opt.id,
+                                                                value: opt.value,
                                                                 image: opt.image,
                                                             }))}
                                                         selectedValues={
-                                                            Array.isArray(
+                                                            fieldValue &&
+                                                            "values" in
                                                                 fieldValue
-                                                            )
-                                                                ? (fieldValue as string[])
+                                                                ? fieldValue.values.map(
+                                                                      v =>
+                                                                          v.label
+                                                                  )
                                                                 : []
                                                         }
                                                         onChange={(
                                                             id: string,
-                                                            value: string,
-                                                            label: string,
-                                                            category: string,
-                                                            updatedValues: string[]
+                                                            updatedSelectedValues: Array<{
+                                                                label: string;
+                                                                value: number;
+                                                            }>
                                                         ) => {
-                                                            setFieldValue(
-                                                                id,
-                                                                updatedValues
-                                                            );
+                                                            setFieldValue(id, {
+                                                                summaryLabel:
+                                                                    field.summaryLabel ||
+                                                                    field.title,
+                                                                values: updatedSelectedValues,
+                                                            });
                                                         }}
                                                     />
                                                 )}
@@ -157,6 +229,7 @@ export default function TagCalculator() {
                                                                     opt as {
                                                                         id: string;
                                                                         label: string;
+                                                                        value?: number;
                                                                         image?: {
                                                                             link: string;
                                                                         };
@@ -170,7 +243,9 @@ export default function TagCalculator() {
                                                                 return {
                                                                     id: option.id,
                                                                     label: option.label,
-                                                                    value: option.id,
+                                                                    value:
+                                                                        option.value ??
+                                                                        100,
                                                                     image: option.image || {
                                                                         link: "",
                                                                         priority: false,
@@ -183,29 +258,16 @@ export default function TagCalculator() {
                                                                 };
                                                             })}
                                                         selectedOptionValue={
-                                                            typeof fieldValue ===
-                                                            "string"
-                                                                ? fieldValue
+                                                            fieldValue &&
+                                                            "label" in
+                                                                fieldValue
+                                                                ? (
+                                                                      fieldValue as SingleSelectFieldValue
+                                                                  ).label
                                                                 : undefined
                                                         }
-                                                        numberValue={
-                                                            typeof fieldValue ===
-                                                            "number"
-                                                                ? fieldValue
-                                                                : undefined
-                                                        }
-                                                        onChange={(
-                                                            id: string,
-                                                            value: string
-                                                        ) => {
-                                                            setFieldValue(
-                                                                id,
-                                                                value
-                                                            );
-                                                        }}
-                                                        onNumberChange={(
-                                                            value: number
-                                                        ) => {
+                                                        numberValue={(() => {
+                                                            // Find the optional number field ID
                                                             if (
                                                                 Array.isArray(
                                                                     field.options
@@ -239,12 +301,116 @@ export default function TagCalculator() {
                                                                     "id" in
                                                                         numberField
                                                                 ) {
-                                                                    setFieldValue(
-                                                                        numberField.id,
-                                                                        value
-                                                                    );
+                                                                    const optionalFieldValue =
+                                                                        values[
+                                                                            numberField
+                                                                                .id
+                                                                        ];
+                                                                    if (
+                                                                        optionalFieldValue &&
+                                                                        "value" in
+                                                                            optionalFieldValue
+                                                                    ) {
+                                                                        return (
+                                                                            optionalFieldValue as OptionalFieldValue
+                                                                        ).value;
+                                                                    }
                                                                 }
                                                             }
+                                                            return undefined;
+                                                        })()}
+                                                        onChange={(
+                                                            id: string,
+                                                            optionId: string,
+                                                            optionLabel: string,
+                                                            optionValue: number
+                                                        ) => {
+                                                            setFieldValue(id, {
+                                                                summaryLabel:
+                                                                    field.summaryLabel ||
+                                                                    field.title,
+                                                                label: optionLabel,
+                                                                value: optionValue,
+                                                            });
+
+                                                            // Clear the optional number field if "0-30 grader" is selected
+                                                            if (
+                                                                optionId ===
+                                                                "0-30 grader"
+                                                            ) {
+                                                                // Find the optional number field
+                                                                if (
+                                                                    Array.isArray(
+                                                                        field.options
+                                                                    )
+                                                                ) {
+                                                                    const numberField =
+                                                                        field.options.find(
+                                                                            opt =>
+                                                                                typeof opt ===
+                                                                                    "object" &&
+                                                                                opt !==
+                                                                                    null &&
+                                                                                "id" in
+                                                                                    opt &&
+                                                                                "type" in
+                                                                                    opt &&
+                                                                                (
+                                                                                    opt as {
+                                                                                        type?: string;
+                                                                                    }
+                                                                                )
+                                                                                    .type ===
+                                                                                    "number"
+                                                                        ) as
+                                                                            | {
+                                                                                  id: string;
+                                                                              }
+                                                                            | undefined;
+                                                                    if (
+                                                                        numberField &&
+                                                                        "id" in
+                                                                            numberField
+                                                                    ) {
+                                                                        setFieldValue(
+                                                                            numberField.id,
+                                                                            undefined
+                                                                        );
+                                                                    }
+                                                                }
+                                                            }
+                                                        }}
+                                                        onNumberChange={(
+                                                            numberFieldId: string,
+                                                            value: number
+                                                        ) => {
+                                                            setFieldValue(
+                                                                numberFieldId,
+                                                                {
+                                                                    label: Array.isArray(
+                                                                        field.options
+                                                                    )
+                                                                        ? (
+                                                                              field.options.find(
+                                                                                  opt =>
+                                                                                      typeof opt ===
+                                                                                          "object" &&
+                                                                                      opt !==
+                                                                                          null &&
+                                                                                      "id" in
+                                                                                          opt &&
+                                                                                      opt.id ===
+                                                                                          numberFieldId
+                                                                              ) as {
+                                                                                  label?: string;
+                                                                              }
+                                                                          )
+                                                                              ?.label ||
+                                                                          ""
+                                                                        : "",
+                                                                    value: value,
+                                                                }
+                                                            );
                                                         }}
                                                     />
                                                 )}
@@ -256,9 +422,12 @@ export default function TagCalculator() {
                                                 "min" in field.options && (
                                                     <AreaInput
                                                         value={
-                                                            typeof fieldValue ===
-                                                            "number"
-                                                                ? fieldValue
+                                                            fieldValue &&
+                                                            "value" in
+                                                                fieldValue
+                                                                ? (
+                                                                      fieldValue as NumberFieldValue
+                                                                  ).value
                                                                 : (
                                                                       field.options as {
                                                                           min: number;
@@ -271,7 +440,12 @@ export default function TagCalculator() {
                                                         ) => {
                                                             setFieldValue(
                                                                 fieldId,
-                                                                value
+                                                                {
+                                                                    summaryLabel:
+                                                                        field.summaryLabel ||
+                                                                        field.title,
+                                                                    value: value,
+                                                                }
                                                             );
                                                         }}
                                                     />
@@ -341,69 +515,71 @@ export default function TagCalculator() {
                                                                 : undefined
                                                         }
                                                         selectedValue={
-                                                            typeof fieldValue ===
-                                                                "number" ||
-                                                            typeof fieldValue ===
-                                                                "string"
-                                                                ? fieldValue
-                                                                : undefined
+                                                            fieldValue &&
+                                                            "value" in
+                                                                fieldValue &&
+                                                            "summaryLabel" in
+                                                                fieldValue
+                                                                ? (
+                                                                      fieldValue as NumberFieldValue
+                                                                  ).value
+                                                                : 0
                                                         }
                                                         onChange={(
-                                                            value:
-                                                                | number
-                                                                | string
+                                                            value: number
                                                         ) => {
                                                             setFieldValue(
                                                                 fieldId,
-                                                                value
+                                                                {
+                                                                    summaryLabel:
+                                                                        field.summaryLabel ||
+                                                                        field.title,
+                                                                    value: value,
+                                                                }
                                                             );
                                                         }}
                                                         onNumberChange={(
+                                                            numberFieldId: string,
                                                             value: number
                                                         ) => {
-                                                            if (
-                                                                Array.isArray(
-                                                                    field.options
-                                                                )
-                                                            ) {
-                                                                const moreOption =
-                                                                    field.options.find(
-                                                                        opt =>
-                                                                            typeof opt ===
-                                                                                "object" &&
-                                                                            opt !==
-                                                                                null &&
-                                                                            "id" in
-                                                                                opt &&
-                                                                            "type" in
-                                                                                opt &&
-                                                                            (
-                                                                                opt as {
-                                                                                    type?: string;
-                                                                                }
-                                                                            )
-                                                                                .type ===
-                                                                                "number"
-                                                                    ) as
-                                                                        | {
-                                                                              id: string;
-                                                                          }
-                                                                        | undefined;
-                                                                if (
-                                                                    moreOption &&
-                                                                    "id" in
-                                                                        moreOption
-                                                                ) {
-                                                                    setFieldValue(
-                                                                        moreOption.id,
-                                                                        value
-                                                                    );
-                                                                    setFieldValue(
-                                                                        fieldId,
-                                                                        value
-                                                                    );
+                                                            // Update the optional field
+                                                            setFieldValue(
+                                                                numberFieldId,
+                                                                {
+                                                                    label: Array.isArray(
+                                                                        field.options
+                                                                    )
+                                                                        ? (
+                                                                              field.options.find(
+                                                                                  opt =>
+                                                                                      typeof opt ===
+                                                                                          "object" &&
+                                                                                      opt !==
+                                                                                          null &&
+                                                                                      "id" in
+                                                                                          opt &&
+                                                                                      opt.id ===
+                                                                                          numberFieldId
+                                                                              ) as {
+                                                                                  label?: string;
+                                                                              }
+                                                                          )
+                                                                              ?.label ||
+                                                                          ""
+                                                                        : "",
+                                                                    value: value,
                                                                 }
-                                                            }
+                                                            );
+                                                            // Also update the main field with the value
+                                                            setFieldValue(
+                                                                fieldId,
+                                                                {
+                                                                    summaryLabel:
+                                                                        field.summaryLabel ||
+                                                                        field.title,
+                                                                    value: value,
+                                                                }
+                                                            );
                                                         }}
                                                     />
                                                 )}
@@ -417,16 +593,20 @@ export default function TagCalculator() {
                                                     }
                                                     hint={field.hint}
                                                     value={
-                                                        typeof fieldValue ===
-                                                        "number"
-                                                            ? fieldValue
+                                                        fieldValue &&
+                                                        "value" in fieldValue
+                                                            ? (
+                                                                  fieldValue as NumberFieldValue
+                                                              ).value
                                                             : 0
                                                     }
                                                     onChange={value => {
-                                                        setFieldValue(
-                                                            fieldId,
-                                                            value
-                                                        );
+                                                        setFieldValue(fieldId, {
+                                                            summaryLabel:
+                                                                field.summaryLabel ||
+                                                                field.title,
+                                                            value: value,
+                                                        });
                                                     }}
                                                     min={0}
                                                     max={1000}

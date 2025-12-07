@@ -20,9 +20,9 @@ interface DropdownInputProps {
         min: number;
         max?: number;
     };
-    selectedValue?: number | string;
-    onChange: (value: number | string) => void;
-    onNumberChange?: (value: number) => void;
+    selectedValue?: number;
+    onChange: (value: number) => void;
+    onNumberChange?: (numberFieldId: string, value: number) => void;
 }
 
 export default function DropdownInput({
@@ -45,29 +45,25 @@ export default function DropdownInput({
 
     // Determine if "more" is selected
     const isMoreSelected =
-        selectedValue === "more" ||
-        (moreOption &&
-            typeof selectedValue === "number" &&
-            selectedValue > max) ||
-        (moreOption &&
-            typeof selectedValue === "string" &&
-            selectedValue === moreOption.id);
+        moreOption && typeof selectedValue === "number" && selectedValue > max;
 
     const handleDropdownChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const value = e.target.value;
         if (value === "more") {
-            onChange("more");
+            // When "more" is selected, set the value to max + 1 to trigger the number input
+            // The actual value will be set when user enters a number
+            onChange(max + 1);
         } else {
             onChange(Number(value));
         }
     };
 
-    // Determine current dropdown value
+    // Determine current dropdown value - default to 0 if no value selected
     const currentValue = isMoreSelected
         ? "more"
         : typeof selectedValue === "number"
           ? String(selectedValue)
-          : "";
+          : String(min);
 
     return (
         <>
@@ -110,9 +106,6 @@ export default function DropdownInput({
                     onChange={handleDropdownChange}
                     className="w-full h-12 rounded-full border border-gradient-brown px-8 pr-12 py-1.5 text-[18px] leading-[125%] bg-transparent text-white appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-gradient-brown"
                 >
-                    <option value="" disabled>
-                        Vælg...
-                    </option>
                     {dropdownValues.map(value => (
                         <option
                             key={value}
@@ -124,7 +117,7 @@ export default function DropdownInput({
                     ))}
                     {moreOption && (
                         <option value="more" className="bg-black text-white">
-                            {moreOption.label}
+                            Mere
                         </option>
                     )}
                 </select>
@@ -142,13 +135,18 @@ export default function DropdownInput({
                     <NumberInput
                         ref={numberInputRef}
                         id={moreOption.id}
+                        label={moreOption.label}
                         value={
                             typeof selectedValue === "number" &&
                             selectedValue > max
                                 ? selectedValue
                                 : moreOption.min
                         }
-                        onChange={onNumberChange}
+                        onChange={value => {
+                            if (onNumberChange) {
+                                onNumberChange(moreOption.id, value);
+                            }
+                        }}
                         min={moreOption.min}
                         max={moreOption.max || 1000}
                     />

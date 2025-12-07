@@ -11,8 +11,10 @@ interface NumberInputProps {
     max: number;
     displayValue?: number;
     title?: string;
+    label?: string;
     description?: string;
     hint?: string;
+    showSectionNumber?: boolean;
 }
 
 const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
@@ -25,8 +27,10 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
             max,
             displayValue,
             title,
+            label,
             description,
             hint,
+            showSectionNumber = true,
         },
         ref
     ) => {
@@ -61,7 +65,7 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
                         exit="exit"
                         viewport={{ once: true, amount: 0.1 }}
                         variants={fadeInAnimation({ scale: 0.85, y: 30 })}
-                        className={`text-[20px] lg:text-[24px] leading-[125%] font-find-sans-pro font-light ${description ? "mb-2" : "mb-6"} before:content-[counter(calc-section)_'.'] before:mr-2`}
+                        className={`text-[20px] lg:text-[24px] leading-[125%] font-find-sans-pro font-light ${description ? "mb-2" : "mb-6"} ${showSectionNumber ? "before:content-[counter(calc-section)_'.'] before:mr-2" : ""}`}
                     >
                         {title}
                     </motion.h2>
@@ -84,38 +88,51 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
                     exit="exit"
                     viewport={{ once: true, amount: 0.1 }}
                     variants={fadeInAnimation({ scale: 0.85, y: 30 })}
-                    className="relative mb-6 xl:max-w-[118px]"
+                    className="mb-6"
                 >
-                    <input
-                        ref={ref}
-                        name={id}
-                        type="number"
-                        id={id}
-                        min={min}
-                        max={max}
-                        value={currentDisplayValue}
-                        onChange={handleNumberChange}
-                        className="w-full h-12 rounded-full border border-gradient-brown px-8 pr-12 py-1.5 text-[18px] leading-[125%] bg-transparent text-white [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
-                    />
-                    <div className="absolute right-4 top-1/2 -translate-y-1/2 flex flex-col gap-1">
-                        <button
-                            type="button"
-                            onClick={handleIncrement}
-                            disabled={value >= max}
-                            className="flex items-center justify-center size-4 text-white disabled:opacity-30 disabled:cursor-not-allowed button-shadow-white cursor-pointer"
-                            aria-label="Increment value"
+                    {label && (
+                        <label
+                            htmlFor={id}
+                            className="block mb-2 text-[18px] leading-[125%] font-light"
                         >
-                            <InputArrow direction="up" className="size-4" />
-                        </button>
-                        <button
-                            type="button"
-                            onClick={handleDecrement}
-                            disabled={value <= min}
-                            className="flex items-center justify-center size-4 text-white disabled:opacity-30 disabled:cursor-not-allowed button-shadow-white cursor-pointer"
-                            aria-label="Decrement value"
-                        >
-                            <InputArrow direction="down" className="size-4" />
-                        </button>
+                            {label}
+                        </label>
+                    )}
+                    <div className="relative xl:max-w-[118px]">
+                        <input
+                            ref={ref}
+                            name={id}
+                            type="number"
+                            id={id}
+                            min={min}
+                            max={max}
+                            value={currentDisplayValue}
+                            onChange={handleNumberChange}
+                            className="w-full h-12 rounded-full border border-gradient-brown px-8 pr-12 py-1.5 text-[18px] leading-[125%] bg-transparent text-white [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                        />
+                        <div className="absolute right-4 top-1/2 -translate-y-1/2 flex flex-col gap-1">
+                            <button
+                                type="button"
+                                onClick={handleIncrement}
+                                disabled={value >= max}
+                                className="flex items-center justify-center size-4 text-white disabled:opacity-30 disabled:cursor-not-allowed button-shadow-white cursor-pointer"
+                                aria-label="Increment value"
+                            >
+                                <InputArrow direction="up" className="size-4" />
+                            </button>
+                            <button
+                                type="button"
+                                onClick={handleDecrement}
+                                disabled={value <= min}
+                                className="flex items-center justify-center size-4 text-white disabled:opacity-30 disabled:cursor-not-allowed button-shadow-white cursor-pointer"
+                                aria-label="Decrement value"
+                            >
+                                <InputArrow
+                                    direction="down"
+                                    className="size-4"
+                                />
+                            </button>
+                        </div>
                     </div>
                 </motion.div>
                 {hint && (

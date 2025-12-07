@@ -4,7 +4,6 @@ import TickIcon from "../shared/icons/TickIcon";
 interface CheckboxCardProps {
     id: string;
     name: string;
-    title: string;
     label: string;
     value: string;
     image: {
@@ -13,13 +12,12 @@ interface CheckboxCardProps {
     };
     isSelected: boolean;
     type?: "checkbox" | "radio";
-    onChange: (id: string, value: string, label: string, title: string) => void;
+    onChange: () => void;
 }
 
 export default function CheckboxCard({
     id,
     name,
-    title,
     label,
     value,
     image,
@@ -43,7 +41,7 @@ export default function CheckboxCard({
                 name={name}
                 value={value}
                 checked={isSelected}
-                onChange={() => onChange(id, value, label, title)}
+                onChange={() => onChange()}
                 className="hidden"
             />
             <div className="relative mb-1 xl:mb-2 aspect-square w-full overflow-hidden rounded-[4px] lg:rounded-[12px]">

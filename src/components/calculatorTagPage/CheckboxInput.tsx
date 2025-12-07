@@ -9,7 +9,7 @@ interface CheckboxInputProps {
     options: {
         id: string;
         label: string;
-        value: string;
+        value: number;
         image: {
             link: string;
             priority?: boolean;
@@ -18,10 +18,7 @@ interface CheckboxInputProps {
     selectedValues?: string[];
     onChange: (
         id: string,
-        value: string,
-        label: string,
-        category: string,
-        updatedSelectedValues: string[]
+        updatedSelectedValues: Array<{ label: string; value: number }>
     ) => void;
 }
 
@@ -64,28 +61,28 @@ export default function CheckboxInput({
         md:grid-cols-[repeat(4,minmax(157px,1fr))] gap-x-[14px] gap-y-6 lg:gap-6 border-none p-0 m-0 justify-items-center"
             >
                 {options.map((option, index) => {
-                    const optionValue = String(option.value ?? "");
                     const isSelected =
-                        selectedValues?.includes(optionValue) ?? false;
+                        selectedValues?.includes(option.label) ?? false;
 
-                    const handleChange = (
-                        cardId: string,
-                        cardValue: string,
-                        cardLabel: string,
-                        cardTitle: string
-                    ) => {
-                        const currentValues = selectedValues ?? [];
-                        const updatedValues = isSelected
-                            ? currentValues.filter(v => v !== optionValue)
-                            : [...currentValues, optionValue];
+                    const handleChange = () => {
+                        const currentSelectedLabels = selectedValues ?? [];
+                        const updatedSelectedLabels = isSelected
+                            ? currentSelectedLabels.filter(
+                                  v => v !== option.label
+                              )
+                            : [...currentSelectedLabels, option.label];
 
-                        onChange(
-                            id,
-                            cardValue,
-                            cardLabel,
-                            cardTitle,
-                            updatedValues
-                        );
+                        // Build array of {label, value} for selected options
+                        const updatedSelectedValues = options
+                            .filter(opt =>
+                                updatedSelectedLabels.includes(opt.label)
+                            )
+                            .map(opt => ({
+                                label: opt.label,
+                                value: opt.value,
+                            }));
+
+                        onChange(id, updatedSelectedValues);
                     };
 
                     return (
@@ -105,9 +102,8 @@ export default function CheckboxInput({
                             <CheckboxCard
                                 id={option.id}
                                 name={id}
-                                title={title}
                                 label={option.label}
-                                value={optionValue}
+                                value={option.id}
                                 image={option.image}
                                 isSelected={isSelected}
                                 onChange={handleChange}
