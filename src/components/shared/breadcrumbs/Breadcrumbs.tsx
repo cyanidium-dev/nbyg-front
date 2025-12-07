@@ -2,6 +2,7 @@ import Container from "../container/Container";
 import Link from "next/link";
 import * as motion from "motion/react-client";
 import { fadeInAnimation } from "@/utils/animationVariants";
+import { twMerge } from "tailwind-merge";
 
 interface Breadcrumb {
   label: string;
@@ -18,7 +19,7 @@ export default function Breadcrumbs({
   className = "",
 }: BreadcrumbsProps) {
   return (
-    <Container className={className}>
+    <Container>
       <motion.nav
         initial="hidden"
         whileInView="visible"
@@ -26,7 +27,7 @@ export default function Breadcrumbs({
         viewport={{ once: true, amount: 0.3 }}
         variants={fadeInAnimation({})}
         aria-label="breadcrumbs"
-        className={`flex items-center pt-4 lg:pt-10`}
+        className={twMerge(`flex items-center pt-4 lg:pt-10`, className)}
       >
         <ul className="flex items-center flex-wrap">
           {crumbs.map((crumb, index) => (

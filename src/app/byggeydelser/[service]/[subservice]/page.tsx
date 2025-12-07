@@ -16,6 +16,7 @@ import { PAGE_BY_SLUG_QUERY } from "@/lib/queries";
 import { fetchSanityData } from "@/utils/fetchSanityData";
 import type { PageSection, SanityPage } from "@/types/page";
 import Loader from "@/components/shared/loader/Loader";
+import Breadcrumbs from "@/components/shared/breadcrumbs/Breadcrumbs";
 
 interface SubservicePageProps {
   params: Promise<{ service: string; subservice: string }>;
@@ -54,38 +55,65 @@ export default async function SubservicePage({ params }: SubservicePageProps) {
     return null;
   }
 
+  const { title, slug, parent } = currentSubservice;
+
+  console.log(parent);
+
+  const crumbs = [
+    { label: "Hjem", href: "/" },
+    {
+      label: "Byggeydelser",
+      href: "/byggeydelser",
+    },
+    {
+      label: parent?.title || "",
+      href: `/byggeydelser/${parent?.slug}` || "",
+    },
+    {
+      label: title,
+      href: `/byggeydelser/${parent?.slug}/${slug}`,
+    },
+  ];
+
   return (
     <>
       <Suspense fallback={<Loader />}>
         {currentSubservice.sections?.map((section, index) => {
-          // Filter gallerySection - only show if showOnServicesPage is true
-          if (
-            section._type === "gallerySection" &&
-            !(section as { showOnServicesPage?: boolean }).showOnServicesPage
-          ) {
+          const { _type } = section;
+
+          // Filter gallerySection
+          if (_type === "gallerySection" && !section.showOnServicesPage) {
             return null;
           }
 
-          const SectionComponent = sectionComponentMap[section._type];
-
-          if (!SectionComponent) {
-            return null;
-          }
+          const SectionComponent = sectionComponentMap[_type];
+          if (!SectionComponent) return null;
 
           const sectionKey =
             (section as { _key?: string })._key ?? `${section._type}-${index}`;
           const key = `${service}-${subservice}-${sectionKey}`;
 
-          // Обгортаємо FaqSection в Container на сторінках subservice
-          if (section._type === "faqSection") {
-            return (
+          // Готуємо елемент (так само як у тебе)
+          const element =
+            _type === "faqSection" ? (
               <Container key={key}>
                 <SectionComponent {...section} uniqueKey={key} />
               </Container>
+            ) : (
+              <SectionComponent key={key} {...section} uniqueKey={key} />
+            );
+
+          // 👉 Якщо heroSection — додаємо Breadcrumbs після нього
+          if (_type === "heroSection") {
+            return (
+              <div key={key}>
+                {element}
+                <Breadcrumbs crumbs={crumbs} />
+              </div>
             );
           }
 
-          return <SectionComponent key={key} {...section} uniqueKey={key} />;
+          return element;
         })}
       </Suspense>
     </>

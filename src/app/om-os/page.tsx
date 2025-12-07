@@ -12,6 +12,7 @@ export default function OmOsPage() {
       href: "/om-os",
     },
   ];
+
   return (
     <>
       <Hero />

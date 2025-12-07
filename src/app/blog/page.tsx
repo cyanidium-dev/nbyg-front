@@ -5,6 +5,15 @@ import { ALL_BLOG_POSTS_QUERY } from "@/lib/queries";
 import { BlogPostPreview } from "@/types/blogPost";
 import { fetchSanityData } from "@/utils/fetchSanityData";
 import { Suspense } from "react";
+import Breadcrumbs from "@/components/shared/breadcrumbs/Breadcrumbs";
+
+const crumbs = [
+  { label: "Hjem", href: "/" },
+  {
+    label: "Blog",
+    href: "/blog",
+  },
+];
 
 export default async function BlogPage() {
   const blogPosts =
@@ -13,6 +22,7 @@ export default async function BlogPage() {
   return (
     <>
       <Hero />
+      <Breadcrumbs crumbs={crumbs} />
       <Suspense fallback={<Loader />}>
         <BlogList blogPosts={blogPosts} />
       </Suspense>
