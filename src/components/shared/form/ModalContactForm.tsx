@@ -28,7 +28,10 @@ export default function ModalContactForm({
                 className="rounded-[12px] w-full max-w-[90vw] md:max-w-[600px] min-w-[328px] overflow-y-auto"
                 closeButtonClassName="top-4 right-4 lg:top-8 lg:right-8"
             >
-                <div className="relative flex flex-col px-6 py-8 rounded-[12px] min-h-full">
+                <div 
+                    className="relative flex flex-col px-6 py-8 rounded-[12px] min-h-full"
+                    onClick={(e) => e.stopPropagation()}
+                >
                     <SectionTitle className="mb-6">Kontakt os</SectionTitle>
                     <p className="text-[14px] leading-[121.4%] md:text-[16px] md:leading-[125%] max-w-[560px] w-full font-light mb-6 tracking-[-0.02rem] lg:tracking-0">
                         Har du spørgsmål eller ønsker du et tilbud? Udfyld

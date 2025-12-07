@@ -32,9 +32,32 @@ export default function FormButton({
         }, 0);
     }, []);
 
+    const handleClick = () => {
+        setIsModalShown(true);
+    };
+
+    const handleButtonClick = (e: React.MouseEvent<HTMLDivElement>) => {
+        if (faq) {
+            e.stopPropagation();
+        }
+    };
+
+    const buttonElement = (
+        <div onClick={handleButtonClick}>
+            <MainButton
+                className={className}
+                variant={variant}
+                textClassName={textClassName}
+                onClick={handleClick}
+            >
+                {children}
+            </MainButton>
+        </div>
+    );
+
     return (
         <>
-            {animationVariants && (
+            {animationVariants ? (
                 <motion.div
                     initial="hidden"
                     whileInView="visible"
@@ -42,25 +65,10 @@ export default function FormButton({
                     viewport={{ once: true, amount: 0.3 }}
                     variants={animationVariants}
                 >
-                    <MainButton
-                        className={className}
-                        variant={variant}
-                        textClassName={textClassName}
-                        onClick={() => setIsModalShown(true)}
-                    >
-                        {children}
-                    </MainButton>
+                    {buttonElement}
                 </motion.div>
-            )}
-            {!animationVariants && (
-                <MainButton
-                    className={className}
-                    variant={variant}
-                    textClassName={textClassName}
-                    onClick={() => setIsModalShown(true)}
-                >
-                    {children}
-                </MainButton>
+            ) : (
+                buttonElement
             )}
             {faq && isMounted ? createPortal(
                 <ModalContactForm
