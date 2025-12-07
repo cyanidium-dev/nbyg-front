@@ -1,7 +1,6 @@
 import * as motion from "motion/react-client";
 import { fadeInAnimation } from "@/utils/animationVariants";
-import TickIcon from "../shared/icons/TickIcon";
-import Image from "next/image";
+import CheckboxCard from "./CheckboxCard";
 
 interface CheckboxInputProps {
     id: string;
@@ -21,11 +20,19 @@ interface CheckboxInputProps {
         id: string,
         value: string,
         label: string,
-        category: string
+        category: string,
+        updatedSelectedValues: string[]
     ) => void;
 }
 
-export default function CheckboxInput({ id, title, description, options, selectedValues, onChange }: CheckboxInputProps) {
+export default function CheckboxInput({
+    id,
+    title,
+    description,
+    options,
+    selectedValues,
+    onChange,
+}: CheckboxInputProps) {
     return (
         <>
             {title && (
@@ -58,7 +65,29 @@ export default function CheckboxInput({ id, title, description, options, selecte
             >
                 {options.map((option, index) => {
                     const optionValue = String(option.value ?? "");
-                    const isSelected = selectedValues?.includes(optionValue) ?? false;
+                    const isSelected =
+                        selectedValues?.includes(optionValue) ?? false;
+
+                    const handleChange = (
+                        cardId: string,
+                        cardValue: string,
+                        cardLabel: string,
+                        cardTitle: string
+                    ) => {
+                        const currentValues = selectedValues ?? [];
+                        const updatedValues = isSelected
+                            ? currentValues.filter(v => v !== optionValue)
+                            : [...currentValues, optionValue];
+
+                        onChange(
+                            id,
+                            cardValue,
+                            cardLabel,
+                            cardTitle,
+                            updatedValues
+                        );
+                    };
+
                     return (
                         <motion.div
                             key={option.id}
@@ -73,65 +102,16 @@ export default function CheckboxInput({ id, title, description, options, selecte
                             })}
                             className="w-full min-w-[157px] max-w-[272px]"
                         >
-                            <label
-                                htmlFor={option.id}
-                                className={`
-                                group flex flex-col h-full cursor-pointer rounded-lg 
-                                transition duration-250 ease-in-out
-                                hover:bg-white/10
-                                ${isSelected ? "bg-white/10" : ""}                                
-                            `}
-                            >
-                                <input
-                                    type="checkbox"
-                                    id={option.id}
-                                    name={id}
-                                    value={optionValue}
-                                    checked={isSelected}
-                                    onChange={() =>
-                                        onChange(
-                                            id,
-                                            optionValue,
-                                            option.label,
-                                            title
-                                        )
-                                    }
-                                    className="hidden"
-                                />
-                                <div className="relative mb-1 xl:mb-2 aspect-square w-full overflow-hidden rounded-[4px] lg:rounded-[12px]">
-                                    <Image
-                                        src={option.image.link}
-                                        alt={option.id}
-                                        fill
-                                        className="object-cover"
-                                        priority={option.image.priority}
-                                    />
-                                </div>
-                                <div className="flex grow-1 items-center gap-2 p-[6px] xl:p-2 lg:px-2 lg:py-2 min-h-[43px]">
-                                    <div
-                                        className={`flex size-4 shrink-0 items-center justify-center rounded-[4px] border border-white transition duration-[250ms] ease-in-out ${
-                                            isSelected
-                                                ? "border-none bg-gradient-brown"
-                                                : "bg-transparent"
-                                        }`}
-                                    >   
-                                        <TickIcon
-                                            className={`h-3 w-3 text-white ${
-                                                isSelected ? "block" : "hidden"
-                                            }`}
-                                        />
-                                    </div>
-                                    <span
-                                        className={`text-[12px] leading-[150%] xs:text-[18px] md:text-[12px] lg:text-[18px] ${
-                                            isSelected
-                                                ? "font-medium"
-                                                : "font-light "
-                                        }`}
-                                    >
-                                        {option.label}
-                                    </span>
-                                </div>
-                            </label>
+                            <CheckboxCard
+                                id={option.id}
+                                name={id}
+                                title={title}
+                                label={option.label}
+                                value={optionValue}
+                                image={option.image}
+                                isSelected={isSelected}
+                                onChange={handleChange}
+                            />
                         </motion.div>
                     );
                 })}
