@@ -25,11 +25,11 @@ export default function ModalContactForm({
                 isModalShown={isModalShown}
                 setIsModalShown={setIsModalShown}
                 variant="notification"
-                className="rounded-[12px] w-full max-w-[90vw] md:max-w-[600px] min-w-[328px] overflow-y-auto"
+                className="rounded-[12px] w-full max-w-[90vw] md:max-w-[600px] min-w-[328px] max-h-[90vh] flex flex-col"
                 closeButtonClassName="top-4 right-4 lg:top-8 lg:right-8"
             >
                 <div 
-                    className="relative flex flex-col px-4 md:px-6 py-8 rounded-[12px] min-h-full w-full"
+                    className="relative flex flex-col px-4 md:px-6 py-8 rounded-[12px] w-full overflow-y-auto flex-1"
                     onClick={(e) => e.stopPropagation()}
                 >
                     <SectionTitle className="mb-6">Kontakt os</SectionTitle>
