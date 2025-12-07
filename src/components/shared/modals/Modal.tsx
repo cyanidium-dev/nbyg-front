@@ -39,6 +39,7 @@ export default function Modal({
       md:rounded-[12px] shadow-md bg-black`,
                 className
             )}
+            onClick={(e) => e.stopPropagation()}
         >
             <div
                 className={twMerge(

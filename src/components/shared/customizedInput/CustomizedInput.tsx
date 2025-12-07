@@ -5,10 +5,11 @@ import {
     FieldInputProps,
     FieldMetaProps,
 } from "formik";
-import { IMaskInput } from "react-imask";
 import { useId } from "react";
 import clsx from "clsx";
 import { twMerge } from "tailwind-merge";
+import PhoneInput from "react-phone-number-input";
+import ShevronIcon from "../icons/ShevronIcon";
 
 interface Values {
     [fieldName: string]: string;
@@ -20,9 +21,9 @@ interface CustomizedInputProps {
     labelClassName?: string;
     fieldClassName?: string;
     inputType?: string;
-    mask?: string;
     placeholder?: string;
     isLabelHidden?: boolean;
+    as?: string;
 }
 
 export default function CustomizedInput({
@@ -32,10 +33,10 @@ export default function CustomizedInput({
     fieldClassName = "",
     inputType = "text",
     placeholder = "",
-    mask = "+45 00000000",
     isLabelHidden = false,
+    as,
 }: CustomizedInputProps) {
-    const { setFieldValue } = useFormikContext<Values>();
+    const { setFieldValue, setFieldTouched } = useFormikContext<Values>();
     const inputId = useId();
 
     return (
@@ -65,7 +66,7 @@ export default function CustomizedInput({
                         const commonProps = {
                             id: inputId,
                             className: twMerge(
-                                "relative w-full outline-none resize-none transition duration-300 ease-out",
+                                "relative w-full outline-none resize-none border transition duration-300 ease-out",
                                 fieldClassName,
                                 meta.touched && meta.error
                                     ? "border-red-error"
@@ -75,17 +76,34 @@ export default function CustomizedInput({
 
                         if (inputType === "tel") {
                             return (
-                                <IMaskInput
+                                <PhoneInput
+                                    international
+                                    countryCallingCodeEditable={false}
+                                    country="DK"
+                                    defaultCountry="DK"
+                                    autoComplete="on"
                                     {...field}
                                     {...commonProps}
-                                    mask={mask}
-                                    lazy={placeholder ? true : false}
-                                    autoComplete="on"
-                                    type="tel"
-                                    placeholder={placeholder || undefined}
-                                    onAccept={(value: string) => {
+                                    onChange={value => {
                                         setFieldValue(fieldName, value || "");
+                                        setFieldTouched(fieldName, true, false);
                                     }}
+                                    countrySelectProps={{
+                                        arrowComponent: () => (
+                                            <ShevronIcon className="size-6 text-white rotate-180" />
+                                        ),
+                                    }}
+                                />
+                            );
+                        }
+
+                        if (as === "textarea") {
+                            return (
+                                <textarea
+                                    {...field}
+                                    {...commonProps}
+                                    autoComplete="on"
+                                    placeholder={placeholder}
                                 />
                             );
                         }

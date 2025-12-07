@@ -22,7 +22,7 @@ export default function Notification({
             isModalShown={isNotificationShown}
             setIsModalShown={setIsNotificationShown}
             variant="notification"
-            className="rounded-[12px]"
+            className="rounded-[12px] z-100"
             closeButtonClassName="top-4 md:top-5 right-4 md:right-5"
         >
             <div className="p-4 pt-14 md:p-6 md:pt-14 lg:p-10 relative flex flex-col justify-center items-center w-full min-w-[256px] max-w-[560px] z-20">

@@ -12,9 +12,13 @@ import YouTubeIcon from "../icons/YouTubeIcon";
 
 interface SocialsGroupProps {
     className?: string;
+    buttonClassName?: string;
 }
 
-export default function SocialsGroup({ className }: SocialsGroupProps) {
+export default function SocialsGroup({
+    className,
+    buttonClassName,
+}: SocialsGroupProps) {
     return (
         <ul className={twMerge("flex items-center gap-5", className)}>
             <motion.li
@@ -22,7 +26,10 @@ export default function SocialsGroup({ className }: SocialsGroupProps) {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.1 }}
-                className="size-8 flex items-center justify-center"
+                className={twMerge(
+                    "size-8 flex items-center justify-center",
+                    buttonClassName
+                )}
             >
                 <a
                     href={FACEBOOK_URL}
@@ -39,7 +46,10 @@ export default function SocialsGroup({ className }: SocialsGroupProps) {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.1 }}
-                className="size-8 flex items-center justify-center"
+                className={twMerge(
+                    "size-8 flex items-center justify-center",
+                    buttonClassName
+                )}
             >
                 <a
                     href={YOUTUBE_URL}
@@ -56,14 +66,20 @@ export default function SocialsGroup({ className }: SocialsGroupProps) {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.1 }}
-                className="size-8 flex items-center justify-center"
+                className={twMerge(
+                    "size-8 flex items-center justify-center",
+                    buttonClassName
+                )}
             >
                 <a
                     href={INSTAGRAM_URL}
                     target="_blank"
                     rel="noopener noreferrer nofollow"
                     aria-label="instagram"
-                    className="w-full h-full flex items-center justify-center xl:hover:opacity-80 transition-opacity duration-300 outline-none focus-visible:outline-none"
+                    className={twMerge(
+                        "w-full h-full flex items-center justify-center xl:hover:opacity-80 transition-opacity duration-300 outline-none focus-visible:outline-none",
+                        buttonClassName
+                    )}
                 >
                     <InstagramIcon className="text-white" />
                 </a>
