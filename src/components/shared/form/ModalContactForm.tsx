@@ -29,20 +29,22 @@ export default function ModalContactForm({
                 closeButtonClassName="top-4 right-4 lg:top-8 lg:right-8"
             >
                 <div 
-                    className="relative flex flex-col px-6 py-8 rounded-[12px] min-h-full"
+                    className="relative flex flex-col px-4 md:px-6 py-8 rounded-[12px] min-h-full w-full"
                     onClick={(e) => e.stopPropagation()}
                 >
                     <SectionTitle className="mb-6">Kontakt os</SectionTitle>
-                    <p className="text-[14px] leading-[121.4%] md:text-[16px] md:leading-[125%] max-w-[560px] w-full font-light mb-6 tracking-[-0.02rem] lg:tracking-0">
+                    <p className="text-[14px] leading-[121.4%] md:text-[16px] md:leading-[125%] w-full font-light mb-6 tracking-[-0.02rem] lg:tracking-0">
                         Har du spørgsmål eller ønsker du et tilbud? Udfyld
                         formularen nedenfor – vi vender hurtigt tilbage med
                         rådgivning eller et uforpligtende tilbud.
                     </p>
-                    <ContactForm
-                        setIsModalShown={setIsModalShown}
-                        setIsError={setIsError}
-                        setIsNotificationShown={setIsNotificationShown}
-                    />
+                    <div className="w-full">
+                        <ContactForm
+                            setIsModalShown={setIsModalShown}
+                            setIsError={setIsError}
+                            setIsNotificationShown={setIsNotificationShown}
+                        />
+                    </div>
                 </div>
             </Modal>
             <Notification
