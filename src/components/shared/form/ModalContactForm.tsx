@@ -25,7 +25,7 @@ export default function ModalContactForm({
                 isModalShown={isModalShown}
                 setIsModalShown={setIsModalShown}
                 variant="notification"
-                className="rounded-[12px] w-full max-w-[90vw] md:max-w-[600px] min-w-[328px] max-h-[90vh] flex flex-col"
+                className="rounded-[12px] w-full max-w-[90vw] md:max-w-[600px] min-w-[328px] flex flex-col"
                 closeButtonClassName="top-4 right-4 lg:top-8 lg:right-8"
             >
                 <div 
