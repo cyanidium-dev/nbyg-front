@@ -5,11 +5,21 @@ import CtaSection from "@/components/shared/sections/ctaSection/CtaSection";
 import Container from "@/components/shared/container/Container";
 import FaqSection from "@/components/shared/sections/faqSection/FaqSection";
 import { faqList } from "@/components/byggeydelserPage/faq/faqList";
+import Breadcrumbs from "@/components/shared/breadcrumbs/Breadcrumbs";
+
+const crumbs = [
+  { label: "Hjem", href: "/" },
+  {
+    label: "Byggeydelser",
+    href: "/byggeydelser",
+  },
+];
 
 export default function ByggeydelserPage() {
   return (
     <>
       <Hero />
+      <Breadcrumbs crumbs={crumbs} />
       <Services />
       <CtaSection {...ctaData} uniqueKey={"byggeydelser-contact-cta"} />
       <Container>

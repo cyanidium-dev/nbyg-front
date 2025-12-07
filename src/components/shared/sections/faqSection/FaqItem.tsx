@@ -5,6 +5,7 @@ import { listItemVariantsLeft } from "@/utils/animationVariants";
 import ShevronIcon from "../../icons/ShevronIcon";
 import Link from "next/link";
 import MainButton from "../../buttons/MainButton";
+import FormButton from "../../buttons/FormButton";
 
 interface FaqItemProps {
   faqItem: {
@@ -29,7 +30,7 @@ const buttonConfig: Record<
   },
   services: {
     label: "Byggeydelser",
-    href: "/byggeydesler",
+    href: "/byggeydelser",
   },
   contact: {
     label: "Kontakt os",
@@ -39,8 +40,8 @@ const buttonConfig: Record<
 
 export default function FaqItem({ faqItem }: FaqItemProps) {
   const [isShownMore, setIsShownMore] = useState(false);
-  const toggleShowMore = () => setIsShownMore(!isShownMore);
 
+  const toggleShowMore = () => setIsShownMore(!isShownMore);
   const { question, answer, buttons } = faqItem;
 
   return (
@@ -95,13 +96,14 @@ export default function FaqItem({ faqItem }: FaqItemProps) {
 
               if (cfg.modal) {
                 return (
-                  <MainButton
+                  <FormButton
                     key={btnKey}
                     variant="outline"
                     className="w-fit h-12 min-w-[210px] px-11"
+                    faq
                   >
                     {cfg.label}
-                  </MainButton>
+                  </FormButton>
                 );
               }
 

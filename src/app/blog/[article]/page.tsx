@@ -9,6 +9,7 @@ import { Suspense } from "react";
 import Loader from "@/components/shared/loader/Loader";
 import RecommendedPostsMobile from "@/components/articlePage/recommendedPosts/RecommendedPostsMobile";
 import RecommendedPostsDesktop from "@/components/articlePage/recommendedPosts/RecommendedPostsDesktop";
+import Breadcrumbs from "@/components/shared/breadcrumbs/Breadcrumbs";
 
 interface ArticlePageProps {
   params: Promise<{ article: string }>;
@@ -31,10 +32,25 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     return null;
   }
 
+  const { heroTitle, slug } = currentArticle;
+
+  const crumbs = [
+    { label: "Hjem", href: "/" },
+    {
+      label: "Blog",
+      href: "/blog",
+    },
+    {
+      label: heroTitle,
+      href: `/blog/${slug}`,
+    },
+  ];
+
   return (
     <>
       <Suspense fallback={<Loader />}>
         <Hero article={currentArticle} />
+        <Breadcrumbs crumbs={crumbs} />
         <Container className="lg:flex gap-8">
           <div>
             {currentArticle.content && (
