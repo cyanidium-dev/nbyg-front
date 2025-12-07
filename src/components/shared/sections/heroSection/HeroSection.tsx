@@ -1,4 +1,3 @@
-"use client";
 import * as motion from "motion/react-client";
 import { fadeInAnimation, headerVariants } from "@/utils/animationVariants";
 import type { HeroSection as HeroSectionData } from "@/types/page";
@@ -9,8 +8,7 @@ import { urlForSanityImage } from "@/utils/getUrlForSanityImage";
 import MainButton from "../../buttons/MainButton";
 import ShevronIcon from "../../icons/ShevronIcon";
 import Link from "next/link";
-import { useState } from "react";
-import ModalContactForm from "../../form/ModalContactForm";
+import FormButton from "../../buttons/FormButton";
 
 interface HeroSectionProps extends HeroSectionData {
   uniqueKey?: string;
@@ -27,7 +25,6 @@ const HeroSection = (_props: HeroSectionProps) => {
     showCalculatorRoofButton,
     uniqueKey,
   } = _props;
-  const [isModalShown, setIsModalShown] = useState(false);
 
   return (
     <>
@@ -95,9 +92,9 @@ const HeroSection = (_props: HeroSectionProps) => {
             className="flex flex-col sm:flex-row gap-3 sm:gap-[30px] sm:w-fit"
           >
             {showDiscussButton && (
-              <MainButton className="h-12 sm:w-[275px]" onClick={() => setIsModalShown(true)}>
+              <FormButton className="h-12 sm:w-[275px]">
                 Tryk her for at drofte projektet
-              </MainButton>
+              </FormButton>
             )}
             {showCalculatorTerraceButton && (
               <Link href="/calculator-terrasser">
@@ -116,10 +113,6 @@ const HeroSection = (_props: HeroSectionProps) => {
           </motion.div>
         </Container>
       </motion.section>
-      <ModalContactForm
-        isModalShown={isModalShown}
-        setIsModalShown={setIsModalShown}
-      />
     </>
   );
 };

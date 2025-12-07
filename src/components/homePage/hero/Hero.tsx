@@ -1,4 +1,3 @@
-"use client";
 import Container from "@/components/shared/container/Container";
 import MainButton from "@/components/shared/buttons/MainButton";
 import ShevronIcon from "@/components/shared/icons/ShevronIcon";
@@ -7,12 +6,9 @@ import * as motion from "motion/react-client";
 import { fadeInAnimation, headerVariants } from "@/utils/animationVariants";
 import PageTitle from "@/components/shared/titles/PageTitle";
 import Link from "next/link";
-import { useState } from "react";
-import ModalContactForm from "@/components/shared/form/ModalContactForm";
+import FormButton from "@/components/shared/buttons/FormButton";
 
 export default function Hero() {
-    const [isModalShown, setIsModalShown] = useState(false);
-
     return (
         <>
             <motion.section
@@ -102,25 +98,17 @@ export default function Hero() {
                         </motion.p>
                     </div>
                     <div className="flex flex-col gap-3 sm:flex-row sm:gap-[30px] sm:w-fit">
-                        <motion.div
-                            initial="hidden"
-                            whileInView="visible"
-                            exit="exit"
-                            viewport={{ once: true, amount: 0.3 }}
-                            variants={fadeInAnimation({
+                        <FormButton
+                            className="h-12 sm:w-[275px]"
+                            textClassName="tracking-[-0.02em]"
+                            animationVariants={fadeInAnimation({
                                 scale: 0.85,
                                 y: 50,
                                 delay: 0.8,
                             })}
                         >
-                            <MainButton
-                                className="h-12 sm:w-[275px]"
-                                textClassName="tracking-[-0.02em]"
-                                onClick={() => setIsModalShown(true)}
-                            >
-                                Tryk her for at drofte projektet
-                            </MainButton>
-                        </motion.div>
+                            Tryk her for at drofte projektet
+                        </FormButton>
                         <motion.div
                             initial="hidden"
                             whileInView="visible"
@@ -146,10 +134,6 @@ export default function Hero() {
                     </div>
                 </Container>
             </motion.section>
-            <ModalContactForm
-                isModalShown={isModalShown}
-                setIsModalShown={setIsModalShown}
-            />
         </>
     );
 }

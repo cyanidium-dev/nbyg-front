@@ -1,10 +1,11 @@
 "use client";
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 import * as motion from "motion/react-client";
 import { listItemVariantsLeft } from "@/utils/animationVariants";
 import ShevronIcon from "../../icons/ShevronIcon";
 import Link from "next/link";
 import MainButton from "../../buttons/MainButton";
+import FormButton from "../../buttons/FormButton";
 
 interface FaqItemProps {
   faqItem: {
@@ -13,7 +14,6 @@ interface FaqItemProps {
     answer: string;
     buttons?: string[];
   };
-  setIsModalShown?: Dispatch<SetStateAction<boolean>>;
 }
 
 const buttonConfig: Record<
@@ -38,7 +38,7 @@ const buttonConfig: Record<
   },
 };
 
-export default function FaqItem({ faqItem, setIsModalShown }: FaqItemProps) {
+export default function FaqItem({ faqItem }: FaqItemProps) {
   const [isShownMore, setIsShownMore] = useState(false);
 
   const toggleShowMore = () => setIsShownMore(!isShownMore);
@@ -96,14 +96,14 @@ export default function FaqItem({ faqItem, setIsModalShown }: FaqItemProps) {
 
               if (cfg.modal) {
                 return (
-                  <MainButton
+                  <FormButton
                     key={btnKey}
                     variant="outline"
                     className="w-fit h-12 min-w-[210px] px-11"
-                    onClick={() => setIsModalShown?.(true)}
+                    faq
                   >
                     {cfg.label}
-                  </MainButton>
+                  </FormButton>
                 );
               }
 

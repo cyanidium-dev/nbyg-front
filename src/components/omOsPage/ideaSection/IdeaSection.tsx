@@ -1,16 +1,12 @@
-"use client";
 import Container from "@/components/shared/container/Container";
 import SectionTitle from "@/components/shared/titles/SectionTitle";
 import Image from "next/image";
 import * as motion from "motion/react-client";
 import { fadeInAnimation } from "@/utils/animationVariants";
-import MainButton from "@/components/shared/buttons/MainButton";
 import IdeaSectionDecorations from "./IdeaSectionDecorations";
-import { useState } from "react";
-import ModalContactForm from "@/components/shared/form/ModalContactForm";
+import FormButton from "@/components/shared/buttons/FormButton";
 
 export default function IdeaSection() {
-  const [isModalShown, setIsModalShown] = useState(false);
   return (
     <>
       <section>
@@ -57,19 +53,7 @@ export default function IdeaSection() {
                 "Nbyg er en virksomhed, der ser på renovering gennem kundens øjne.\nEt firma, der ikke blot udfører håndværk, men lytter, forstår og skaber løsninger, hvor kvalitet, funktion og æstetik går hånd i hånd.\n\nVi tror på, at hvert hus og hver lejlighed er unik. Hvert rum har sin egen historie og karakter – og vores opgave er at bevare og fremhæve den.\n\nVi lægger stor vægt på bæredygtige løsninger, brugen af naturlige materialer og især arbejdet med træ, som giver varme, liv og harmoni til ethvert hjem.\n\nGennem årene er vi vokset til et team af erfarne håndværkere, der udfører projekter nøglefærdigt – fra små renoveringer til større fornyelser.\nMen det vigtigste har aldrig ændret sig: respekten for hjemmet, nærheden til kunden og arbejdet med hjertet.\n\nVi renoverer ikke bare – vi giver hjemmet liv igen, fyldt med varme og hygge."
               }
             </motion.p>
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              exit="exit"
-              viewport={{ once: true, amount: 0.1 }}
-              variants={fadeInAnimation({
-                scale: 0.85,
-
-                delay: 0.8,
-              })}
-            >
-              <MainButton className="h-[58px]" onClick={() => setIsModalShown(true)}>Kontakt os</MainButton>
-            </motion.div>
+            <FormButton className="h-[58px]" animationVariants={fadeInAnimation({ scale: 0.85, delay: 0.8 })}>Kontakt os</FormButton>
           </div>
           <motion.div
             key="desk"
@@ -95,10 +79,6 @@ export default function IdeaSection() {
           </motion.div>
         </Container>
       </section>
-      <ModalContactForm
-        isModalShown={isModalShown}
-        setIsModalShown={setIsModalShown}
-      />
-  </>
+    </>
   );
 }

@@ -1,16 +1,11 @@
-"use client";
 import Container from "@/components/shared/container/Container";
 import PageTitle from "@/components/shared/titles/PageTitle";
 import Image from "next/image";
 import * as motion from "motion/react-client";
 import { fadeInAnimation, headerVariants } from "@/utils/animationVariants";
-import MainButton from "@/components/shared/buttons/MainButton";
-import { useState } from "react";
-import ModalContactForm from "@/components/shared/form/ModalContactForm";
+import FormButton from "@/components/shared/buttons/FormButton";
 
 export default function Hero() {
-  const [isModalShown, setIsModalShown] = useState(false);
-
   return (
     <>
       <motion.section
@@ -66,24 +61,11 @@ export default function Hero() {
             holder i mange år. Uanset projektets størrelse får du en professionel
             samarbejdspartner, der går op i kvalitet, æstetik og detaljen.
           </motion.p>
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            exit="exit"
-            viewport={{ once: true, amount: 0.1 }}
-            variants={fadeInAnimation({ scale: 0.85, delay: 0.6 })}
-            className="w-full sm:w-fit"
-          >
-            <MainButton className="h-12 sm:w-[275px]" onClick={() => setIsModalShown(true)}>
-              Tryk her for at drofte projektet
-            </MainButton>
-          </motion.div>
+          <FormButton className="h-12 sm:w-[275px]" animationVariants={fadeInAnimation({ scale: 0.85, delay: 0.6 })}>
+            Tryk her for at drofte projektet
+          </FormButton>
         </Container>
       </motion.section>
-      <ModalContactForm
-        isModalShown={isModalShown}
-        setIsModalShown={setIsModalShown}
-      />
     </>
   );
 }

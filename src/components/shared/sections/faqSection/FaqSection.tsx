@@ -1,12 +1,9 @@
-"use client";
 import type { FaqSection as FaqSectionData } from "@/types/page";
 import SectionTitle from "../../titles/SectionTitle";
 import FaqList from "./FaqList";
 import * as motion from "motion/react-client";
 import { fadeInAnimation } from "@/utils/animationVariants";
 import FaqSectionImages from "./FaqSectionImages";
-import ModalContactForm from "../../form/ModalContactForm";
-import { useState } from "react";
 
 interface FaqSectionProps extends FaqSectionData {
   uniqueKey?: string;
@@ -14,7 +11,6 @@ interface FaqSectionProps extends FaqSectionData {
 
 const FaqSection = (_props: FaqSectionProps) => {
   const { description, items, uniqueKey } = _props;
-  const [isModalShown, setIsModalShown] = useState(false);
   return (
     <>
       <section className="relative flex flex-col gap-10 lg:gap-12 pt-25 lg:pt-[138px] lg:pb-[26px]">
@@ -40,12 +36,8 @@ const FaqSection = (_props: FaqSectionProps) => {
             </motion.p>
           ) : null}
         </div>
-        <FaqList faqList={items} uniqueKey={uniqueKey} setIsModalShown={setIsModalShown} />
+        <FaqList faqList={items} uniqueKey={uniqueKey} />
       </section>
-      <ModalContactForm
-        isModalShown={isModalShown}
-        setIsModalShown={setIsModalShown}
-      />
     </>
   );
 };
