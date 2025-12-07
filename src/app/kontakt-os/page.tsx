@@ -2,14 +2,24 @@ import ContactsBlock from "@/components/kontactOsPage/ContactsBlock";
 import ContactFormBlock from "@/components/kontactOsPage/ContactFormBlock";
 import Hero from "@/components/kontactOsPage/Hero";
 import Container from "@/components/shared/container/Container";
+import Breadcrumbs from "@/components/shared/breadcrumbs/Breadcrumbs";
 import * as motion from "motion/react-client";
 import { fadeInAnimation } from "@/utils/animationVariants";
 import Image from "next/image";
 
 export default function KontaktOsPage() {
+    const crumbs = [
+        { label: "Hjem", href: "/" },
+        {
+            label: "Kontakt os",
+            href: "/kontakt-os",
+        },
+    ];
+
     return (
         <>
             <Hero />
+            <Breadcrumbs crumbs={crumbs} />
             <Container className="relative">
                 <motion.div
                     variants={fadeInAnimation({ delay: 0.9, scale: 0.8 })}
