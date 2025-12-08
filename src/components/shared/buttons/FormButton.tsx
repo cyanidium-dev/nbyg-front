@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, ReactNode, useEffect } from "react";
-import ModalContactForm from "../form/ModalContactForm";
+import ModalContactForm from "../form/ModalContactForm.lazy";
 import MainButton from "./MainButton";
 import * as motion from "motion/react-client";
 import { Variants } from "framer-motion";
@@ -70,13 +70,15 @@ export default function FormButton({
             ) : (
                 buttonElement
             )}
-            {faq && isMounted ? createPortal(
-                <ModalContactForm
-                    isModalShown={isModalShown}
-                    setIsModalShown={setIsModalShown}
-                />,
-                document.body
-            ):(
+            {faq && isMounted ? (
+                createPortal(
+                    <ModalContactForm
+                        isModalShown={isModalShown}
+                        setIsModalShown={setIsModalShown}
+                    />,
+                    document.body
+                )
+            ) : (
                 <ModalContactForm
                     isModalShown={isModalShown}
                     setIsModalShown={setIsModalShown}

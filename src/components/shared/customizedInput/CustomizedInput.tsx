@@ -9,6 +9,7 @@ import { useId } from "react";
 import clsx from "clsx";
 import { twMerge } from "tailwind-merge";
 import PhoneInput from "react-phone-number-input";
+import "react-phone-number-input/style.css";
 import ShevronIcon from "../icons/ShevronIcon";
 
 interface Values {
