@@ -75,7 +75,7 @@ export default function GalleryModal({
             swiperClassName="gallery-modal w-full h-full"
             showNavigation={true}
             buttonsPosition="onSlides"
-            buttonsClassName="absolute z-10 top-[calc(50%-27px)] md:top-[calc(50%-27px+22px)] left-0 
+            buttonsClassName="absolute z-30 top-[calc(50%-27px)] md:top-[calc(50%-27px+22px)] left-0 
           lg:left-[calc(50%-492px)] w-full lg:w-[984px]"
             uniqueKey={`${uniqueKey}-gallery-modal`}
             additionalOptions={{}}
