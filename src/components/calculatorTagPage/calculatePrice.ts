@@ -29,53 +29,56 @@ function getOptionalNumberValue(field: FormFieldValue): number {
 
 export function calculatePriceForTagtype(
     tagtypeLabel: string,
-    basePrice: number,
+    tagtypePrice: number,
     values: FormValues
 ): PriceCalculation {
     const area = getNumberValue(values.area);
-
-    const formExtra = getPrice(values.tagform);
-
-    const angleExtra = getPrice(values.hældning);
+    const formPrice = getPrice(values.tagform);
+    const anglePrice = getPrice(values.hældning);
 
     const indtastGrader = getOptionalNumberValue(values.indtastGrader);
-    const actualAngleExtra = indtastGrader > 30 ? 15 : angleExtra;
+    const actualAnglePrice = indtastGrader > 30 ? 15 : anglePrice;
 
-    const pricePerM2 = basePrice + formExtra + actualAngleExtra;
-
-    const roofCost = area * pricePerM2;
+    const roofCost = (tagtypePrice + formPrice + actualAnglePrice) * area;
 
     const windowValue = getNumberValue(values.antalOvenlysvinduer);
     const windowNumber = getOptionalNumberValue(values.indtastAntalVinduer);
-    const totalWindows = windowNumber > 20 ? windowNumber : windowValue;
-    const windowPrice = getPrice(values.antalOvenlysvinduer);
-    const windowsCost = totalWindows * windowPrice;
+    const antalOvenlysvinduer = windowNumber > 20 ? windowNumber : windowValue;
+    const antalOvenlysvinduerPrice = getPrice(values.antalOvenlysvinduer);
+    const antalOvenlysvinduerCost =
+        antalOvenlysvinduerPrice * antalOvenlysvinduer;
 
     const kvistValue = getNumberValue(values.antalKviste);
     const kvistNumber = getOptionalNumberValue(values.indtastAntalKviste);
-    const totalKvists = kvistNumber > 6 ? kvistNumber : kvistValue;
-    const kvistPrice = getPrice(values.antalKviste);
-    const kvistsCost = totalKvists * kvistPrice;
+    const antalKviste = kvistNumber > 6 ? kvistNumber : kvistValue;
+    const antalKvistePrice = getPrice(values.antalKviste);
+    const antalKvisteCost = antalKvistePrice * antalKviste;
 
-    const gutterMeters = getNumberValue(values.antalMeterTagrender);
-    const gutterPrice = getPrice(values.antalMeterTagrender);
-    const gutterCost = gutterMeters * gutterPrice;
+    const antalMeterVindskeder = getNumberValue(values.antalMeterVindskeder);
+    const antalMeterVindskederPrice = getPrice(values.antalMeterVindskeder);
+    const antalMeterVindskederCost =
+        antalMeterVindskederPrice * antalMeterVindskeder;
 
-    const windMeters = getNumberValue(values.antalMeterVindskeder);
-    const windPrice = getPrice(values.antalMeterVindskeder);
-    const windCost = windMeters * windPrice;
+    const antalMeterTagrender = getNumberValue(values.antalMeterTagrender);
+    const antalMeterTagrenderPrice = getPrice(values.antalMeterTagrender);
+    const antalMeterTagrenderCost =
+        antalMeterTagrenderPrice * antalMeterTagrender;
 
-    const extrasCost = windowsCost + kvistsCost + gutterCost + windCost;
+    const extrasCost =
+        antalOvenlysvinduerCost +
+        antalKvisteCost +
+        antalMeterVindskederCost +
+        antalMeterTagrenderCost;
 
     const total = roofCost + extrasCost;
 
     return {
         tagtypeLabel,
-        basePrice,
+        basePrice: tagtypePrice,
         area,
-        formExtra,
-        angleExtra: actualAngleExtra,
-        pricePerM2,
+        formExtra: formPrice,
+        angleExtra: actualAnglePrice,
+        pricePerM2: tagtypePrice + formPrice + actualAnglePrice,
         roofCost,
         extrasCost,
         total,

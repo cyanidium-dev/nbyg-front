@@ -137,7 +137,7 @@ export const RadioInput = ({
                       ref={numberInputRef}
                       id={option.id}
                       label={option.label}
-                      value={numberValue ?? option.min}
+                      value={numberValue ?? 0}
                       onChange={value => {
                         if (onNumberChange) {
                           onNumberChange(option.id, {
