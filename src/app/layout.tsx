@@ -48,13 +48,11 @@ export default async function RootLayout({
   return (
     <html lang="da" className="scroll-smooth">
       <head>
-        <head>
-          <Script
-            id="cookieyes"
-            strategy="afterInteractive"
-            src="https://cdn-cookieyes.com/client_data/7c7a0eb91418e9ba2c9158d6458a8d19/script.js"
-          />
-        </head>
+        <Script
+          id="cookieyes"
+          strategy="afterInteractive"
+          src="https://cdn-cookieyes.com/client_data/7c7a0eb91418e9ba2c9158d6458a8d19/script.js"
+        />
       </head>
       <body
         className={`${geistSans.variable} ${findSans.variable} flex min-h-screen flex-col antialiased text-[14px] lg:text-[16px] font-light 
