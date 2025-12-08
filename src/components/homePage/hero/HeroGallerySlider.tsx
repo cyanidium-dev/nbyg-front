@@ -36,8 +36,8 @@ export default function HeroGallerySlider({ images }: HeroGallerySliderProps) {
                         fill
                         className="object-cover"
                         sizes="100vw"
-                        priority
-                        fetchPriority="high"
+                        priority={index === 0 ? true : false}
+                        fetchPriority={index === 0 ? "high" : "auto"}
                         placeholder="blur"
                         blurDataURL={image.blurDataURL}
                     />
