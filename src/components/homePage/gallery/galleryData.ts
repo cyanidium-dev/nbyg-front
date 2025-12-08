@@ -12,6 +12,10 @@ export const galleryData = [
         image: "/images/homePage/gallery/gallery-3.webp",
     },
     {
+        _key: "4",
+        image: "/images/homePage/gallery/gallery-4.webp",
+    },
+    {
         _key: "5",
         image: "/images/homePage/gallery/gallery-5.webp",
     },
@@ -20,8 +24,16 @@ export const galleryData = [
         image: "/images/homePage/gallery/gallery-6.webp",
     },
     {
+        _key: "7",
+        image: "/images/homePage/gallery/gallery-7.webp",
+    },
+    {
         _key: "8",
         image: "/images/homePage/gallery/gallery-8.webp",
+    },
+    {
+        _key: "9",
+        image: "/images/homePage/gallery/gallery-9.webp",
     },
     {
         _key: "10",
