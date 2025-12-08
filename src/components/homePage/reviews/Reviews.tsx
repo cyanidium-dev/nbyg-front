@@ -1,7 +1,7 @@
 import Container from "../../shared/container/Container";
 import SectionTitle from "../../shared/titles/SectionTitle";
 import { reviewsData } from "./reviewsData";
-import ReviewsBlock from "./ReviewsBlock";
+import ReviewsBlock from "./ReviewsBlock.lazy";
 import Image from "next/image";
 import ReviewsDecorations from "./ReviewsDecorations";
 import { fadeInAnimation } from "@/utils/animationVariants";

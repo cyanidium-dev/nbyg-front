@@ -1,5 +1,5 @@
 import Container from "@/components/shared/container/Container";
-import GallerySlider from "@/components/shared/sections/gallerySection/GallerySlider";
+import GallerySlider from "@/components/shared/sections/gallerySection/GallerySlider.lazy";
 import SectionTitle from "@/components/shared/titles/SectionTitle";
 import * as motion from "motion/react-client";
 import { fadeInAnimation } from "@/utils/animationVariants";
