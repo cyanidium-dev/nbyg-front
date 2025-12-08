@@ -4,33 +4,25 @@ import CheckboxCard from "./CheckboxCard";
 import ImageCard from "./ImageCard";
 import NumberInput from "./NumberInput";
 import { useRef } from "react";
+import type {
+    RadioOption,
+    SingleSelectFieldValue,
+    OptionalFieldValue,
+    FormValues,
+} from "@/types/calculatorTag";
 
 interface RadioInputProps {
     id: string;
     title: string;
     description?: string;
-    options: {
-        id: string;
-        label: string;
-        value?: string | number;
-        type?: "image" | "number";
-        variant?: "hidden";
-        image?: {
-            link: string;
-            priority?: boolean;
-        };
-        min?: number;
-        max?: number;
-    }[];
-    selectedOptionValue?: string;
-    numberValue?: number;
-    onChange: (
-        id: string,
-        optionId: string,
-        optionLabel: string,
-        optionValue: number
+    options: RadioOption[];
+    selectedValue?: SingleSelectFieldValue;
+    values?: FormValues;
+    onChange: (id: string, value: SingleSelectFieldValue) => void;
+    onNumberChange?: (
+        numberFieldId: string,
+        value: OptionalFieldValue | undefined
     ) => void;
-    onNumberChange?: (numberFieldId: string, value: number) => void;
 }
 
 export const RadioInput = ({
@@ -38,12 +30,30 @@ export const RadioInput = ({
     title,
     description,
     options,
-    selectedOptionValue,
-    numberValue,
+    selectedValue,
+    values,
     onChange,
     onNumberChange,
 }: RadioInputProps) => {
     const numberInputRef = useRef<HTMLInputElement>(null);
+
+    const numberOption = options.find(
+        opt => "type" in opt && opt.type === "number"
+    ) as
+        | {
+              id: string;
+              label: string;
+              type: "number";
+              variant?: "hidden";
+              min?: number;
+              max?: number;
+          }
+        | undefined;
+
+    const selectedOptionValue = selectedValue?.label;
+    const numberValue = numberOption
+        ? (values?.[numberOption.id] as OptionalFieldValue | undefined)?.value
+        : undefined;
     return (
         <>
             {title && (
@@ -75,8 +85,7 @@ export const RadioInput = ({
         md:grid-cols-[repeat(4,minmax(157px,1fr))] gap-x-[14px] gap-y-6 lg:gap-6 border-none p-0 m-0 justify-items-center"
             >
                 {options.map((option, index) => {
-                    // Handle image type options
-                    if (option.type === "image" && option.image) {
+                    if ("type" in option && option.type === "image") {
                         return (
                             <motion.div
                                 key={option.id}
@@ -100,14 +109,14 @@ export const RadioInput = ({
                         );
                     }
 
-                    // Handle number type options
-                    if (
-                        option.type === "number" &&
-                        option.min !== undefined &&
-                        option.max !== undefined &&
-                        onNumberChange
-                    ) {
-                        // Show if variant is not "hidden", or if variant is "hidden" and "31-50 grader" is selected
+                    if ("type" in option && option.type === "number") {
+                        if (
+                            option.min === undefined ||
+                            option.max === undefined
+                        ) {
+                            return null;
+                        }
+
                         const shouldShow =
                             option.variant !== "hidden" ||
                             (option.variant === "hidden" &&
@@ -135,7 +144,10 @@ export const RadioInput = ({
                                     value={numberValue ?? option.min}
                                     onChange={value => {
                                         if (onNumberChange) {
-                                            onNumberChange(option.id, value);
+                                            onNumberChange(option.id, {
+                                                label: option.label,
+                                                value: value,
+                                            });
                                         }
                                     }}
                                     min={option.min}
@@ -145,19 +157,26 @@ export const RadioInput = ({
                         );
                     }
 
-                    // Handle regular radio options
-                    const optionValue = option.value ?? option.id;
+                    if (!("image" in option) || !option.image) return null;
+
+                    const optionPrice =
+                        "price" in option ? (option.price ?? 0) : 0;
                     const isSelected = selectedOptionValue === option.label;
 
-                    if (!option.image) return null;
-
                     const handleRadioChange = () => {
-                        onChange(
-                            id,
-                            option.id,
-                            option.label,
-                            typeof optionValue === "number" ? optionValue : 100
-                        );
+                        onChange(id, {
+                            summaryLabel: "",
+                            label: option.label,
+                            price: optionPrice,
+                        });
+
+                        if (
+                            option.id === "0-30 grader" &&
+                            numberOption &&
+                            onNumberChange
+                        ) {
+                            onNumberChange(numberOption.id, undefined);
+                        }
                     };
 
                     return (
@@ -178,7 +197,7 @@ export const RadioInput = ({
                                 id={option.id}
                                 name={id}
                                 label={option.label}
-                                value={option.id}
+                                price={optionPrice}
                                 image={option.image}
                                 isSelected={isSelected}
                                 type="radio"

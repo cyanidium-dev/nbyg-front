@@ -1,24 +1,17 @@
 import * as motion from "motion/react-client";
 import { fadeInAnimation } from "@/utils/animationVariants";
 import CheckboxCard from "./CheckboxCard";
+import type { CheckboxOption } from "@/types/calculatorTag";
 
 interface CheckboxInputProps {
     id: string;
     title: string;
     description?: string;
-    options: {
-        id: string;
-        label: string;
-        value: number;
-        image: {
-            link: string;
-            priority?: boolean;
-        };
-    }[];
-    selectedValues?: string[];
+    options: CheckboxOption[];
+    selectedValues?: Array<{ label: string; price: number }>;
     onChange: (
         id: string,
-        updatedSelectedValues: Array<{ label: string; value: number }>
+        updatedSelectedValues: Array<{ label: string; price: number }>
     ) => void;
 }
 
@@ -30,6 +23,15 @@ export default function CheckboxInput({
     selectedValues,
     onChange,
 }: CheckboxInputProps) {
+    const selectedOptionIds = new Set(
+        selectedValues
+            ?.map(v => {
+                const option = options.find(opt => opt.label === v.label);
+                return option?.id;
+            })
+            .filter(Boolean) ?? []
+    );
+
     return (
         <>
             {title && (
@@ -61,28 +63,27 @@ export default function CheckboxInput({
         md:grid-cols-[repeat(4,minmax(157px,1fr))] gap-x-[14px] gap-y-6 lg:gap-6 border-none p-0 m-0 justify-items-center"
             >
                 {options.map((option, index) => {
-                    const isSelected =
-                        selectedValues?.includes(option.label) ?? false;
+                    const isSelected = selectedOptionIds.has(option.id);
 
                     const handleChange = () => {
-                        const currentSelectedLabels = selectedValues ?? [];
-                        const updatedSelectedLabels = isSelected
-                            ? currentSelectedLabels.filter(
-                                  v => v !== option.label
-                              )
-                            : [...currentSelectedLabels, option.label];
+                        const currentSelectedValues = selectedValues ?? [];
 
-                        // Build array of {label, value} for selected options
-                        const updatedSelectedValues = options
-                            .filter(opt =>
-                                updatedSelectedLabels.includes(opt.label)
-                            )
-                            .map(opt => ({
-                                label: opt.label,
-                                value: opt.value,
-                            }));
-
-                        onChange(id, updatedSelectedValues);
+                        if (isSelected) {
+                            const updatedSelectedValues =
+                                currentSelectedValues.filter(
+                                    v => v.label !== option.label
+                                );
+                            onChange(id, updatedSelectedValues);
+                        } else {
+                            const updatedSelectedValues = [
+                                ...currentSelectedValues,
+                                {
+                                    label: option.label,
+                                    price: option.price ?? 0,
+                                },
+                            ];
+                            onChange(id, updatedSelectedValues);
+                        }
                     };
 
                     return (
@@ -103,7 +104,7 @@ export default function CheckboxInput({
                                 id={option.id}
                                 name={id}
                                 label={option.label}
-                                value={option.id}
+                                price={option.price ?? 0}
                                 image={option.image}
                                 isSelected={isSelected}
                                 onChange={handleChange}

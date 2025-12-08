@@ -12,56 +12,63 @@ export const fieldsData = [
                 label: "Ståltag",
                 image: {
                     link: "/images/calculatorTagPage/staltag.webp",
+                    priority: true,
                 },
-                value: 850,
+                price: 850,
             },
             {
                 id: "eternittag",
                 label: "Eternittag",
                 image: {
                     link: "/images/calculatorTagPage/eternittag.webp",
+                    priority: true,
                 },
-                value: 800,
+                price: 800,
             },
             {
                 id: "skiferTag",
                 label: "Skifer tag",
                 image: {
                     link: "/images/calculatorTagPage/skiferTag.webp",
+                    priority: true,
                 },
-                value: 1600,
+                price: 1600,
             },
             {
                 id: "tagpapTag",
                 label: "Tagpap tag",
                 image: {
                     link: "/images/calculatorTagPage/tagpapTag.webp",
+                    priority: true,
                 },
-                value: 900,
+                price: 900,
             },
             {
                 id: "tegletag",
                 label: "Tegltag",
                 image: {
                     link: "/images/calculatorTagPage/tegletag.webp",
+                    priority: true,
                 },
-                value: 1100,
+                price: 1100,
             },
             {
                 id: "traditionelDanskRodTegl",
                 label: "Traditionel dansk rød tegl",
                 image: {
                     link: "/images/calculatorTagPage/traditionelDanskRodTegl.webp",
+                    priority: true,
                 },
-                value: 1400,
+                price: 1400,
             },
             {
                 id: "trapezogtermotag",
                 label: "Trapez og termotag",
                 image: {
                     link: "/images/calculatorTagPage/trapezogtermotag.webp",
+                    priority: true,
                 },
-                value: 350,
+                price: 350,
             },
         ],
     },
@@ -77,7 +84,7 @@ export const fieldsData = [
                 image: {
                     link: "/images/calculatorTagPage/pulttag.webp",
                 },
-                value: 100,
+                price: 0,
             },
             {
                 id: "sadeltag",
@@ -85,7 +92,7 @@ export const fieldsData = [
                 image: {
                     link: "/images/calculatorTagPage/sadeltag.webp",
                 },
-                value: 100,
+                price: 0,
             },
             {
                 id: "pyramidetag",
@@ -93,7 +100,7 @@ export const fieldsData = [
                 image: {
                     link: "/images/calculatorTagPage/pyramidetag.webp",
                 },
-                value: 100,
+                price: 100,
             },
             {
                 id: "halvvalmettag",
@@ -101,7 +108,7 @@ export const fieldsData = [
                 image: {
                     link: "/images/calculatorTagPage/halvvalmettag.webp",
                 },
-                value: 100,
+                price: 100,
             },
             {
                 id: "helvalmettag",
@@ -109,7 +116,7 @@ export const fieldsData = [
                 image: {
                     link: "/images/calculatorTagPage/helvalmettag.webp",
                 },
-                value: 100,
+                price: 100,
             },
             {
                 id: "komplektSadeltag",
@@ -117,7 +124,7 @@ export const fieldsData = [
                 image: {
                     link: "/images/calculatorTagPage/komplektSadeltag.webp",
                 },
-                value: 100,
+                price: 100,
             },
             {
                 id: "mansardtTag",
@@ -125,7 +132,7 @@ export const fieldsData = [
                 image: {
                     link: "/images/calculatorTagPage/mansardtTag.webp",
                 },
-                value: 100,
+                price: 100,
             },
             {
                 id: "fladtTag",
@@ -133,7 +140,7 @@ export const fieldsData = [
                 image: {
                     link: "/images/calculatorTagPage/fladtTag.webp",
                 },
-                value: 100,
+                price: 0,
             },
         ],
     },
@@ -143,7 +150,7 @@ export const fieldsData = [
         title: "Angiv tagets størrelse i m²",
         description: "Angiv tagets areal i m² – eller brug skyderen nedenfor.",
         summaryLabel: "Tagets størrelse",
-        options: { min: 5, max: 500 },
+        options: { min: 50, max: 500 },
     },
     {
         id: "hældning",
@@ -157,7 +164,7 @@ export const fieldsData = [
                 image: {
                     link: "/images/calculatorTagPage/0-30grader.webp",
                 },
-                value: 100,
+                price: 0,
             },
             {
                 id: "31-50 grader",
@@ -165,7 +172,7 @@ export const fieldsData = [
                 image: {
                     link: "/images/calculatorTagPage/31-50grader.webp",
                 },
-                value: 100,
+                price: 15,
             },
             {
                 id: "graderChart",
@@ -191,9 +198,10 @@ export const fieldsData = [
         title: "Vælg antal ovenlysvinduer",
         description: "Vejledende pris for montering, ekskl. vinduets pris.",
         summaryLabel: "Antal ovenlysvinduer",
-        value: 100,
+        price: 2995,
         options: [
             {
+                type: "select",
                 min: 0,
                 max: 20,
                 step: 1,
@@ -212,9 +220,10 @@ export const fieldsData = [
         type: "dropdown",
         title: "Vælg antal kviste",
         summaryLabel: "Antal kviste",
-        value: 100,
+        price: 19995,
         options: [
             {
+                type: "select",
                 min: 0,
                 max: 6,
                 step: 1,
@@ -236,7 +245,7 @@ export const fieldsData = [
             "Skriv cirka, hvor mange meter vindskeder der er på dit tag.",
         summaryLabel: "Meter vindskeder",
         hint: "Du kan sagtens springe dette felt over, hvis du ikke har målene lige ved hånden.",
-        value: 100,
+        price: 99,
     },
     {
         id: "antalMeterTagrender",
@@ -246,6 +255,6 @@ export const fieldsData = [
             "Skriv cirka, hvor mange meter tagrender der er på dit hus.",
         summaryLabel: "Meter tagrender",
         hint: "Du kan sagtens springe dette felt over, hvis du ikke har målene lige ved hånden.",
-        value: 100,
+        price: 199,
     },
 ];

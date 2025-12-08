@@ -4,66 +4,92 @@ import { fadeInAnimation } from "@/utils/animationVariants";
 import * as motion from "motion/react-client";
 import NumberInput from "./NumberInput";
 import ShevronIcon from "../shared/icons/ShevronIcon";
+import type {
+    DropdownOption,
+    NumberFieldValue,
+    OptionalFieldValue,
+    FormValues,
+} from "@/types/calculatorTag";
 
 interface DropdownInputProps {
     id: string;
     title: string;
     description?: string;
-    dropdownOptions: {
-        min: number;
-        max: number;
-        step: number;
-    };
-    moreOption?: {
-        id: string;
-        label: string;
-        min: number;
-        max?: number;
-    };
-    selectedValue?: number;
-    onChange: (value: number) => void;
-    onNumberChange?: (numberFieldId: string, value: number) => void;
+    options: DropdownOption[];
+    selectedValue?: NumberFieldValue;
+    values?: FormValues;
+    onChange: (id: string, value: NumberFieldValue) => void;
+    onNumberChange?: (numberFieldId: string, value: OptionalFieldValue) => void;
 }
 
 export default function DropdownInput({
     id,
     title,
     description,
-    dropdownOptions,
-    moreOption,
+    options,
     selectedValue,
+    values,
     onChange,
     onNumberChange,
 }: DropdownInputProps) {
     const numberInputRef = useRef<HTMLInputElement>(null);
 
-    const { min, max, step } = dropdownOptions;
+    const selectOption = options.find(
+        opt => "type" in opt && opt.type === "select"
+    ) as
+        | {
+              type: "select";
+              min: number;
+              max: number;
+              step: number;
+          }
+        | undefined;
+
+    const numberOption = options.find(
+        opt => "type" in opt && opt.type === "number"
+    ) as
+        | {
+              id: string;
+              label: string;
+              type: "number";
+              variant?: "hidden";
+              min?: number;
+              max?: number;
+          }
+        | undefined;
+
+    if (!selectOption) return null;
+
+    const { min, max, step } = selectOption;
     const dropdownValues: number[] = [];
     for (let i = min; i <= max; i += step) {
         dropdownValues.push(i);
     }
 
-    // Determine if "more" is selected
-    const isMoreSelected =
-        moreOption && typeof selectedValue === "number" && selectedValue > max;
+    const currentValue = selectedValue?.value ?? 0;
+    const isMoreSelected = numberOption && currentValue > max;
+    const numberValue = numberOption
+        ? (values?.[numberOption.id] as OptionalFieldValue | undefined)?.value
+        : undefined;
 
     const handleDropdownChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const value = e.target.value;
         if (value === "more") {
-            // When "more" is selected, set the value to max + 1 to trigger the number input
-            // The actual value will be set when user enters a number
-            onChange(max + 1);
+            onChange(id, {
+                summaryLabel: "",
+                value: max + 1,
+            });
         } else {
-            onChange(Number(value));
+            onChange(id, {
+                summaryLabel: "",
+                value: Number(value),
+            });
         }
     };
 
-    // Determine current dropdown value - default to 0 if no value selected
-    const currentValue = isMoreSelected
+    const currentDropdownValue = isMoreSelected
         ? "more"
-        : typeof selectedValue === "number"
-          ? String(selectedValue)
-          : String(min);
+        : String(currentValue || min);
 
     return (
         <>
@@ -102,7 +128,7 @@ export default function DropdownInput({
                 <select
                     id={id}
                     name={id}
-                    value={currentValue}
+                    value={currentDropdownValue}
                     onChange={handleDropdownChange}
                     className="w-full h-12 rounded-full border border-gradient-brown px-8 pr-12 py-1.5 text-[18px] leading-[125%] bg-transparent text-white appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-gradient-brown"
                 >
@@ -115,7 +141,7 @@ export default function DropdownInput({
                             {value}
                         </option>
                     ))}
-                    {moreOption && (
+                    {numberOption && (
                         <option value="more" className="bg-black text-white">
                             Mere
                         </option>
@@ -125,7 +151,7 @@ export default function DropdownInput({
                     <ShevronIcon className="size-5 text-white rotate-180" />
                 </div>
             </motion.div>
-            {isMoreSelected && moreOption && onNumberChange && (
+            {isMoreSelected && numberOption && onNumberChange && (
                 <motion.div
                     initial="hidden"
                     animate="visible"
@@ -134,21 +160,28 @@ export default function DropdownInput({
                 >
                     <NumberInput
                         ref={numberInputRef}
-                        id={moreOption.id}
-                        label={moreOption.label}
+                        id={numberOption.id}
+                        label={numberOption.label}
                         value={
-                            typeof selectedValue === "number" &&
-                            selectedValue > max
-                                ? selectedValue
-                                : moreOption.min
+                            numberValue ??
+                            (numberOption.min !== undefined
+                                ? numberOption.min
+                                : max + 1)
                         }
                         onChange={value => {
                             if (onNumberChange) {
-                                onNumberChange(moreOption.id, value);
+                                onNumberChange(numberOption.id, {
+                                    label: numberOption.label,
+                                    value: value,
+                                });
                             }
+                            onChange(id, {
+                                summaryLabel: "",
+                                value: value,
+                            });
                         }}
-                        min={moreOption.min}
-                        max={moreOption.max || 1000}
+                        min={numberOption.min ?? max + 1}
+                        max={numberOption.max ?? 1000}
                     />
                 </motion.div>
             )}

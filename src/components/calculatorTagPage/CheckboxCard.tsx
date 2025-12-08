@@ -5,8 +5,8 @@ interface CheckboxCardProps {
     id: string;
     name: string;
     label: string;
-    value: string;
-    image: {
+    price: number;
+    image?: {
         link: string;
         priority?: boolean;
     };
@@ -19,7 +19,7 @@ export default function CheckboxCard({
     id,
     name,
     label,
-    value,
+    price,
     image,
     isSelected,
     type = "checkbox",
@@ -39,20 +39,22 @@ export default function CheckboxCard({
                 type={type}
                 id={id}
                 name={name}
-                value={value}
+                value={price}
                 checked={isSelected}
                 onChange={() => onChange()}
                 className="hidden"
             />
-            <div className="relative mb-1 xl:mb-2 aspect-square w-full overflow-hidden rounded-[4px] lg:rounded-[12px]">
-                <Image
-                    src={image.link}
-                    alt={id}
-                    fill
-                    className="object-cover"
-                    priority={image.priority}
-                />
-            </div>
+            {image && (
+                <div className="relative mb-1 xl:mb-2 aspect-square w-full overflow-hidden rounded-[4px] lg:rounded-[12px]">
+                    <Image
+                        src={image.link}
+                        alt={id}
+                        fill
+                        className="object-cover"
+                        priority={image.priority}
+                    />
+                </div>
+            )}
             <div className="flex grow items-center gap-2 p-[6px] xl:p-2 lg:px-2 lg:py-2 min-h-[43px]">
                 <div
                     className={`flex size-4 shrink-0 items-center justify-center rounded-[4px] border border-white transition duration-250 ease-in-out ${

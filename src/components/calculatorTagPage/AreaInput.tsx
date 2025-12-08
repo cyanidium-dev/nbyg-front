@@ -6,19 +6,23 @@ import NumberInput from "./NumberInput";
 
 interface AreaInputProps {
     value: number;
+    min: number;
+    max: number;
     onChange: (value: number) => void;
 }
 
-export default function AreaInput({ value, onChange }: AreaInputProps) {
+export default function AreaInput({
+    value,
+    min,
+    max,
+    onChange,
+}: AreaInputProps) {
     const [isDragging, setIsDragging] = useState(false);
     const [localValue, setLocalValue] = useState(value);
     const rangeRef = useRef<HTMLInputElement>(null);
     const popupRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
     const prevValueRef = useRef(value);
-
-    const min = 5;
-    const max = 500;
 
     useEffect(() => {
         if (!isDragging && prevValueRef.current !== value) {

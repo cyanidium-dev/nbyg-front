@@ -1,37 +1,12 @@
 "use client";
+import { useMemo } from "react";
 import {
     fadeInAnimation,
     listVariants,
     listItemVariantsLeft,
 } from "@/utils/animationVariants";
 import * as motion from "motion/react-client";
-
-interface FieldData {
-    value: string | number;
-    label: string;
-    category: string;
-    labels?: string[]; // For checkbox fields with multiple labels
-}
-
-type FormFieldValue =
-    | {
-          summaryLabel: string;
-          values: Array<{ label: string; value: number }>;
-      }
-    | {
-          summaryLabel: string;
-          label: string;
-          value: number;
-      }
-    | {
-          summaryLabel: string;
-          value: number;
-      }
-    | {
-          label: string;
-          value: number;
-      }
-    | undefined;
+import type { FieldData, FormFieldValue } from "@/types/calculatorTag";
 
 interface SummaryProps {
     values: Record<string, FormFieldValue>;
@@ -43,148 +18,159 @@ interface SummaryProps {
     }>;
 }
 
+const optionalFieldsMap: Record<string, string[]> = {
+    hældning: ["indtastGrader"],
+    antalOvenlysvinduer: ["indtastAntalVinduer"],
+    antalKviste: ["indtastAntalKviste"],
+};
+
 export default function Summary({ values, fieldsData }: SummaryProps) {
-    // Collect all field data entries in page order
-    const allFieldData: FieldData[] = [];
+    const allFieldData: FieldData[] = useMemo(() => {
+        const data: FieldData[] = [];
 
-    // Map of parent field ID to optional field IDs
-    const optionalFieldsMap: Record<string, string[]> = {
-        hældning: ["indtastGrader"],
-        antalOvenlysvinduer: ["indtastAntalVinduer"],
-        antalKviste: ["indtastAntalKviste"],
-    };
+        fieldsData.forEach(fieldConfig => {
+            const fieldId = fieldConfig.id;
+            const fieldValue = values[fieldId];
 
-    fieldsData.forEach(fieldConfig => {
-        const fieldId = fieldConfig.id;
-        const fieldValue = values[fieldId];
+            if (!fieldValue) return;
 
-        // Skip if no value
-        if (!fieldValue) return;
-
-        // Handle checkbox fields (tagtype) - single row with all labels in column
-        if ("values" in fieldValue && Array.isArray(fieldValue.values)) {
-            if (fieldValue.values.length > 0) {
-                allFieldData.push({
-                    value: fieldValue.values.map(v => v.value).join(","),
-                    label: fieldValue.values[0].label, // First label as fallback
-                    category: fieldValue.summaryLabel,
-                    labels: fieldValue.values.map(v => v.label), // All labels for vertical display
-                });
-            }
-            return;
-        }
-
-        // Handle single select fields (radio) - has label and value
-        if ("label" in fieldValue && "summaryLabel" in fieldValue) {
-            allFieldData.push({
-                value: fieldValue.value,
-                label: fieldValue.label,
-                category: fieldValue.summaryLabel,
-            });
-
-            // Add optional fields right after parent field
-            const optionalFieldIds = optionalFieldsMap[fieldId] || [];
-            optionalFieldIds.forEach(optionalFieldId => {
-                const optionalValue = values[optionalFieldId];
-                if (
-                    optionalValue &&
-                    "label" in optionalValue &&
-                    "value" in optionalValue &&
-                    !("summaryLabel" in optionalValue) &&
-                    optionalValue.value > 0
-                ) {
-                    allFieldData.push({
-                        value: optionalValue.value,
-                        label: String(optionalValue.value),
-                        category: optionalValue.label,
+            if ("values" in fieldValue && Array.isArray(fieldValue.values)) {
+                if (fieldValue.values.length > 0) {
+                    data.push({
+                        value: fieldValue.values.map(v => v.price).join(","),
+                        label: fieldValue.values[0].label,
+                        category: fieldValue.summaryLabel,
+                        labels: fieldValue.values.map(v => v.label),
                     });
                 }
-            });
-            return;
-        }
+                return;
+            }
 
-        // Handle number fields (area, number inputs) - has summaryLabel and value
-        if ("summaryLabel" in fieldValue && "value" in fieldValue) {
-            let label: string;
-
-            // Check if this is a dropdown field with value over max
             if (
-                fieldConfig.type === "dropdown" &&
-                Array.isArray(fieldConfig.options)
+                "label" in fieldValue &&
+                "summaryLabel" in fieldValue &&
+                "price" in fieldValue
             ) {
-                const dropdownOptions = fieldConfig.options[0] as
-                    | {
-                          min?: number;
-                          max?: number;
-                          step?: number;
-                      }
-                    | undefined;
+                data.push({
+                    value: fieldValue.price,
+                    label: fieldValue.label,
+                    category: fieldValue.summaryLabel,
+                });
 
-                if (dropdownOptions && dropdownOptions.max !== undefined) {
-                    // If value exceeds max, show "Mere" instead of the number
-                    if (fieldValue.value > dropdownOptions.max) {
-                        label = "Mere";
+                const optionalFieldIds = optionalFieldsMap[fieldId] || [];
+                optionalFieldIds.forEach(optionalFieldId => {
+                    const optionalValue = values[optionalFieldId];
+                    if (
+                        optionalValue &&
+                        "value" in optionalValue &&
+                        optionalValue.value > 0
+                    ) {
+                        const category =
+                            "summaryLabel" in optionalValue &&
+                            typeof optionalValue.summaryLabel === "string"
+                                ? optionalValue.summaryLabel
+                                : "label" in optionalValue &&
+                                    typeof optionalValue.label === "string"
+                                  ? optionalValue.label
+                                  : "";
+                        data.push({
+                            value: optionalValue.value,
+                            label: String(optionalValue.value),
+                            category: category,
+                        });
+                    }
+                });
+                return;
+            }
+
+            if ("summaryLabel" in fieldValue && "value" in fieldValue) {
+                let label: string;
+
+                if (
+                    fieldConfig.type === "dropdown" &&
+                    Array.isArray(fieldConfig.options)
+                ) {
+                    const dropdownOptions = fieldConfig.options[0] as
+                        | {
+                              type?: string;
+                              min?: number;
+                              max?: number;
+                              step?: number;
+                          }
+                        | undefined;
+
+                    if (dropdownOptions && dropdownOptions.max !== undefined) {
+                        if (fieldValue.value > dropdownOptions.max) {
+                            label = "Mere";
+                        } else {
+                            label = String(fieldValue.value);
+                        }
                     } else {
                         label = String(fieldValue.value);
                     }
                 } else {
-                    label = String(fieldValue.value);
+                    label =
+                        fieldConfig.type === "area"
+                            ? `${fieldValue.value} m²`
+                            : String(fieldValue.value);
                 }
-            } else {
-                // For area fields, show with m²
-                label =
-                    fieldConfig.type === "area"
-                        ? `${fieldValue.value} m²`
-                        : String(fieldValue.value);
+
+                data.push({
+                    value: fieldValue.value,
+                    label: label,
+                    category: fieldValue.summaryLabel,
+                });
+
+                const optionalFieldIds = optionalFieldsMap[fieldId] || [];
+                optionalFieldIds.forEach(optionalFieldId => {
+                    const optionalValue = values[optionalFieldId];
+                    if (
+                        optionalValue &&
+                        "value" in optionalValue &&
+                        optionalValue.value > 0
+                    ) {
+                        const category =
+                            "summaryLabel" in optionalValue &&
+                            typeof optionalValue.summaryLabel === "string"
+                                ? optionalValue.summaryLabel
+                                : "label" in optionalValue &&
+                                    typeof optionalValue.label === "string"
+                                  ? optionalValue.label
+                                  : "";
+                        data.push({
+                            value: optionalValue.value,
+                            label: String(optionalValue.value),
+                            category: category,
+                        });
+                    }
+                });
+                return;
             }
 
-            allFieldData.push({
-                value: fieldValue.value,
-                label: label,
-                category: fieldValue.summaryLabel,
-            });
-
-            // Add optional fields right after parent field (for dropdowns)
-            const optionalFieldIds = optionalFieldsMap[fieldId] || [];
-            optionalFieldIds.forEach(optionalFieldId => {
-                const optionalValue = values[optionalFieldId];
-                if (
-                    optionalValue &&
-                    "label" in optionalValue &&
-                    "value" in optionalValue &&
-                    !("summaryLabel" in optionalValue) &&
-                    optionalValue.value > 0
-                ) {
-                    allFieldData.push({
-                        value: optionalValue.value,
-                        label: String(optionalValue.value),
-                        category: optionalValue.label,
+            if ("value" in fieldValue) {
+                const isOptionalField = Object.values(optionalFieldsMap)
+                    .flat()
+                    .includes(fieldId);
+                if (!isOptionalField) {
+                    const category =
+                        "summaryLabel" in fieldValue &&
+                        typeof fieldValue.summaryLabel === "string"
+                            ? fieldValue.summaryLabel
+                            : "label" in fieldValue &&
+                                typeof fieldValue.label === "string"
+                              ? fieldValue.label
+                              : "";
+                    data.push({
+                        value: fieldValue.value,
+                        label: String(fieldValue.value),
+                        category: category,
                     });
                 }
-            });
-            return;
-        }
-
-        // Handle optional fields (indtastGrader, etc.) - has label and value, no summaryLabel
-        // These should only be added if they're not already handled by their parent
-        if ("label" in fieldValue && "value" in fieldValue) {
-            // Skip if this is an optional field that should be handled by its parent
-            const isOptionalField = Object.values(optionalFieldsMap)
-                .flat()
-                .includes(fieldId);
-            if (!isOptionalField) {
-                allFieldData.push({
-                    value: fieldValue.value,
-                    label: String(fieldValue.value),
-                    category: fieldValue.label,
-                });
             }
-        }
-    });
+        });
 
-    const fieldsKey = allFieldData
-        .map(data => `${data.category}-${data.value}`)
-        .join("-");
+        return data;
+    }, [values, fieldsData]);
 
     if (allFieldData.length === 0) return null;
 
@@ -208,7 +194,6 @@ export default function Summary({ values, fieldsData }: SummaryProps) {
                 Du har valgt:
             </motion.h2>
             <motion.table
-                key={fieldsKey}
                 initial="hidden"
                 animate="visible"
                 exit="exit"
@@ -224,7 +209,7 @@ export default function Summary({ values, fieldsData }: SummaryProps) {
 
                         return (
                             <motion.tr
-                                key={`${data.category}-${data.value}-${index}`}
+                                key={`${data.category}-${String(data.value)}-${index}`}
                                 initial="hidden"
                                 animate="visible"
                                 exit="exit"

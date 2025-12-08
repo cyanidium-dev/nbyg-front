@@ -2,10 +2,14 @@ import { fadeInAnimation } from "@/utils/animationVariants";
 import * as motion from "motion/react-client";
 
 interface CalculatedPriceProps {
+    title: string;
     total: number;
 }
 
-export default function CalculatedPrice({ total }: CalculatedPriceProps) {
+export default function CalculatedPrice({
+    title,
+    total,
+}: CalculatedPriceProps) {
     if (total <= 0) return null;
 
     return (
@@ -25,7 +29,7 @@ export default function CalculatedPrice({ total }: CalculatedPriceProps) {
                 variants={fadeInAnimation({ scale: 0.85, x: -30 })}
                 className="text-[20px] lg:text-[24px] leading-[125%] font-find-sans-pro font-light pb-4 border-b border-white/10 lg:border-b-0 lg:pb-0 lg:p-0"
             >
-                Forventet pris for dit tag:
+                {title}
             </motion.h2>
             <motion.p
                 initial="hidden"
