@@ -278,10 +278,7 @@ export default function DropdownInput({
               ref={numberInputRef}
               id={numberOption.id}
               label={numberOption.label}
-              value={
-                numberValue ??
-                (numberOption.min !== undefined ? numberOption.min : max + 1)
-              }
+              value={numberValue ?? 0}
               onChange={value => {
                 if (onNumberChange) {
                   onNumberChange(numberOption.id, {
