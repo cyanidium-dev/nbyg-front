@@ -29,53 +29,81 @@ function getOptionalNumberValue(field: FormFieldValue): number {
 
 export function calculatePriceForTagtype(
     tagtypeLabel: string,
-    basePrice: number,
+    tagtypePrice: number,
     values: FormValues
 ): PriceCalculation {
+    console.log(`\n=== Calculating price for: ${tagtypeLabel} ===`);
+    
     const area = getNumberValue(values.area);
-
-    const formExtra = getPrice(values.tagform);
-
-    const angleExtra = getPrice(values.hældning);
+    const formPrice = getPrice(values.tagform);
+    const anglePrice = getPrice(values.hældning);
+    
+    console.log("Base values:");
+    console.log(`  - Tagtype price: ${tagtypePrice}`);
+    console.log(`  - Area (m²): ${area}`);
+    console.log(`  - Form price: ${formPrice}`);
+    console.log(`  - Angle price: ${anglePrice}`);
 
     const indtastGrader = getOptionalNumberValue(values.indtastGrader);
-    const actualAngleExtra = indtastGrader > 30 ? 15 : angleExtra;
+    const actualAnglePrice = indtastGrader > 30 ? 15 : anglePrice;
+    
+    if (indtastGrader > 30) {
+        console.log(`  - Custom angle (${indtastGrader}°): Using price 15 instead of ${anglePrice}`);
+    }
+    console.log(`  - Final angle price: ${actualAnglePrice}`);
 
-    const pricePerM2 = basePrice + formExtra + actualAngleExtra;
-
-    const roofCost = area * pricePerM2;
+    const roofCost = (tagtypePrice + formPrice + actualAnglePrice) * area;
+    console.log(`\nRoof cost calculation:`);
+    console.log(`  (${tagtypePrice} + ${formPrice} + ${actualAnglePrice}) × ${area} = ${roofCost}`);
 
     const windowValue = getNumberValue(values.antalOvenlysvinduer);
     const windowNumber = getOptionalNumberValue(values.indtastAntalVinduer);
-    const totalWindows = windowNumber > 20 ? windowNumber : windowValue;
-    const windowPrice = getPrice(values.antalOvenlysvinduer);
-    const windowsCost = totalWindows * windowPrice;
+    const antalOvenlysvinduer = windowNumber > 20 ? windowNumber : windowValue;
+    const antalOvenlysvinduerPrice = getPrice(values.antalOvenlysvinduer);
+    const antalOvenlysvinduerCost = antalOvenlysvinduerPrice * antalOvenlysvinduer;
+    console.log(`\nAntal ovenlysvinduer:`);
+    console.log(`  ${antalOvenlysvinduerPrice} × ${antalOvenlysvinduer} = ${antalOvenlysvinduerCost}`);
 
     const kvistValue = getNumberValue(values.antalKviste);
     const kvistNumber = getOptionalNumberValue(values.indtastAntalKviste);
-    const totalKvists = kvistNumber > 6 ? kvistNumber : kvistValue;
-    const kvistPrice = getPrice(values.antalKviste);
-    const kvistsCost = totalKvists * kvistPrice;
+    const antalKviste = kvistNumber > 6 ? kvistNumber : kvistValue;
+    const antalKvistePrice = getPrice(values.antalKviste);
+    const antalKvisteCost = antalKvistePrice * antalKviste;
+    console.log(`\nAntal kviste:`);
+    console.log(`  ${antalKvistePrice} × ${antalKviste} = ${antalKvisteCost}`);
 
-    const gutterMeters = getNumberValue(values.antalMeterTagrender);
-    const gutterPrice = getPrice(values.antalMeterTagrender);
-    const gutterCost = gutterMeters * gutterPrice;
+    const antalMeterVindskeder = getNumberValue(values.antalMeterVindskeder);
+    const antalMeterVindskederPrice = getPrice(values.antalMeterVindskeder);
+    const antalMeterVindskederCost = antalMeterVindskederPrice * antalMeterVindskeder;
+    console.log(`\nAntal meter vindskeder:`);
+    console.log(`  ${antalMeterVindskederPrice} × ${antalMeterVindskeder} = ${antalMeterVindskederCost}`);
 
-    const windMeters = getNumberValue(values.antalMeterVindskeder);
-    const windPrice = getPrice(values.antalMeterVindskeder);
-    const windCost = windMeters * windPrice;
+    const antalMeterTagrender = getNumberValue(values.antalMeterTagrender);
+    const antalMeterTagrenderPrice = getPrice(values.antalMeterTagrender);
+    const antalMeterTagrenderCost = antalMeterTagrenderPrice * antalMeterTagrender;
+    console.log(`\nAntal meter tagrender:`);
+    console.log(`  ${antalMeterTagrenderPrice} × ${antalMeterTagrender} = ${antalMeterTagrenderCost}`);
 
-    const extrasCost = windowsCost + kvistsCost + gutterCost + windCost;
+    const extrasCost =
+        antalOvenlysvinduerCost +
+        antalKvisteCost +
+        antalMeterVindskederCost +
+        antalMeterTagrenderCost;
+    console.log(`\nExtras cost:`);
+    console.log(`  ${antalOvenlysvinduerCost} + ${antalKvisteCost} + ${antalMeterVindskederCost} + ${antalMeterTagrenderCost} = ${extrasCost}`);
 
     const total = roofCost + extrasCost;
+    console.log(`\nTotal:`);
+    console.log(`  ${roofCost} + ${extrasCost} = ${total}`);
+    console.log(`=== End calculation for: ${tagtypeLabel} ===\n`);
 
     return {
         tagtypeLabel,
-        basePrice,
+        basePrice: tagtypePrice,
         area,
-        formExtra,
-        angleExtra: actualAngleExtra,
-        pricePerM2,
+        formExtra: formPrice,
+        angleExtra: actualAnglePrice,
+        pricePerM2: tagtypePrice + formPrice + actualAnglePrice,
         roofCost,
         extrasCost,
         total,
