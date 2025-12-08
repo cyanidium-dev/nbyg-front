@@ -2,7 +2,6 @@ import { ADDRESS, CONTACT_PHONE, CVR, EMAIL } from "@/constants/constants";
 import { contactsPhoneRegex } from "@/regex/regex";
 import { fadeInAnimation } from "@/utils/animationVariants";
 import * as motion from "motion/react-client";
-import { twMerge } from "tailwind-merge";
 
 interface CookieAddressProps {
     className?: string;
@@ -16,7 +15,7 @@ export default function CookieAddress({
     staggerDelay = 0,
 }: CookieAddressProps) {
     return (
-        <address className={twMerge("not-italic tracking-normal", className)}>
+        <address className={`not-italic tracking-normal text-[14px] lg:text-[16px] leading-[150%] ${className}`}>
             <motion.p
                 initial="hidden"
                 whileInView="visible"

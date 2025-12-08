@@ -1,4 +1,3 @@
-import { twMerge } from "tailwind-merge";
 import * as motion from "motion/react-client";
 import { fadeInAnimation } from "@/utils/animationVariants";
 
@@ -19,10 +18,7 @@ export default function CookieParagraph({
             exit="exit"
             viewport={{ once: true, amount: 0.1 }}
             variants={fadeInAnimation({ scale: 0.95, y: 30, delay: delay })}
-            className={twMerge(
-                "font-light leading-[150%] tracking-[-0.02rem] text-[14px] lg:text-[16px]",
-                className
-            )}
+            className={`font-light leading-[150%] tracking-[-0.02rem] text-[14px] lg:text-[16px] ${className}`}
         >
             {children}
         </motion.p>

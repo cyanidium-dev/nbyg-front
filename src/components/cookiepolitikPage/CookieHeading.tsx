@@ -1,5 +1,4 @@
 import { fadeInAnimation } from "@/utils/animationVariants";
-import { twMerge } from "tailwind-merge";
 import * as motion from "motion/react-client";
 
 interface CookieHeadingProps {
@@ -20,10 +19,7 @@ export default function CookieHeading({
             exit="exit"
             viewport={{ once: true, amount: 0.1 }}
             variants={fadeInAnimation({ scale: 0.95, y: 10, delay: delay })}
-            className={twMerge(
-                "font-medium mb-4 text-[14px] lg:text-[16px] leading-[150%] text-light tracking-[-0.02rem]",
-                className
-            )}
+            className={`font-medium mb-4 text-[14px] lg:text-[16px] leading-[150%] text-light tracking-[-0.02rem] ${className}`}
         >
             {children}
         </motion.h2>
