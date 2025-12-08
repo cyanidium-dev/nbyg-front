@@ -83,8 +83,4 @@ export const galleryData = [
         _key: "21",
         image: "/images/homePage/gallery/gallery-21.webp",
     },
-    {
-        _key: "22",
-        image: "/images/homePage/gallery/gallery-22.webp",
-    },
 ];
