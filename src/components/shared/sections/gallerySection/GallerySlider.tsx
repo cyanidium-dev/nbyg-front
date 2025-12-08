@@ -26,9 +26,6 @@ export default function GallerySlider({
   const [activeIndex, setActiveIndex] = useState(0);
 
   const mainSwiper = useRef<SwiperType | null>(null);
-  const modalSwiper = useRef<SwiperType | null>(null);
-
-  const isSyncingRef = useRef(false); // прапорець, щоб уникнути рекурсії
 
   if (!items || !items.length) return null;
 
@@ -36,11 +33,6 @@ export default function GallerySlider({
     const realIndex = mainSwiper.current?.realIndex ?? activeIndex;
     setActiveIndex(realIndex);
     setIsModalOpen(true);
-
-    // синхронізуємо модальний слайдер
-    setTimeout(() => {
-      modalSwiper.current?.slideToLoop(realIndex, 0);
-    }, 0);
   };
 
   const handleCloseModal = () => {
@@ -48,15 +40,9 @@ export default function GallerySlider({
   };
 
   const handleMainSlideChange = (swiper: SwiperType) => {
-    if (isSyncingRef.current) return;
     const realIndex = swiper.realIndex;
     setActiveIndex(realIndex);
-
-    if (modalSwiper.current) {
-      isSyncingRef.current = true;
-      modalSwiper.current.slideToLoop(realIndex);
-      isSyncingRef.current = false;
-    }
+    // Синхронізація з модалкою відбувається через activeIndex та useEffect в GalleryModal
   };
 
   return (
