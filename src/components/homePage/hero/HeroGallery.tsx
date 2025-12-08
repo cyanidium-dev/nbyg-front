@@ -1,10 +1,6 @@
 "use client";
-import dynamic from "next/dynamic";
 import { HERO_GALLERY_IMAGES } from "./heroImages";
-
-const HeroGallerySlider = dynamic(() => import("./HeroGallerySlider"), {
-    ssr: false,
-});
+import HeroGallerySlider from "./HeroGallerySlider";
 
 export default function HeroGallery() {
     return (
