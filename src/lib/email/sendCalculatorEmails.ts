@@ -35,28 +35,15 @@ export async function sendCalculatorEmails(
     const date = formatDate(new Date());
     const source = formData.source || "Terrasseberegner";
 
-    console.log("[send-calculator-emails] Starting email rendering:", {
-        email: formData.email,
-        source,
-        date,
-        summaryDataCount: formData.summaryData.length,
-        calculatedPricesCount: formData.calculatedPrices.length,
-    });
-
     // Render customer email
-    console.log("[send-calculator-emails] Rendering customer email...");
     const customerHtml = await render(
         CalculatorCustomerEmail({
             summaryData: formData.summaryData,
             calculatedPrices: formData.calculatedPrices,
         })
     );
-    console.log("[send-calculator-emails] Customer email rendered:", {
-        htmlLength: customerHtml.length,
-    });
 
     // Render support email
-    console.log("[send-calculator-emails] Rendering support email...");
     const supportHtml = await render(
         CalculatorSupportEmail({
             source,
@@ -66,11 +53,6 @@ export async function sendCalculatorEmails(
             calculatedPrices: formData.calculatedPrices,
         })
     );
-    console.log("[send-calculator-emails] Support email rendered:", {
-        htmlLength: supportHtml.length,
-    });
-
-    console.log("[send-calculator-emails] Sending emails to API...");
     const response = await fetch("/api/send-email", {
         method: "POST",
         headers: {
@@ -89,19 +71,8 @@ export async function sendCalculatorEmails(
         const error = await response.json().catch(() => ({
             error: "Failed to send emails",
         }));
-        console.error("[send-calculator-emails] API error:", {
-            status: response.status,
-            statusText: response.statusText,
-            error,
-        });
         throw new Error(error.error || "Failed to send emails");
     }
-
-    const responseData = await response.json().catch(() => ({}));
-    console.log("[send-calculator-emails] Emails sent successfully:", {
-        status: response.status,
-        responseData,
-    });
 
     return response;
 }
