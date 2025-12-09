@@ -49,8 +49,10 @@ export default function Header({ dynamicPagesList }: HeaderProps) {
                             alt="Logo"
                             width={48}
                             height={48}
+                            priority
                             sizes="(max-width: 786px) 32px, 48px"
                             className="w-12 h-12 lg:w-18 lg:h-18 rounded-full"
+                            fetchPriority="high"
                         />
                     </Link>
                     <div className="flex items-center xl:gap-21 space-between gap-3 lg:gap-[16px]">

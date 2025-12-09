@@ -1,10 +1,12 @@
 "use client";
-import React, { useState, ReactNode, useEffect } from "react";
-import ModalContactForm from "../form/ModalContactForm.lazy";
+import React, { useState, ReactNode, useEffect, lazy, Suspense } from "react";
 import MainButton from "./MainButton";
 import * as motion from "motion/react-client";
 import { Variants } from "framer-motion";
 import { createPortal } from "react-dom";
+
+// Lazy load the modal only when needed
+const ModalContactForm = lazy(() => import("../form/ModalContactForm"));
 
 interface FormButtonProps {
     className?: string;
@@ -70,19 +72,23 @@ export default function FormButton({
             ) : (
                 buttonElement
             )}
-            {faq && isMounted ? (
-                createPortal(
-                    <ModalContactForm
-                        isModalShown={isModalShown}
-                        setIsModalShown={setIsModalShown}
-                    />,
-                    document.body
-                )
-            ) : (
-                <ModalContactForm
-                    isModalShown={isModalShown}
-                    setIsModalShown={setIsModalShown}
-                />
+            {isModalShown && (
+                <Suspense fallback={null}>
+                    {faq && isMounted ? (
+                        createPortal(
+                            <ModalContactForm
+                                isModalShown={isModalShown}
+                                setIsModalShown={setIsModalShown}
+                            />,
+                            document.body
+                        )
+                    ) : (
+                        <ModalContactForm
+                            isModalShown={isModalShown}
+                            setIsModalShown={setIsModalShown}
+                        />
+                    )}
+                </Suspense>
             )}
         </>
     );
