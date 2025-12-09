@@ -50,7 +50,6 @@ export default async function RootLayout({
   return (
     <html lang="da" className="scroll-smooth">
       <head>
-        <link rel="preconnect" href="https://purecatamphetamine.github.io" />
         <Script
           id="cookieyes"
           strategy="afterInteractive"
