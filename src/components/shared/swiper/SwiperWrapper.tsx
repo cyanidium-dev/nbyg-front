@@ -154,15 +154,15 @@ export default function SwiperWrapper({
         >
           {component}
           <div
-            className={`flex justify-between sm:gap-3 items-center ${buttonsPositionClass[buttonsPosition]}`}
+            className={`flex justify-between sm:gap-3 items-center pointer-events-none ${buttonsPositionClass[buttonsPosition]}`}
           >
             <button
               ref={prevRef}
               disabled={isBeginning && !loop}
-              className={`group enabled:cursor-pointer size-[54px] bg-white border border-white rounded-full flex items-center justify-center pointer-events-auto
+              className={`relative z-100 group enabled:cursor-pointer size-[54px] bg-white border border-white rounded-full flex items-center justify-center pointer-events-auto
              transition duration-300 xl:enabled:hover:opacity-70 disabled:bg-transparent`}
             >
-              <ShevronIcon className="-rotate-90 group-enabled:text-black group-disabled:text-white mr-1 pointer-events-auto" />
+              <ShevronIcon className="relative z-100 -rotate-90 group-enabled:text-black group-disabled:text-white mr-1 pointer-events-auto" />
             </button>
             <button
               ref={nextRef}
