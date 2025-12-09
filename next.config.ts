@@ -25,17 +25,6 @@ const nextConfig: NextConfig = {
       "formik",
     ],
   },
-
-  webpack: (config, { isServer }) => {
-    if (!isServer) {
-      config.optimization = {
-        ...config.optimization,
-        usedExports: true,
-        sideEffects: false,
-      };
-    }
-    return config;
-  },
 };
 
 export default nextConfig;
