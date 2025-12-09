@@ -104,7 +104,6 @@ export type GallerySection = {
     _key?: string;
     image?: SanityImage | string;
   }>;
-  showOnServicesPage?: boolean;
 };
 
 export type BeforeAfterSection = {

@@ -6,6 +6,12 @@ import Container from "@/components/shared/container/Container";
 import FaqSection from "@/components/shared/sections/faqSection/FaqSection";
 import { faqList } from "@/components/byggeydelserPage/faq/faqList";
 import Breadcrumbs from "@/components/shared/breadcrumbs/Breadcrumbs";
+import { Metadata } from "next";
+import { getDefaultMetadata } from "@/utils/getDefaultMetadata";
+
+export async function generateMetadata(): Promise<Metadata> {
+  return getDefaultMetadata("/byggeydelser");
+}
 
 const crumbs = [
   { label: "Hjem", href: "/" },

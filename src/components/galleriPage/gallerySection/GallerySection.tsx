@@ -11,20 +11,21 @@ interface GallerySectionProps {
 }
 
 export default function GallerySection({ section }: GallerySectionProps) {
-  const { title, slug, gallery } = section;
-
-  const { description, items } = gallery;
+  const { title, description, items } = section;
 
   if (!items || !items?.length) return null;
 
+  // Створюємо унікальний ключ для декорацій на основі title
+  const uniqueKey = title.toLowerCase().replace(/\s+/g, "-");
+
   return (
     <section className="relative py-25 lg:pt-[152px] lg:pb-[104px]">
-      <GalleryDecorations uniqueKey={slug} />
+      <GalleryDecorations uniqueKey={uniqueKey} />
       <Container className="flex flex-col md:flex-row md:justify-between gap-10 mb-10 lg:mb-14">
-        <SectionTitle key={`gallery-${slug}`}>{title}</SectionTitle>
+        <SectionTitle key={`gallery-${uniqueKey}`}>{title}</SectionTitle>
         {description ? (
           <motion.p
-            key={`${slug}-description`}
+            key={`${uniqueKey}-description`}
             initial="hidden"
             whileInView="visible"
             exit="exit"

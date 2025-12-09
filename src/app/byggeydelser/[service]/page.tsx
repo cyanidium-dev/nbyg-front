@@ -17,9 +17,24 @@ import { fetchSanityData } from "@/utils/fetchSanityData";
 import type { PageSection, SanityPage } from "@/types/page";
 import Loader from "@/components/shared/loader/Loader";
 import Breadcrumbs from "@/components/shared/breadcrumbs/Breadcrumbs";
+import { Metadata } from "next";
+import { getCanonicalUrl } from "@/utils/getCanonicalUrl";
 
 interface ServicePageProps {
   params: Promise<{ service: string }>;
+}
+
+export async function generateMetadata({
+  params,
+}: ServicePageProps): Promise<Metadata> {
+  const { service } = await params;
+  const canonicalUrl = getCanonicalUrl(`/byggeydelser/${service}`);
+
+  return {
+    alternates: {
+      canonical: canonicalUrl,
+    },
+  };
 }
 
 const sectionComponentMap: Partial<
@@ -71,11 +86,6 @@ export default async function ServicePage({ params }: ServicePageProps) {
       <Suspense fallback={<Loader />}>
         {currentService.sections?.map((section, index) => {
           const { _type } = section;
-
-          // Filter gallerySection
-          if (_type === "gallerySection" && !section.showOnServicesPage) {
-            return null;
-          }
 
           const SectionComponent = sectionComponentMap[_type];
           if (!SectionComponent) return null;

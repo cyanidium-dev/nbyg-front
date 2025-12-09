@@ -6,6 +6,12 @@ import Breadcrumbs from "@/components/shared/breadcrumbs/Breadcrumbs";
 import * as motion from "motion/react-client";
 import { fadeInAnimation } from "@/utils/animationVariants";
 import Image from "next/image";
+import { Metadata } from "next";
+import { getDefaultMetadata } from "@/utils/getDefaultMetadata";
+
+export async function generateMetadata(): Promise<Metadata> {
+  return getDefaultMetadata("/kontakt-os");
+}
 
 export default function KontaktOsPage() {
     const crumbs = [

@@ -13,6 +13,12 @@ import Container from "@/components/shared/container/Container";
 import SectionLoader from "@/components/shared/loader/SectionLoader";
 import TextRevealCardsSliderSection from "@/components/shared/sections/textRevealCardsSliderSection/TextRevealCardsSliderSection.lazy";
 import BeforeAfterSection from "@/components/shared/sections/beforeAfterSection/BeforeAfterSection.lazy";
+import { getDefaultMetadata } from "@/utils/getDefaultMetadata";
+import { Metadata } from "next";
+
+export async function generateMetadata(): Promise<Metadata> {
+  return getDefaultMetadata("/");
+}
 
 export default function Home() {
   return (

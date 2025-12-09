@@ -1,5 +1,5 @@
 "use client";
-import { useMemo } from "react";
+import { useMemo, useRef, useEffect, useState } from "react";
 import { Formik, Form } from "formik";
 import Container from "@/components/shared/container/Container";
 import AreaInput from "./AreaInput";
@@ -24,11 +24,13 @@ import { getAllCalculations, getPriceTitle } from "./calculatePrice";
 
 import { fadeInAnimation } from "@/utils/animationVariants";
 import * as motion from "motion/react-client";
+import { AnimatePresence } from "framer-motion";
 import CalculatorContactForm from "../shared/calculatorContactForm/CalculatorContactForm";
 
 function MemoizedSummaryAndPrice({
   values,
   fieldsData,
+  onShouldShowFormChange,
 }: {
   values: FormValues;
   fieldsData: Array<{
@@ -37,8 +39,23 @@ function MemoizedSummaryAndPrice({
     title: string;
     options?: unknown;
   }>;
+  onShouldShowFormChange: (shouldShow: boolean) => void;
 }) {
   const calculations = useMemo(() => getAllCalculations(values), [values]);
+  const previousShouldShowFormRef = useRef(false);
+
+  useEffect(() => {
+    const hasSelections = Object.keys(values).length > 1;
+    const total = calculations.reduce((acc, calc) => acc + calc.total, 0);
+    const shouldShowForm = total > 0 && hasSelections;
+
+    if (shouldShowForm !== previousShouldShowFormRef.current) {
+      previousShouldShowFormRef.current = shouldShowForm;
+      setTimeout(() => {
+        onShouldShowFormChange(shouldShowForm);
+      }, 0);
+    }
+  }, [calculations, values, onShouldShowFormChange]);
 
   return (
     <>
@@ -59,6 +76,7 @@ function MemoizedSummaryAndPrice({
 }
 
 export default function TagCalculator() {
+  const [showContactForm, setShowContactForm] = useState(false);
   const initialValues: FormValues = {
     area: {
       summaryLabel: "Tagets størrelse",
@@ -247,6 +265,7 @@ export default function TagCalculator() {
                         options?: unknown;
                       }>
                     }
+                    onShouldShowFormChange={setShowContactForm}
                   />
                 )}
               </Container>
@@ -254,7 +273,9 @@ export default function TagCalculator() {
           );
         }}
       </Formik>
-      <CalculatorContactForm />
+      <AnimatePresence>
+        {showContactForm && <CalculatorContactForm />}
+      </AnimatePresence>
     </>
   );
 }

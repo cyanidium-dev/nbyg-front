@@ -35,7 +35,7 @@ const findSans = localFont({
 });
 
 export async function generateMetadata() {
-  return getDefaultMetadata();
+  return getDefaultMetadata("/");
 }
 
 export default async function RootLayout({
@@ -53,7 +53,7 @@ export default async function RootLayout({
         <Script
           id="cookieyes"
           strategy="afterInteractive"
-          src="https://cdn-cookieyes.com/client_data/7c7a0eb91418e9ba2c9158d6458a8d19/script.js"
+          src="https://cdn-cookieyes.com/client_data/17e4795a8aff15e288f360abc85aef25/script.js"
         />
       </head>
 
