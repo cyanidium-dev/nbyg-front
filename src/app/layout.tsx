@@ -33,7 +33,7 @@ const findSans = localFont({
 });
 
 export async function generateMetadata() {
-  return getDefaultMetadata();
+  return getDefaultMetadata("/");
 }
 
 export default async function RootLayout({
