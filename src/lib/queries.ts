@@ -64,11 +64,13 @@ export const PAGE_BY_SLUG_QUERY = `*[
       description,
       items[]{
         "image": image{
-          ...,
+          _type,
+          asset,
+          crop,
+          hotspot,
           "alt": alt
         }
-      },
-      showOnServicesPage
+      }
     },
     _type == "faqSection" => {
       "type": _type,
@@ -218,7 +220,10 @@ export const ALL_GALLERIES_QUERY = `
     items[]{ 
       _key,
       "image": image{
-        ...,
+        _type,
+        asset,
+        crop,
+        hotspot,
         "alt": alt
       }
     }

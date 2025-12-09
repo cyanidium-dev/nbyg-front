@@ -3,6 +3,7 @@ import { fetchSanityData } from "@/utils/fetchSanityData";
 import { ALL_GALLERIES_QUERY } from "@/lib/queries";
 import GallerySection from "@/components/galleriPage/gallerySection/GallerySection";
 import Breadcrumbs from "@/components/shared/breadcrumbs/Breadcrumbs";
+import { SanityImage } from "@/types/page";
 
 const crumbs = [
   { label: "Hjem", href: "/" },
@@ -17,13 +18,7 @@ export interface Gallery {
   description: string;
   items: Array<{
     _key?: string;
-    image?: {
-      asset: {
-        _ref: string;
-        _type: "reference";
-      };
-      alt?: string;
-    };
+    image?: SanityImage | string;
   }>;
 }
 
