@@ -15,6 +15,27 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+
+  experimental: {
+    optimizePackageImports: [
+      "framer-motion",
+      "motion",
+      "swiper",
+      "react-select",
+      "formik",
+    ],
+  },
+
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.optimization = {
+        ...config.optimization,
+        usedExports: true,
+        sideEffects: false,
+      };
+    }
+    return config;
+  },
 };
 
 export default nextConfig;
