@@ -10,9 +10,24 @@ import Loader from "@/components/shared/loader/Loader";
 import RecommendedPostsMobile from "@/components/articlePage/recommendedPosts/RecommendedPostsMobile";
 import RecommendedPostsDesktop from "@/components/articlePage/recommendedPosts/RecommendedPostsDesktop";
 import Breadcrumbs from "@/components/shared/breadcrumbs/Breadcrumbs";
+import { Metadata } from "next";
+import { getCanonicalUrl } from "@/utils/getCanonicalUrl";
 
 interface ArticlePageProps {
   params: Promise<{ article: string }>;
+}
+
+export async function generateMetadata({
+  params,
+}: ArticlePageProps): Promise<Metadata> {
+  const { article } = await params;
+  const canonicalUrl = getCanonicalUrl(`/blog/${article}`);
+
+  return {
+    alternates: {
+      canonical: canonicalUrl,
+    },
+  };
 }
 
 export default async function ArticlePage({ params }: ArticlePageProps) {

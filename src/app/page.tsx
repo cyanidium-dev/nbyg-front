@@ -11,6 +11,12 @@ import { BEFORE_AFTER_IMAGES } from "@/components/homePage/beforeAfter/beforeAft
 import Reviews from "@/components/homePage/reviews/Reviews";
 import Gallery from "@/components/homePage/gallery/Gallery";
 import Container from "@/components/shared/container/Container";
+import { getDefaultMetadata } from "@/utils/getDefaultMetadata";
+import { Metadata } from "next";
+
+export async function generateMetadata(): Promise<Metadata> {
+  return getDefaultMetadata("/");
+}
 
 export default function Home() {
   return (

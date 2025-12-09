@@ -4,6 +4,12 @@ import { ALL_GALLERIES_QUERY } from "@/lib/queries";
 import GallerySection from "@/components/galleriPage/gallerySection/GallerySection";
 import Breadcrumbs from "@/components/shared/breadcrumbs/Breadcrumbs";
 import { SanityImage } from "@/types/page";
+import { Metadata } from "next";
+import { getDefaultMetadata } from "@/utils/getDefaultMetadata";
+
+export async function generateMetadata(): Promise<Metadata> {
+  return getDefaultMetadata("/galleri");
+}
 
 const crumbs = [
   { label: "Hjem", href: "/" },
