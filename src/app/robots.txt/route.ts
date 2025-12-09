@@ -4,8 +4,23 @@ import { headers } from "next/headers";
 export async function GET() {
   const headersList = await headers();
   const host = headersList.get("host");
-  const protocol = process.env.NODE_ENV === "production" ? "https" : "http";
-  const baseUrl = `${protocol}://${host}`;
+  const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL;
+  
+  // Використовуємо SITE_URL з env, якщо він є, інакше формуємо з host
+  let baseUrl = SITE_URL;
+  
+  if (!baseUrl && host) {
+    const protocol = process.env.NODE_ENV === "production" ? "https" : "http";
+    baseUrl = `${protocol}://${host}`;
+  }
+  
+  // Якщо все ще немає baseUrl, використовуємо дефолтний
+  if (!baseUrl) {
+    baseUrl = "https://www.nbygkøbenhavn.dk";
+  }
+  
+  // Нормалізуємо - прибираємо trailing slash
+  baseUrl = baseUrl.replace(/\/+$/, "");
 
   const robotsTxt = `User-agent: *
 Allow: /
