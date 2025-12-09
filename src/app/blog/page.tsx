@@ -6,6 +6,12 @@ import { BlogPostPreview } from "@/types/blogPost";
 import { fetchSanityData } from "@/utils/fetchSanityData";
 import { Suspense } from "react";
 import Breadcrumbs from "@/components/shared/breadcrumbs/Breadcrumbs";
+import { Metadata } from "next";
+import { getDefaultMetadata } from "@/utils/getDefaultMetadata";
+
+export async function generateMetadata(): Promise<Metadata> {
+  return getDefaultMetadata("/blog");
+}
 
 const crumbs = [
   { label: "Hjem", href: "/" },

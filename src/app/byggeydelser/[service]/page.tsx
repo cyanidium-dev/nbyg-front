@@ -17,9 +17,24 @@ import { fetchSanityData } from "@/utils/fetchSanityData";
 import type { PageSection, SanityPage } from "@/types/page";
 import Loader from "@/components/shared/loader/Loader";
 import Breadcrumbs from "@/components/shared/breadcrumbs/Breadcrumbs";
+import { Metadata } from "next";
+import { getCanonicalUrl } from "@/utils/getCanonicalUrl";
 
 interface ServicePageProps {
   params: Promise<{ service: string }>;
+}
+
+export async function generateMetadata({
+  params,
+}: ServicePageProps): Promise<Metadata> {
+  const { service } = await params;
+  const canonicalUrl = getCanonicalUrl(`/byggeydelser/${service}`);
+
+  return {
+    alternates: {
+      canonical: canonicalUrl,
+    },
+  };
 }
 
 const sectionComponentMap: Partial<
