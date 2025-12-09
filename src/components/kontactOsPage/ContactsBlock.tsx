@@ -72,7 +72,7 @@ export default function ContactsBlock() {
                                     </p>
                                     <a
                                         href={`mailto:${EMAIL}`}
-                                        className="text-[14px] leading-[142%] lg:text-[16px] lg:leading-[125%] font-medium text-shadow-white"
+                                        className="text-[14px] leading-[142%] lg:text-[16px] lg:leading-[125%] font-medium text-shadow-white break-all md:break-normal lg:break-all"
                                         aria-label="email"
                                         target="_blank"
                                         rel="noopener noreferrer nofollow"
