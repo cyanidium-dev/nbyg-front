@@ -2,11 +2,11 @@
 import { Form, Formik, FormikHelpers } from "formik";
 import { Dispatch, SetStateAction, useState } from "react";
 import CustomizedInput from "../customizedInput/CustomizedInput";
-import axios from "axios";
 import { contactFormValidation } from "@/schemas/contactFormValidation";
 import * as motion from "motion/react-client";
 import { fadeInAnimation } from "@/utils/animationVariants";
 import MainButton from "../buttons/MainButton";
+import { sendContactFormEmail } from "@/lib/email";
 
 interface ContactFormValues {
     name: string;
@@ -46,20 +46,13 @@ export default function ContactForm({
             setIsError(false);
             setIsLoading(true);
 
-            await axios({
-                method: "POST",
-                url: "/api/send-email",
-                data: JSON.stringify({
-                    source: "Kontakt os",
-                    name: values.name,
-                    phone: values.phone,
-                    email: values.email,
-                    address: values.address,
-                    message: values.message,
-                }),
-                headers: {
-                    "Content-Type": "application/json",
-                },
+            await sendContactFormEmail({
+                source: "Kontakt os",
+                name: values.name,
+                phone: values.phone,
+                email: values.email,
+                address: values.address,
+                message: values.message,
             });
 
             resetForm();
