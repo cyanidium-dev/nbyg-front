@@ -211,26 +211,19 @@ export const PAGE_BY_SLUG_QUERY = `*[
 }`;
 
 export const ALL_GALLERIES_QUERY = `
-*[_type == "page"]{
-  title,
-  "slug": slug.current,
-  "gallery": sections[_type == "gallerySection"][0]{
-    order,
+*[_type == "galleryPage"][0]{
+  galleries[]{
+    title,
     description,
     items[]{ 
+      _key,
       "image": image{
         ...,
         "alt": alt
       }
-    },
-    showOnServicesPage
-  },
-  "galleryOrder": sections[_type == "gallerySection"][0].order
-}
-[
-  defined(gallery)
-] 
-| order(galleryOrder asc)
+    }
+  }
+}.galleries
 `;
 
 export const ALL_BLOG_POSTS_QUERY = `*[_type == "blogPost"] | order(_createdAt desc){
