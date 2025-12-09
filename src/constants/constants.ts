@@ -3,7 +3,7 @@ export const CONTACT_PHONE = "+4591842857";
 export const ADDRESS = "Bolbyvej 2, 3782 Klemensker";
 export const ADDRESS_URL = "https://maps.app.goo.gl/BQGSs5g1HwGRXD6GA";
 
-export const EMAIL = "nbyg.kunder@gmail.com";
+export const EMAIL = "nbygkobenhavn.kunder@gmail.com";
 
 export const CVR = "38879723";
 
