@@ -19,6 +19,20 @@ export interface ContactFormData {
 export async function sendContactFormEmail(
     formData: ContactFormData
 ): Promise<Response> {
+    const date = formatDate(new Date());
+    const source = formData.source || "Kontakt os";
+
+    console.log("[send-contact-form-email] Starting email rendering:", {
+        email: formData.email,
+        name: formData.name,
+        phone: formData.phone,
+        source,
+        date,
+        hasAddress: !!formData.address,
+        hasMessage: !!formData.message,
+    });
+
+    console.log("[send-contact-form-email] Rendering contact form email...");
     const html = await render(
         ContactFormEmail({
             name: formData.name,
@@ -26,10 +40,14 @@ export async function sendContactFormEmail(
             email: formData.email,
             address: formData.address,
             message: formData.message,
-            date: formatDate(new Date()),
+            date,
         })
     );
+    console.log("[send-contact-form-email] Contact form email rendered:", {
+        htmlLength: html.length,
+    });
 
+    console.log("[send-contact-form-email] Sending email to API...");
     const response = await fetch("/api/send-email", {
         method: "POST",
         headers: {
@@ -37,7 +55,7 @@ export async function sendContactFormEmail(
         },
         body: JSON.stringify({
             type: "contact",
-            source: formData.source || "Kontakt os",
+            source,
             name: formData.name,
             phone: formData.phone,
             email: formData.email,
@@ -51,8 +69,19 @@ export async function sendContactFormEmail(
         const error = await response.json().catch(() => ({
             error: "Failed to send email",
         }));
+        console.error("[send-contact-form-email] API error:", {
+            status: response.status,
+            statusText: response.statusText,
+            error,
+        });
         throw new Error(error.error || "Failed to send email");
     }
+
+    const responseData = await response.json().catch(() => ({}));
+    console.log("[send-contact-form-email] Email sent successfully:", {
+        status: response.status,
+        responseData,
+    });
 
     return response;
 }

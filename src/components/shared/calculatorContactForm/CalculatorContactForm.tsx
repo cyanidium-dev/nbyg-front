@@ -48,6 +48,13 @@ export default function CalculatorContactForm({
             setIsError(false);
             setIsLoading(true);
 
+            console.log("[calculator-form] Submitting calculator form:", {
+                email: values.email,
+                source,
+                summaryDataCount: summaryData.length,
+                calculatedPricesCount: calculatedPrices.length,
+            });
+
             await sendCalculatorEmails({
                 email: values.email,
                 source,
@@ -55,9 +62,23 @@ export default function CalculatorContactForm({
                 calculatedPrices,
             });
 
+            console.log(
+                "[calculator-form] Calculator emails sent successfully"
+            );
+
             resetForm();
             setIsNotificationShown(true);
         } catch (error) {
+            console.error(
+                "[calculator-form] Error submitting calculator form:",
+                error
+            );
+            if (error instanceof Error) {
+                console.error("[calculator-form] Error details:", {
+                    message: error.message,
+                    stack: error.stack,
+                });
+            }
             setIsError(true);
             setIsNotificationShown(true);
             return error;
