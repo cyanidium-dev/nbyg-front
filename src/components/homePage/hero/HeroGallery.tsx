@@ -21,7 +21,7 @@ export default function HeroGallery() {
                 src="/images/homePage/hero/gallery-loader.webp"
                 alt="Hero Gallery Loader"
                 fill
-                className="object-cover hero-gallery-static-image transition-opacity duration-700 ease-in-out z-[1]"
+                className="object-cover hero-gallery-static-image transition-opacity duration-700 ease-in-out z-1"
                 priority
                 sizes="(max-width: 768px) 100vw, 1920px"
                 quality={95}
