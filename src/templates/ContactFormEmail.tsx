@@ -77,7 +77,7 @@ export function ContactFormEmail({
                         </Text>
                     )}
 
-                    <Text style={p}>
+                    <Text style={{ ...p, marginBottom: 0 }}>
                         Denne e-mail er genereret automatisk. Ignorér den, hvis
                         den er modtaget ved en fejl.
                     </Text>

@@ -31,6 +31,10 @@ type CalculatorCustomerEmailProps = {
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "";
 
+const getDisplayUrl = (url: string): string => {
+    return url.replace(/^https?:\/\//, "");
+};
+
 export function CalculatorCustomerEmail({
     summaryData = [],
     calculatedPrices = [],
@@ -47,15 +51,18 @@ export function CalculatorCustomerEmail({
                         Tak for din beregning – vi har modtaget dine oplysninger
                     </Text>
 
-                    <Text style={p}>
-                        <strong>Hej!</strong>
-                    </Text>
-                    <Text style={{ ...p, marginBottom: "32px" }}>
+                    <Text style={pMedium}>Hej!</Text>
+                    <Text style={{ ...pLight, marginBottom: "32px" }}>
                         Tak fordi du brugte vores online beregner til tage. Vi
                         har modtaget dine oplysninger og gennemgår nu din
                         beregning.
                     </Text>
-                    <Text style={{ ...p, marginBottom: "32px" }}>
+                    <Text
+                        style={{
+                            marginBottom: "32px",
+                            ...pMedium,
+                        }}
+                    >
                         Her er en kort oversigt over det, du har angivet:
                     </Text>
 
@@ -148,38 +155,43 @@ export function CalculatorCustomerEmail({
                         </Section>
                     )}
 
-                    <Text style={p}>
+                    <Text style={pLight}>
                         Vi kontakter dig snarest muligt for at bekræfte
                         detaljerne, svare på spørgsmål og give en mere præcis
                         pris baseret på dit projekt.
                     </Text>
-                    <Text style={p}>
+                    <Text style={pLight}>
                         Hvis du har yderligere spørgsmål, er du altid velkommen
                         til at skrive eller ringe til os.
                     </Text>
-                    <Text style={p}>Med venlig hilsen</Text>
-                    <Text style={p}>
-                        <strong>Nbyg Teamet</strong>
+                    <Text style={{ ...pLight, marginBottom: "0" }}>
+                        Med venlig hilsen
                     </Text>
-                    <Text style={p}>
-                        Har du spørgsmål? Ring til os eller send os en e-mail
+                    <Text style={{ ...pMedium }}>
+                        <strong>Nbyg Teamet</strong>
                     </Text>
 
                     <Section style={addressSection}>
                         <Text style={addressText}>
-                            <a href={`tel:${CONTACT_PHONE}`}>
+                            Har du spørgsmål? Ring til os eller send os en
+                            e-mail
+                        </Text>
+                        <a style={addressText} href={`tel:${CONTACT_PHONE}`}>
+                            <Text style={addressText}>
                                 <strong>{CONTACT_PHONE}</strong>
-                            </a>
-                        </Text>
-                        <Text style={addressText}>
-                            <a href={`mailto:${EMAIL}`}>
-                                <strong>{EMAIL}</strong>
-                            </a>
-                        </Text>
-                        {SITE_URL && (
-                            <Text style={footerText}>
-                                <a href={SITE_URL}>{SITE_URL}</a>
                             </Text>
+                        </a>
+                        <a style={addressText} href={`mailto:${EMAIL}`}>
+                            <Text style={addressText}>
+                                <strong>{EMAIL}</strong>
+                            </Text>
+                        </a>
+                        {SITE_URL && (
+                            <a style={footerText} href={SITE_URL}>
+                                <Text style={footerText}>
+                                    {getDisplayUrl(SITE_URL)}
+                                </Text>
+                            </a>
                         )}
                     </Section>
                 </Container>
@@ -193,8 +205,6 @@ export function CalculatorCustomerEmail({
 const main = {
     fontFamily: "Montserrat, sans-serif",
     fontSize: "12px",
-    fontWeight: "300",
-    lineHeight: "1.5",
     color: "#ffffff",
     backgroundColor: "#000000",
     padding: "48px",
@@ -206,20 +216,33 @@ const container = {
 };
 
 const h1 = {
-    fontFamily: "Find Sans Pro",
     fontSize: "30px",
     lineHeight: "1.2",
+    fontWeight: "300",
     margin: "0 0 50px 0",
 };
 
 const h2 = {
     fontSize: "18px",
+    fontWeight: "500",
+    lineHeight: "1.5",
     margin: "0 0 24px 0",
 };
 
-const p = {
-    margin: "0 0 24px 0",
+const pMedium = {
+    margin: "0",
     fontSize: "12px",
+    fontWeight: "500",
+    lineHeight: "1.5",
+    display: "inline",
+};
+
+const pLight = {
+    margin: "0",
+    fontSize: "12px",
+    fontWeight: "300",
+    lineHeight: "1.5",
+    display: "inline",
 };
 
 const summarySection = {
@@ -269,6 +292,7 @@ const labelText = {
     color: "#ffffff",
     fontSize: "12px",
     lineHeight: "125%",
+    fontWeight: "300",
 };
 
 const iconContainer = {
@@ -324,21 +348,26 @@ const priceAmount = {
 const addressSection = {
     margin: "48px auto 0 auto",
     textAlign: "center" as const,
+    width: "233px",
 };
 
 const addressText = {
     margin: "0 0 8px 0",
     color: "#ffffff",
     fontSize: "12px",
+    fontWeight: "300",
     lineHeight: "1.25",
+    textDecoration: "none",
 };
 
 const footerText = {
     color: "#B86D29",
     fontSize: "12px",
+    fontWeight: "300",
     lineHeight: "1.25",
     textDecoration: "underline",
     textDecorationColor: "#B86D29",
     textDecorationThickness: "1px",
     textUnderlineOffset: "2px",
+    margin: "0",
 };

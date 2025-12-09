@@ -50,12 +50,14 @@ export function CalculatorSupportEmail({
                         Du har modtaget en ny besked fra formularen &quot;
                         {source}&quot;.
                     </Text>
-                    <Text style={p}>E-mail: {email}</Text>
                     <Text style={p}>
-                        <strong>Sendt den: </strong>
-                        {date}
+                        <Text style={pBold}>E-mail:</Text> {email}
                     </Text>
                     <Text style={p}>
+                        <Text style={pBold}>Sendt den: </Text>
+                        {date}
+                    </Text>
+                    <Text style={pMedium}>
                         Her er et resumé af, hvad klienten leverede:
                     </Text>
 
@@ -148,10 +150,11 @@ export function CalculatorSupportEmail({
                         </Section>
                     )}
 
-                    <Text style={p}>
+                    <Text style={{ ...pLight, marginBottom: 0 }}>
                         Denne e-mail er genereret automatisk. Ignorér den, hvis
-                        den er modtaget ved en fejl. © Nbyg
+                        den er modtaget ved en fejl.
                     </Text>
+                    <Text style={pLight}>© Nbyg</Text>
                 </Container>
             </Body>
         </Html>
@@ -160,38 +163,62 @@ export function CalculatorSupportEmail({
 
 // === Styles ===
 
-// Main styles from ContactFormEmail
 const main = {
-    fontFamily: "Arial, sans-serif",
+    fontFamily: "Montserrat, sans-serif",
     fontSize: "12px",
-    lineHeight: "1.167",
     color: "#ffffff",
     backgroundColor: "#000000",
     padding: "48px",
 };
 
 const container = {
-    maxWidth: "600px",
+    maxWidth: "504px",
     margin: "0 auto",
 };
 
 const h1 = {
-    fontSize: "20px",
-    lineHeight: "150%",
-    margin: "0 0 40px 0",
-    color: "#ffffff",
+    fontSize: "30px",
+    lineHeight: "1.2",
+    fontWeight: "300",
+    margin: "0 0 50px 0",
 };
 
 const h2 = {
     fontSize: "18px",
+    fontWeight: "500",
+    lineHeight: "1.5",
     margin: "0 0 24px 0",
 };
 
 const p = {
     margin: "0 0 24px 0",
-    color: "#ffffff",
     fontSize: "12px",
-    lineHeight: "1.167",
+    fontWeight: "400",
+    lineHeight: "1.5",
+};
+
+const pMedium = {
+    margin: "0",
+    fontSize: "12px",
+    fontWeight: "500",
+    lineHeight: "1.5",
+    display: "inline",
+};
+
+const pBold = {
+    margin: "0",
+    fontSize: "12px",
+    fontWeight: "700",
+    lineHeight: "1.5",
+    display: "inline",
+};
+
+const pLight = {
+    margin: "0",
+    fontSize: "12px",
+    fontWeight: "300",
+    lineHeight: "1.5",
+    display: "inline",
 };
 
 // Table and summary styles from CalculatorCustomerEmail
@@ -242,6 +269,7 @@ const labelText = {
     color: "#ffffff",
     fontSize: "12px",
     lineHeight: "125%",
+    fontWeight: "300",
 };
 
 const iconContainer = {

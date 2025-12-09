@@ -3,6 +3,7 @@ import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const CONTACT_EMAIL_ADDRESS = process.env.CONTACT_EMAIL_ADDRESS || "";
+const SENDER_EMAIL_ADDRESS = process.env.SENDER_EMAIL_ADDRESS || "";
 
 export async function POST(req: Request) {
     try {
@@ -19,6 +20,14 @@ export async function POST(req: Request) {
             );
         }
 
+        if (!SENDER_EMAIL_ADDRESS) {
+            console.error("[send-email] SENDER_EMAIL_ADDRESS is not set");
+            return NextResponse.json(
+                { error: "SENDER_EMAIL_ADDRESS is not set" },
+                { status: 500 }
+            );
+        }
+
         if (type === "contact") {
             // Handle contact form email
             const { html } = body;
@@ -29,7 +38,7 @@ export async function POST(req: Request) {
             );
 
             const data = await resend.emails.send({
-                from: `N-Byg <no-repply@xn--nbygkbenhavn-zjb.dk>`,
+                from: `N-Byg <${SENDER_EMAIL_ADDRESS}>`,
                 to: CONTACT_EMAIL_ADDRESS,
                 subject: "Ny henvendelse fra kontaktformularen",
                 html,
@@ -64,7 +73,7 @@ export async function POST(req: Request) {
                 customerEmail
             );
             const customerData = await resend.emails.send({
-                from: `N-Byg <no-repply@xn--nbygkbenhavn-zjb.dk>`,
+                from: `N-Byg <${SENDER_EMAIL_ADDRESS}>`,
                 to: customerEmail,
                 subject:
                     "Tak for din beregning – vi har modtaget dine oplysninger",
@@ -83,7 +92,7 @@ export async function POST(req: Request) {
                 CONTACT_EMAIL_ADDRESS
             );
             const supportData = await resend.emails.send({
-                from: `N-Byg <no-repply@xn--nbygkbenhavn-zjb.dk>`,
+                from: `N-Byg <${SENDER_EMAIL_ADDRESS}>`,
                 to: CONTACT_EMAIL_ADDRESS,
                 subject: `Ny anmodning fra ${source}`,
                 html: supportHtml,
