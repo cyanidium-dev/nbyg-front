@@ -24,15 +24,18 @@ export const fetchSanityDataServer = async (query, params = {}) => {
 export const GET_DYNAMIC_PAGES_SLUGS = `{
   "pages": *[_type == "page" && !defined(parent._ref)]{
     "slug": slug.current,
+    _updatedAt,
     "children": *[
       _type == "page" &&
       parent._ref == ^._id
     ]{
-      "slug": slug.current
+      "slug": slug.current,
+      _updatedAt
     }
   },
   "blogPosts": *[_type == "blogPost"]{
-    "slug": slug.current
+    "slug": slug.current,
+    _updatedAt
   }
 }`;
 
@@ -40,17 +43,30 @@ async function getDynamicPages() {
   const res = await fetchSanityDataServer(GET_DYNAMIC_PAGES_SLUGS);
 
   const pages = res?.pages || [];
-  const pagesPaths = pages.map((page) => `/byggeydelser/${page.slug}`);
+  const pagesPaths = pages.map((page) => ({
+    loc: `/byggeydelser/${page.slug}`,
+    lastmod: page._updatedAt || new Date().toISOString(),
+    changefreq: "monthly",
+    priority: 0.8,
+  }));
 
   // Додаємо підпослуги (children)
   const subservicesPaths = pages.flatMap((page) =>
-    (page.children || []).map(
-      (child) => `/byggeydelser/${page.slug}/${child.slug}`
-    )
+    (page.children || []).map((child) => ({
+      loc: `/byggeydelser/${page.slug}/${child.slug}`,
+      lastmod: child._updatedAt || new Date().toISOString(),
+      changefreq: "monthly",
+      priority: 0.7,
+    }))
   );
 
   const blogPosts = res?.blogPosts || [];
-  const blogPostsPaths = blogPosts.map((post) => `/blog/${post.slug}`);
+  const blogPostsPaths = blogPosts.map((post) => ({
+    loc: `/blog/${post.slug}`,
+    lastmod: post._updatedAt || new Date().toISOString(),
+    changefreq: "monthly",
+    priority: 0.7,
+  }));
 
   return [...pagesPaths, ...subservicesPaths, ...blogPostsPaths];
 }
@@ -72,12 +88,16 @@ const sitemapConfig = {
       },
     ],
   },
-  transform: async (config, path) => {
+  transform: async (config, path, options = {}) => {
+    const base = config.siteUrl;
+    // Якщо path вже абсолютний URL, використовуємо його, інакше додаємо base
+    const absoluteUrl = path.startsWith("http") ? path : `${base}${path}`;
+    
     return {
-      loc: path,
-      lastmod: new Date().toISOString(),
-      changefreq: config.changefreq,
-      priority: config.priority,
+      loc: absoluteUrl,
+      lastmod: options.lastmod || new Date().toISOString(),
+      changefreq: options.changefreq || config.changefreq,
+      priority: options.priority || config.priority,
     };
   },
   additionalPaths: async (config) => {
@@ -125,25 +145,29 @@ const sitemapConfig = {
       },
       {
         loc: "/cookiepolitik",
-        changefreq: "yearly",
-        priority: 0.3,
+        changefreq: "monthly",
+        priority: 0.5,
       },
     ];
 
     const staticPaths = await Promise.all(
       staticPages.map(async (page) => {
-        const transformed = await config.transform(config, page.loc);
-        return {
-          ...transformed,
+        return await config.transform(config, page.loc, {
           changefreq: page.changefreq,
           priority: page.priority,
-        };
+        });
       })
     );
 
     const dynamicPages = await getDynamicPages();
     const dynamicPaths = await Promise.all(
-      dynamicPages.map((page) => config.transform(config, page))
+      dynamicPages.map((page) =>
+        config.transform(config, page.loc, {
+          lastmod: page.lastmod,
+          changefreq: page.changefreq,
+          priority: page.priority,
+        })
+      )
     );
 
     return [...staticPaths, ...dynamicPaths];
