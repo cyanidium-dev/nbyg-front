@@ -51,7 +51,9 @@ export function CalculatorCustomerEmail({
                         Tak for din beregning – vi har modtaget dine oplysninger
                     </Text>
 
-                    <Text style={pMedium}>Hej!</Text>
+                    <Text style={pMedium}>
+                        <strong>Hej!</strong>
+                    </Text>
                     <Text style={{ ...pLight, marginBottom: "32px" }}>
                         Tak fordi du brugte vores online beregner til tage. Vi
                         har modtaget dine oplysninger og gennemgår nu din
@@ -63,7 +65,9 @@ export function CalculatorCustomerEmail({
                             ...pMedium,
                         }}
                     >
-                        Her er en kort oversigt over det, du har angivet:
+                        <strong>
+                            Her er en kort oversigt over det, du har angivet:
+                        </strong>
                     </Text>
 
                     {summaryData.length > 0 && (
@@ -230,19 +234,17 @@ const h2 = {
 };
 
 const pMedium = {
-    margin: "0",
+    margin: "0 0 24px 0",
     fontSize: "12px",
     fontWeight: "500",
     lineHeight: "1.5",
-    display: "inline",
 };
 
 const pLight = {
-    margin: "0",
+    margin: "0 0 24px 0",
     fontSize: "12px",
     fontWeight: "300",
     lineHeight: "1.5",
-    display: "inline",
 };
 
 const summarySection = {

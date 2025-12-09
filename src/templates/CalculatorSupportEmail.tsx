@@ -58,12 +58,16 @@ export function CalculatorSupportEmail({
                         {date}
                     </Text>
                     <Text style={pMedium}>
-                        Her er et resumé af, hvad klienten leverede:
+                        <strong>
+                            Her er et resumé af, hvad klienten leverede:
+                        </strong>
                     </Text>
 
                     {summaryData.length > 0 && (
                         <Section style={summarySection}>
-                            <Text style={h2}>Du har valgt:</Text>
+                            <Text style={h2}>
+                                <strong>Du har valgt:</strong>
+                            </Text>
                             <Section style={tableContainer}>
                                 {summaryData.map((data, index) => {
                                     if (!data || !data.label || !data.category)
@@ -79,7 +83,9 @@ export function CalculatorSupportEmail({
                                                         tableCellCategoryText
                                                     }
                                                 >
-                                                    {data.category || ""}
+                                                    <strong>
+                                                        {data.category || ""}
+                                                    </strong>
                                                 </Text>
                                             </Column>
                                             <Column style={tableCellValue}>
@@ -198,27 +204,24 @@ const p = {
 };
 
 const pMedium = {
-    margin: "0",
+    margin: "0 0 24px 0",
     fontSize: "12px",
     fontWeight: "500",
     lineHeight: "1.5",
-    display: "inline",
 };
 
 const pBold = {
-    margin: "0",
+    margin: "0 0 24px 0",
     fontSize: "12px",
     fontWeight: "700",
     lineHeight: "1.5",
-    display: "inline",
 };
 
 const pLight = {
-    margin: "0",
+    margin: "0 0 24px 0",
     fontSize: "12px",
     fontWeight: "300",
     lineHeight: "1.5",
-    display: "inline",
 };
 
 // Table and summary styles from CalculatorCustomerEmail
