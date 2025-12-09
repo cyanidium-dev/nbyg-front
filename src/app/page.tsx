@@ -32,8 +32,8 @@ export default function Home() {
         uniqueKey="home-before-after"
       />
       <WhyUs />
-      <BottomCTA />
       <Gallery />
+      <BottomCTA />
       <Container>
         <FaqSection
           _type="faqSection"

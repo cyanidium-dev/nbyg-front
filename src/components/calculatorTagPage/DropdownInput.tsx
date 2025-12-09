@@ -19,6 +19,7 @@ interface DropdownInputProps {
   options: DropdownOption[];
   selectedValue?: NumberFieldValue;
   values?: FormValues;
+  price?: number;
   onChange: (id: string, value: NumberFieldValue) => void;
   onNumberChange?: (numberFieldId: string, value: OptionalFieldValue) => void;
 }
@@ -30,6 +31,7 @@ export default function DropdownInput({
   options,
   selectedValue,
   values,
+  price,
   onChange,
   onNumberChange,
 }: DropdownInputProps) {
@@ -101,11 +103,13 @@ export default function DropdownInput({
       onChange(id, {
         summaryLabel: "",
         value: max + 1,
+        price: price,
       });
     } else {
       onChange(id, {
         summaryLabel: "",
         value: Number(option.value),
+        price: price,
       });
     }
   };
@@ -274,10 +278,7 @@ export default function DropdownInput({
               ref={numberInputRef}
               id={numberOption.id}
               label={numberOption.label}
-              value={
-                numberValue ??
-                (numberOption.min !== undefined ? numberOption.min : max + 1)
-              }
+              value={numberValue ?? 0}
               onChange={value => {
                 if (onNumberChange) {
                   onNumberChange(numberOption.id, {
@@ -288,6 +289,7 @@ export default function DropdownInput({
                 onChange(id, {
                   summaryLabel: "",
                   value: value,
+                  price: price,
                 });
               }}
               min={numberOption.min ?? max + 1}

@@ -186,10 +186,12 @@ export default function TagCalculator() {
                                 : undefined
                             }
                             values={values}
+                            price={field.price}
                             onChange={(id: string, value: NumberFieldValue) => {
                               setFieldValue(id, {
                                 summaryLabel: field.summaryLabel || field.title,
                                 value: value.value,
+                                price: value.price,
                               });
                             }}
                             onNumberChange={(
@@ -216,6 +218,7 @@ export default function TagCalculator() {
                             setFieldValue(fieldId, {
                               summaryLabel: field.summaryLabel || field.title,
                               value: value,
+                              price: field.price,
                             });
                           }}
                           min={

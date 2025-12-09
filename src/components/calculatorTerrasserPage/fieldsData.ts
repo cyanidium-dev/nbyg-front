@@ -103,7 +103,7 @@ export const fieldsData = {
     ],
     stone: [
         {
-            sectionTitle: "Vælg materiale",
+            sectionTitle: "Vælg stenmateriale",
             id: "type",
             fields: [
                 {
@@ -135,7 +135,7 @@ export const fieldsData = {
     ],
     composite: [
         {
-            sectionTitle: "Vælg materiale",
+            sectionTitle: "Vælg komposit",
             id: "type",
             fields: [
                 {
@@ -144,7 +144,7 @@ export const fieldsData = {
                     image: {
                         link: "/images/calculatorTerrasserPage/composite-wood-plastic.webp",
                     },
-                    value: 1295,
+                    value: 1345,
                 },
                 {
                     id: "solid",
@@ -152,7 +152,7 @@ export const fieldsData = {
                     image: {
                         link: "/images/calculatorTerrasserPage/composite-solid.webp",
                     },
-                    value: 1055,
+                    value: 1095,
                 },
                 {
                     id: "hollow",
@@ -160,7 +160,7 @@ export const fieldsData = {
                     image: {
                         link: "/images/calculatorTerrasserPage/composite-hollow.webp",
                     },
-                    value: 1095,
+                    value: 1145,
                 },
                 {
                     id: "extruded",
@@ -168,7 +168,7 @@ export const fieldsData = {
                     image: {
                         link: "/images/calculatorTerrasserPage/composite-extruded.webp",
                     },
-                    value: 1455,
+                    value: 1495,
                 },
                 {
                     id: "bamboo",
@@ -176,7 +176,7 @@ export const fieldsData = {
                     image: {
                         link: "/images/calculatorTerrasserPage/composite-bamboo.webp",
                     },
-                    value: 1795,
+                    value: 1845,
                 },
             ],
         },
@@ -192,7 +192,7 @@ export const fieldsData = {
                     image: {
                         link: "/images/calculatorTerrasserPage/tiled-concrete.webp",
                     },
-                    value: 795,
+                    value: 845,
                 },
                 {
                     id: "brick",
@@ -200,7 +200,7 @@ export const fieldsData = {
                     image: {
                         link: "/images/calculatorTerrasserPage/tiled-brick.webp",
                     },
-                    value: 1095,
+                    value: 1145,
                 },
                 {
                     id: "granite",

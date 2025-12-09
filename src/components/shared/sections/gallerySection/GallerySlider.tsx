@@ -26,21 +26,28 @@ export default function GallerySlider({
   const [activeIndex, setActiveIndex] = useState(0);
 
   const mainSwiper = useRef<SwiperType | null>(null);
-  const modalSwiper = useRef<SwiperType | null>(null);
-
-  const isSyncingRef = useRef(false); // прапорець, щоб уникнути рекурсії
 
   if (!items || !items.length) return null;
 
-  const handleImageClick = () => {
+  const handleImageClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    // Перевіряємо, чи клік був на кнопку навігації або на контейнер кнопок
+    const target = e.target as HTMLElement;
+    const clickedButton = target.closest("button");
+
+    // Перевіряємо, чи клік був на контейнер кнопок (який має absolute позиціонування)
+    const clickedButtonsContainer = target.closest(
+      '[class*="absolute"][class*="z-10"]'
+    );
+
+    if (clickedButton || clickedButtonsContainer) {
+      // Не відкриваємо модалку, якщо клік був на кнопку навігації або на її контейнер
+      e.stopPropagation();
+      return;
+    }
+
     const realIndex = mainSwiper.current?.realIndex ?? activeIndex;
     setActiveIndex(realIndex);
     setIsModalOpen(true);
-
-    // синхронізуємо модальний слайдер
-    setTimeout(() => {
-      modalSwiper.current?.slideToLoop(realIndex, 0);
-    }, 0);
   };
 
   const handleCloseModal = () => {
@@ -48,15 +55,9 @@ export default function GallerySlider({
   };
 
   const handleMainSlideChange = (swiper: SwiperType) => {
-    if (isSyncingRef.current) return;
     const realIndex = swiper.realIndex;
     setActiveIndex(realIndex);
-
-    if (modalSwiper.current) {
-      isSyncingRef.current = true;
-      modalSwiper.current.slideToLoop(realIndex);
-      isSyncingRef.current = false;
-    }
+    // Синхронізація з модалкою відбувається через activeIndex та useEffect в GalleryModal
   };
 
   return (
@@ -120,8 +121,16 @@ export default function GallerySlider({
                   onClick={handleImageClick}
                 >
                   <Image
-                    src={typeof item.image === "string" ? item.image : urlForSanityImage(item.image).fit("crop").url()}
-                    alt={typeof item.image === "string" ? `Galleri billede ${idx + 1}` : item.image?.alt || `Galleri billede ${idx + 1}`}
+                    src={
+                      typeof item.image === "string"
+                        ? item.image
+                        : urlForSanityImage(item.image).fit("crop").url()
+                    }
+                    alt={
+                      typeof item.image === "string"
+                        ? `Galleri billede ${idx + 1}`
+                        : item.image?.alt || `Galleri billede ${idx + 1}`
+                    }
                     fill
                     className="object-cover rounded-[14px]"
                   />
