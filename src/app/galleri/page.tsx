@@ -1,9 +1,9 @@
 import Hero from "@/components/galleriPage/hero/Hero";
 import { fetchSanityData } from "@/utils/fetchSanityData";
 import { ALL_GALLERIES_QUERY } from "@/lib/queries";
-import { GallerySection as GallerySectionType } from "@/types/page";
 import GallerySection from "@/components/galleriPage/gallerySection/GallerySection";
 import Breadcrumbs from "@/components/shared/breadcrumbs/Breadcrumbs";
+import { SanityImage } from "@/types/page";
 
 const crumbs = [
   { label: "Hjem", href: "/" },
@@ -15,8 +15,11 @@ const crumbs = [
 
 export interface Gallery {
   title: string;
-  slug: string;
-  gallery: GallerySectionType;
+  description: string;
+  items: Array<{
+    _key?: string;
+    image?: SanityImage | string;
+  }>;
 }
 
 export default async function GalleriPage() {
@@ -28,8 +31,8 @@ export default async function GalleriPage() {
     <>
       <Hero />
       <Breadcrumbs crumbs={crumbs} />
-      {gallerySections.map((section) => (
-        <GallerySection section={section} key={section?.slug} />
+      {gallerySections.map((section, index) => (
+        <GallerySection section={section} key={section?.title || index} />
       ))}
     </>
   );
