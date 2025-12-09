@@ -10,16 +10,11 @@ import clsx from "clsx";
 import { twMerge } from "tailwind-merge";
 import dynamic from "next/dynamic";
 import ShevronIcon from "../icons/ShevronIcon";
+import "react-phone-number-input/style.css";
 
-const PhoneInput = dynamic(
-  () =>
-    import("react-phone-number-input").then(mod => {
-      // @ts-expect-error - CSS imports don't have type definitions
-      import("react-phone-number-input/style.css");
-      return { default: mod.default };
-    }),
-  { ssr: false }
-);
+const PhoneInput = dynamic(() => import("react-phone-number-input"), {
+  ssr: false,
+});
 
 interface Values {
   [fieldName: string]: string;
