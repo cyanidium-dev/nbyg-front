@@ -18,7 +18,7 @@ export function getDefaultMetadata(path: string = "/"): Metadata {
           url: `${SITE_URL}/opengraph-image.jpg`,
           width: 1200,
           height: 630,
-          alt: "Glimmer",
+          alt: "Nbyg",
         },
       ],
       type: "website",
