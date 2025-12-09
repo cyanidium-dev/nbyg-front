@@ -1,4 +1,3 @@
-import dynamic from "next/dynamic";
 import { Suspense } from "react";
 import Hero from "@/components/homePage/hero/Hero";
 import WhyUs from "@/components/homePage/whyUs/WhyUs";
@@ -12,22 +11,8 @@ import Reviews from "@/components/homePage/reviews/Reviews";
 import Gallery from "@/components/homePage/gallery/Gallery";
 import Container from "@/components/shared/container/Container";
 import SectionLoader from "@/components/shared/loader/SectionLoader";
-
-const TextRevealCardsSliderSection = dynamic(
-  () =>
-    import(
-      "@/components/shared/sections/textRevealCardsSliderSection/TextRevealCardsSliderSection"
-    ),
-  { ssr: false }
-);
-
-const BeforeAfterSection = dynamic(
-  () =>
-    import(
-      "@/components/shared/sections/beforeAfterSection/BeforeAfterSection"
-    ),
-  { ssr: false }
-);
+import TextRevealCardsSliderSection from "@/components/shared/sections/textRevealCardsSliderSection/TextRevealCardsSliderSection.lazy";
+import BeforeAfterSection from "@/components/shared/sections/beforeAfterSection/BeforeAfterSection.lazy";
 
 export default function Home() {
   return (

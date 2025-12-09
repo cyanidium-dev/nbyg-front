@@ -17,6 +17,7 @@ const geistSans = Montserrat({
   subsets: ["latin"],
   weight: ["300", "400", "500", "700"],
   display: "swap",
+  preload: true,
 });
 
 const findSans = localFont({
