@@ -1,8 +1,8 @@
 "use client";
 import { useState, useRef, useEffect, startTransition } from "react";
-import InputArrow from "../shared/icons/InputArrow";
 import { fadeInAnimation } from "@/utils/animationVariants";
 import * as motion from "motion/react-client";
+import NumberInput from "../calculatorTagPage/NumberInput";
 
 interface AreaInputProps {
     value: number;
@@ -33,13 +33,6 @@ export default function AreaInput({ value, onChange }: AreaInputProps) {
     const percent = ((displayValue - min) / (max - min)) * 100;
     const thumbOffset = 8 * (1 - percent / 50);
 
-    const handleNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        let numValue = parseInt(e.target.value) || min;
-        if (numValue > max) numValue = max;
-        if (numValue < min) numValue = min;
-        onChange(numValue);
-    };
-
     const handleRangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newValue = parseInt(e.target.value);
         setLocalValue(newValue);
@@ -48,18 +41,6 @@ export default function AreaInput({ value, onChange }: AreaInputProps) {
     const handleRangeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newValue = parseInt(e.target.value);
         setLocalValue(newValue);
-    };
-
-    const handleIncrement = () => {
-        if (value < max) {
-            onChange(value + 1);
-        }
-    };
-
-    const handleDecrement = () => {
-        if (value > min) {
-            onChange(value - 1);
-        }
     };
 
     return (
@@ -82,39 +63,16 @@ export default function AreaInput({ value, onChange }: AreaInputProps) {
                 variants={fadeInAnimation({ scale: 0.85, y: 20, delay: 0.2 })}
                 className="flex flex-col"
             >
-                <div className="relative mb-6 xl:max-w-[118px]">
-                    <input
-                        ref={inputRef}
-                        name="area"
-                        type="number"
-                        id="area-input"
-                        min={min}
-                        max={max}
-                        value={displayValue}
-                        onChange={handleNumberChange}
-                        className="w-full h-12 rounded-full border border-gradient-brown px-8 pr-12 py-1.5 text-[18px] leading-[125%] bg-transparent text-white [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
-                    />
-                    <div className="absolute right-4 top-1/2 -translate-y-1/2 flex flex-col gap-1">
-                        <button
-                            type="button"
-                            onClick={handleIncrement}
-                            disabled={value >= max}
-                            className="flex items-center justify-center size-4 text-white disabled:opacity-30 disabled:cursor-not-allowed button-shadow-white cursor-pointer"
-                            aria-label="Increment value"
-                        >
-                            <InputArrow direction="up" className="size-4" />
-                        </button>
-                        <button
-                            type="button"
-                            onClick={handleDecrement}
-                            disabled={value <= min}
-                            className="flex items-center justify-center size-4 text-white disabled:opacity-30 disabled:cursor-not-allowed button-shadow-white cursor-pointer"
-                            aria-label="Decrement value"
-                        >
-                            <InputArrow direction="down" className="size-4" />
-                        </button>
-                    </div>
-                </div>
+                <NumberInput
+                    ref={inputRef}
+                    id="area-input"
+                    value={value}
+                    onChange={onChange}
+                    min={min}
+                    max={max}
+                    displayValue={displayValue}
+                    className="mb-6 xl:max-w-[118px]"
+                />
                 <p className="mb-5 text-[18px] leading-[150%] font-light">
                     Indtast terrassearealet eller brug skyderen nedenfor.
                 </p>
@@ -169,7 +127,7 @@ export default function AreaInput({ value, onChange }: AreaInputProps) {
                                 setIsDragging(false);
                                 onChange(parseInt(e.currentTarget.value));
                             }}
-                            className="w-full h-1 absolute top-1/2 -translate-y-1/2 rounded bg-transparent outline-none cursor-pointer z-[5] p-0 m-0 [appearance:none] [-webkit-appearance:none]"
+                            className="w-full h-1 absolute top-1/2 -translate-y-1/2 rounded bg-transparent outline-none cursor-pointer z-5 p-0 m-0 appearance-none [-webkit-appearance:none]"
                         />
                     </div>
 
