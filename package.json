@@ -19,6 +19,7 @@
     "handlebars": "^4.7.8",
     "next": "^16.0.7",
     "next-sanity": "^11.6.6",
+    "next-sitemap": "^4.2.3",
     "react": "19.2.0",
     "react-dom": "19.2.0",
     "react-phone-number-input": "^3.4.14",
