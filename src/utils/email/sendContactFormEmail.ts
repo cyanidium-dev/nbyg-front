@@ -1,8 +1,3 @@
-import { render } from "@react-email/render";
-import { ContactFormCustomerEmail } from "@/components/shared/emailTemplates/ContactFormCustomerEmail";
-import { ContactFormSupportEmail } from "@/components/shared/emailTemplates/ContactFormSupportEmail";
-import { formatDate } from "@/utils/formatDate";
-
 export interface ContactFormData {
     name?: string;
     phone?: string;
@@ -13,40 +8,14 @@ export interface ContactFormData {
 }
 
 /**
- * Renders both ContactFormCustomerEmail and ContactFormSupportEmail templates to HTML
- * and sends them to the email API route
+ * Sends contact form data to the email API route (rendering happens server-side)
  * @param formData - The contact form data
  * @returns Promise with the API response
  */
 export async function sendContactFormEmail(
     formData: ContactFormData
 ): Promise<Response> {
-    const date = formatDate(new Date());
     const source = formData.source || "Kontakt os";
-
-    // Render customer email
-    const customerHtml = await render(
-        ContactFormCustomerEmail({
-            name: formData.name,
-            phone: formData.phone,
-            email: formData.email,
-            address: formData.address,
-            message: formData.message,
-            date,
-        })
-    );
-
-    // Render support email
-    const supportHtml = await render(
-        ContactFormSupportEmail({
-            name: formData.name,
-            phone: formData.phone,
-            email: formData.email,
-            address: formData.address,
-            message: formData.message,
-            date,
-        })
-    );
 
     const response = await fetch("/api/send-email", {
         method: "POST",
@@ -56,9 +25,11 @@ export async function sendContactFormEmail(
         body: JSON.stringify({
             type: "contact",
             source,
+            name: formData.name,
+            phone: formData.phone,
             email: formData.email,
-            customerHtml,
-            supportHtml,
+            address: formData.address,
+            message: formData.message,
         }),
     });
 

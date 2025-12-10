@@ -1,5 +1,11 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import { render } from "@react-email/render";
+import { ContactFormCustomerEmail } from "@/components/shared/emailTemplates/ContactFormCustomerEmail";
+import { ContactFormSupportEmail } from "@/components/shared/emailTemplates/ContactFormSupportEmail";
+import { CalculatorCustomerEmail } from "@/components/shared/emailTemplates/CalculatorCustomerEmail";
+import { CalculatorSupportEmail } from "@/components/shared/emailTemplates/CalculatorSupportEmail";
+import { formatDate } from "@/utils/formatDate";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const CONTACT_EMAIL_ADDRESS = process.env.CONTACT_EMAIL_ADDRESS || "";
@@ -25,18 +31,38 @@ export async function POST(req: Request) {
         }
 
         if (type === "contact") {
-            // Handle contact form emails (customer and support)
-            const { email: customerEmail, customerHtml, supportHtml } = body;
+            const { name, phone, email, address, message } = body;
+            const date = formatDate(new Date());
 
-            // Send customer email
+            const customerHtml = await render(
+                ContactFormCustomerEmail({
+                    name,
+                    phone,
+                    email,
+                    address,
+                    message,
+                    date,
+                })
+            );
+
+            const supportHtml = await render(
+                ContactFormSupportEmail({
+                    name,
+                    phone,
+                    email,
+                    address,
+                    message,
+                    date,
+                })
+            );
+
             const customerData = await resend.emails.send({
                 from: `N-Byg <${SENDER_EMAIL_ADDRESS}>`,
-                to: customerEmail,
+                to: email,
                 subject: "Tak for din henvendelse",
                 html: customerHtml,
             });
 
-            // Send support email
             const supportData = await resend.emails.send({
                 from: `N-Byg <${SENDER_EMAIL_ADDRESS}>`,
                 to: CONTACT_EMAIL_ADDRESS,
@@ -52,15 +78,31 @@ export async function POST(req: Request) {
                 },
             });
         } else if (type === "calculator") {
-            // Handle calculator emails (customer and support)
             const {
                 source = "Terrasseberegner",
                 email: customerEmail,
-                customerHtml,
-                supportHtml,
+                summaryData = [],
+                calculatedPrices = [],
             } = body;
+            const date = formatDate(new Date());
 
-            // Send customer email
+            const customerHtml = await render(
+                CalculatorCustomerEmail({
+                    summaryData,
+                    calculatedPrices,
+                })
+            );
+
+            const supportHtml = await render(
+                CalculatorSupportEmail({
+                    source,
+                    email: customerEmail,
+                    date,
+                    summaryData,
+                    calculatedPrices,
+                })
+            );
+
             const customerData = await resend.emails.send({
                 from: `N-Byg <${SENDER_EMAIL_ADDRESS}>`,
                 to: customerEmail,
@@ -69,7 +111,6 @@ export async function POST(req: Request) {
                 html: customerHtml,
             });
 
-            // Send support email
             const supportData = await resend.emails.send({
                 from: `N-Byg <${SENDER_EMAIL_ADDRESS}>`,
                 to: CONTACT_EMAIL_ADDRESS,
