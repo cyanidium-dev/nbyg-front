@@ -12,7 +12,6 @@ import RecommendedPostsDesktop from "@/components/articlePage/recommendedPosts/R
 import Breadcrumbs from "@/components/shared/breadcrumbs/Breadcrumbs";
 import { Metadata } from "next";
 import { getDynamicPageMetadata } from "@/utils/getDynamicPageMetadata";
-import { BLOG_POST_BY_SLUG_QUERY } from "@/lib/queries";
 import { SchemaJson } from "@/components/shared/SchemaJson";
 import { getDynamicPageSchemaJson } from "@/utils/getDynamicPageSchemaJson";
 
@@ -24,7 +23,7 @@ export async function generateMetadata({
   params,
 }: ArticlePageProps): Promise<Metadata> {
   const { article } = await params;
-  
+
   return getDynamicPageMetadata({
     query: BLOG_POST_BY_SLUG_QUERY,
     queryParams: {

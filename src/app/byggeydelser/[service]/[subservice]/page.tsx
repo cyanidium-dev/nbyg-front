@@ -19,7 +19,6 @@ import Loader from "@/components/shared/loader/Loader";
 import Breadcrumbs from "@/components/shared/breadcrumbs/Breadcrumbs";
 import { Metadata } from "next";
 import { getDynamicPageMetadata } from "@/utils/getDynamicPageMetadata";
-import { PAGE_BY_SLUG_QUERY } from "@/lib/queries";
 import { SchemaJson } from "@/components/shared/SchemaJson";
 import { getDynamicPageSchemaJson } from "@/utils/getDynamicPageSchemaJson";
 
@@ -31,7 +30,7 @@ export async function generateMetadata({
   params,
 }: SubservicePageProps): Promise<Metadata> {
   const { service, subservice } = await params;
-  
+
   return getDynamicPageMetadata({
     query: PAGE_BY_SLUG_QUERY,
     queryParams: {
