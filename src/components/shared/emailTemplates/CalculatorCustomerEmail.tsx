@@ -243,7 +243,7 @@ const main = {
     fontSize: "12px",
     color: "#ffffff",
     backgroundColor: "#000000",
-    padding: "16px",
+    padding: "48px 16px",
 };
 
 const container = {
