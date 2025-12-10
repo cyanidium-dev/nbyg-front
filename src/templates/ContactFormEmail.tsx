@@ -1,5 +1,5 @@
+import { Body } from "@react-email/body";
 import {
-    Body,
     Container,
     Head,
     Html,

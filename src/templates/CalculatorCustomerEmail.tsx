@@ -1,5 +1,5 @@
+import { Body } from "@react-email/body";
 import {
-    Body,
     Column,
     Container,
     Head,
@@ -224,6 +224,7 @@ const h1 = {
     lineHeight: "1.2",
     fontWeight: "300",
     margin: "0 0 50px 0",
+    color: "#ffffff",
 };
 
 const h2 = {
@@ -231,6 +232,7 @@ const h2 = {
     fontWeight: "500",
     lineHeight: "1.5",
     margin: "0 0 24px 0",
+    color: "#ffffff",
 };
 
 const pMedium = {
@@ -238,6 +240,7 @@ const pMedium = {
     fontSize: "12px",
     fontWeight: "500",
     lineHeight: "1.5",
+    color: "#ffffff",
 };
 
 const pLight = {
@@ -245,6 +248,7 @@ const pLight = {
     fontSize: "12px",
     fontWeight: "300",
     lineHeight: "1.5",
+    color: "#ffffff",
 };
 
 const summarySection = {
