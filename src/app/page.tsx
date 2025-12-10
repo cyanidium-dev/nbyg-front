@@ -13,16 +13,25 @@ import BeforeAfterSection from "@/components/shared/sections/beforeAfterSection/
 import Gallery from "@/components/homePage/gallery/Gallery.lazy";
 import Reviews from "@/components/homePage/reviews/Reviews.lazy";
 import BottomCTA from "@/components/homePage/bottomCTA/BottomCTA.lazy";
-import { getDefaultMetadata } from "@/utils/getDefaultMetadata";
+import { SchemaJson } from "@/components/shared/SchemaJson";
+import { getPageMetadata } from "@/utils/getPageMetadata";
+import { getPageSchemaJson } from "@/utils/getPageSchemaJson";
+import { HOME_PAGE_QUERY } from "@/lib/queries";
 import { Metadata } from "next";
 
 export async function generateMetadata(): Promise<Metadata> {
-  return getDefaultMetadata("/");
+  return getPageMetadata({
+    query: HOME_PAGE_QUERY,
+    path: "/",
+  });
 }
 
-export default function Home() {
+export default async function Home() {
+  const schemaJson = await getPageSchemaJson(HOME_PAGE_QUERY);
+
   return (
     <>
+      <SchemaJson schemaJson={schemaJson} />
       <Hero />
       <AboutUs />
       <Suspense fallback={<SectionLoader />}>

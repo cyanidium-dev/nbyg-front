@@ -22,11 +22,11 @@ const buttonConfig: Record<
 > = {
   calculatorTerrace: {
     label: "Terrasseberegner",
-    href: "/calculator-terrasser",
+    href: "/terrasseprisberegner",
   },
   calculatorRoof: {
     label: "Tagberegner",
-    href: "/calculator-tag",
+    href: "/tagprisberegner",
   },
   services: {
     label: "Byggeydelser",

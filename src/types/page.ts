@@ -232,9 +232,9 @@ export type PageParent = {
 export type PageSeo = {
   metaTitle?: string;
   metaDescription?: string;
-  keywords?: string[];
+  keywords?: string[] | string;
   opengraphImage?: SanityImage;
-  schemaJson?: unknown;
+  schemaJsonUrl?: string;
 };
 
 export type SanityPage = {

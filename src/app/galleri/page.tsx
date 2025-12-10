@@ -5,10 +5,16 @@ import GallerySection from "@/components/galleriPage/gallerySection/GallerySecti
 import Breadcrumbs from "@/components/shared/breadcrumbs/Breadcrumbs";
 import { SanityImage } from "@/types/page";
 import { Metadata } from "next";
-import { getDefaultMetadata } from "@/utils/getDefaultMetadata";
+import { getPageMetadata } from "@/utils/getPageMetadata";
+import { GALLERY_PAGE_QUERY } from "@/lib/queries";
+import { SchemaJson } from "@/components/shared/SchemaJson";
+import { getPageSchemaJson } from "@/utils/getPageSchemaJson";
 
 export async function generateMetadata(): Promise<Metadata> {
-  return getDefaultMetadata("/galleri");
+  return getPageMetadata({
+    query: GALLERY_PAGE_QUERY,
+    path: "/galleri",
+  });
 }
 
 const crumbs = [
@@ -30,11 +36,13 @@ export interface Gallery {
 
 export default async function GalleriPage() {
   const gallerySections = await fetchSanityData<Gallery[]>(ALL_GALLERIES_QUERY);
+  const schemaJson = await getPageSchemaJson(GALLERY_PAGE_QUERY);
 
   if (!gallerySections || !gallerySections?.length) return null;
 
   return (
     <>
+      <SchemaJson schemaJson={schemaJson} />
       <Hero />
       <Breadcrumbs crumbs={crumbs} />
       {gallerySections.map((section, index) => (

@@ -208,7 +208,20 @@ export const PAGE_BY_SLUG_QUERY = `*[
       ...,
       "alt": alt
     },
-    schemaJson
+    "schemaJsonUrl": schemaJson.asset->url
+  }
+}`;
+
+export const GALLERY_PAGE_QUERY = `*[_type == "galleryPage"][0]{
+  seo{
+    metaTitle,
+    metaDescription,
+    keywords,
+    "opengraphImage": opengraphImage{
+      ...,
+      "alt": alt
+    },
+    "schemaJsonUrl": schemaJson.asset->url
   }
 }`;
 
@@ -230,6 +243,110 @@ export const ALL_GALLERIES_QUERY = `
   }
 }.galleries
 `;
+
+export const HOME_PAGE_QUERY = `*[_type == "homePage"][0]{
+  seo{
+    metaTitle,
+    metaDescription,
+    keywords,
+    "opengraphImage": opengraphImage{
+      ...,
+      "alt": alt
+    },
+    "schemaJsonUrl": schemaJson.asset->url
+  }
+}`;
+
+export const SERVICES_PAGE_QUERY = `*[_type == "servicesPage"][0]{
+  seo{
+    metaTitle,
+    metaDescription,
+    keywords,
+    "opengraphImage": opengraphImage{
+      ...,
+      "alt": alt
+    },
+    "schemaJsonUrl": schemaJson.asset->url
+  }
+}`;
+
+export const ABOUT_PAGE_QUERY = `*[_type == "aboutPage"][0]{
+  seo{
+    metaTitle,
+    metaDescription,
+    keywords,
+    "opengraphImage": opengraphImage{
+      ...,
+      "alt": alt
+    },
+    "schemaJsonUrl": schemaJson.asset->url
+  }
+}`;
+
+export const CONTACTS_PAGE_QUERY = `*[_type == "contactsPage"][0]{
+  seo{
+    metaTitle,
+    metaDescription,
+    keywords,
+    "opengraphImage": opengraphImage{
+      ...,
+      "alt": alt
+    },
+    "schemaJsonUrl": schemaJson.asset->url
+  }
+}`;
+
+export const COOKIE_POLICY_PAGE_QUERY = `*[_type == "cookiePolicyPage"][0]{
+  seo{
+    metaTitle,
+    metaDescription,
+    keywords,
+    "opengraphImage": opengraphImage{
+      ...,
+      "alt": alt
+    },
+    "schemaJsonUrl": schemaJson.asset->url
+  }
+}`;
+
+export const BLOG_PAGE_QUERY = `*[_type == "blogPage"][0]{
+  seo{
+    metaTitle,
+    metaDescription,
+    keywords,
+    "opengraphImage": opengraphImage{
+      ...,
+      "alt": alt
+    },
+    "schemaJsonUrl": schemaJson.asset->url
+  }
+}`;
+
+export const TERRACE_CALCULATOR_PAGE_QUERY = `*[_type == "terraceCalculatorPage"][0]{
+  seo{
+    metaTitle,
+    metaDescription,
+    keywords,
+    "opengraphImage": opengraphImage{
+      ...,
+      "alt": alt
+    },
+    "schemaJsonUrl": schemaJson.asset->url
+  }
+}`;
+
+export const ROOF_CALCULATOR_PAGE_QUERY = `*[_type == "roofCalculatorPage"][0]{
+  seo{
+    metaTitle,
+    metaDescription,
+    keywords,
+    "opengraphImage": opengraphImage{
+      ...,
+      "alt": alt
+    },
+    "schemaJsonUrl": schemaJson.asset->url
+  }
+}`;
 
 export const ALL_BLOG_POSTS_QUERY = `*[_type == "blogPost"] | order(_createdAt desc){
   heroTitle,
@@ -310,6 +427,6 @@ export const BLOG_POST_BY_SLUG_QUERY = `*[
       ...,
       "alt": alt
     },
-    schemaJson
+    "schemaJsonUrl": schemaJson.asset->url
   }
 }`;

@@ -4,13 +4,21 @@ import IdeaSection from "@/components/omOsPage/ideaSection/IdeaSection";
 import ValuesSection from "@/components/omOsPage/valuesSection/ValuesSection";
 import Breadcrumbs from "@/components/shared/breadcrumbs/Breadcrumbs";
 import { Metadata } from "next";
-import { getDefaultMetadata } from "@/utils/getDefaultMetadata";
+import { getPageMetadata } from "@/utils/getPageMetadata";
+import { ABOUT_PAGE_QUERY } from "@/lib/queries";
+import { SchemaJson } from "@/components/shared/SchemaJson";
+import { getPageSchemaJson } from "@/utils/getPageSchemaJson";
 
 export async function generateMetadata(): Promise<Metadata> {
-  return getDefaultMetadata("/om-os");
+  return getPageMetadata({
+    query: ABOUT_PAGE_QUERY,
+    path: "/om-os",
+  });
 }
 
-export default function OmOsPage() {
+export default async function OmOsPage() {
+  const schemaJson = await getPageSchemaJson(ABOUT_PAGE_QUERY);
+
   const crumbs = [
     { label: "Hjem", href: "/" },
     {
@@ -21,6 +29,7 @@ export default function OmOsPage() {
 
   return (
     <>
+      <SchemaJson schemaJson={schemaJson} />
       <Hero />
       <Breadcrumbs crumbs={crumbs} />
       <HistorySection />
