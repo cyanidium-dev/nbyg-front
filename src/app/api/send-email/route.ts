@@ -25,17 +25,32 @@ export async function POST(req: Request) {
         }
 
         if (type === "contact") {
-            // Handle contact form email
-            const { html } = body;
+            // Handle contact form emails (customer and support)
+            const { email: customerEmail, customerHtml, supportHtml } = body;
 
-            const data = await resend.emails.send({
+            // Send customer email
+            const customerData = await resend.emails.send({
+                from: `N-Byg <${SENDER_EMAIL_ADDRESS}>`,
+                to: customerEmail,
+                subject: "Tak for din henvendelse",
+                html: customerHtml,
+            });
+
+            // Send support email
+            const supportData = await resend.emails.send({
                 from: `N-Byg <${SENDER_EMAIL_ADDRESS}>`,
                 to: CONTACT_EMAIL_ADDRESS,
                 subject: "Ny henvendelse fra kontaktformularen",
-                html,
+                html: supportHtml,
             });
 
-            return NextResponse.json({ success: true, data });
+            return NextResponse.json({
+                success: true,
+                data: {
+                    customer: customerData,
+                    support: supportData,
+                },
+            });
         } else if (type === "calculator") {
             // Handle calculator emails (customer and support)
             const {
