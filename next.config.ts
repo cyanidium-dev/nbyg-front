@@ -29,6 +29,7 @@ const nextConfig: NextConfig = {
       "react-select",
       "formik",
     ],
+    turbopackFileSystemCacheForDev: true,
   },
 };
 

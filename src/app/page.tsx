@@ -1,10 +1,7 @@
 import { Suspense } from "react";
 import Hero from "@/components/homePage/hero/Hero";
-import WhyUs from "@/components/homePage/whyUs/WhyUs";
-import FaqSection from "@/components/shared/sections/faqSection/FaqSection";
 import { faq } from "@/components/homePage/faq/Faq";
 import { services } from "@/components/homePage/services/services";
-import AboutUs from "@/components/homePage/aboutUs/AboutUs";
 import { BEFORE_AFTER_IMAGES } from "@/components/homePage/beforeAfter/beforeAfter";
 import Container from "@/components/shared/container/Container";
 import SectionLoader from "@/components/shared/loader/SectionLoader";
@@ -13,6 +10,9 @@ import BeforeAfterSection from "@/components/shared/sections/beforeAfterSection/
 import Gallery from "@/components/homePage/gallery/Gallery.lazy";
 import Reviews from "@/components/homePage/reviews/Reviews.lazy";
 import BottomCTA from "@/components/homePage/bottomCTA/BottomCTA.lazy";
+import AboutUs from "@/components/homePage/aboutUs/AboutUs.lazy";
+import WhyUs from "@/components/homePage/whyUs/WhyUs.lazy";
+import FaqSection from "@/components/shared/sections/faqSection/FaqSection.lazy";
 import { SchemaJson } from "@/components/shared/SchemaJson";
 import { getPageMetadata } from "@/utils/getPageMetadata";
 import { getPageSchemaJson } from "@/utils/getPageSchemaJson";
@@ -33,7 +33,9 @@ export default async function Home() {
     <>
       <SchemaJson schemaJson={schemaJson} />
       <Hero />
-      <AboutUs />
+      <Suspense fallback={<SectionLoader />}>
+        <AboutUs />
+      </Suspense>
       <Suspense fallback={<SectionLoader />}>
         <TextRevealCardsSliderSection
           _type="textReavealCardsSliderSection"
@@ -52,7 +54,9 @@ export default async function Home() {
           uniqueKey="home-before-after"
         />
       </Suspense>
-      <WhyUs />
+      <Suspense fallback={<SectionLoader />}>
+        <WhyUs />
+      </Suspense>
       <Suspense fallback={<SectionLoader />}>
         <Gallery />
       </Suspense>
@@ -60,13 +64,15 @@ export default async function Home() {
         <BottomCTA />
       </Suspense>
       <Container>
-        <FaqSection
-          _type="faqSection"
-          type="faqSection"
-          description="Har du nogen spørgsmål?"
-          items={faq}
-          uniqueKey="home-faq"
-        />
+        <Suspense fallback={<SectionLoader />}>
+          <FaqSection
+            _type="faqSection"
+            type="faqSection"
+            description="Har du nogen spørgsmål?"
+            items={faq}
+            uniqueKey="home-faq"
+          />
+        </Suspense>
       </Container>
       <Suspense fallback={<SectionLoader />}>
         <Reviews />

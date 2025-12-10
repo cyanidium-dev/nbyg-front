@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "analyze": "cross-env ANALYZE=true next build --webpack",
+    "analyze": "cross-env ANALYZE=true next build",
     "perf:lighthouse": "lighthouse http://localhost:3000 --output=html --output-path=./lighthouse-report.html --view",
     "perf:build": "npm run build",
     "perf:budget": "bundlesize"
