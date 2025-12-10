@@ -1,18 +1,18 @@
 import { Suspense } from "react";
 import Hero from "@/components/homePage/hero/Hero";
 import WhyUs from "@/components/homePage/whyUs/WhyUs";
-import BottomCTA from "@/components/homePage/bottomCTA/BottomCTA";
 import FaqSection from "@/components/shared/sections/faqSection/FaqSection";
 import { faq } from "@/components/homePage/faq/Faq";
 import { services } from "@/components/homePage/services/services";
 import AboutUs from "@/components/homePage/aboutUs/AboutUs";
 import { BEFORE_AFTER_IMAGES } from "@/components/homePage/beforeAfter/beforeAfter";
-import Reviews from "@/components/homePage/reviews/Reviews";
-import Gallery from "@/components/homePage/gallery/Gallery";
 import Container from "@/components/shared/container/Container";
 import SectionLoader from "@/components/shared/loader/SectionLoader";
 import TextRevealCardsSliderSection from "@/components/shared/sections/textRevealCardsSliderSection/TextRevealCardsSliderSection.lazy";
 import BeforeAfterSection from "@/components/shared/sections/beforeAfterSection/BeforeAfterSection.lazy";
+import Gallery from "@/components/homePage/gallery/Gallery.lazy";
+import Reviews from "@/components/homePage/reviews/Reviews.lazy";
+import BottomCTA from "@/components/homePage/bottomCTA/BottomCTA.lazy";
 import { getDefaultMetadata } from "@/utils/getDefaultMetadata";
 import { Metadata } from "next";
 
@@ -44,8 +44,12 @@ export default function Home() {
         />
       </Suspense>
       <WhyUs />
-      <Gallery />
-      <BottomCTA />
+      <Suspense fallback={<SectionLoader />}>
+        <Gallery />
+      </Suspense>
+      <Suspense fallback={<SectionLoader />}>
+        <BottomCTA />
+      </Suspense>
       <Container>
         <FaqSection
           _type="faqSection"
@@ -55,7 +59,9 @@ export default function Home() {
           uniqueKey="home-faq"
         />
       </Container>
-      <Reviews />
+      <Suspense fallback={<SectionLoader />}>
+        <Reviews />
+      </Suspense>
     </>
   );
 }

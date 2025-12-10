@@ -22,8 +22,12 @@ export const fetchSanityData = async <T = unknown>(
     );
 
     return response.data as T;
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
+    // Log the actual error for debugging
+    if (error instanceof Error) {
+      console.error("Sanity fetch error:", error.message);
+      throw new Error(`Failed to fetch Sanity data: ${error.message}`);
+    }
     throw new Error("Failed to fetch Sanity data");
   }
 };
