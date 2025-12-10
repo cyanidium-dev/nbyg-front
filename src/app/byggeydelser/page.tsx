@@ -7,10 +7,16 @@ import FaqSection from "@/components/shared/sections/faqSection/FaqSection";
 import { faqList } from "@/components/byggeydelserPage/faq/faqList";
 import Breadcrumbs from "@/components/shared/breadcrumbs/Breadcrumbs";
 import { Metadata } from "next";
-import { getDefaultMetadata } from "@/utils/getDefaultMetadata";
+import { getPageMetadata } from "@/utils/getPageMetadata";
+import { SERVICES_PAGE_QUERY } from "@/lib/queries";
+import { SchemaJson } from "@/components/shared/SchemaJson";
+import { getPageSchemaJson } from "@/utils/getPageSchemaJson";
 
 export async function generateMetadata(): Promise<Metadata> {
-  return getDefaultMetadata("/byggeydelser");
+  return getPageMetadata({
+    query: SERVICES_PAGE_QUERY,
+    path: "/byggeydelser",
+  });
 }
 
 const crumbs = [
@@ -21,9 +27,12 @@ const crumbs = [
   },
 ];
 
-export default function ByggeydelserPage() {
+export default async function ByggeydelserPage() {
+  const schemaJson = await getPageSchemaJson(SERVICES_PAGE_QUERY);
+
   return (
     <>
+      <SchemaJson schemaJson={schemaJson} />
       <Hero />
       <Breadcrumbs crumbs={crumbs} />
       <Services />

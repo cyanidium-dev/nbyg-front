@@ -7,13 +7,21 @@ import * as motion from "motion/react-client";
 import { fadeInAnimation } from "@/utils/animationVariants";
 import Image from "next/image";
 import { Metadata } from "next";
-import { getDefaultMetadata } from "@/utils/getDefaultMetadata";
+import { getPageMetadata } from "@/utils/getPageMetadata";
+import { CONTACTS_PAGE_QUERY } from "@/lib/queries";
+import { SchemaJson } from "@/components/shared/SchemaJson";
+import { getPageSchemaJson } from "@/utils/getPageSchemaJson";
 
 export async function generateMetadata(): Promise<Metadata> {
-  return getDefaultMetadata("/kontakt-os");
+  return getPageMetadata({
+    query: CONTACTS_PAGE_QUERY,
+    path: "/kontakt-os",
+  });
 }
 
-export default function KontaktOsPage() {
+export default async function KontaktOsPage() {
+    const schemaJson = await getPageSchemaJson(CONTACTS_PAGE_QUERY);
+
     const crumbs = [
         { label: "Hjem", href: "/" },
         {
@@ -24,6 +32,7 @@ export default function KontaktOsPage() {
 
     return (
         <>
+            <SchemaJson schemaJson={schemaJson} />
             <Hero />
             <Breadcrumbs crumbs={crumbs} />
             <Container className="relative">

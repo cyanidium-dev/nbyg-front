@@ -5,14 +5,16 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL;
 
 export function getDefaultMetadata(path: string = "/"): Metadata {
   return {
-    title: "Nbyg",
-    description: "Byggeri og renovering med kvalitet og tillid",
+    title: "Nbyg – Tagfirma i København | Tagrenovering & Træterrasser",
+    description:
+      "Professionelt tagfirma i København med speciale i tagrenovering, nyt tag og opbygning af træterrasser. Få et gratis og uforpligtende tilbud fra Nbyg i dag.",
     alternates: {
       canonical: getCanonicalUrl(path),
     },
     openGraph: {
-      title: "Nbyg",
-      description: "Byggeri og renovering med kvalitet og tillid",
+      title: "Nbyg – Tagfirma i København | Tagrenovering & Træterrasser",
+      description:
+        "Professionelt tagfirma i København med speciale i tagrenovering, nyt tag og opbygning af træterrasser. Få et gratis og uforpligtende tilbud fra Nbyg i dag.",
       images: [
         {
           url: `${SITE_URL}/opengraph-image.jpg`,

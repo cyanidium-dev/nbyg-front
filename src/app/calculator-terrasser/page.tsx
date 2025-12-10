@@ -1,10 +1,16 @@
 import TerraceCalculator from "@/components/calculatorTerrasserPage/TerraceCalculator";
 import Breadcrumbs from "@/components/shared/breadcrumbs/Breadcrumbs";
 import { Metadata } from "next";
-import { getDefaultMetadata } from "@/utils/getDefaultMetadata";
+import { getPageMetadata } from "@/utils/getPageMetadata";
+import { TERRACE_CALCULATOR_PAGE_QUERY } from "@/lib/queries";
+import { SchemaJson } from "@/components/shared/SchemaJson";
+import { getPageSchemaJson } from "@/utils/getPageSchemaJson";
 
 export async function generateMetadata(): Promise<Metadata> {
-  return getDefaultMetadata("/calculator-terrasser");
+  return getPageMetadata({
+    query: TERRACE_CALCULATOR_PAGE_QUERY,
+    path: "/calculator-terrasser",
+  });
 }
 
 const crumbs = [
@@ -15,9 +21,12 @@ const crumbs = [
   },
 ];
 
-export default function CalculatorTerrasserPage() {
+export default async function CalculatorTerrasserPage() {
+  const schemaJson = await getPageSchemaJson(TERRACE_CALCULATOR_PAGE_QUERY);
+
   return (
     <>
+      <SchemaJson schemaJson={schemaJson} />
       <Breadcrumbs crumbs={crumbs} className="pt-[108px] lg:pt-[139px]" />
       <TerraceCalculator />
     </>
