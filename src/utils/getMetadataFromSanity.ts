@@ -69,6 +69,10 @@ export function getMetadataFromSanity({
     keywords,
     alternates: {
       canonical: canonicalUrl,
+      languages: {
+        "da-DK": canonicalUrl,
+        "x-default": canonicalUrl,
+      },
     },
     openGraph: {
       title: metaTitle,
