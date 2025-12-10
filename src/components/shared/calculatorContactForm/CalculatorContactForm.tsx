@@ -7,16 +7,35 @@ import { useState } from "react";
 import Backdrop from "../backdrop/Backdrop";
 import Notification from "../notification/Notification";
 import { Form, Formik, FormikHelpers } from "formik";
-import axios from "axios";
 import CustomizedInput from "../customizedInput/CustomizedInput";
 import { calculatorFormValidation } from "@/schemas/calculatorFormValidation";
 import Container from "../container/Container";
+import {
+    sendCalculatorEmails,
+    type FieldData,
+    type CalculatedPrice,
+} from "@/utils/email";
 
 interface FormValues {
     email: string;
 }
 
-export default function CalculatorContactForm() {
+interface CalculatorContactFormProps {
+    source?: string;
+    summaryData?: FieldData[];
+    calculatedPrices?: CalculatedPrice[];
+    getCalculatorData?: () => {
+        summaryData: FieldData[];
+        calculatedPrices: CalculatedPrice[];
+    };
+}
+
+export default function CalculatorContactForm({
+    source = "Terrasseberegner",
+    summaryData = [],
+    calculatedPrices = [],
+    getCalculatorData,
+}: CalculatorContactFormProps) {
     const [isLoading, setIsLoading] = useState(false);
     const [isNotificationShown, setIsNotificationShown] = useState(false);
     const [isError, setIsError] = useState(false);
@@ -34,16 +53,15 @@ export default function CalculatorContactForm() {
             setIsError(false);
             setIsLoading(true);
 
-            await axios({
-                method: "POST",
-                url: "/api/send-email",
-                data: JSON.stringify({
-                    source: "Calculator Terrasser",
-                    email: values.email,
-                }),
-                headers: {
-                    "Content-Type": "application/json",
-                },
+            const dataToSend = getCalculatorData
+                ? getCalculatorData()
+                : { summaryData, calculatedPrices };
+
+            await sendCalculatorEmails({
+                email: values.email,
+                source,
+                summaryData: dataToSend.summaryData,
+                calculatedPrices: dataToSend.calculatedPrices,
             });
 
             resetForm();
