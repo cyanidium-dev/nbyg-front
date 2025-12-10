@@ -77,7 +77,12 @@ const HeroSection = (_props: HeroSectionProps) => {
             whileInView="visible"
             exit="exit"
             viewport={{ once: true, amount: 0.1 }}
-            variants={fadeInAnimation({ scale: 0.85, x: 70, y: 30, delay: 0.4 })}
+            variants={fadeInAnimation({
+              scale: 0.85,
+              x: 70,
+              y: 30,
+              delay: 0.4,
+            })}
             className="max-w-[480px] lg:max-w-[685px] mb-6 lg:mb-9 whitespace-pre-line"
           >
             {description}
@@ -99,14 +104,16 @@ const HeroSection = (_props: HeroSectionProps) => {
             {showCalculatorTerraceButton && (
               <Link href="/calculator-terrasser">
                 <MainButton variant="gradient" className="h-12 sm:w-[275px]">
-                  Beregn din terrasse <ShevronIcon className="size-5 rotate-90" />
+                  Beregn din terrasse{" "}
+                  <ShevronIcon className="size-5 rotate-90" />
                 </MainButton>
               </Link>
             )}
             {showCalculatorRoofButton && (
-              <Link href="/calculator-tag">
+              <Link href="/tagprisberegner">
                 <MainButton variant="gradient" className="h-12 sm:w-[275px]">
-                  Gratis tagberegner <ShevronIcon className="size-5 rotate-90" />
+                  Gratis tagberegner{" "}
+                  <ShevronIcon className="size-5 rotate-90" />
                 </MainButton>
               </Link>
             )}

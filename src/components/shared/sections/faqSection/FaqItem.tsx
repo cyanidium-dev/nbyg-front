@@ -26,7 +26,7 @@ const buttonConfig: Record<
   },
   calculatorRoof: {
     label: "Tagberegner",
-    href: "/calculator-tag",
+    href: "/tagprisberegner",
   },
   services: {
     label: "Byggeydelser",
