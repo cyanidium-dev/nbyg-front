@@ -51,11 +51,10 @@ export function CalculatorSupportEmail({
                         {source}&quot;.
                     </Text>
                     <Text style={p}>
-                        <Text style={pBold}>E-mail:</Text> {email}
+                        <strong>E-mail:</strong> {email}
                     </Text>
                     <Text style={p}>
-                        <Text style={pBold}>Sendt den: </Text>
-                        {date}
+                        <strong>Sendt den:</strong> {date}
                     </Text>
                     <Text style={pMedium}>
                         <strong>
@@ -69,69 +68,102 @@ export function CalculatorSupportEmail({
                                 <strong>Du har valgt:</strong>
                             </Text>
                             <Section style={tableContainer}>
-                                {summaryData.map((data, index) => {
-                                    if (!data || !data.label || !data.category)
-                                        return null;
+                                {summaryData
+                                    .filter(
+                                        data =>
+                                            data && data.label && data.category
+                                    )
+                                    .map((data, index, filteredArray) => {
+                                        const isLastRow =
+                                            index === filteredArray.length - 1;
 
-                                    return (
-                                        <Row
-                                            key={`${data.category}-${String(data.value)}-${index}`}
-                                        >
-                                            <Column style={tableCellCategory}>
-                                                <Text
+                                        return (
+                                            <Row
+                                                key={`${data.category}-${String(data.value)}-${index}`}
+                                            >
+                                                <Column
                                                     style={
-                                                        tableCellCategoryText
+                                                        isLastRow
+                                                            ? {
+                                                                  ...tableCellCategory,
+                                                                  borderBottom:
+                                                                      "none",
+                                                              }
+                                                            : tableCellCategory
                                                     }
                                                 >
-                                                    <strong>
-                                                        {data.category || ""}
-                                                    </strong>
-                                                </Text>
-                                            </Column>
-                                            <Column style={tableCellValue}>
-                                                {data.fieldId === "padding" ? (
-                                                    <div style={iconContainer}>
-                                                        <Text style={iconText}>
-                                                            {Number(
-                                                                data.value
-                                                            ) > 0
-                                                                ? "✓"
-                                                                : "✗"}
-                                                        </Text>
-                                                    </div>
-                                                ) : data.labels ? (
-                                                    <>
-                                                        {data.labels.map(
-                                                            (
-                                                                label,
-                                                                labelIndex
-                                                            ) => (
-                                                                <Text
-                                                                    key={
-                                                                        labelIndex
-                                                                    }
-                                                                    style={
-                                                                        labelText
-                                                                    }
-                                                                >
-                                                                    {label}
-                                                                </Text>
-                                                            )
-                                                        )}
-                                                    </>
-                                                ) : (
                                                     <Text
                                                         style={
-                                                            tableCellValueText
+                                                            tableCellCategoryText
                                                         }
                                                     >
-                                                        {data.label || ""}
+                                                        <strong>
+                                                            {data.category ||
+                                                                ""}
+                                                        </strong>
                                                     </Text>
-                                                )}
-                                            </Column>
-                                        </Row>
-                                    );
-                                })}
+                                                </Column>
+                                                <Column
+                                                    style={
+                                                        isLastRow
+                                                            ? {
+                                                                  ...tableCellValue,
+                                                                  borderBottom:
+                                                                      "none",
+                                                              }
+                                                            : tableCellValue
+                                                    }
+                                                >
+                                                    {data.fieldId ===
+                                                    "padding" ? (
+                                                        <div
+                                                            style={
+                                                                iconContainer
+                                                            }
+                                                        >
+                                                            <Text
+                                                                style={iconText}
+                                                            >
+                                                                {Number(
+                                                                    data.value
+                                                                ) > 0
+                                                                    ? "✓"
+                                                                    : "✗"}
+                                                            </Text>
+                                                        </div>
+                                                    ) : data.labels ? (
+                                                        <>
+                                                            {data.labels.map(
+                                                                (
+                                                                    label,
+                                                                    labelIndex
+                                                                ) => (
+                                                                    <Text
+                                                                        key={
+                                                                            labelIndex
+                                                                        }
+                                                                        style={
+                                                                            labelText
+                                                                        }
+                                                                    >
+                                                                        {label}
+                                                                    </Text>
+                                                                )
+                                                            )}
+                                                        </>
+                                                    ) : (
+                                                        <Text
+                                                            style={
+                                                                tableCellValueText
+                                                            }
+                                                        >
+                                                            {data.label || ""}
+                                                        </Text>
+                                                    )}
+                                                </Column>
+                                            </Row>
+                                        );
+                                    })}
                             </Section>
                         </Section>
                     )}
@@ -214,14 +246,6 @@ const pMedium = {
     color: "#ffffff",
 };
 
-const pBold = {
-    margin: "0 0 24px 0",
-    fontSize: "12px",
-    fontWeight: "700",
-    lineHeight: "1.5",
-    color: "#ffffff",
-};
-
 const pLight = {
     margin: "0 0 24px 0",
     fontSize: "12px",
@@ -243,8 +267,8 @@ const tableContainer = {
 const tableCellCategory = {
     width: "50%",
     padding: "12px",
-    borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
-    borderRight: "1px solid rgba(255, 255, 255, 0.1)",
+    borderBottom: "1px solid #1a1a1a",
+    borderRight: "1px solid #1a1a1a",
     verticalAlign: "middle",
 };
 
@@ -259,7 +283,7 @@ const tableCellCategoryText = {
 const tableCellValue = {
     width: "50%",
     padding: "12px",
-    borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
+    borderBottom: "1px solid #1a1a1a",
     textAlign: "center" as const,
     verticalAlign: "middle",
 };
@@ -306,7 +330,7 @@ const pricesSection = {
 };
 
 const priceItem = {
-    backgroundColor: "rgba(255, 255, 255, 0.1)",
+    backgroundColor: "#1a1a1a",
     borderRadius: "8px",
     padding: "16px",
     margin: "0 0 16px 0",
@@ -319,7 +343,7 @@ const priceTitle = {
     lineHeight: "125%",
     fontWeight: "300",
     paddingBottom: "16px",
-    borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
+    borderBottom: "1px solid #1a1a1a",
 };
 
 const priceAmount = {

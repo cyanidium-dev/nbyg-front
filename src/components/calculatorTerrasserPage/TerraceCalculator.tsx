@@ -1,7 +1,7 @@
 "use client";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import { useState, useRef } from "react";
+import { useState, useRef, useLayoutEffect } from "react";
 import Container from "@/components/shared/container/Container";
 import { CalcSection } from "./CalcSection";
 import AreaInput from "./AreaInput";
@@ -15,7 +15,7 @@ import CalculatorContactForm from "../shared/calculatorContactForm/CalculatorCon
 import {
     extractTerraceCalculatorSummaryData,
     extractTerraceCalculatorPrice,
-} from "@/lib/email/calculatorDataUtils";
+} from "@/utils/email/calculatorDataUtils";
 
 interface FieldData {
     value: string | number;
@@ -53,6 +53,24 @@ export default function TerraceCalculator() {
         calculatedPrices: ReturnType<typeof extractTerraceCalculatorPrice>;
     } | null>(null);
     const previousShouldShowFormRef = useRef(false);
+    const valuesRef = useRef<FormValues>(initialValues);
+    const previousValuesStringRef = useRef<string>("");
+
+    useLayoutEffect(() => {
+        const currentValuesString = JSON.stringify(valuesRef.current);
+        if (previousValuesStringRef.current !== currentValuesString) {
+            previousValuesStringRef.current = currentValuesString;
+
+            const summaryData = extractTerraceCalculatorSummaryData(
+                valuesRef.current
+            );
+            const calculatedPrices = extractTerraceCalculatorPrice(
+                valuesRef.current
+            );
+
+            setCalculatorData({ summaryData, calculatedPrices });
+        }
+    });
 
     return (
         <>
@@ -62,22 +80,7 @@ export default function TerraceCalculator() {
                 onSubmit={() => {}}
             >
                 {({ values, setFieldValue, setValues }) => {
-                    // Update calculator data when values change
-                    const summaryData =
-                        extractTerraceCalculatorSummaryData(values);
-                    const calculatedPrices =
-                        extractTerraceCalculatorPrice(values);
-
-                    // Update state only if data has changed
-                    if (
-                        !calculatorData ||
-                        JSON.stringify(calculatorData.summaryData) !==
-                            JSON.stringify(summaryData) ||
-                        JSON.stringify(calculatorData.calculatedPrices) !==
-                            JSON.stringify(calculatedPrices)
-                    ) {
-                        setCalculatorData({ summaryData, calculatedPrices });
-                    }
+                    valuesRef.current = values;
 
                     const materialType =
                         typeof values.materialtype === "string"
@@ -465,11 +468,22 @@ export default function TerraceCalculator() {
                 }}
             </Formik>
             <AnimatePresence>
-                {showContactForm && calculatorData && (
+                {showContactForm && (
                     <CalculatorContactForm
                         source="Terrasseberegner"
-                        summaryData={calculatorData.summaryData}
-                        calculatedPrices={calculatorData.calculatedPrices}
+                        summaryData={calculatorData?.summaryData}
+                        calculatedPrices={calculatorData?.calculatedPrices}
+                        getCalculatorData={() => {
+                            const summaryData =
+                                extractTerraceCalculatorSummaryData(
+                                    valuesRef.current
+                                );
+                            const calculatedPrices =
+                                extractTerraceCalculatorPrice(
+                                    valuesRef.current
+                                );
+                            return { summaryData, calculatedPrices };
+                        }}
                     />
                 )}
             </AnimatePresence>

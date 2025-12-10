@@ -1,6 +1,6 @@
 import { render } from "@react-email/render";
-import { CalculatorCustomerEmail } from "@/templates/CalculatorCustomerEmail";
-import { CalculatorSupportEmail } from "@/templates/CalculatorSupportEmail";
+import { CalculatorCustomerEmail } from "@/components/shared/emailTemplates/CalculatorCustomerEmail";
+import { CalculatorSupportEmail } from "@/components/shared/emailTemplates/CalculatorSupportEmail";
 import { formatDate } from "@/utils/formatDate";
 
 export interface FieldData {

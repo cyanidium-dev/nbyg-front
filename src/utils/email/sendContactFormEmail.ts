@@ -1,5 +1,5 @@
 import { render } from "@react-email/render";
-import { ContactFormEmail } from "@/templates/ContactFormEmail";
+import { ContactFormEmail } from "@/components/shared/emailTemplates/ContactFormEmail";
 import { formatDate } from "@/utils/formatDate";
 
 export interface ContactFormData {

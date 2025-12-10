@@ -14,7 +14,7 @@ import {
     sendCalculatorEmails,
     type FieldData,
     type CalculatedPrice,
-} from "@/lib/email";
+} from "@/utils/email";
 
 interface FormValues {
     email: string;
@@ -24,12 +24,17 @@ interface CalculatorContactFormProps {
     source?: string;
     summaryData?: FieldData[];
     calculatedPrices?: CalculatedPrice[];
+    getCalculatorData?: () => {
+        summaryData: FieldData[];
+        calculatedPrices: CalculatedPrice[];
+    };
 }
 
 export default function CalculatorContactForm({
     source = "Terrasseberegner",
     summaryData = [],
     calculatedPrices = [],
+    getCalculatorData,
 }: CalculatorContactFormProps) {
     const [isLoading, setIsLoading] = useState(false);
     const [isNotificationShown, setIsNotificationShown] = useState(false);
@@ -48,11 +53,15 @@ export default function CalculatorContactForm({
             setIsError(false);
             setIsLoading(true);
 
+            const dataToSend = getCalculatorData
+                ? getCalculatorData()
+                : { summaryData, calculatedPrices };
+
             await sendCalculatorEmails({
                 email: values.email,
                 source,
-                summaryData,
-                calculatedPrices,
+                summaryData: dataToSend.summaryData,
+                calculatedPrices: dataToSend.calculatedPrices,
             });
 
             resetForm();

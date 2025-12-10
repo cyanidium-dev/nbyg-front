@@ -1,5 +1,5 @@
 "use client";
-import { useMemo, useRef, useEffect, useState } from "react";
+import { useMemo, useRef, useEffect, useLayoutEffect, useState } from "react";
 import { Formik, Form } from "formik";
 import Container from "@/components/shared/container/Container";
 import AreaInput from "./AreaInput";
@@ -29,7 +29,7 @@ import CalculatorContactForm from "../shared/calculatorContactForm/CalculatorCon
 import {
     extractTagCalculatorSummaryData,
     extractTagCalculatorPrices,
-} from "@/lib/email/calculatorDataUtils";
+} from "@/utils/email/calculatorDataUtils";
 
 function MemoizedSummaryAndPrice({
     values,
@@ -91,33 +91,36 @@ export default function TagCalculator() {
             value: 50,
         },
     };
+    const valuesRef = useRef<FormValues>(initialValues);
+    const previousValuesStringRef = useRef<string>("");
+
+    useLayoutEffect(() => {
+        const currentValuesString = JSON.stringify(valuesRef.current);
+        if (previousValuesStringRef.current !== currentValuesString) {
+            previousValuesStringRef.current = currentValuesString;
+
+            const summaryData = extractTagCalculatorSummaryData(
+                valuesRef.current,
+                fieldsData as Array<{
+                    id: string;
+                    type: string;
+                    title: string;
+                    options?: unknown;
+                }>
+            );
+            const calculatedPrices = extractTagCalculatorPrices(
+                valuesRef.current
+            );
+
+            setCalculatorData({ summaryData, calculatedPrices });
+        }
+    });
 
     return (
         <>
             <Formik initialValues={initialValues} onSubmit={() => {}}>
                 {({ values, setFieldValue }) => {
-                    // Update calculator data when values change
-                    const summaryData = extractTagCalculatorSummaryData(
-                        values,
-                        fieldsData as Array<{
-                            id: string;
-                            type: string;
-                            title: string;
-                            options?: unknown;
-                        }>
-                    );
-                    const calculatedPrices = extractTagCalculatorPrices(values);
-
-                    // Update state only if data has changed
-                    if (
-                        !calculatorData ||
-                        JSON.stringify(calculatorData.summaryData) !==
-                            JSON.stringify(summaryData) ||
-                        JSON.stringify(calculatorData.calculatedPrices) !==
-                            JSON.stringify(calculatedPrices)
-                    ) {
-                        setCalculatorData({ summaryData, calculatedPrices });
-                    }
+                    valuesRef.current = values;
 
                     return (
                         <Form className="pt-2 lg:pt-8 font-montserrat [counter-reset:calc-section]">
@@ -376,11 +379,26 @@ export default function TagCalculator() {
                 }}
             </Formik>
             <AnimatePresence>
-                {showContactForm && calculatorData && (
+                {showContactForm && (
                     <CalculatorContactForm
                         source="Tagberegner"
-                        summaryData={calculatorData.summaryData}
-                        calculatedPrices={calculatorData.calculatedPrices}
+                        summaryData={calculatorData?.summaryData}
+                        calculatedPrices={calculatorData?.calculatedPrices}
+                        getCalculatorData={() => {
+                            const summaryData = extractTagCalculatorSummaryData(
+                                valuesRef.current,
+                                fieldsData as Array<{
+                                    id: string;
+                                    type: string;
+                                    title: string;
+                                    options?: unknown;
+                                }>
+                            );
+                            const calculatedPrices = extractTagCalculatorPrices(
+                                valuesRef.current
+                            );
+                            return { summaryData, calculatedPrices };
+                        }}
                     />
                 )}
             </AnimatePresence>

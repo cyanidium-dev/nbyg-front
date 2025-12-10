@@ -6,7 +6,7 @@ import { contactFormValidation } from "@/schemas/contactFormValidation";
 import * as motion from "motion/react-client";
 import { fadeInAnimation } from "@/utils/animationVariants";
 import MainButton from "../buttons/MainButton";
-import { sendContactFormEmail } from "@/lib/email";
+import { sendContactFormEmail } from "@/utils/email";
 
 interface ContactFormValues {
     name: string;
