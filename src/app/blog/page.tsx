@@ -7,10 +7,16 @@ import { fetchSanityData } from "@/utils/fetchSanityData";
 import { Suspense } from "react";
 import Breadcrumbs from "@/components/shared/breadcrumbs/Breadcrumbs";
 import { Metadata } from "next";
-import { getDefaultMetadata } from "@/utils/getDefaultMetadata";
+import { getPageMetadata } from "@/utils/getPageMetadata";
+import { BLOG_PAGE_QUERY } from "@/lib/queries";
+import { SchemaJson } from "@/components/shared/SchemaJson";
+import { getPageSchemaJson } from "@/utils/getPageSchemaJson";
 
 export async function generateMetadata(): Promise<Metadata> {
-  return getDefaultMetadata("/blog");
+  return getPageMetadata({
+    query: BLOG_PAGE_QUERY,
+    path: "/blog",
+  });
 }
 
 const crumbs = [
@@ -25,8 +31,11 @@ export default async function BlogPage() {
   const blogPosts =
     await fetchSanityData<BlogPostPreview[]>(ALL_BLOG_POSTS_QUERY);
 
+  const schemaJson = await getPageSchemaJson(BLOG_PAGE_QUERY);
+
   return (
     <>
+      <SchemaJson schemaJson={schemaJson} />
       <Hero />
       <Breadcrumbs crumbs={crumbs} />
       <Suspense fallback={<Loader />}>

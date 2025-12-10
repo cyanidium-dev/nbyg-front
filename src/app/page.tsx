@@ -11,16 +11,25 @@ import { BEFORE_AFTER_IMAGES } from "@/components/homePage/beforeAfter/beforeAft
 import Reviews from "@/components/homePage/reviews/Reviews";
 import Gallery from "@/components/homePage/gallery/Gallery";
 import Container from "@/components/shared/container/Container";
-import { getDefaultMetadata } from "@/utils/getDefaultMetadata";
+import { SchemaJson } from "@/components/shared/SchemaJson";
+import { getPageMetadata } from "@/utils/getPageMetadata";
+import { getPageSchemaJson } from "@/utils/getPageSchemaJson";
+import { HOME_PAGE_QUERY } from "@/lib/queries";
 import { Metadata } from "next";
 
 export async function generateMetadata(): Promise<Metadata> {
-  return getDefaultMetadata("/");
+  return getPageMetadata({
+    query: HOME_PAGE_QUERY,
+    path: "/",
+  });
 }
 
-export default function Home() {
+export default async function Home() {
+  const schemaJson = await getPageSchemaJson(HOME_PAGE_QUERY);
+
   return (
     <>
+      <SchemaJson schemaJson={schemaJson} />
       <Hero />
       <AboutUs />
       <TextRevealCardsSliderSection

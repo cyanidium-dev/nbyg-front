@@ -18,7 +18,10 @@ import type { PageSection, SanityPage } from "@/types/page";
 import Loader from "@/components/shared/loader/Loader";
 import Breadcrumbs from "@/components/shared/breadcrumbs/Breadcrumbs";
 import { Metadata } from "next";
-import { getCanonicalUrl } from "@/utils/getCanonicalUrl";
+import { getDynamicPageMetadata } from "@/utils/getDynamicPageMetadata";
+import { PAGE_BY_SLUG_QUERY } from "@/lib/queries";
+import { SchemaJson } from "@/components/shared/SchemaJson";
+import { getDynamicPageSchemaJson } from "@/utils/getDynamicPageSchemaJson";
 
 interface SubservicePageProps {
   params: Promise<{ service: string; subservice: string }>;
@@ -28,13 +31,15 @@ export async function generateMetadata({
   params,
 }: SubservicePageProps): Promise<Metadata> {
   const { service, subservice } = await params;
-  const canonicalUrl = getCanonicalUrl(`/byggeydelser/${service}/${subservice}`);
-
-  return {
-    alternates: {
-      canonical: canonicalUrl,
+  
+  return getDynamicPageMetadata({
+    query: PAGE_BY_SLUG_QUERY,
+    queryParams: {
+      slug: subservice,
+      parentSlug: service,
     },
-  };
+    path: `/byggeydelser/${service}/${subservice}`,
+  });
 }
 
 const sectionComponentMap: Partial<
@@ -72,7 +77,10 @@ export default async function SubservicePage({ params }: SubservicePageProps) {
 
   const { title, slug, parent } = currentSubservice;
 
-  console.log(parent);
+  const schemaJson = await getDynamicPageSchemaJson(PAGE_BY_SLUG_QUERY, {
+    slug: subservice,
+    parentSlug: service,
+  });
 
   const crumbs = [
     { label: "Hjem", href: "/" },
@@ -92,6 +100,7 @@ export default async function SubservicePage({ params }: SubservicePageProps) {
 
   return (
     <>
+      <SchemaJson schemaJson={schemaJson} />
       <Suspense fallback={<Loader />}>
         {currentSubservice.sections?.map((section, index) => {
           const { _type } = section;

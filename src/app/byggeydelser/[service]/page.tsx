@@ -18,7 +18,9 @@ import type { PageSection, SanityPage } from "@/types/page";
 import Loader from "@/components/shared/loader/Loader";
 import Breadcrumbs from "@/components/shared/breadcrumbs/Breadcrumbs";
 import { Metadata } from "next";
-import { getCanonicalUrl } from "@/utils/getCanonicalUrl";
+import { getDynamicPageMetadata } from "@/utils/getDynamicPageMetadata";
+import { SchemaJson } from "@/components/shared/SchemaJson";
+import { getDynamicPageSchemaJson } from "@/utils/getDynamicPageSchemaJson";
 
 interface ServicePageProps {
   params: Promise<{ service: string }>;
@@ -28,13 +30,15 @@ export async function generateMetadata({
   params,
 }: ServicePageProps): Promise<Metadata> {
   const { service } = await params;
-  const canonicalUrl = getCanonicalUrl(`/byggeydelser/${service}`);
 
-  return {
-    alternates: {
-      canonical: canonicalUrl,
+  return getDynamicPageMetadata({
+    query: PAGE_BY_SLUG_QUERY,
+    queryParams: {
+      slug: service,
+      parentSlug: "",
     },
-  };
+    path: `/byggeydelser/${service}`,
+  });
 }
 
 const sectionComponentMap: Partial<
@@ -69,6 +73,11 @@ export default async function ServicePage({ params }: ServicePageProps) {
 
   const { title, slug } = currentService;
 
+  const schemaJson = await getDynamicPageSchemaJson(PAGE_BY_SLUG_QUERY, {
+    slug: service,
+    parentSlug: "",
+  });
+
   const crumbs = [
     { label: "Hjem", href: "/" },
     {
@@ -83,6 +92,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
 
   return (
     <>
+      <SchemaJson schemaJson={schemaJson} />
       <Suspense fallback={<Loader />}>
         {currentService.sections?.map((section, index) => {
           const { _type } = section;

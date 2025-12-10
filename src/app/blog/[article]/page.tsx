@@ -11,7 +11,10 @@ import RecommendedPostsMobile from "@/components/articlePage/recommendedPosts/Re
 import RecommendedPostsDesktop from "@/components/articlePage/recommendedPosts/RecommendedPostsDesktop";
 import Breadcrumbs from "@/components/shared/breadcrumbs/Breadcrumbs";
 import { Metadata } from "next";
-import { getCanonicalUrl } from "@/utils/getCanonicalUrl";
+import { getDynamicPageMetadata } from "@/utils/getDynamicPageMetadata";
+import { BLOG_POST_BY_SLUG_QUERY } from "@/lib/queries";
+import { SchemaJson } from "@/components/shared/SchemaJson";
+import { getDynamicPageSchemaJson } from "@/utils/getDynamicPageSchemaJson";
 
 interface ArticlePageProps {
   params: Promise<{ article: string }>;
@@ -21,13 +24,14 @@ export async function generateMetadata({
   params,
 }: ArticlePageProps): Promise<Metadata> {
   const { article } = await params;
-  const canonicalUrl = getCanonicalUrl(`/blog/${article}`);
-
-  return {
-    alternates: {
-      canonical: canonicalUrl,
+  
+  return getDynamicPageMetadata({
+    query: BLOG_POST_BY_SLUG_QUERY,
+    queryParams: {
+      slug: article,
     },
-  };
+    path: `/blog/${article}`,
+  });
 }
 
 export default async function ArticlePage({ params }: ArticlePageProps) {
@@ -49,6 +53,10 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
   const { heroTitle, slug } = currentArticle;
 
+  const schemaJson = await getDynamicPageSchemaJson(BLOG_POST_BY_SLUG_QUERY, {
+    slug: article,
+  });
+
   const crumbs = [
     { label: "Hjem", href: "/" },
     {
@@ -63,6 +71,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
   return (
     <>
+      <SchemaJson schemaJson={schemaJson} />
       <Suspense fallback={<Loader />}>
         <Hero article={currentArticle} />
         <Breadcrumbs crumbs={crumbs} />
