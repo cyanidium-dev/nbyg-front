@@ -9,15 +9,15 @@ import { getPageSchemaJson } from "@/utils/getPageSchemaJson";
 export async function generateMetadata(): Promise<Metadata> {
   return getPageMetadata({
     query: TERRACE_CALCULATOR_PAGE_QUERY,
-    path: "/calculator-terrasser",
+    path: "/terrasseprisberegner",
   });
 }
 
 const crumbs = [
   { label: "Hjem", href: "/" },
   {
-    label: "Calculator terraser",
-    href: "/calculator-terrasser",
+    label: "Terrasseprisberegner",
+    href: "/terrasseprisberegner",
   },
 ];
 

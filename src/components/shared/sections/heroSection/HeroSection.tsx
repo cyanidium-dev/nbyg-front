@@ -102,7 +102,7 @@ const HeroSection = (_props: HeroSectionProps) => {
               </FormButton>
             )}
             {showCalculatorTerraceButton && (
-              <Link href="/calculator-terrasser">
+              <Link href="/terrasseprisberegner">
                 <MainButton variant="gradient" className="h-12 sm:w-[275px]">
                   Beregn din terrasse{" "}
                   <ShevronIcon className="size-5 rotate-90" />

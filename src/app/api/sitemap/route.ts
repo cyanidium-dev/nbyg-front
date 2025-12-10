@@ -187,7 +187,7 @@ export async function GET() {
         priority: 0.6,
       },
       {
-        loc: "/calculator-terrasser",
+        loc: "/terrasseprisberegner",
         lastmod: new Date().toISOString(),
         changefreq: "monthly",
         priority: 0.6,

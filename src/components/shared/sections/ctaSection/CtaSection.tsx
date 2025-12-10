@@ -66,7 +66,7 @@ const CtaSection = (_props: CtaSectionProps) => {
             />
 
             {buttonType === "calculatorTerrace" ? (
-              <Link href="/calculator-terrasser" className="hidden md:block">
+              <Link href="/terrasseprisberegner" className="hidden md:block">
                 <MainButton className="h-[58px]">Begær terrassepris</MainButton>
               </Link>
             ) : buttonType === "calculatorRoof" ? (
@@ -116,7 +116,7 @@ const CtaSection = (_props: CtaSectionProps) => {
             className="md:hidden"
           >
             {buttonType === "calculatorTerrace" ? (
-              <Link href="/calculator-terrasser">
+              <Link href="/terrasseprisberegner">
                 <MainButton className="h-[58px]">Begær terrassepris</MainButton>
               </Link>
             ) : buttonType === "calculatorRoof" ? (
