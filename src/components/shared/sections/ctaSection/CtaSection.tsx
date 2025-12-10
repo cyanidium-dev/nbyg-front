@@ -66,11 +66,11 @@ const CtaSection = (_props: CtaSectionProps) => {
             />
 
             {buttonType === "calculatorTerrace" ? (
-              <Link href="/calculator-terrasser" className="hidden md:block">
+              <Link href="/terrasseprisberegner" className="hidden md:block">
                 <MainButton className="h-[58px]">Begær terrassepris</MainButton>
               </Link>
             ) : buttonType === "calculatorRoof" ? (
-              <Link href="/calculator-tag" className="hidden md:block">
+              <Link href="/tagprisberegner" className="hidden md:block">
                 <MainButton className="h-[58px]">
                   Beregn prisen på taget
                 </MainButton>
@@ -97,7 +97,11 @@ const CtaSection = (_props: CtaSectionProps) => {
                   ? image
                   : urlForSanityImage(image).fit("crop").url()
               }
-              alt={typeof image === "string" ? "CTA billede" : image?.alt || "CTA billede"}
+              alt={
+                typeof image === "string"
+                  ? "CTA billede"
+                  : image?.alt || "CTA billede"
+              }
               fill
               className="object-cover"
             />
@@ -112,11 +116,11 @@ const CtaSection = (_props: CtaSectionProps) => {
             className="md:hidden"
           >
             {buttonType === "calculatorTerrace" ? (
-              <Link href="/calculator-terrasser">
+              <Link href="/terrasseprisberegner">
                 <MainButton className="h-[58px]">Begær terrassepris</MainButton>
               </Link>
             ) : buttonType === "calculatorRoof" ? (
-              <Link href="/calculator-tag">
+              <Link href="/tagprisberegner">
                 <MainButton className="h-[58px]">
                   Beregn prisen på taget
                 </MainButton>

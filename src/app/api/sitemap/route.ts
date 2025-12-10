@@ -47,7 +47,10 @@ const GET_DYNAMIC_PAGES_SLUGS = `{
   }
 }`;
 
-async function fetchSanityDataServer<T>(query: string, params = {}): Promise<T | null> {
+async function fetchSanityDataServer<T>(
+  query: string,
+  params = {}
+): Promise<T | null> {
   try {
     return await client.fetch<T>(query, params);
   } catch (error) {
@@ -66,7 +69,9 @@ type SitemapUrl = {
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "";
 
 async function getDynamicPages(): Promise<SitemapUrl[]> {
-  const res = await fetchSanityDataServer<SanitySitemapData>(GET_DYNAMIC_PAGES_SLUGS);
+  const res = await fetchSanityDataServer<SanitySitemapData>(
+    GET_DYNAMIC_PAGES_SLUGS
+  );
 
   const pages = res?.pages || [];
   const pagesPaths: SitemapUrl[] = pages.map((page: Page) => ({
@@ -113,13 +118,13 @@ function escapeXml(unsafe: string): string {
 function generateSitemapXml(urls: SitemapUrl[]): string {
   // Нормалізуємо SITE_URL - прибираємо trailing slash
   const baseUrl = SITE_URL.replace(/\/+$/, "");
-  
+
   const urlEntries = urls
     .map((url) => {
       // Нормалізуємо loc - додаємо leading slash якщо його немає
       const normalizedLoc = url.loc.startsWith("/") ? url.loc : `/${url.loc}`;
       const fullUrl = `${baseUrl}${normalizedLoc}`;
-      
+
       return `  <url>
     <loc>${escapeXml(fullUrl)}</loc>
     <lastmod>${formatDate(url.lastmod)}</lastmod>
@@ -176,13 +181,13 @@ export async function GET() {
         priority: 0.7,
       },
       {
-        loc: "/calculator-tag",
+        loc: "/tagprisberegner",
         lastmod: new Date().toISOString(),
         changefreq: "monthly",
         priority: 0.6,
       },
       {
-        loc: "/calculator-terrasser",
+        loc: "/terrasseprisberegner",
         lastmod: new Date().toISOString(),
         changefreq: "monthly",
         priority: 0.6,
@@ -216,4 +221,3 @@ export async function GET() {
     return new NextResponse("Error generating sitemap", { status: 500 });
   }
 }
-
