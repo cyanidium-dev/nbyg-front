@@ -53,7 +53,7 @@ export const galleryData = [
     },
     {
         _key: "14",
-        image: {link: "/images/homePage/gallery/gallery-14.webp", alt: ""},
+        image: {link: "/images/homePage/gallery/gallery-14.webp", alt: "Totalrenovering lejlighed – komplet Nbyg projekt"},
     },
     {
         _key: "15",
