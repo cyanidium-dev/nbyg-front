@@ -98,7 +98,7 @@ export default function GalleryModal({
                         }
                         alt={
                           typeof item.image === "object" && "link" in item.image
-                            ? `Galleri billede ${idx + 1}`
+                            ? item.image.alt || `Galleri billede ${idx + 1}`
                             : item.image?.alt || `Galleri billede ${idx + 1}`
                         }
                         fill

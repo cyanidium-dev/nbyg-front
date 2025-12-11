@@ -32,7 +32,7 @@ export default function HeroGallerySlider({ images }: HeroGallerySliderProps) {
                 <SwiperSlide key={index}>
                     <Image
                         src={image.url}
-                        alt={`Hero Gallery ${index + 1}`}
+                        alt={image.alt}
                         fill
                         className="object-cover"
                         sizes="100vw"
