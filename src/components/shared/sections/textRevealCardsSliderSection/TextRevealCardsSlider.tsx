@@ -10,7 +10,7 @@ interface TextRevealCardsSliderProps {
     _key?: string;
     title: string;
     description: string;
-    image: SanityImage | string;
+    image: SanityImage | { link: string; alt: string };
     link?: string;
   }>;
   uniqueKey?: string;

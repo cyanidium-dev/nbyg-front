@@ -102,7 +102,7 @@ export type GallerySection = {
   description?: string;
   items?: Array<{
     _key?: string;
-    image?: SanityImage | string;
+    image?: SanityImage | { link: string; alt: string };
   }>;
 };
 
@@ -111,8 +111,8 @@ export type BeforeAfterSection = {
   type: "beforeAfterSection";
   items: Array<{
     _key?: string;
-    beforeImage: SanityImage | string;
-    afterImage: SanityImage | string;
+    beforeImage: SanityImage | { link: string; alt: string };
+    afterImage: SanityImage | { link: string; alt: string };
   }>;
 };
 
@@ -164,7 +164,7 @@ export type TextRevealCardsSliderSection = {
     _key?: string;
     title: string;
     description: string;
-    image: SanityImage | string;
+    image: SanityImage | { link: string; alt: string };
     link?: string;
   }>;
 };
