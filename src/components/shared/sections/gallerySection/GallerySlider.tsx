@@ -13,7 +13,7 @@ import { fadeInAnimation } from "@/utils/animationVariants";
 interface GallerySliderProps {
   items: Array<{
     _key?: string;
-    image?: SanityImage | string;
+    image?: SanityImage | {link: string, alt: string};
   }>;
   uniqueKey?: string;
 }
@@ -122,12 +122,12 @@ export default function GallerySlider({
                 >
                   <Image
                     src={
-                      typeof item.image === "string"
-                        ? item.image
+                      typeof item.image === "object" && "link" in item.image
+                        ? item.image.link
                         : urlForSanityImage(item.image).fit("crop").url()
                     }
                     alt={
-                      typeof item.image === "string"
+                      typeof item.image === "object" && "link" in item.image
                         ? `Galleri billede ${idx + 1}`
                         : item.image?.alt || `Galleri billede ${idx + 1}`
                     }

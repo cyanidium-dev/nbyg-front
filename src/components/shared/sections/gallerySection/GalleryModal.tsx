@@ -10,7 +10,7 @@ import Backdrop from "../../backdrop/Backdrop";
 import Modal from "../../modals/Modal";
 
 interface GalleryModalProps {
-  items: Array<{ _key?: string; image?: SanityImage | string }>;
+  items: Array<{ _key?: string; image?: SanityImage | {link: string, alt: string} }>;
   isOpen: boolean;
   onClose: () => void;
   activeIndex: number;
@@ -92,12 +92,12 @@ export default function GalleryModal({
                     <div className="relative w-full h-full max-w-full max-h-full">
                       <Image
                         src={
-                          typeof item.image === "string"
-                            ? item.image
+                          typeof item.image === "object" && "link" in item.image
+                            ? item.image.link
                             : urlForSanityImage(item.image).fit("crop").url()
                         }
                         alt={
-                          typeof item.image === "string"
+                          typeof item.image === "object" && "link" in item.image
                             ? `Galleri billede ${idx + 1}`
                             : item.image?.alt || `Galleri billede ${idx + 1}`
                         }
