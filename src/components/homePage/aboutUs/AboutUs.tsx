@@ -17,7 +17,7 @@ export default function AboutUs() {
                     whileInView="visible"
                     exit="exit"
                     viewport={{ once: true, amount: 0.1 }}
-                    className="absolute pointer-events-none bottom-[-86px] md:right-[200px] lg:right-[321px] hidden md:block rotate-[286deg] scale-90"
+                    className="absolute pointer-events-none bottom-[-86px] md:right-[200px] lg:right-[321px] hidden md:block rotate-286 scale-90"
                 >
                     <Image
                         src="/images/decorations/ellipsis.svg"
@@ -92,7 +92,7 @@ export default function AboutUs() {
                     >
                         <Image
                             src="/images/homePage/aboutUs/aboutUsImage.webp"
-                            alt="about us image"
+                            alt="Nbyg København – byggefirma"
                             fill
                             className="object-cover scale-125 object-[10%_35%] translate-x-[-10%] lg:scale-100 lg:object-[center_32%] lg:translate-x-0"
                         />

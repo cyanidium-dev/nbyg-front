@@ -30,7 +30,7 @@ export interface Gallery {
   description: string;
   items: Array<{
     _key?: string;
-    image?: SanityImage | string;
+    image?: SanityImage | { link: string; alt: string };
   }>;
 }
 

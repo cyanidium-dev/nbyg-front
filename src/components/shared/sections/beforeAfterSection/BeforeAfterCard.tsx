@@ -2,7 +2,7 @@ import { SanityImage } from "@/types/page";
 import Image from "next/image";
 import { urlForSanityImage } from "@/utils/getUrlForSanityImage";
 
-type ImageSource = SanityImage | string;
+type ImageSource = SanityImage | { link: string; alt: string };
 
 interface BeforeAfterCardProps {
     slide: {
@@ -20,12 +20,16 @@ export default function BeforeAfterCard({ slide }: BeforeAfterCardProps) {
             <div className="relative w-full h-[140px] lg:h-[148px] mb-5 lg:mb-1">
                 <Image
                     src={
-                        typeof beforeImage === "string"
-                            ? beforeImage
+                        typeof beforeImage === "object" && "link" in beforeImage
+                            ? beforeImage.link
                             : urlForSanityImage(beforeImage).fit("crop").url()
                     }
                     fill
-                    alt={typeof beforeImage === "string" ? "Før billede" : beforeImage?.alt || "Før billede"}
+                    alt={
+                        typeof beforeImage === "object" && "link" in beforeImage
+                            ? beforeImage.alt || "Før billede"
+                            : beforeImage?.alt || "Før billede"
+                    }
                     className="object-cover"
                 />
                 <div
@@ -38,12 +42,16 @@ export default function BeforeAfterCard({ slide }: BeforeAfterCardProps) {
             <div className="relative w-full h-[140px] lg:h-[148px]">
                 <Image
                     src={
-                        typeof afterImage === "string"
-                            ? afterImage
+                        typeof afterImage === "object" && "link" in afterImage
+                            ? afterImage.link
                             : urlForSanityImage(afterImage).fit("crop").url()
                     }
                     fill
-                    alt={typeof afterImage === "string" ? "Efter billede" : afterImage?.alt || "Efter billede"}
+                    alt={
+                        typeof afterImage === "object" && "link" in afterImage
+                            ? afterImage.alt || "Efter billede"
+                            : afterImage?.alt || "Efter billede"
+                    }
                     className="object-cover"
                 />
                 <div

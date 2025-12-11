@@ -99,7 +99,7 @@ export default function WhyUs() {
                                 >
                                     <Image
                                         src="/images/homePage/whyUs/card-1.webp"
-                                        alt="Service"
+                                        alt="Professionelle renoveringer og tage"
                                         fill
                                         className="object-cover sm:object-[center_35%] lg:object-center"
                                     />
@@ -155,7 +155,7 @@ export default function WhyUs() {
                             >
                                 <Image
                                     src="/images/homePage/whyUs/card-2.webp"
-                                    alt="Service"
+                                    alt="Terrasse, tage og totalrenovering"
                                     fill
                                     className="object-cover object-bottom"
                                 />
@@ -257,7 +257,7 @@ export default function WhyUs() {
                             >
                                 <Image
                                     src="/images/homePage/whyUs/card-3.webp"
-                                    alt="Service"
+                                    alt="Moderne byggeri og design"
                                     fill
                                     className="object-cover scale-118 object-[center_73%] xs:object-center xl:object-[center_73%] xl:scale-100"
                                 />
