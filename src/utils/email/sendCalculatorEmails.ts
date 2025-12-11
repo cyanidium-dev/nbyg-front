@@ -1,8 +1,3 @@
-import { render } from "@react-email/render";
-import { CalculatorCustomerEmail } from "@/components/shared/emailTemplates/CalculatorCustomerEmail";
-import { CalculatorSupportEmail } from "@/components/shared/emailTemplates/CalculatorSupportEmail";
-import { formatDate } from "@/utils/formatDate";
-
 export interface FieldData {
     value: string | number;
     label: string;
@@ -24,35 +19,15 @@ export interface CalculatorFormData {
 }
 
 /**
- * Renders both CalculatorCustomerEmail and CalculatorSupportEmail templates to HTML
- * and sends them to the email API route
+ * Sends calculator form data to the email API route (rendering happens server-side)
  * @param formData - The calculator form data including summary and prices
  * @returns Promise with the API response
  */
 export async function sendCalculatorEmails(
     formData: CalculatorFormData
 ): Promise<Response> {
-    const date = formatDate(new Date());
     const source = formData.source || "Terrasseberegner";
 
-    // Render customer email
-    const customerHtml = await render(
-        CalculatorCustomerEmail({
-            summaryData: formData.summaryData,
-            calculatedPrices: formData.calculatedPrices,
-        })
-    );
-
-    // Render support email
-    const supportHtml = await render(
-        CalculatorSupportEmail({
-            source,
-            email: formData.email,
-            date,
-            summaryData: formData.summaryData,
-            calculatedPrices: formData.calculatedPrices,
-        })
-    );
     const response = await fetch("/api/send-email", {
         method: "POST",
         headers: {
@@ -62,8 +37,8 @@ export async function sendCalculatorEmails(
             type: "calculator",
             source,
             email: formData.email,
-            customerHtml,
-            supportHtml,
+            summaryData: formData.summaryData,
+            calculatedPrices: formData.calculatedPrices,
         }),
     });
 
