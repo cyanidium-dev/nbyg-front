@@ -5,16 +5,12 @@ import {
   FieldInputProps,
   FieldMetaProps,
 } from "formik";
-import { useId } from "react";
+import { useId, lazy, Suspense } from "react";
 import clsx from "clsx";
 import { twMerge } from "tailwind-merge";
-import dynamic from "next/dynamic";
 import ShevronIcon from "../icons/ShevronIcon";
-import "react-phone-number-input/style.css";
 
-const PhoneInput = dynamic(() => import("react-phone-number-input"), {
-  ssr: false,
-});
+const PhoneInputWrapper = lazy(() => import("./PhoneInputWrapper"));
 
 interface Values {
   [fieldName: string]: string;
@@ -81,24 +77,26 @@ export default function CustomizedInput({
 
             if (inputType === "tel") {
               return (
-                <PhoneInput
-                  international
-                  countryCallingCodeEditable={false}
-                  country="DK"
-                  defaultCountry="DK"
-                  autoComplete="on"
-                  {...field}
-                  {...commonProps}
-                  onChange={value => {
-                    setFieldValue(fieldName, value || "");
-                    setFieldTouched(fieldName, true, false);
-                  }}
-                  countrySelectProps={{
-                    arrowComponent: () => (
-                      <ShevronIcon className="size-6 text-white rotate-180" />
-                    ),
-                  }}
-                />
+                <Suspense fallback={<div className={commonProps.className} />}>
+                  <PhoneInputWrapper
+                    international
+                    countryCallingCodeEditable={false}
+                    country="DK"
+                    defaultCountry="DK"
+                    autoComplete="on"
+                    {...field}
+                    {...commonProps}
+                    onChange={(value: string | undefined) => {
+                      setFieldValue(fieldName, value || "");
+                      setFieldTouched(fieldName, true, false);
+                    }}
+                    countrySelectProps={{
+                      arrowComponent: () => (
+                        <ShevronIcon className="size-6 text-white rotate-180" />
+                      ),
+                    }}
+                  />
+                </Suspense>
               );
             }
 

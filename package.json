@@ -6,11 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint",
-    "analyze": "cross-env ANALYZE=true next build",
-    "perf:lighthouse": "lighthouse http://localhost:3000 --output=html --output-path=./lighthouse-report.html --view",
-    "perf:build": "npm run build",
-    "perf:budget": "bundlesize"
+    "lint": "eslint"
   },
   "dependencies": {
     "@portabletext/react": "^5.0.0",
@@ -36,15 +32,12 @@
     "yup": "^1.7.1"
   },
   "devDependencies": {
-    "@next/bundle-analyzer": "^16.0.7",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "cross-env": "^7.0.3",
     "eslint": "^9",
     "eslint-config-next": "^16.0.7",
-    "lighthouse": "^12.0.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
