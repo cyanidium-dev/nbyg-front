@@ -8,7 +8,7 @@ import {
     Text,
 } from "@react-email/components";
 
-type ContactFormEmailProps = {
+type ContactFormSupportEmailProps = {
     name?: string;
     phone?: string;
     email: string;
@@ -17,14 +17,14 @@ type ContactFormEmailProps = {
     date?: string;
 };
 
-export function ContactFormEmail({
+export function ContactFormSupportEmail({
     name,
     phone,
     email,
     address,
     message,
     date,
-}: ContactFormEmailProps) {
+}: ContactFormSupportEmailProps) {
     return (
         <Html lang="da">
             <Head />
@@ -63,10 +63,12 @@ export function ContactFormEmail({
                             </Text>
                         )}
                         {message && (
-                            <Text style={listItem}>
-                                <strong>Besked: </strong>
-                                {message}
-                            </Text>
+                            <>
+                                <Text style={listItem}>
+                                    <strong>Besked: </strong>
+                                </Text>
+                                <Text style={listItem}>{message}</Text>
+                            </>
                         )}
                     </Section>
 
@@ -96,7 +98,7 @@ const main = {
     lineHeight: "1.167",
     color: "#ffffff",
     backgroundColor: "#000000",
-    padding: "48px",
+    padding: "48px 16px",
 };
 
 const container = {
