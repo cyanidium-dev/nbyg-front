@@ -29,7 +29,7 @@ export default function TextRevealCard({ slide }: TextRevealCardProps) {
         src={
           typeof image === "object" && "link" in image
             ? image.link
-            : urlForSanityImage(image).fit("crop").url()
+            : urlForSanityImage(image).url()
         }
         alt={
           typeof image === "object" && "link" in image

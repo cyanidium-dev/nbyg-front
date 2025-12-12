@@ -51,7 +51,7 @@ const TableWithImageSection = (_props: TableWithImageSectionProps) => {
               className="relative w-full xl:w-1/2 h-[300px] xl:h-auto rounded-[12px] overflow-hidden shrink-0"
             >
               <Image
-                src={urlForSanityImage(image).fit("crop").url()}
+                src={urlForSanityImage(image).url()}
                 fill
                 alt={image?.alt || "Billede"}
                 className="object-cover"

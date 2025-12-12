@@ -124,7 +124,7 @@ export default function GallerySlider({
                     src={
                       typeof item.image === "object" && "link" in item.image
                         ? item.image.link
-                        : urlForSanityImage(item.image).fit("crop").url()
+                        : urlForSanityImage(item.image).url()
                     }
                     alt={
                       typeof item.image === "object" && "link" in item.image

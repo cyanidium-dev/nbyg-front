@@ -22,7 +22,7 @@ export default function BeforeAfterCard({ slide }: BeforeAfterCardProps) {
                     src={
                         typeof beforeImage === "object" && "link" in beforeImage
                             ? beforeImage.link
-                            : urlForSanityImage(beforeImage).fit("crop").url()
+                            : urlForSanityImage(beforeImage).url()
                     }
                     fill
                     alt={
@@ -44,7 +44,7 @@ export default function BeforeAfterCard({ slide }: BeforeAfterCardProps) {
                     src={
                         typeof afterImage === "object" && "link" in afterImage
                             ? afterImage.link
-                            : urlForSanityImage(afterImage).fit("crop").url()
+                            : urlForSanityImage(afterImage).url()
                     }
                     fill
                     alt={

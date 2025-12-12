@@ -127,7 +127,7 @@ const RoofTypesSection = (_props: RoofTypesSectionProps) => {
               className="relative w-full lg:w-1/2 h-60 lg:h-auto rounded-[8px] overflow-hidden shrink-0"
             >
               <Image
-                src={urlForSanityImage(image).fit("crop").url()}
+                src={urlForSanityImage(image).url()}
                 fill
                 alt={image?.alt || "Tagtyper"}
                 className="object-cover"

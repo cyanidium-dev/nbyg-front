@@ -117,7 +117,7 @@ const ImageTextButtonSection = (_props: ImageTextButtonSectionProps) => {
               className="relative w-full md:w-[43.6%] h-[300px] md:h-auto rounded-[12px] overflow-hidden shrink-0"
             >
               <Image
-                src={urlForSanityImage(image).fit("crop").url()}
+                src={urlForSanityImage(image).url()}
                 fill
                 alt={image?.alt || "Billede"}
                 className="object-cover"

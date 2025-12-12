@@ -105,7 +105,7 @@ const LargeTableSection = (_props: LargeTableSectionProps) => {
             className="relative w-full lg:max-w-[467px] xl:max-w-[567px] h-50 lg:h-auto rounded-[8px] overflow-hidden shrink-0"
           >
             <Image
-              src={urlForSanityImage(image).fit("crop").url()}
+              src={urlForSanityImage(image).url()}
               fill
               alt={image?.alt || "Billede"}
               className="object-cover"
