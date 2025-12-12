@@ -93,7 +93,7 @@ const HeroSection = (_props: HeroSectionProps) => {
             whileInView="visible"
             exit="exit"
             viewport={{ once: true, amount: 0.3 }}
-            variants={fadeInAnimation({ scale: 0.85, y: 50, delay: 0.8 })}
+            variants={headerVariants}
             className="flex flex-col sm:flex-row gap-3 sm:gap-[30px] sm:w-fit"
           >
             {showDiscussButton && (
