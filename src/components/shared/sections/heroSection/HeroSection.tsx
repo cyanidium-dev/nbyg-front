@@ -1,5 +1,5 @@
 import * as motion from "motion/react-client";
-import { fadeInAnimation, headerVariants } from "@/utils/animationVariants";
+import { fadeInAnimation, fadeInAnimationSafe, headerVariants } from "@/utils/animationVariants";
 import type { HeroSection as HeroSectionData } from "@/types/page";
 import Container from "../../container/Container";
 import PageTitle from "../../titles/PageTitle";
@@ -15,7 +15,7 @@ interface HeroSectionProps extends HeroSectionData {
 }
 
 const HeroSection = (_props: HeroSectionProps) => {
-  const {
+  const { 
     title,
     description,
     mobileImage,
@@ -37,33 +37,35 @@ const HeroSection = (_props: HeroSectionProps) => {
         variants={headerVariants}
         className="relative rounded-b-[18px] overflow-hidden"
       >
-        <div
-          className="absolute -z-10 inset-0 pointer-events-none"
-          style={{
-            background: `
+        <div className="absolute inset-0 -z-10 rounded-b-[18px]">
+          <div
+            className="absolute -z-10 inset-0 pointer-events-none"
+            style={{
+              background: `
         linear-gradient(0deg, rgba(0, 0, 0, 0) -36.89%, rgba(0, 0, 0, 0.464) 91.14%, rgba(0, 0, 0, 0) 144.39%),
         linear-gradient(240.18deg, rgba(0, 0, 0, 0) 19.24%, rgba(0, 0, 0, 0.8) 82.96%)
       `,
-          }}
-        />
-        <Image
-          src={urlForSanityImage(mobileImage).url()}
-          alt={mobileImage?.alt || "Hero billede"}
-          fill
-          sizes="100vw"
-          priority
-          fetchPriority="high"
-          className="md:hidden -z-20 object-cover object-top"
-        />
-        <Image
-          src={urlForSanityImage(desktopImage).url()}
-          alt={desktopImage?.alt || "Hero billede"}
-          fill
-          sizes="100vw"
-          priority
-          fetchPriority="high"
-          className="hidden md:block -z-20 object-cover object-top"
-        />
+            }}
+          />
+          <Image
+            src={urlForSanityImage(mobileImage).url()}
+            alt={mobileImage?.alt || "Hero billede"}
+            fill
+            sizes="100vw"
+            priority
+            fetchPriority="high"
+            className="md:hidden -z-20 object-cover object-top"
+          />
+          <Image
+            src={urlForSanityImage(desktopImage).url()}
+            alt={desktopImage?.alt || "Hero billede"}
+            fill
+            sizes="100vw"
+            priority
+            fetchPriority="high"
+            className="hidden md:block -z-20 object-cover object-top"
+          />
+        </div>
         <Container className="pt-[146px] lg:pt-[179px] pb-7 lg:pb-20">
           <PageTitle
             className="max-w-[430px] lg:max-w-[978px] mb-6 lg:mb-9"
@@ -93,7 +95,7 @@ const HeroSection = (_props: HeroSectionProps) => {
             whileInView="visible"
             exit="exit"
             viewport={{ once: true, amount: 0.3 }}
-            variants={headerVariants}
+            variants={fadeInAnimationSafe({ scale: 0.85, delay: 0.8, translateY: 50 })}
             className="flex flex-col sm:flex-row gap-3 sm:gap-[30px] sm:w-fit"
           >
             {showDiscussButton && (

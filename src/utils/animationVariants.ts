@@ -26,6 +26,31 @@ export const fadeInAnimation = ({
   },
 });
 
+export const fadeInAnimationSafe = ({
+  scale = 0.5,
+  delay = 0,
+  duration = 0.7,
+  opacity = 0,
+  translateY = 0,
+  translateX = 0,
+}) => ({
+  hidden: { opacity: opacity, scale: scale, translateY: translateY, translateX: translateX },
+  visible: {
+    scale: 1,
+    opacity: 1,
+    translateY: 0,
+    translateX: 0,
+    transition: { duration, delay, ease: [0.25, 0.1, 0.25, 1] as const },
+  },
+  exit: {
+    scale: scale,
+    opacity: opacity,
+    translateY: translateY,
+    translateX: translateX,
+    transition: { duration, ease: [0.42, 0, 1, 1] as const },
+  },
+});
+
 export const headerVariants = {
   hidden: { opacity: 0.01 },
   visible: {
