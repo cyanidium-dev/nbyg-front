@@ -33,7 +33,7 @@ export default function MaterialsCard({ slide }: MaterialCardProps) {
       overflow-hidden shrink-0"
       >
         <Image
-          src={urlForSanityImage(image).fit("crop").url()}
+          src={urlForSanityImage(image).url()}
           alt={image?.alt || title}
           fill
           className="object-cover"

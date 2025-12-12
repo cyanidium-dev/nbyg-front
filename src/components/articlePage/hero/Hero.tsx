@@ -24,7 +24,7 @@ export default function Hero({ article }: HeroProps) {
       className="relative rounded-b-[18px] overflow-hidden"
     >
       <Image
-        src={urlForSanityImage(heroMobileImage).fit("crop").url()}
+        src={urlForSanityImage(heroMobileImage).url()}
         fill
         alt={heroMobileImage?.alt || "Blog indlæg hero billede"}
         sizes="100vw"
@@ -33,7 +33,7 @@ export default function Hero({ article }: HeroProps) {
         fetchPriority="high"
       />
       <Image
-        src={urlForSanityImage(heroDesktopImage).fit("crop").url()}
+        src={urlForSanityImage(heroDesktopImage).url()}
         fill
         alt={heroDesktopImage?.alt || "Blog indlæg hero billede"}
         sizes="100vw"

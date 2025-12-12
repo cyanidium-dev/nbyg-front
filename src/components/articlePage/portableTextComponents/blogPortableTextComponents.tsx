@@ -162,7 +162,7 @@ export const getBlogPortableTextComponents = (
   },
   types: {
     image: ({ value }: { value: BlogPostContentImage }) => {
-      const imageUrl = urlForSanityImage(value).fit("crop").url();
+      const imageUrl = urlForSanityImage(value).url();
       const alt = value?.alt || "Blog indlæg billede";
       const key = `${slug}-${value?._key || `image-${Math.random()}`}`;
 

@@ -4,7 +4,7 @@ import SwiperWrapper from "../../swiper/SwiperWrapper";
 import BeforeAfterCard from "./BeforeAfterCard";
 import { SanityImage } from "@/types/page";
 
-type ImageSource = SanityImage | string;
+type ImageSource = SanityImage | { link: string; alt: string };
 
 interface BeforeAfterSliderProps {
   slides: Array<{

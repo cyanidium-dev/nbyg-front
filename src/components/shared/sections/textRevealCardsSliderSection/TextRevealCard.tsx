@@ -12,7 +12,7 @@ interface TextRevealCardProps {
     _key?: string;
     title: string;
     description: string;
-    image: SanityImage | string;
+    image: SanityImage | { link: string; alt: string };
     link?: string;
   };
 }
@@ -26,8 +26,16 @@ export default function TextRevealCard({ slide }: TextRevealCardProps) {
   return (
     <div className="relative flex flex-col justify-end h-[399px] rounded-[8px]">
       <Image
-        src={typeof image === "string" ? image : urlForSanityImage(image).fit("crop").url()}
-        alt={typeof image === "string" ? title : image?.alt || title}
+        src={
+          typeof image === "object" && "link" in image
+            ? image.link
+            : urlForSanityImage(image).url()
+        }
+        alt={
+          typeof image === "object" && "link" in image
+            ? image.alt || title
+            : image?.alt || title
+        }
         fill
         className="-z-10 object-cover rounded-[8px]"
       />
