@@ -14,6 +14,12 @@ const nextConfig: NextConfig = {
         pathname: "**",
       },
     ],
+    // Custom loader для Sanity зображень
+    // Повертає прямий URL без параметрів Next.js (?w=, ?q=),
+    // які викликають Sanity Image API (платний) на Vercel
+    // На Vercel зображення будуть без оптимізації, але працюватимуть
+    loader: "custom",
+    loaderFile: "./src/utils/sanityImageLoader.ts",
   },
 };
 
