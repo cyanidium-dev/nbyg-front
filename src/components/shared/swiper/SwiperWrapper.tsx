@@ -1,8 +1,4 @@
 "use client";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/effect-coverflow";
-
 import { ReactNode, useRef, useLayoutEffect, useState } from "react";
 import { Navigation, EffectCoverflow } from "swiper/modules";
 import { Swiper } from "swiper/react";
@@ -103,7 +99,7 @@ export default function SwiperWrapper({
     <>
       <Swiper
         key={`${uniqueKey}-swiper`}
-        onSwiper={(swiper) => {
+        onSwiper={swiper => {
           swiperInstanceRef.current = swiper;
           onSwiper?.(swiper);
         }}

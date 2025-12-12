@@ -32,7 +32,10 @@ const GallerySection = (props: GallerySectionProps) => {
               whileInView="visible"
               exit="exit"
               viewport={{ once: true, amount: 0.2 }}
-              variants={fadeInAnimation({ scale: 0.85, delay: 0.3 })}
+              variants={fadeInAnimation({
+                scale: 0.85,
+                delay: 0.3,
+              })}
               className="w-fit"
             >
               <Link

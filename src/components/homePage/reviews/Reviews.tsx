@@ -1,11 +1,12 @@
 import Container from "../../shared/container/Container";
 import SectionTitle from "../../shared/titles/SectionTitle";
 import { reviewsData } from "./reviewsData";
-import ReviewsBlock from "./ReviewsBlock";
+import ReviewsBlock from "./ReviewsBlock.lazy";
 import Image from "next/image";
 import ReviewsDecorations from "./ReviewsDecorations";
 import { fadeInAnimation } from "@/utils/animationVariants";
 import * as motion from "motion/react-client";
+import { Suspense } from "react";
 
 export default function Reviews() {
     return (
@@ -48,7 +49,13 @@ export default function Reviews() {
                         />
                     </motion.div>
                 </div>
-                <ReviewsBlock reviews={reviewsData} />
+                <Suspense
+                    fallback={
+                        <div className="h-[400px] animate-pulse bg-gray-200/10 rounded-lg" />
+                    }
+                >
+                    <ReviewsBlock reviews={reviewsData} />
+                </Suspense>
                 <motion.div
                     variants={fadeInAnimation({ delay: 0.8, y: 20 })}
                     initial="hidden"

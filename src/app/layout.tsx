@@ -1,6 +1,7 @@
 export const revalidate = 60;
 
 import "./globals.css";
+import "../styles/swiper.css";
 import { getDefaultMetadata } from "@/utils/getDefaultMetadata";
 import { Montserrat } from "next/font/google";
 import localFont from "next/font/local";
@@ -16,6 +17,7 @@ const geistSans = Montserrat({
   subsets: ["latin"],
   weight: ["300", "400", "500", "700"],
   display: "swap",
+  preload: true,
 });
 
 const findSans = localFont({

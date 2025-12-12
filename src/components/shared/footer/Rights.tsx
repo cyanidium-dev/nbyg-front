@@ -46,10 +46,10 @@ export default function Rights() {
                             href={WEB_BOND_URL}
                             target="_blank"
                             rel="noopener noreferrer nofollow"
-                            className="py-1 xl:hover:opacity-80 transition-opacity duration-300 inline-block"
+                            className="py-1 xl:hover:opacity-80 w-[96px] h-[32px] transition-opacity duration-300 inline-block"
                         >
                             <Image
-                                src="/images/footer/WebBondLogo.webp"
+                                src="/images/footer/WebBondLogo.svg"
                                 alt="WebBond"
                                 width={96}
                                 height={32}

@@ -21,6 +21,17 @@ const nextConfig: NextConfig = {
     loader: "custom",
     loaderFile: "./src/utils/sanityImageLoader.ts",
   },
+
+  experimental: {
+    optimizePackageImports: [
+      "framer-motion",
+      "motion",
+      "swiper",
+      "react-select",
+      "formik",
+    ],
+    turbopackFileSystemCacheForDev: true,
+  },
 };
 
 export default nextConfig;

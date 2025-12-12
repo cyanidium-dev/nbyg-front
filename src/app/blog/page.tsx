@@ -28,8 +28,14 @@ const crumbs = [
 ];
 
 export default async function BlogPage() {
-  const blogPosts =
-    await fetchSanityData<BlogPostPreview[]>(ALL_BLOG_POSTS_QUERY);
+  let blogPosts: BlogPostPreview[] = [];
+
+  try {
+    blogPosts = await fetchSanityData<BlogPostPreview[]>(ALL_BLOG_POSTS_QUERY);
+  } catch (error) {
+    console.error("Failed to fetch blog posts:", error);
+    // Continue with empty array - page will still render
+  }
 
   const schemaJson = await getPageSchemaJson(BLOG_PAGE_QUERY);
 

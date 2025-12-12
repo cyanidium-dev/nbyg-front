@@ -1,5 +1,5 @@
 import Container from "@/components/shared/container/Container";
-import GallerySlider from "@/components/shared/sections/gallerySection/GallerySlider";
+import GallerySlider from "@/components/shared/sections/gallerySection/GallerySlider.lazy";
 import SectionTitle from "@/components/shared/titles/SectionTitle";
 import * as motion from "motion/react-client";
 import { fadeInAnimation } from "@/utils/animationVariants";
@@ -7,12 +7,19 @@ import { galleryData } from "./galleryData";
 import ArrowIcon from "@/components/shared/icons/ArrowIcon";
 import Link from "next/link";
 import DecorativeEllipsis from "@/components/shared/decorativeEllipsis/DecorativeEllipsis";
+import { Suspense } from "react";
 
 export default function Gallery() {
     return (
         <section className="relative py-25 lg:pt-[138px] lg:pb-[46px]">
             <div className="max-w-[416px] sm:max-w-[726px] md:max-w-[867px] lg:max-w-[1141px] xl:max-w-[1494px] mx-auto">
-                <GallerySlider items={galleryData} />
+                <Suspense
+                    fallback={
+                        <div className="h-[400px] animate-pulse bg-gray-200/10 rounded-lg" />
+                    }
+                >
+                    <GallerySlider items={galleryData} />
+                </Suspense>
             </div>
             <Container className="flex flex-col mt-10 lg:mt-15 sm:flex-row sm:justify-between sm:items-center">
                 <div className="flex justify-between gap-4 sm:gap-8 w-full sm:w-fit items-center sm:items-center mb-8 sm:mb-0">

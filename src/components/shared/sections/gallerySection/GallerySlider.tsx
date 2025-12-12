@@ -108,7 +108,7 @@ export default function GallerySlider({
           buttonsClassName="absolute z-10 top-[calc(50%-27px)] left-[calc(50%-143px)] sm:left-[calc(50%-240.5px)] md:left-[calc(50%-285.5px)] 
           lg:left-[calc(50%-390.5px)] w-[286px] sm:w-[481px] md:w-[571px] lg:w-[781px] pointer-events-none"
           showCoverflowEffect={true}
-          onSwiper={(swiper) => (mainSwiper.current = swiper)}
+          onSwiper={swiper => (mainSwiper.current = swiper)}
           onSlideChange={handleMainSlideChange}
         >
           {items.map((item, idx) => {
@@ -133,6 +133,7 @@ export default function GallerySlider({
                     }
                     fill
                     className="object-cover rounded-[14px]"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   />
                 </div>
               </SwiperSlide>

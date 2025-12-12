@@ -64,7 +64,7 @@ export default function GalleryModal({
 
       <Modal
         isModalShown={isOpen}
-        setIsModalShown={(value) => !value && handleClose()}
+        setIsModalShown={value => !value && handleClose()}
         className="w-full max-w-[930px] max-h-dvh md:max-h-[95dvh] h-dvh lg:h-[750px] flex flex-col bg-black"
       >
         {/* MAIN modal slider */}
@@ -79,7 +79,7 @@ export default function GalleryModal({
           lg:left-[calc(50%-492px)] w-full lg:w-[984px]"
             uniqueKey={`${uniqueKey}-gallery-modal`}
             additionalOptions={{}}
-            onSwiper={(swiper) => {
+            onSwiper={swiper => {
               modalRef.current = swiper;
               swiper.slideToLoop(activeIndex, 0);
             }}
