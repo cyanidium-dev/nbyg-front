@@ -47,7 +47,7 @@ const HeroSection = (_props: HeroSectionProps) => {
           }}
         />
         <Image
-          src={urlForSanityImage(mobileImage).fit("crop").url()}
+          src={urlForSanityImage(mobileImage).url()}
           alt={mobileImage?.alt || "Hero billede"}
           fill
           sizes="100vw"
@@ -56,7 +56,7 @@ const HeroSection = (_props: HeroSectionProps) => {
           className="md:hidden -z-20 object-cover object-top"
         />
         <Image
-          src={urlForSanityImage(desktopImage).fit("crop").url()}
+          src={urlForSanityImage(desktopImage).url()}
           alt={desktopImage?.alt || "Hero billede"}
           fill
           sizes="100vw"

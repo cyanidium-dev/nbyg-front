@@ -29,7 +29,7 @@ export default function BlogCard({ post }: BlogCardProps) {
       />
       <div className="relative w-full h-45 rounded-[8px] overflow-hidden">
         <Image
-          src={urlForSanityImage(heroMobileImage).fit("crop").url()}
+          src={urlForSanityImage(heroMobileImage).url()}
           fill
           alt={heroMobileImage?.alt || "Blog indlæg billede"}
           sizes="(max-width: 440px) 100vw, 328px"
