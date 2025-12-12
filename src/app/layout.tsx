@@ -1,7 +1,9 @@
 export const revalidate = 60;
 
 import "./globals.css";
-import "../styles/swiper.css";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/effect-coverflow";
 import { getDefaultMetadata } from "@/utils/getDefaultMetadata";
 import { Montserrat } from "next/font/google";
 import localFont from "next/font/local";
