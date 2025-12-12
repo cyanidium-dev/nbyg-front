@@ -37,7 +37,6 @@ const HeroSection = (_props: HeroSectionProps) => {
         variants={headerVariants}
         className="relative rounded-b-[18px] overflow-hidden"
       >
-        <div className="absolute inset-0 -z-10 rounded-b-[18px]">
           <div
             className="absolute -z-10 inset-0 pointer-events-none"
             style={{
@@ -65,7 +64,6 @@ const HeroSection = (_props: HeroSectionProps) => {
             fetchPriority="high"
             className="hidden md:block -z-20 object-cover object-top"
           />
-        </div>
         <Container className="pt-[146px] lg:pt-[179px] pb-7 lg:pb-20">
           <PageTitle
             className="max-w-[430px] lg:max-w-[978px] mb-6 lg:mb-9"
